@@ -1,0 +1,518 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Your app custom styles here */
+.card-color-green {
+  background-color: forestgreen;
+}
+
+.card-color-white {
+  background-color: white;
+}
+
+.btn-color-blueWhite {
+  background-color: navy;
+  color: white;
+}
+
+.btn-color-greenWhite {
+  background-color: forestgreen;
+  color: white;
+}
+
+.card-color-yellow {
+  background-color: #E6F23C;
+}
+
+.card-color-orange {
+  background-color: #bd6d03;
+}
+
+.card-color-blood {
+  background-color: #b20000;
+}
+
+.card-color-red {
+  background-color: #b20000;
+  color: white;
+}
+
+.card-color-red-important {
+  background-color: #b20000 !important;
+  color: white !important;
+}
+
+.card-color-blue {
+  background-color: navy;
+}
+
+.card-color-steel-blue {
+  background-color: navy;
+}
+
+:root {
+  --f7-popup-border-radius: 0px;
+  --f7-popup-tablet-width: 630px;
+  --f7-popup-tablet-height: 630px;
+  --f7-popup-transition-duration: 400ms;
+  --f7-popup-push-border-radius: 10px;
+  --f7-popup-push-offset: var(--f7-safe-area-top);
+  --f7-table-head-font-size: 12px;
+  --f7-table-body-font-size: 14px;
+  --f7-table-footer-font-size: 12px;
+  --f7-table-input-height: 24px;
+  --f7-table-input-font-size: 14px;
+  --f7-table-collapsible-cell-padding: 3px;
+  --f7-table-link-icon-only-icon-size: 20px;
+  --f7-table-sortable-icon-color: #000;
+  /*
+  --f7-popup-tablet-border-radius: var(--f7-popup-border-radius);
+  */
+}
+
+.ios {
+  --f7-popup-box-shadow: none;
+}
+
+.md {
+  --f7-popup-box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5);
+}
+
+.aurora {
+  --f7-popup-tablet-border-radius: 4px;
+  --f7-popup-box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5);
+}
+
+
+/*additional css by aris */
+
+/*table color */
+.table-color-tomato {
+  background-color: #FF887C;
+}
+
+.table-color-lightgray {
+  background-color: lightgray;
+}
+
+.table-color-green {
+  background: linear-gradient(#4a8a4a, forestgreen);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#4a8a4a, forestgreen);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#4a8a4a, forestgreen);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#4a8a4a, forestgreen);
+  /* For Firefox 3.6 to 15 */
+  color: white;
+}
+
+.table-color-yellow {
+  background-color: #e2e209;
+}
+
+.table-color-lightblue {
+  background-color: navy;
+}
+
+.table-color-orange {
+  background: linear-gradient(#f57d51, #ff4500);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#f57d51, #ff4500);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#f57d51, #ff4500);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#f57d51, #ff4500);
+  /* For Firefox 3.6 to 15 */
+  color: white;
+}
+
+.table-color-red {
+  background: linear-gradient(#b53737, #b20000);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#b53737, #b20000);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#b53737, #b20000);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#b53737, #b20000);
+  /* For Firefox 3.6 to 15 */
+  background-color: #b20000;
+  color: white;
+
+}
+
+.table-color-white-dop {
+  background-color: #dcdcf15e;
+}
+
+/*end table color */
+
+/*text color */
+.text-add-colour-blue-fb {
+  color: navy;
+}
+
+.text-add-colour-black-soft {
+  color: #4c4c4c;
+}
+
+.text-add-colour-tomato {
+  color: #FF887C;
+}
+
+.text-add-colour-red {
+  color: #b20000;
+}
+
+.text-add-colour-white {
+  color: #DCDCDCFA;
+}
+
+.text-add-colour-gray {
+  color: dimgray;
+}
+
+/*end text color */
+
+/*text param*/
+.text-bold {
+  font-weight: bold;
+}
+
+/*end*/
+
+/*Col Border */
+div[class*="col-border"] {
+  border: 0.2px solid black;
+  height: 35px;
+  padding: 4px;
+}
+
+.grid-resizable-demo {
+  --f7-grid-row-gap: 16px;
+}
+
+.grid-resizable-demo div[class*="col"] {
+  margin-bottom: 0;
+}
+
+.grid-resizable-demo .demo-col-center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*end*/
+
+/*Margin For Minimize Padding element (request client)*/
+.margin-3 {
+  margin-top: -3px !important;
+}
+
+.margin-5 {
+  margin-top: -5px !important;
+}
+
+.margin-4 {
+  margin-top: -4px !important;
+}
+
+.margin-8 {
+  margin-top: -8px !important;
+}
+
+.margin-10 {
+  margin-top: -10px !important;
+}
+
+.margin-2 {
+  margin-top: -2px !important;
+}
+
+.margin-1 {
+  margin-top: -1px !important;
+}
+
+.margin-10 {
+  margin-top: -10px !important;
+}
+
+.margin-6 {
+  margin-top: -6px !important;
+}
+
+.margin-12 {
+  margin-top: -12px !important;
+}
+
+.margin-15 {
+  margin-top: -15px !important;
+}
+
+.margin-16 {
+  margin-top: -16px !important;
+}
+
+.margin-18 {
+  margin-top: -18px !important;
+}
+
+.margin-20 {
+  margin-top: -20px !important;
+}
+
+.margin-23 {
+  margin-top: -23px !important;
+}
+
+.margin-25 {
+  margin-top: -25px !important;
+}
+
+.margin-27 {
+  margin-top: -27px !important;
+}
+
+.margin-37 {
+  margin-top: -37px !important;
+}
+
+.margin-35 {
+  margin-top: -35px !important;
+}
+
+.margin-50 {
+  margin-top: -50px !important;
+}
+
+.margin-65 {
+  margin-top: -65px !important;
+}
+
+/*End Margin*/
+
+/*Dark Mode Req Client */
+.bg-dark-gray {
+  background-color: dimgray !important;
+}
+
+.bg-dark-hover-button-choose {
+  background-color: dimgray !important;
+}
+
+.bg-dark-gray-young {
+  background: linear-gradient(lightgray, #686665);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(lightgray, #686665);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(lightgray, #686665);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(lightgray, #686665);
+  /* For Firefox 3.6 to 15 */
+}
+
+.bg-dark-gray-medium {
+  background: linear-gradient(#015cab, #909090);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#015cab, #909090);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#015cab, #909090);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#015cab, #909090);
+  /* For Firefox 3.6 to 15 */
+}
+
+.bg-dark-gray-black {
+  background: linear-gradient(#3d3d3d, black);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#3d3d3d, black);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#3d3d3d, black);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#3d3d3d, black);
+  /* For Firefox 3.6 to 15 */
+}
+
+.bg-dark-gray-cover {
+  background-color: #1c1c1d;
+}
+
+.border-actived {
+  border-width: thin;
+  border-style: solid;
+  border-color: white;
+}
+
+.border-actived-gray {
+  border-width: thin;
+  border-style: solid;
+  border-color: gray;
+}
+
+/*end Dark Mode Req Client */
+/*Color Pallete */
+.palete {
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  border: 1px solid white;
+}
+
+.page-button {
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  border: 1px solid white;
+}
+
+/*End Color Pallete */
+
+
+
+:root .theme-dark,
+:root.theme-dark {
+  --f7-table-cell-border-color: rgba(255, 255, 255, 0.15);
+  --f7-table-sortable-icon-color: #fff;
+  --f7-table-input-text-color: #fff;
+}
+
+.ios {
+  --f7-table-head-font-weight: 600;
+  --f7-table-head-cell-height: 39px;
+  --f7-table-head-icon-size: 13px;
+  --f7-table-body-cell-height: 39px;
+  --f7-table-cell-padding-vertical: 2px;
+  --f7-table-cell-padding-horizontal: 2px;
+  --f7-table-edge-cell-padding-horizontal: 2px;
+  --f7-table-label-cell-padding-horizontal: 2px;
+  --f7-table-checkbox-cell-width: 18px;
+  /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
+  /* --f7-table-actions-link-color: var(--f7-theme-color); */
+  --f7-table-title-font-size: 17px;
+  --f7-table-title-font-weight: 600;
+  --f7-table-card-header-height: 59px;
+  --f7-table-footer-height: 39px;
+  --f7-table-head-text-color: rgba(0, 0, 0, 0.45);
+  --f7-table-cell-border-color: rgba(0, 0, 0, 0.22);
+  --f7-table-selected-row-bg-color: rgba(0, 0, 0, 0.03);
+  --f7-table-footer-text-color: rgba(0, 0, 0, 0.45);
+  --f7-table-input-text-color: #000;
+}
+
+.ios .theme-dark,
+.ios.theme-dark {
+  --f7-table-head-text-color: rgba(255, 255, 255, 0.55);
+  --f7-table-footer-text-color: rgba(255, 255, 255, 0.55);
+  --f7-table-selected-row-bg-color: rgba(255, 255, 255, 0.08);
+}
+
+.md {
+  --f7-table-head-font-weight: 500;
+  --f7-table-head-cell-height: 51px;
+  --f7-table-head-icon-size: 16px;
+  --f7-table-body-cell-height: 43px;
+  --f7-table-cell-padding-vertical: 2px;
+  --f7-table-cell-padding-horizontal: 2px;
+  --f7-table-edge-cell-padding-horizontal: 2px;
+  --f7-table-label-cell-padding-horizontal: 2px;
+  --f7-table-checkbox-cell-width: 18px;
+  --f7-table-title-font-size: 20px;
+  --f7-table-title-font-weight: 400;
+  --f7-table-card-header-height: 59px;
+  --f7-table-footer-height: 51px;
+  --f7-table-head-text-color: rgba(0, 0, 0, 0.54);
+  --f7-table-cell-border-color: rgba(0, 0, 0, 0.12);
+  --f7-table-actions-cell-link-color: rgba(0, 0, 0, 0.54);
+  --f7-table-selected-row-bg-color: #f5f5f5;
+  --f7-table-actions-link-color: rgba(0, 0, 0, 0.54);
+  --f7-table-footer-text-color: rgba(0, 0, 0, 0.54);
+  --f7-table-input-text-color: #212121;
+}
+
+.md .theme-dark,
+.md.theme-dark {
+  --f7-table-head-text-color: rgba(255, 255, 255, 0.54);
+  --f7-table-footer-text-color: rgba(255, 255, 255, 0.54);
+  --f7-table-selected-row-bg-color: rgba(255, 255, 255, 0.05);
+  --f7-table-actions-cell-link-color: rgba(255, 255, 255, 0.54);
+  --f7-table-actions-link-color: rgba(255, 255, 255, 0.54);
+}
+
+.aurora {
+  --f7-table-link-icon-only-icon-size: 18px;
+  --f7-table-head-font-weight: 400;
+  --f7-table-head-cell-height: 28px;
+  --f7-table-head-icon-size: 18px;
+  --f7-table-body-cell-height: 28px;
+  --f7-table-cell-padding-vertical: 2px;
+  --f7-table-cell-padding-horizontal: 2px;
+  --f7-table-edge-cell-padding-horizontal: 2px;
+  --f7-table-label-cell-padding-horizontal: 2px;
+  --f7-table-checkbox-cell-width: 22px;
+  /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
+  /* --f7-table-actions-link-color: var(--f7-theme-color); */
+  --f7-table-title-font-size: 14px;
+  --f7-table-title-font-weight: 600;
+  --f7-table-card-header-height: 37px;
+  --f7-table-footer-height: 28px;
+  --f7-table-head-text-color: rgba(0, 0, 0, 0.6);
+  --f7-table-cell-border-color: rgba(0, 0, 0, 0.12);
+  --f7-table-selected-row-bg-color: rgba(0, 0, 0, 0.03);
+  --f7-table-footer-text-color: rgba(0, 0, 0, 0.5);
+  --f7-table-input-text-color: #000;
+}
+
+.aurora .theme-dark,
+.aurora.theme-dark {
+  --f7-table-selected-row-bg-color: rgba(255, 255, 255, 0.03);
+  --f7-table-head-text-color: rgba(255, 255, 255, 0.54);
+  --f7-table-footer-text-color: rgba(255, 255, 255, 0.54);
+}
+
+/* .appdialog {
+  width: 90%;
+  left: 5%;
+  margin-left: 0;
+}
+
+.sheet-modal-large {
+  height: 50vh !important;
+} */
+@media (min-width: 768px) {
+  .popup-notif {
+    left: 60%;
+    top: 70%;
+    width: 90%;
+    height: 90%;
+  }
+}
+
+.popup-notif {
+  left: 5%;
+  top: 12%;
+  width: 90%;
+  height: 90%;
+}
+
+/* blink */
+.announcement {
+  animation-name: blinkingText;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blinkingText {
+  /* from {
+    background-color: white;
+  } */
+
+  to {
+    background-color: transparent;
+  }
+}
+
+/*end additional css by aris*/

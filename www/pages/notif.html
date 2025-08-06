@@ -1,0 +1,878 @@
+<div class="page" data-name="notif" class="">
+
+  <div class="popup detail-proforma-notif-popup" style="background-color: white;">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title"><b>Detail Proforma</b></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back_popup_detail_proforma_notif"
+                data-popup=".detail-proforma-notif-popup"><i style="margin-right:7px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card-content" style="width:100%;background-color: white;color: black;"
+            id="detail_proforma_notif_table_popup">
+            </table>
+          </div>
+          <input type="hidden" id="detail_valid_notif_performa" name="detail_valid_notif_performa" required validated>
+          <input type="hidden" id="detail_performa_header_id_notif_performa"
+            name="detail_performa_header_id_notif_performa" required validated>
+          <div class="row" style="padding: 5px;">
+            <div class="col-50 text-left">
+              <button onclick="UpdateValidNotifPerforma(1);" style="width:100%;"
+                class="btn-color-blueWhite button-small col button text-bold">VALID
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reject_element_proforma">
+              <button style="width:100%;" data-popup=".update-valid-reject-proforma"
+                class="card-color-red button-small col button text-bold popup-open">REJECT
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reset_reject_element_proforma">
+              <button style="width:100%;" onclick="UpdateValidNotifPerforma(2);"
+                class="card-color-red button-small col button text-bold">REJECT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup update-valid-reject-proforma">
+    <div class="view view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Keterangan Reject</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-update-valid-reject-proforma"
+                data-popup=".update-valid-reject-proforma"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <div class="list no-hairlines-md">
+                      <div class="list">
+                        <form id="">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <!-- <label style="height:17px; margin-top:-9px;"><b>Kategori</b></label> -->
+                                <div class="item-input-wrap">
+                                  <input type="text" class="" id="keterangan_valid_proforma" placeholder="Uraian"
+                                    name="keterangan_valid_proforma" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </form>
+                      </div>
+                      <div class="row" style="padding: 5px;margin-top:10px;">
+                        <button onclick="UpdateValidNotifRejectPerforma();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="edit_jurnal_kas_button_save">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup detail-notif-sales-spkpo-popup" style="background-color: white;">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title"><b>SPK PO</b></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back_popup_detail-notif-sales-spkpo-popup"
+                data-popup=".detail-notif-sales-spkpo-popup"><i style="margin-right:7px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card-content" style="width:100%;background-color: white;color: black;"
+            id="detail_notif_sales_spkpo_table_popup">
+            </table>
+          </div>
+          <input type="hidden" id="detail_valid_notif_sales" name="detail_valid_notif_sales" required validated>
+          <input type="hidden" id="detail_penjualan_id_notif_sales" name="detail_penjualan_id_notif_sales" required
+            validated>
+          <div class="row" style="padding: 5px;">
+            <div class="col-50 text-left">
+              <button onclick="UpdateValidNotifSales(1);" style="width:100%;"
+                class="btn-color-blueWhite button-small col button text-bold">VALID
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reject_element_sales">
+              <button style="width:100%;" data-popup=".update-valid-reject-sales"
+                class="card-color-red button-small col button text-bold popup-open">REJECT
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reset_reject_element_sales">
+              <button style="width:100%;" onclick="UpdateValidNotifSales(2);"
+                class="card-color-red button-small col button text-bold">REJECT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup update-valid-reject-sales">
+    <div class="view view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Keterangan Reject</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-update-valid-reject-sales"
+                data-popup=".update-valid-reject-sales"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <div class="list no-hairlines-md">
+                      <div class="list">
+                        <form id="">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <!-- <label style="height:17px; margin-top:-9px;"><b>Kategori</b></label> -->
+                                <div class="item-input-wrap">
+                                  <input type="text" class="" id="keterangan_valid_sales" placeholder="Uraian"
+                                    name="keterangan_valid_sales" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </form>
+                      </div>
+                      <div class="row" style="padding: 5px;margin-top:10px;">
+                        <button onclick="UpdateValidNotifRejectSales();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup bukti-foto-pembayaran-notif">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Foto Bukti Pembayaran</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" data-popup=".bukti-foto-pembayaran-notif"><i
+                  style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <table align="center" width="100%">
+                      <tr>
+                        <td>
+                          <center>
+                            <img onclick="zoom_view_global(this.src);" width="100px" style="border-radius:10px;"
+                              id="file_foto_bayar_notif_view_now" />
+
+                            <input type="hidden" id="detail_penjualan_id_notif_bayar"
+                              name="detail_penjualan_id_notif_bayar" required validated>
+                            <input type="hidden" id="detail_foto_urutan_notif_bayar"
+                              name="detail_foto_urutan_notif_bayar" required validated>
+                            <input type="hidden" id="detail_valid_notif_bayar" name="detail_valid_notif_bayar" required
+                              validated>
+                            <br>
+                          </center>
+                        </td>
+                      </tr>
+                    </table>
+                    <div class="list no-hairlines-md" style="margin-top: -5px;">
+                      <form id="">
+                        <div class="list">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner" style="padding-top: 0px;">
+                                <label style="height:17px;"><b>Jumlah Pembayaran</b></label>
+                                <div class="item-input-wrap">
+                                  <label></label>
+                                  <input type="text" id="jumlah_pembayaran_popup_bukti"
+                                    name="jumlah_pembayaran_popup_bukti" placeholder="0" style="color: grey;" value=""
+                                    required validate readonly>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding: 5px;">
+                <div class="col-50 text-left">
+                  <button onclick="UpdateValidNotifBayar(1);" style="width:100%;"
+                    class="btn-color-blueWhite button-small col button text-bold">VALID
+                  </button>
+                </div>
+                <div class="col-50 text-right" id="show_reject_element_bayar">
+                  <button style="width:100%;" data-popup=".update-valid-reject-bayar"
+                    class="card-color-red button-small col button text-bold popup-open">REJECT
+                  </button>
+                </div>
+                <div class="col-50 text-right" id="show_reset_reject_element_bayar">
+                  <button style="width:100%;" onclick="UpdateValidNotifBayar(2);"
+                    class="card-color-red button-small col button text-bold">REJECT
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup update-valid-reject-bayar">
+    <div class="view view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Keterangan Reject</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-update-valid-reject-bayar"
+                data-popup=".update-valid-reject-bayar"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <div class="list no-hairlines-md">
+                      <div class="list">
+                        <form id="">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <!-- <label style="height:17px; margin-top:-9px;"><b>Kategori</b></label> -->
+                                <div class="item-input-wrap">
+                                  <input type="text" class="" id="keterangan_valid_bayar" placeholder="Uraian"
+                                    name="keterangan_valid_bayar" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </form>
+                      </div>
+                      <div class="row" style="padding: 5px;margin-top:10px;">
+                        <button onclick="UpdateValidNotifRejectBayar();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup surat-jalan-notif">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Surat Jalan</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p id="backbutton" class="text-add-colour-white link popup-close" id="back-surat-jalan-notif"
+                data-popup=".surat-jalan-notif"><i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <table align="center" width="100%" border="0"
+                      style="border-collapse: collapse; border:1px solid gray;">
+                      <thead>
+                        <tr>
+                          <td id="nomer_sj" colspan="5" align="center"
+                            style="font-size: 14px;font-weight: bold;height: 35px;"></td>
+                        </tr>
+                      </thead>
+                      <tbody id="detail_surat_jalan_history_notif">
+                      </tbody>
+                    </table>
+                    <input type="hidden" id="detail_penjualan_id_notif_kirim" name="detail_penjualan_id_notif_kirim"
+                      required validated>
+                    <input type="hidden" id="detail_valid_notif_kirim" name="detail_valid_notif_kirim" required
+                      validated>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="padding: 5px;margin-top: 15px;">
+                <div class="col-50 text-left">
+                  <button onclick="UpdateValidNotifKirim(1);" style="width:100%;"
+                    class="btn-color-blueWhite button-small col button text-bold">VALID
+                  </button>
+                </div>
+                <div class="col-50 text-right" id="show_reject_element_kirim">
+                  <button style="width:100%;" data-popup=".update-valid-reject-kirim"
+                    class="card-color-red button-small col button text-bold popup-open">REJECT
+                  </button>
+                </div>
+                <div class="col-50 text-right" id="show_reset_reject_element_kirim">
+                  <button style="width:100%;" onclick="UpdateValidNotifKirim(2);"
+                    class="card-color-red button-small col button text-bold">REJECT
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup update-valid-reject-kirim">
+    <div class="view view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Keterangan Reject</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-update-valid-reject-kirim"
+                data-popup=".update-valid-reject-kirim"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <div class="list no-hairlines-md">
+                      <div class="list">
+                        <form id="">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <!-- <label style="height:17px; margin-top:-9px;"><b>Kategori</b></label> -->
+                                <div class="item-input-wrap">
+                                  <input type="text" class="" id="keterangan_valid_kirim" placeholder="Uraian"
+                                    name="keterangan_valid_kirim" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </form>
+                      </div>
+                      <div class="row" style="padding: 5px;margin-top:10px;">
+                        <button onclick="UpdateValidNotifRejectKirim();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup pengajuan-potongan-notif-popup">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Pengajuan Potongan</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p id="backbutton" class="text-add-colour-white link popup-close"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top bg-dark-gray-medium">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card">
+                    <div class="card-content" style="overflow-x:auto; width:100%;">
+                      <table cellspacing="1" cellpadding="1" width="100%">
+                        <thead class="bg-dark-gray-medium text-align-center">
+                          <tr>
+                            <th class="label-cell" style="border-bottom:1px solid gray;" width="32%">Type</th>
+                            <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">qty</th>
+                            <th class="label-cell" style="border-bottom:1px solid gray;" width="16%">Harga</th>
+                            <th class="label-cell" style="border-bottom:1px solid gray;" width="16%">Potongan</th>
+                            <th class="label-cell" style="border-bottom:1px solid gray;" width="16%">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-align-center" id="potongan_penjualan_notif">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup input-alamat-kirim-notif">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Alamat <span id="nama-client-alamat-notif"></span></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p id="back-input-alamat-kirim-notif" class="text-add-colour-white link popup-close"
+                data-popup=".input-alamat-kirim-notif">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <form id="input_alamat_kirim_notif_popup">
+            <div class="list" style="margin-top: 10px;">
+              <ul style="padding: 10px;">
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px;"><b>Foto Produksi Selesai</b></label>
+                    <div class="item-input-wrap">
+                      <center>
+                        <img onclick="zoom_view_foto_bayar(this.src);" width="200px"
+                          style="border-radius:10px;margin-top:5px;" id="file_foto_produksi_selesai_notif_view" />
+                        <br>
+                      </center>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="alamat_sekarang_notif_popup" name="alamat_sekarang_notif_popup" required
+                        readonly disabled validate>
+                      <input type="hidden" id="penjualan_id_notif_alamat" name="penjualan_id_notif_alamat" required
+                        validate>
+                      <input type="hidden" id="client_id_notif_alamat" name="client_id_notif_alamat" required validate>
+                      <input type="hidden" id="karyawan_id_notif_alamat" name="karyawan_id_notif_alamat" required
+                        validate>
+                      <input type="hidden" id="detail_valid_notif_shipment" name="detail_valid_notif_shipment" required
+                        validate>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Kota</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="kota_kirim_notif_popup" name="kota_kirim_notif_popup" required readonly
+                        disabled validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="hp_notif_alamat" name="hp_notif_alamat" required readonly disabled
+                        validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <textarea type="text" value="" id="alamat_kirim_notif_popup" readonly disabled
+                        name="alamat_kirim_notif_popup" required validate></textarea>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </form>
+          <div class="row" style="padding: 5px;margin-top: 15px;display: none;">
+            <div class="col-50 text-left">
+              <button onclick="UpdateValidNotifShipment(1);" style="width:100%;"
+                class="btn-color-blueWhite button-small col button text-bold">VALID
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reject_element_shipment">
+              <button style="width:100%;" data-popup=".update-valid-reject-shipment"
+                class="card-color-red button-small col button text-bold popup-open">REJECT
+              </button>
+            </div>
+            <div class="col-50 text-right" id="show_reset_reject_element_shipment">
+              <button style="width:100%;" onclick="UpdateValidNotifShipment(2);"
+                class="card-color-red button-small col button text-bold">REJECT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup update-valid-reject-shipment">
+    <div class="view view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Keterangan Reject</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-update-valid-reject-shipment"
+                data-popup=".update-valid-reject-shipment"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <div class="list no-hairlines-md">
+                      <div class="list">
+                        <form id="">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <!-- <label style="height:17px; margin-top:-9px;"><b>Kategori</b></label> -->
+                                <div class="item-input-wrap">
+                                  <input type="text" class="" id="keterangan_valid_shipment" placeholder="Uraian"
+                                    name="keterangan_valid_shipment" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </form>
+                      </div>
+                      <div class="row" style="padding: 5px;margin-top:10px;">
+                        <button onclick="UpdateValidNotifRejectShipment();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+    <!-- And somewhere in DOM -->
+
+    <div class="card">
+
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold proformaFilterMenuNotif clearFilterMenuNotif merah-performa"><a
+            class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');">Proforma</a>
+        </div>
+        <div class="col col-border text-bold salesFilterMenuNotif clearFilterMenuNotif merah-sales"><a
+            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('sales');">Sales</a>
+        </div>
+        <div class="col col-border text-bold bayarFilterMenuNotif clearFilterMenuNotif merah-bayar"><a
+            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('bayar');">Bayar</a>
+        </div>
+        <div class="col col-border text-bold shipmentFilterMenuNotifclearFilterMenuNotif merah-shipment "><a
+            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('shipment');">Shipment</a>
+        </div>
+        <div class="col col-border text-bold kirimFilterMenuNotifclearFilterMenuNotif merah-kirim "><a
+            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('kirim');">Kirim</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-100">
+          <div id="notif-proforma">
+            <div style="overflow-x:auto;width:100%;margin-top:5px;">
+              <table cellspacing="1" cellpadding="1" width="700px">
+                <thead class="bg-dark-gray-medium text-align-center">
+                  <tr>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="5%">
+                      No</th>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="12%">
+                      Tanggal</th>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="22%">
+                      Proforma</th>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="28%">
+                      Perusahaan</th>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="28%">
+                      Sales</th>
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" colspan="2"
+                      align="center" width="10%">Opsi</th>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="text-align-center" id="performa_notif_value">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="notif-sales">
+            <div style="overflow-x:auto; width:100%;margin-top:5px;">
+              <table align="center" width="600px" border="0" style="border-collapse: collapse; border:1px solid gray;">
+                <tr>
+                  <td align="center" width="5%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No</td>
+                  <td align="center" width="25%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">SPK</td>
+                  <td align="center" width="25%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Client</td>
+                  <td align="center" width="20%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Sales</td>
+                  <!-- <td align="center" width="8%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">PO</td> -->
+                  <!-- <td align="center" width="8%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Kota</td> -->
+                  <td align="left" width="8%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Wilayah</td>
+                  <td align="center" width="8%" colspan="2"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">OPSI</td>
+                </tr>
+                <tbody id="data_status_notif_manager">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="notif-bayar">
+            <div style="overflow-x:auto; width:100%;margin-top:5px;">
+              <table align="center" width="900px" border="0" style="border-collapse: collapse; border:1px solid gray;">
+                <tr>
+                  <td align="center" width="5%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No</td>
+                  <td align="center" width="11%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Tanggal</td>
+                  <td align="center" width="18%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">SPK</td>
+                  <td align="center" width="14%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Client</td>
+                  <td align="center" width="13%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Sales</td>
+                  <td align="center" width="13%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Jumlah</td>
+                  <td align="center" width="18%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Keterangan</td>
+                  <td align="center" width="4%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Bukti</td>
+                  <!-- <td align="center" width="4%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">OPSI</td> -->
+                </tr>
+                <tbody id="data_status_notif_bayar_manager">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="notif-kirim">
+            <div style="overflow-x:auto; width:100%;margin-top:5px;">
+              <table align="center" width="900px" border="0" style="border-collapse: collapse; border:1px solid gray;">
+                <tr>
+                  <td align="center" width="5%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Tgl Kirim</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">SPK</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Client</td>
+                  <td align="center" width="18%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No SJ</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Plat</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Kendaraan</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Pengirim</td>
+                  <td align="center" width="12%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Opsi</td>
+                  <!-- <td align="center" width="8%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">PO</td>
+                  <td align="center" width="8%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">OPSI</td> -->
+                </tr>
+                <tbody id="data_status_notif_kirim_manager">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="notif-shipment">
+            <div style="overflow-x:auto; width:100%;margin-top:5px;">
+              <table align="center" width="1000px" border="0" style="border-collapse: collapse; border:1px solid gray;">
+                <tr>
+                  <td align="center" width="5%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">SPK</td>
+                  <td align="center" width="15%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Client</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Kota</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Tgl Kirim</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Tgl Req Kirim</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">No HP</td>
+                  <td align="center" width="20%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Alamat Kirim</td>
+                  <td align="center" width="10%"
+                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                    class="label-cell bg-dark-gray-young">Opsi</td>
+                </tr>
+                <tbody id="data_status_notif_shipment_manager">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

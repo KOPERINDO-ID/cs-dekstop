@@ -75,7 +75,7 @@ function checkInternet() {
 			console.log(data.password);
 			console.log(localStorage.getItem("password"));
 			if (localStorage.getItem("password") == data.password) {
-				console.log('Password Accept')
+				console.log('Password Accept');
 			} else {
 				app.dialog.alert('Password Anda Tidak Sesuai', function () {
 					logOut();
@@ -99,6 +99,63 @@ function checkInternet() {
 	});
 }
 
+
+
+function getPlayAudio() {
+	jQuery.ajax({
+		type: 'POST',
+		url: "" + BASE_API + "/get-count-status-cs-notif-view",
+		dataType: 'JSON',
+		data: {
+			lokasi_pabrik: localStorage.getItem("lokasi_pabrik_sales"),
+		},
+		beforeSend: function () {
+		},
+		success: function (data) {
+
+			if (data.data_count_all > 0) {
+				var audio = new Audio('img/sound/audio.wav');
+				audio.play();
+				setTimeout(() => {
+					audio.pause();
+					audio.currentTime = 0; // Mengatur ulang waktu audio ke awal
+					console.log('Audio berhenti.');
+				}, 20000);
+				$$('.merah-notif-all').removeClass("card-color-red-important");
+				$$('.merah-notif-all').addClass("card-color-red-important");
+			} else {
+				$$('.merah-notif-all').removeClass("card-color-red-important");
+			}
+
+		},
+		error: function (xmlhttprequest, textstatus, message) {
+		}
+	});
+}
+function getNotifRed() {
+	jQuery.ajax({
+		type: 'POST',
+		url: "" + BASE_API + "/get-count-status-cs-notif-view",
+		dataType: 'JSON',
+		data: {
+			lokasi_pabrik: localStorage.getItem("lokasi_pabrik_sales"),
+		},
+		beforeSend: function () {
+		},
+		success: function (data) {
+
+			if (data.data_count_all > 0) {
+				$$('.merah-notif-all').removeClass("card-color-red-important");
+				$$('.merah-notif-all').addClass("card-color-red-important");
+			} else {
+				$$('.merah-notif-all').removeClass("card-color-red-important");
+			}
+
+		},
+		error: function (xmlhttprequest, textstatus, message) {
+		}
+	});
+}
 
 function inputLog(id_transaksi, jenis, keterangan) {
 	jQuery.ajax({
@@ -239,3 +296,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 setInterval(function () {
 	checkInternet();
 }, 8000);
+
+setInterval(function () {
+	getPlayAudio();
+	getNotifAllRed();
+}, 300000);

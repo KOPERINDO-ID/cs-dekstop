@@ -1,0 +1,248 @@
+<div class="page" data-name="penjualan_input" class="theme-dark">
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <div class="popup detail-performa">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail Proforma</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content card-content-padding">
+                <div class="row">
+                  <div class="col-100">
+                    <h2 class="text-add-colour-white text-align-center margin-10" style="margin-bottom: 0;">
+                      Detail Proforma
+                    </h2>
+                    <div class="card data-table" id="performa_data">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+    <!-- And somewhere in DOM -->
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white backToSales" 
+            href="/Sales">Sales</a>
+        </div>
+      </div>
+    </div>
+    <div class="list no-hairlines-md margin-3">
+      <ul>
+        <form id="penjualan_form">
+          <input id="count_performa" name="count_performa" type="hidden" value="1" />
+          <input id="jenis_penjualan" name="jenis_penjualan" value="performa" type="hidden" />
+          <input class="performa-input" id="performa" name="performa" placeholder="Masukan Kode Performa" type="hidden"
+            required validate>
+          <br>
+          <div id="penjualan_performa_get">
+          </div>
+          <ul
+            style="background-color:#1c1c1d; border-radius:2px;padding-left: 0px; margin:15px; border:1px solid gray; ">
+            <li>
+              <div class="item-input-wrap">
+                <a class="item-link smart-select smart-select-init" data-searchbar="true"
+                  data-searchbar-placeholder="Cari Provinsi" data-open-in="popup" data-close-on-select="true"
+                  style="width: 100%;">
+                  <select name="provinsi_multiple" id="provinsi_multiple" required validate
+                    onchange="selectBoxKotaMultiple();">
+                  </select>
+                  <div class="item-content" style="float:left;width:96%;">
+                    <div class="item-inner">
+                      <div class="item-after item_after_provinsi_multiple"
+                        style="font-size:16px;margin-top:7px;margin-left: -4px;float:left; color:grey;">
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="item-input-wrap">
+                <a class="item-link smart-select smart-select-init" data-searchbar="true"
+                  data-searchbar-placeholder="Cari Kota" data-open-in="popup" data-close-on-select="true"
+                  style="width: 100%;">
+                  <select name="kota_multiple" id="kota_multiple" required validate>
+                  </select>
+                  <div class="item-content" style="float:left;width:96%;">
+                    <div class="item-inner">
+                      <div class="item-title item_title_kota_multiple" style="margin-left: 3px;color: grey;">KOTA</div>
+                      <div class="item-after item_after_kota_multiple"
+                        style="font-size:16px;margin-top:7px;margin-left: -3px;float:left; color:grey;">
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input placeholder="DEPOSIT" name="pembayaran_dp_akhir" id="pembayaran_dp_akhir"
+                    class="text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="text" required
+                    validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <li class="margin-6">
+              <div class="item-input-wrap">
+                <a style="width:98%;" class="item-link smart-select smart-select-init" data-open-in="popup"
+                  data-searchbar="true" data-searchbar-placeholder="Pilih Bank">
+                  <select class="performa-input input-item-bank" id="bank_1" name="bank_1" required validate>
+                    <option value="">Bank</option>
+                    <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                    <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                    <option value="Mandiri" selected>Mandiri (1410005187422 A/N Sutono)</option>
+                    <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)</option>
+                    <option value="Tunai">Tunai</option>
+                  </select>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div style="width:100%; width:100%; margin-bottom:-10px;">
+                        <div style="margin-left:-7px; float:left; font-size:16px;" class="item-after title_select_bank">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="item-content item-input" style="height:65px;">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <div class="row">
+                    <div class="col-35" style=" padding-top:5px;">
+                      <label for="file_foto_pembayaran_dp" style="width: 100%;"
+                        class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Foto
+                        Bayar
+                      </label>
+                      <input id="file_foto_pembayaran_dp" onchange="getFileNameMultiple(this);"
+                        name="file_foto_pembayaran_dp" style="visibility:hidden;" type="file">
+
+                    </div>
+                    <div class="col-65">
+                      <input type="text" id="foto_upload_multiple_name" name="foto_upload_multiple_name" value=""
+                        required validate>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+          <br>
+          <h3 id="title_1" class="title-performa" style="margin-left:15px; margin-top:-25px;">
+            Sales #1</h3>
+          <ul id="performa_1" class="performa_group_field_count"
+            style="background-color:#1c1c1d; border-radius:2px; margin:15px; border:1px solid gray; ">
+
+            <li class="item-content item-input margin-5">
+              <a class="add_kode_performa_1_1 f7-icons" onclick="addKodePerformaPenjualan(1,1);"
+                style="float:right; font-size:39px; margin-left:-60px; margin-right:19px; color:forestgreen;">bag_fill_badge_plus</a>
+              <div class="item-inner" style="height:8px; Width:126px;">
+                <div class="item-input-wrap">
+                  <input placeholder="Kode" name="kode_content_1_1" id="kode_content_1_1"
+                    class="kode_content_1 text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                    type="text" required validate>
+                </div>
+              </div>
+              <div class="item-inner" style="height:8px;  Width:140px;">
+                <div class="item-input-wrap">
+                  <input placeholder="Qty" name="qty_1_1" id="qty_1_1" onchange="checkPrice(value,1,1)"
+                    class="qty_1 text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="number"
+                    required validate>
+                </div>
+              </div>
+              <div class="item-inner" style="height:8px;">
+                <div class="item-input-wrap">
+                  <input style="width:100%;" placeholder="Total" name="sub_harga_1_1" id="sub_harga_1_1"
+                    class="sub_harga_1 text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="text"
+                    value="0" readonly>
+                </div>
+              </div>
+            </li>
+            <div id="kode_content_1_html"> </div>
+
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <label style="margin-top:-9px; height:17px;"><b>Biaya Kirim<span style="color:red;font-size:12px;">
+                      *Optional</span></b></label>
+                <div class="item-input-wrap">
+                  <input id="biaya_kirim_multiple_1" value="0"
+                    class="performa-input textbox-n input-item-biaya-kirim-multiple  biaya_kirim_multiple_number"
+                    type="text" name="biaya_kirim_multiple_1">
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <label style="margin-top:-9px; height:17px;"><b>Tanggal Order</b></label>
+                <div class="item-input-wrap">
+                  <input placeholder="Tanggal Pemesanan" id="tanggal_pemesanan_1"
+                    class="performa-input textbox-n input-item-tanggal-pemesanan" type="date" name="tanggal_pemesanan_1"
+                    readonly required validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input margin-3">
+              <div class="item-inner">
+                <label style="margin-top:-15px; height:17px;"><b>Tanggal Kirim</b></label>
+                <div class="item-input-wrap">
+                  <input placeholder="Tanggal Kirim" id="tanggal_kirim_1"
+                    class="performa-input textbox-n input-item-tanggal-kirim" type="date" name="tanggal_kirim_1"
+                    required validate>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+              <a id="add_performa" onclick="addPerformaPenjualan();"
+                style="float:right; font-size:39px; margin-right:10px; color:forestgreen;"
+                class="add_performa f7-icons">plus_rectangle_fill_on_rectangle_fill</a>
+            </li>
+            <input name="penjualan_total_1" id="penjualan_total_1" value=""
+              class="penjualan_total_1 omset_total text-bold" type="hidden" required validate>
+            <input name="qty_total_1" id="qty_total_1" value="" class="qty_total_1 sum_qty text-bold" type="hidden"
+              required validate>
+            <input name="count_kode_1" id="count_kode_1" value="1"
+              class="count_kode_1 text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="hidden"
+              required validate>
+          </ul>
+          <div class="performa_group_field">
+          </div>
+        </form>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <center>
+                <button onclick="penjualanProcess();"
+                  style="display:none; width:45%; font-size:16px; height:42px; width: 45%;"
+                  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                  id="penjualan_save">Simpan
+                </button>
+              </center>
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

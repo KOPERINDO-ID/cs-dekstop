@@ -350,18 +350,28 @@ function shipmentNotif(penjualan_id) {
             var client_nama = "";
             var hp_alamat = "";
             var client_kota = "";
+			var tgl_kirim_cabang = "";
+			var keterangan_cabang = "";
             if (data.data != null) {
                 alamat_client = data.data.client_alamat;
                 alamat_kirim = data.data.alamat_kirim_penjualan;
                 client_nama = data.data.client_nama;
                 hp_alamat = data.data.client_telp;
                 client_kota = data.data.client_kota;
+				if (data.data.tgl_kirim_cabang != null) {
+					tgl_kirim_cabang = moment(data.data.tgl_kirim_cabang).format('YYYY-MM-DD');
+				} else {
+					tgl_kirim_cabang = '';
+				}
+				keterangan_cabang = data.data.keterangan_cabang;
             } else {
                 alamat_client = '-';
                 alamat_kirim = '-';
                 client_nama = '-';
                 hp_alamat = '-';
                 client_kota = '-';
+				tgl_kirim_cabang = '';
+				keterangan_cabang = '';
             }
 
             if (data.data.valid_shipment != 2) {
@@ -382,6 +392,8 @@ function shipmentNotif(penjualan_id) {
                 jQuery('#file_foto_produksi_selesai_notif_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
             }
             $$('#hp_notif_alamat').val(hp_alamat);
+			$$('#tgl_kirim_cabang_notif').val(tgl_kirim_cabang);
+			$$('#keterangan_cabang_notif').val(keterangan_cabang);
         },
         error: function (xmlhttprequest, textstatus, message) {
         }
@@ -889,10 +901,21 @@ function getPerformaHeaderNotifPenjualan() {
                 $.each(data.data, function (i2, item2) {
                     no++
                     if (item2.valid_cs == 2) {
-                        var btn_valid = 'card-color-red';
+                        color_tr = 'red';
+                        if (data.potongan[item2.performa_header_id] != 0) {
+                            var btn_valid = 'card-color-red';
+                        } else {
+                            var btn_valid = 'card-color-red';
+                        }
                     } else {
-                        var btn_valid = 'text-add-colour-black-soft bg-dark-gray-young';
+                        color_tr = '';
+                        if (data.potongan[item2.performa_header_id] != 0) {
+                            var btn_valid = 'card-color-red';
+                        } else {
+                            var btn_valid = 'text-add-colour-black-soft bg-dark-gray-young';
+                        }
                     }
+
                     if (data.potongan[item2.performa_header_id] != 0) {
                         var btn_potongan = 'card-color-red';
                     } else {
@@ -915,15 +938,18 @@ function getPerformaHeaderNotifPenjualan() {
                         performa_value += '<td class="label-cell text-align-left" style=" background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
                         performa_value += '' + item2.karyawan_nama + '';
                         performa_value += '</td>';
+                        performa_value += '<td class="label-cell text-align-left" style=" background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
+                        performa_value += '' + number_format(item2.total_performa) + '';
+                        performa_value += '</td>';
                         // performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
                         // performa_value += '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\');" src="img/logo/donwloadproforma.png" width="80px" />';
                         // performa_value += '</td>';
                         performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
-                        performa_value += '   <button  class="' + btn_valid + ' button-small col button popup-open text-bold" data-popup=".detail-proforma-notif-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + item2.valid_cs + '\');">Detail</button>';
+                        performa_value += '   <button  class="' + btn_valid + '  button-small col button popup-open text-bold" data-popup=".detail-proforma-notif-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + item2.valid_cs + '\');">Detail</button>';
                         performa_value += '</td>';
-                        performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
-                        performa_value += '   <button  class="' + btn_potongan + ' button-small col button popup-open text-bold" data-popup=".pengajuan-potongan-notif-popup" onclick="potonganPenjualanNotif(\'' + item2.performa_header_id + '\',\'' + item2.status + '\');">Potongan</button>';
-                        performa_value += '</td>';
+                        // performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
+                        // performa_value += '   <button  class="' + btn_potongan + ' button-small col button popup-open text-bold" data-popup=".pengajuan-potongan-notif-popup" onclick="potonganPenjualanNotif(\'' + item2.performa_header_id + '\',\'' + item2.status + '\');">Potongan</button>';
+                        // performa_value += '</td>';
                         // performa_value += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
                         // performa_value += '   <label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateStatusNotifPerforma(\'' + item2.performa_header_id + '\',1);">eye</i></label>';
                         // performa_value += '</td>';
@@ -1248,6 +1274,14 @@ function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, clie
                         var path_image = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
                     }
 
+                    if (val.potongan_price != 0) {
+                        var potongan = '<span style="font-weight:bold;color:red;">' + number_format(val.potongan_price) + '<span>';
+                        var potongan_total = '<span style="font-weight:bold;color:red;">' + number_format(parseFloat(val.potongan_price) * parseFloat(val.qty)) + '<span>';
+                    } else {
+                        var potongan = '';
+                        var potongan_total = '';
+                    }
+
                     proforma_data += '		<tr>';
                     proforma_data += '			<td width="30%" class="label-cell text-align-left" style="border-top: solid 1px; border-left: solid 1px; "><center>' + val.jenis + '<br><img src="' + path_image + '/' + val.gambar + '" width="70%"></center></td>';
                     proforma_data += '			<td width="20%" class="label-cell" align="left" style="border-top: solid 1px; white-space: pre;">SPESIFIKASI<br>' + val.spesifikasi + '<br>' + ket_item + '</td>';
@@ -1255,10 +1289,10 @@ function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, clie
                     proforma_data += '					<center>' + val.qty + '</center>';
                     proforma_data += '				</td>';
                     proforma_data += '				<td width="20%" class="label-cell" style="border-top: solid 1px; border-left: solid 1px;">';
-                    proforma_data += '					<center>' + number_format(val.price) + '</center>';
+                    proforma_data += '					<center>' + number_format(val.price) + '<br>' + potongan + '</center>';
                     proforma_data += '				</td>';
                     proforma_data += '				<td width="20%" colspan="2" class="label-cell text-align-center" style="border-top:  solid 1px; border-right: solid 1px; border-left: solid 1px;">';
-                    proforma_data += '					<center>' + number_format(val.total) + '</center>';
+                    proforma_data += '					<center>' + number_format(val.total) + '<br>' + potongan_total + ' </center > ';
                     proforma_data += '				</td>';
                     proforma_data += '			</tr>';
 
@@ -1452,14 +1486,14 @@ function spkPoNotifSales(penjualan_id_primary, performa_id_relation, performa_he
     var tipe_grosir = "";
 
     if (extra != 1) {
-		header_koper = 'INDOKOPER';
-		header_web = '';
-		tipe_grosir = "Grosir"
-	} else {
-		header_koper = 'KOPERINDO';
-		header_web = 'www.koperindo.id';
-		tipe_grosir = "Xtra"
-	}
+        header_koper = 'INDOKOPER';
+        header_web = '';
+        tipe_grosir = "Grosir"
+    } else {
+        header_koper = 'KOPERINDO';
+        header_web = 'www.koperindo.id';
+        tipe_grosir = "Xtra"
+    }
     jQuery.ajax({
         type: 'POST',
         url: "" + BASE_API + "/spk-po-manager",

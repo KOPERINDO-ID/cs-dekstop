@@ -5,12 +5,108 @@ var routes = [
     url: './index.html',
   },
   {
+    path: '/sales',
+    url: './pages/penjualan.html',
+  },
+  {
+    path: '/client',
+    url: './pages/client.html',
+  },
+  {
     path: '/notif',
     url: './pages/notif.html',
   },
   {
+    path: '/kpi',
+    url: './pages/kpi.html',
+  },
+  {
+    path: '/kpi_broadcast',
+    url: './pages/kpi_broadcast.html',
+  },
+  {
+    path: '/log',
+    url: './pages/log.html',
+  },
+  {
+    path: '/tools',
+    url: './pages/tools.html',
+  },
+  {
+    path: '/share_link',
+    url: './pages/share_link.html',
+  },
+  {
+    path: '/point-sales',
+    url: './pages/point_sales.html',
+  },
+  {
+    path: '/point-produksi',
+    url: './pages/point_produksi.html',
+  },
+  {
+    path: '/history-point-produksi',
+    url: './pages/history_point_produksi.html',
+  },
+  {
+    path: '/point-admin',
+    url: './pages/point_admin.html',
+  },
+  {
+    path: '/history-point-admin',
+    url: './pages/history_point_admin.html',
+  },
+  {
+    path: '/point-sj',
+    url: './pages/point_sj.html',
+  },
+  {
+    path: '/history-point-sj',
+    url: './pages/history_point_sj.html',
+  },
+  {
     path: '/login',
     url: './pages/login.html',
+  },
+  {
+    path: '/surat_jalan',
+    url: './pages/surat_jalan.html',
+  },
+  {
+    path: '/absen-sales',
+    url: './pages/absen_sales.html',
+  },
+  {
+    path: '/data-gaji-sales',
+    url: './pages/data_gaji_sales.html',
+  },
+  {
+    path: '/penjualan-input-single',
+    url: './pages/penjualan_input_single.html',
+  },
+  {
+    path: '/penjualan-input',
+    url: './pages/penjualan_input.html',
+  },
+  {
+    path: '/katalog',
+    url: './pages/katalog.html',
+  },
+  {
+    path: '/detail-product',
+    url: './pages/detail_product.html',
+  },
+  {
+    path: '/kunjungan-sales',
+    url: './pages/kunjungan_sales.html',
+  },
+  {
+    path: '/kunjungan',
+    url: './pages/kunjungan.html',
+  },
+  {
+    path: '/prospek',
+    url: './pages/prospek.html',
   },
   {
     path: '/form/',

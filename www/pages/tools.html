@@ -1,0 +1,202 @@
+<div class="page" data-name="tools" class="">
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+    <!-- And somewhere in DOM -->
+
+    <div class="popup edit-tools-broadcast-popup">
+      <div class="view view-init">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Edit Tools Marketing</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" id="back-edit-tools-broadcast-popup"
+                  data-popup=".edit-tools-broadcast-popup"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+                      <div class="list no-hairlines-md">
+                        <div class="list">
+                          <form id="form_edit_tools_broadcast" novalidate>
+                            <ul>
+                              <li class="item-content item-input">
+                                <ul style="padding-left: 0px;">
+                                  <li>
+                                    <label class="item-radio item-radio-icon-start item-content">
+                                      <input type="radio" name="radio_file" id="radio-gambar" value="Gambar"
+                                        onchange="pilihRadioFile('Gambar');" />
+                                      <i class="icon icon-radio"></i>
+                                      <div class="item-inner" style="padding-top: 13px;">
+                                        <div class="item-title">Gambar</div>
+                                      </div>
+                                    </label>
+                                  </li>
+                                  <li>
+                                    <label class="item-radio item-radio-icon-start item-content">
+                                      <input type="radio" name="radio_file" id="radio-video" value="Video"
+                                        onchange="pilihRadioFile('Video');" />
+                                      <i class="icon icon-radio"></i>
+                                      <div class="item-inner" style="padding-top: 13px;">
+                                        <div class="item-title">Video</div>
+                                      </div>
+                                    </label>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li class="item-content item-input" id="element_gambar">
+                                <div class="item-inner" style="padding-top: 20px;">
+                                  <label style="height:17px; margin-top:-9px;margin-bottom: 5px;"><b>Gambar</b></label>
+                                  <div class="item-input-wrap">
+                                    <div class="row">
+                                      <div class="col-100 text-align-center">
+                                        <img id="view_gambar_broadcast" onclick="zoom_view(this.src);" width="300"
+                                          height="300">
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-50 text-align-right">
+                                        <label for="edit_foto_broadcast" id="value_edit_foto_broadcast"
+                                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">
+                                          Pilih Gambar
+                                        </label>
+                                        <input onchange="gambarBroadcast();" style="display:none;"
+                                          id="edit_foto_broadcast" type="file" name="edit_foto_broadcast"
+                                          class="clear_edit_tools_broadcast" accept="image/*;capture=camera" />
+                                      </div>
+                                      <div class="col-50 text-align-left">
+                                        <label onclick="removeGambarBroadcast();" style="width:100%;"
+                                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Hapus
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input" id="element_video">
+                                <div class="item-inner" style="padding-top: 20px;">
+                                  <label style="height:17px; margin-top:-9px;margin-bottom: 5px;"><b>Video</b></label>
+                                  <div class="item-input-wrap">
+                                    <div class="row">
+                                      <div class="col-100 text-align-center">
+                                        <video width="300" id="head_video_broadcast" controls="controls"
+                                          preload="metadata">
+                                          <source id="view_video_broadcast" type="video/mp4">
+                                        </video>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-50 text-align-right">
+                                        <label for="edit_video_broadcast" id="value_edit_video_broadcast"
+                                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">
+                                          Pilih Video
+                                        </label>
+                                        <input onchange="videoBroadcast(this);" style="display:none;"
+                                          id="edit_video_broadcast" type="file" name="edit_video_broadcast"
+                                          class="clear_edit_tools_broadcast" accept="video/*;capture=camera" />
+                                      </div>
+                                      <div class="col-50 text-align-left">
+                                        <label onclick="removeVideoBroadcast();" style="width:100%;"
+                                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Hapus
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-top: 20px;">
+                                  <label style="height:17px; margin-top:-9px;"><b>Pesan</b></label>
+                                  <div class="item-input-wrap">
+                                    <textarea class="clear_edit_tools_broadcast" id="edit_tools_pesan_broadcast"
+                                      name="edit_tools_pesan_broadcast" placeholder="Pesan"></textarea>
+                                    <input type="hidden" id="edit_tools_marketing_id" name="edit_tools_marketing_id" />
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </form>
+                        </div>
+                      </div>
+                      <div style="padding: 5px;">
+                        <button onclick="updateToolsMarketing();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                          id="edit_tools_button_save">SIMPAN
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales"
+            href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+            href="/client">Broadcast</a>
+        </div>
+        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
+            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        </div>
+        <div class="col col-border text-bold  bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/tools">Tools</a>
+        </div>
+        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
+      </div>
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold  bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/tools">Marketing</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/share_link">Share Link</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-100">
+          <div class="card border-actived" style="margin-top: 4px;">
+            <div class="card-header bg-dark-gray-young" style="padding-left:5px ;">
+              <div class="data-table-title" style="height:2px; margin-left:6px;">
+                <h3 class="margin-15">Tools Marketing
+                  <!-- | <i id="total_data_tools"> </i> -->
+                </h3>
+              </div>
+            </div>
+            <div class="card-content" style="overflow-x:auto;width:100%;">
+              <table cellspacing="1" cellpadding="1" width="100%">
+                <thead class="bg-dark-gray-medium text-align-center">
+                  <tr>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="4%">No</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="6%">Pesan</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Status</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Opsi</th>
+                  </tr>
+                </thead>
+                <tbody class="text-align-center" id="tools_broadcast_value">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

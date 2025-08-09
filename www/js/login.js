@@ -37,7 +37,7 @@ function getDataUser() {
 				console.log(localStorage.getItem("jabatan_kantor"));
 
 				if (data.user_position == 'CS') {
-					return app.views.main.router.navigate('/notif');
+					return app.views.main.router.navigate('/sales');
 				} else {
 					app.dialog.preloader('Jabatan Tidak Sesuai');
 					setTimeout(function () {

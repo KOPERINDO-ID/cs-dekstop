@@ -1,0 +1,497 @@
+<div class="page" data-name="data-gaji-sales" class="">
+  <!-- Scrollable page content-->
+
+  <div class="page-content theme-dark">
+    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+    <!-- And somewhere in DOM -->
+
+    <div class="popup tanggal-akhir-sales-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Confirm Gaji</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" data-popup=".tanggal-akhir-sales-popup"><i
+                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+                      <div class="list no-hairlines-md">
+                        <div class="list">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner" style="padding-top: 20px;">
+                                <label style="height:17px; margin-top:-9px;"><b>Tanggal Akhir</b></label>
+                                <div class="item-input-wrap">
+                                  <label></label>
+                                  <input type="date" id="tanggal_akhir_gaji_sales_confirm"
+                                    name="tanggal_akhir_gaji_sales_confirm" placeholder="Tanggal Akhir" required
+                                    validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-content item-input">
+                              <div class="item-inner" style="padding-top: 20px;" id="formdata-append">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div style="padding: 5px;">
+                        <button onclick="openCameraAbsenSales();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                          id="tanggal_akhir_button_save">CONFIRM
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup bukti-gaji-sales">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Foto Bukti Gaji</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" data-popup=".bukti-gaji-sales"><i
+                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+
+                      <table align="center" width="100%">
+                        <tr>
+                          <td>
+                            <center>
+                              <h3>Foto Bukti Gaji</h3>
+                            </center>
+
+                            <center>
+                              <img onclick="zoom_view(this.src);" width="100px" style="border-radius:10px;"
+                                id="file_foto_view_now_sales" />
+                              <br>
+                            </center>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup detail-data-gaji-sales">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail Gaji <span id="karyawan-nama-detail-gaji-sales"></span></div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" style="width: 50px;height: 50px;"><i
+                    style="margin-right:5px;font-size: 34px;" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top bg-dark-gray-medium">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card" id="fill_Detail_Gaji_sales">
+                      <div class="card-content" style="width:100%;">
+                        <table width="100%">
+                          <tr>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;">
+                              Foto Masuk</td>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Foto Keluar</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;">
+                              <img width="100%" onclick="zoom_view(this.src);" id="image-data-masuk-sales"
+                                style="display: block;margin-top:10px;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                            </td>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              <img width="100%" onclick="zoom_view(this.src);" id="image-data-keluar-sales"
+                                style="display: block;margin-top:10px;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;">
+                              Lokasi Masuk</td>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Lokasi Keluar</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;"
+                              id="map-masuk-sales">
+
+                            </td>
+                            <td
+                              style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;"
+                              id="map-keluar-sales">
+
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="card-content" style="width:100%;">
+                        <table align="center" width="100%" border="0"
+                          style="border-collapse: collapse; border:1px solid white;">
+                          <thead>
+                            <tr>
+                              <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Tanggal
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="tanggal_gaji_detail_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Jam Masuk
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="jam_masuk_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Jam Keluar
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="jam_keluar_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Gaji
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="gaji_pokok_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" width="25%" class="numeric-cell text-align-left">Potongan
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="potongan_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <!-- <tr>
+                              <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Tunjangan
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="tunjangan_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr> -->
+                            <tr>
+                              <td colspan="3" width="25%" class="numeric-cell text-align-left">TOTAL
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="total_gaji_detail_gaji_sales" class="numeric-cell text-align-right">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" width="25%" class="numeric-cell text-align-left">Status
+                              </td>
+                              <td width="21%" class="numeric-cell text-align-right">:</td>
+                              <td width="45%" id="status_terlambat_detail_gaji_sales"
+                                class="numeric-cell text-align-right">
+                                Terlambat</td>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup color-info-gaji-sales">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+              <div class="title">Informasi</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" data-popup=".color-info-gaji-sales"
+                  style="width: 50px;height: 50px;"><i style="margin-right:5px;font-size: 34px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top bg-dark-gray-medium">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card">
+                      <div class="card-content" style="width:100%;">
+                        <table width="100%">
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: center;border-top: 1px solid grey;border-bottom: 1px solid grey;border-left: 1px solid grey;background-color: navy;">
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-top: 1px solid grey;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Sudah Absen Masuk Dan Keluar</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;background-color: orange;">
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Belum Absen Keluar</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;background-color: red;">
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Absen Di Tolak</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;">
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Belum di Validasi</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;">Jam Masuk
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;" id="info-jam-masuk-sales">
+                              </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;">Jam Pulang
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;" id="info-jam-pulang-sales">
+                              </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;">Telat Sampai 5 Menit
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Gaji di potong 5000</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;">Telat Sampai 20 Menit
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Gaji di potong 20.000</td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="width: 30%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;">Telat Lebih 20 Menit
+                            </td>
+                            <td
+                              style="width: 70%;text-align: left;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                              Tidak di Gaji</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold  bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/absen-sales">Absensi</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/prospek">Prospek</a></div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-100 text-align-center">
+          <h2 style="margin: 0px;" id="nama_absen"></h2>
+        </div>
+        <div class="col-100">
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <table cellspacing="0" cellpadding="1" style="width:100%;">
+                <thead class="bg-dark-gray-medium">
+                  <th class="label-cell" style="width:12%;text-align:center;border-right: 1px solid grey;">
+                    Gaji</th>
+                  <th class="label-cell" style="width:12%;text-align:center;border-right: 1px solid grey;">
+                    Disiplin</th>
+                  <th class="label-cell" style="width:12%;text-align:center;">
+                    Total Gaji</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="border-left: 1px solid grey;border-bottom:  1px solid grey;text-align: center;">
+                      <span id="total-data-gaji-sales">0</span>
+                    </td>
+                    <td style="border-left: 1px solid grey;border-bottom:  1px solid grey;text-align: center;">
+                      <span id="disiplin-value-sales">0</span>
+                    </td>
+                    <td
+                      style="border-left: 1px solid grey;border-bottom:  1px solid grey;border-right: 1px solid grey;text-align: center;">
+                      <span id="grand-total-gaji-sales">0</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-100">
+          <div class="item-content item-input">
+            <div class="item-inner" id="btnConfirmGajiSales" style="display: none;">
+              <label for="bukti_gaji_sales" id="value_bukti_gaji_sales" onclick="clearDateAbsenSales();"
+                data-popup=".tanggal-akhir-sales-popup"
+                style="width:100%;background-color: lightgrey;margin-left: auto;margin-right:auto;"
+                class="text-add-colour-black-soft bg-dark-gray-young button-large col popup-open button text-bold custom-file-upload">
+                CONFIRM
+              </label>
+              <!-- <input onchange="confirmGajiSales();" style="display:none;" type="file" name="bukti_gaji_sales" id="bukti_gaji_sales"
+                accept="image/*;capture=camera" required validate /> -->
+            </div>
+            <div class="item-inner" id="btnBuktiDataGajiSales" style="display: none;">
+              <button class="btn-color-blueWhite button-large col button text-bold popup-open"
+                style="width:100%;margin-left: auto;margin-right:auto;" data-popup=".bukti-gaji-sales"
+                onclick="buktiGajiSales();">Bukti</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-100">
+          <div>
+            <table cellspacing="0" cellpadding="1" style="border-color:gray;width:100%;">
+              <tr class="bg-dark-gray-young">
+                <th style="padding:4px;" align="left" width="20%">
+                  <div id="count_day_total_sales" style="margin-left: 12px;font-size: 20px;"></div>
+                </th>
+                <!-- <th align="right" width="20%">
+                  <table id="check-disiplin" style="margin-left:-79px;padding-left: 65px;">
+                    <tr>
+                      <td>
+                        <input style="height: 25px; width: 25px;" onchange="getValueTotal()" type="checkbox"
+                          name="bonus-disiplin" id="bonus-disiplin" value="1" />
+                      </td>
+                      <td>
+                        <label>DISIPLIN</label>
+                      </td>
+                    </tr>
+                  </table> -->
+                </th>
+                <th width="20%">
+                  <i class="text-align-right f7-icons" onclick="backToabsensiSales();"
+                    style="font-size:30px; color:white; margin-right:-17px;">arrow_2_circlepath_circle_fill</i>
+                </th>
+                <th width="20%">
+                  <i class="text-align-right f7-icons popup-open" data-popup=".color-info-gaji-sales" onclick="getDataKaryawanShiftSales();"
+                    style="font-size:30px; color:white; margin-right:-18px;">info_circle</i>
+                </th>
+                <th style="padding-right:10px;" align="right" width="20%">
+                  <i class="text-align-right f7-icons" onclick="downloadPdfGajiSales();"
+                    style="font-size:30px; color:white; margin-right:-9px;padding: 5px;">arrow_down_doc_fill</i>
+                </th>
+              </tr>
+            </table>
+          </div>
+          <div style="overflow-x:auto;width: 100%;">
+            <table cellspacing="0" cellpadding="1" style="width:550px;">
+              <thead class="bg-dark-gray-medium">
+                <th class="label-cell"
+                  style="width:7%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center;">
+                  No</th>
+                <th class="label-cell"
+                  style="width:15%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                  Tanggal</th>
+                <th class="label-cell"
+                  style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                  Gaji</th>
+                <th class="label-cell"
+                  style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                  Potongan</th>
+                <th class="label-cell"
+                  style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                  Prospek</th>
+                <th class="label-cell"
+                  style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                  Total</th>
+                <th class="label-cell"
+                  style="width:12%;border-left: 1px solid grey;border-right: 1px solid grey;border-top: 1px solid grey;border-bottom: 1px solid grey;text-align:center">
+                  Detail</th>
+              </thead>
+              <tbody id="tabel_data_gaji_sales">
+
+              </tbody>
+            </table>
+
+            <input type="hidden" name="tanggal_awal_gaji_sales" id="tanggal_awal_gaji_sales" />
+            <input type="hidden" name="tanggal_akhir_gaji_sales" id="tanggal_akhir_gaji_sales" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

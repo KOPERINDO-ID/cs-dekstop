@@ -1,0 +1,452 @@
+<div class="page" data-name="prospek" class="theme-dark">
+    <!-- Scrollable page content-->
+
+    <div class="popup show-foto-bbm-admin">
+        <div class="view">
+            <div class="page">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner bg-dark-gray-medium">
+                        <div class="title">Foto Nota BBM <span id="tanggal_nota_admin"></span></div>
+                        <div class="right">
+                            <!-- Link to close popup -->
+                            <p class="text-add-colour-white link popup-close" data-popup=".show-foto-bbm-admin"><i
+                                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+                    <div class="card card-outline margin-top">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-100">
+                                    <div class="card-content">
+                                        <table align="center" width="100%">
+                                            <tr>
+                                                <td>
+                                                    <center>
+                                                        <img onclick="zoom_view(this.src);" width="300px"
+                                                            style="border-radius:10px;" id="show_foto_bbm_admin" />
+                                                        <br>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup bbm-popup-admin">
+        <div class="view view-init">
+            <div class="page">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner bg-dark-gray-medium">
+                        <div class="title">BBM</div>
+                        <div class="right">
+                            <!-- Link to close popup -->
+                            <p id="backbutton-bbm-popup-admin" class="text-add-colour-white link popup-close"
+                                data-popup=".bbm-popup-admin"><i style="margin-right:5px;"
+                                    class="f7-icons">xmark_rectangle_fill</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+                    <div class="card card-outline margin-top bg-dark-gray-medium">
+                        <div class="card-content">
+                            <table width="100%;" cellspacing="0" cellpadding="1" style="border-color:gray;">
+                                <tr class="bg-dark-gray-young">
+                                    <th style="padding:4px;" align="left">
+                                        <h3 style="margin: 7px;">Data BBM</h3>
+                                    </th>
+                                </tr>
+                            </table>
+                            <div class="card">
+                                <div class="card-content" style="overflow-x:auto; width:100%;">
+                                    <table cellspacing="1" cellpadding="1" width="500px">
+                                        <thead class="bg-dark-gray-medium text-align-center">
+                                            <tr>
+                                                <th class="label-cell" style="border-bottom:1px solid gray;"
+                                                    width="10%">
+                                                    No</th>
+                                                <th class="label-cell" style="border-bottom:1px solid gray;"
+                                                    width="25%">
+                                                    Tanggal</th>
+                                                <th class="label-cell" style="border-bottom:1px solid gray;"
+                                                    width="25%">
+                                                    No. Plat</th>
+                                                <th class="label-cell" style="border-bottom:1px solid gray;"
+                                                    width="25%">
+                                                    Foto</th>
+                                                <th class="label-cell" style="border-bottom:1px solid gray;"
+                                                    width="25%">
+                                                    Nominal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-align-center" id="bbm_values_admin">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup detail-prospek-admin">
+        <div class="view">
+            <div class="page">
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner bg-dark-gray-medium">
+                        <div class="title">Detail Prospek</div>
+                        <div class="right">
+                            <!-- Link to close popup -->
+                            <p class="text-add-colour-white link popup-close" data-popup=".detail-prospek-admin">
+                                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+                    <div class="card card-outline margin-top bg-dark-gray-medium">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-100">
+                                    <div class="card">
+                                        <form id="detail_prospek_form_admin">
+                                            <div class="card-content" style="overflow-x:auto; width:100%;">
+                                                <table width="100%" style="border-spacing: 0;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell text-align-left">
+                                                                Perusahaan
+                                                            </td>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell">
+                                                                :</td>
+                                                            <td align="right" style="border-bottom: 1px solid gray;"
+                                                                id="popup-detail-prospek-td-client_nama-admin"
+                                                                class="numeric-cell"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell text-align-left">Kota
+                                                            </td>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell">
+                                                                :</td>
+                                                            <td align="right" style="border-bottom: 1px solid gray;"
+                                                                id="popup-detail-prospek-client_kota-admin"
+                                                                class="numeric-cell"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell text-align-left">Person
+                                                            </td>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell">
+                                                                :</td>
+                                                            <td align="right" style="border-bottom: 1px solid gray;"
+                                                                id="popup-detail-prospek-client_person-admin"
+                                                                class="numeric-cell"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell text-align-left">Posisi
+                                                            </td>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell">
+                                                                :</td>
+                                                            <td align="right" style="border-bottom: 1px solid gray;"
+                                                                id="popup-detail-prospek-client_posisi-admin"
+                                                                class="numeric-cell"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell text-align-left">Telpon /
+                                                                Wa</td>
+                                                            <td style="border-bottom: 1px solid gray;"
+                                                                class="numeric-cell">
+                                                                :</td>
+                                                            <td align="right" style="border-bottom: 1px solid gray;"
+                                                                id="popup-detail-prospek-client_telpon-admin"
+                                                                class="numeric-cell"></td>
+                                                        </tr>
+                                                        <div class="detail_pertemuan_1_section_admin">
+                                                            <tr>
+                                                                <td style=" padding-top:9px; padding-bottom:9px;"
+                                                                    class="numeric-cell text-align-left">
+                                                                    Pertemuan 1</td>
+                                                                <td class="numeric-cell">:</td>
+                                                                <td class="numeric-cell"
+                                                                    style="border:1px solid white;">
+                                                                    <input style="  text-align: center; width:100%;"
+                                                                        placeholder="Tidak Ada"
+                                                                        id="tanggal_status1_detail_admin"
+                                                                        class="data-table numeric-cell prospek-detail-admin"
+                                                                        type="date" name="tanggal_status1_detail_admin"
+                                                                        readonly>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_selfie_card_1_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto1_admin"
+                                                                            style="display:none;">Selfie</font>
+                                                                    </center>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_id_card_1_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto1_admin"
+                                                                            style="display:none;">ID Card</font>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <center>
+                                                                        <div id="lokasi1_detail_admin"
+                                                                            style="width: 90%;text-align: center;">
+                                                                        </div>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3" class="numeric-cell text-align-left">
+                                                                    <textarea
+                                                                        style="padding:10px; width:100%; background-color:lightgray; color:black;"
+                                                                        name="hasil_pertemuan1_detail_admin"
+                                                                        id="hasil_pertemuan1_detail_admin"
+                                                                        class="prospek-detail input-item-keterangan-detail resizable"
+                                                                        readonly></textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </div>
+
+                                                        <div>
+                                                            <tr class="detail_pertemuan_2_section_admin">
+                                                                <td style="padding-top:9px; padding-bottom:9px;"
+                                                                    class="numeric-cell text-align-left">
+                                                                    Pertemuan 2</td>
+                                                                <td class="numeric-cell">:</td>
+                                                                <td align="right" class="numeric-cell"
+                                                                    style="border:1px solid white;">
+                                                                    <input name="tanggal_status2_detail_admin"
+                                                                        style="text-align: center; width:100%;"
+                                                                        placeholder="Tidak Ada"
+                                                                        id="tanggal_status2_detail_admin"
+                                                                        class="prospek-detail_admin textbox-n" readonly
+                                                                        type="date">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="detail_pertemuan_2_section_admin">
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_selfie_card_2_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto2_admin"
+                                                                            style="display:none;">Selfie</font>
+                                                                    </center>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_id_card_2_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto2_admin"
+                                                                            style="display:none;">ID Card</font>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <center>
+                                                                        <div id="lokasi2_detail_admin"
+                                                                            style="width: 90%;text-align: center;">
+                                                                        </div>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="detail_pertemuan_2_section_admin">
+                                                                <td colspan="3" class="numeric-cell text-align-left">
+                                                                    <textarea name="hasil_pertemuan2_detail_admin"
+                                                                        style="padding:10px; width:100%; background-color:lightgray; color:black;"
+                                                                        id="hasil_pertemuan2_detail_admin" readonly
+                                                                        class="prospek-detail_admin input-item-keterangan-detail resizable"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </div>
+
+                                                        <div>
+                                                            <tr class="detail_pertemuan_3_section_admin">
+                                                                <td style="padding-top:9px; padding-bottom:9px;"
+                                                                    class="numeric-cell text-align-left">
+                                                                    Pertemuan 3</td>
+                                                                <td class="numeric-cell">:</td>
+                                                                <td align="right" class="numeric-cell"
+                                                                    style="border:1px solid white;">
+                                                                    <input style="width:100%; text-align: center;"
+                                                                        placeholder="Tidak Ada"
+                                                                        id="tanggal_status3_detail_admin"
+                                                                        name="tanggal_status3_detail_admin"
+                                                                        class="prospek-detail_admin textbox-n"
+                                                                        type="date">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="detail_pertemuan_3_section_admin">
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_selfie_card_3_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto3_admin"
+                                                                            style="display:none;">Selfie</font>
+                                                                    </center>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <center>
+                                                                        <img onclick="zoom_view(this.src);"
+                                                                            width="100px" style="border-radius:10px;"
+                                                                            id="file_id_card_3_view_detail_admin" />
+                                                                        <br>
+                                                                        <font class="keterangan_foto3_admin"
+                                                                            style="display:none;">ID Card</font>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <center>
+                                                                        <div id="lokasi3_detail_admin"
+                                                                            style="width: 90%;text-align: center;">
+                                                                        </div>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="detail_pertemuan_3_section_admin">
+                                                                <td colspan="3" class="numeric-cell text-align-left">
+                                                                    <textarea
+                                                                        style="padding:10px; width:100%; background-color:lightgray; color:black;"
+                                                                        name="hasil_pertemuan3_detail_admin"
+                                                                        id="hasil_pertemuan3_detail_admin" readonly
+                                                                        class="input-item-keterangan-detail resizable"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content theme-dark">
+        <div class="card">
+            <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+                <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales"
+                    href="/Sales">Sales</a>
+                </div>                
+                <div class="col col-border text-bold"><a class="text-add-colour-white" href="/absen-sales">Absensi</a>
+                </div>
+                <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white"
+                        href="/prospek">Prospek</a>
+                </div>
+            </div>
+
+            <!-- <div style="text-align: center;" class="row no-gap bg-dark-gray-young"> -->
+                <!-- <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white" href="/prospek">Data</a>
+                </div> -->
+                <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/confirm_bbm">BBM</a>
+                </div>
+            </div> -->
+            <div class="card-content" style="overflow-x:auto;  height:550px; width:99.6%; margin-top:-12px;">
+                <div style="margin-bottom:5px;margin-top: 20px;">
+                    <div class="row">
+                        <div class="col-100">
+                            <a class="item-link smart-select smart-select-init" data-searchbar="true"
+                                data-searchbar-placeholder="Cari Sales" data-open-in="popup"
+                                data-close-on-select="true">
+                                <select name="sales_filter_manager_new" id="sales_filter_manager_new"
+                                    onchange="getProspekHeaderManager(1);">
+                                </select>
+                                <div class="item-content"
+                                    style="border-radius:3px; margin-left:13px; margin-right:13px;padding-top:6px;padding-bottom: 6px;padding-left: 6px;height: 18px;color:black; background-color:lightgray;">
+                                    <div class="item-inner">
+                                        <div class="item-after item_after_sales_filter_admin"
+                                            style="float:left;color:gray;margin-top: -2px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-actived">
+                    <div class="card-header bg-dark-gray-young">
+                        <div class="data-table-title" style="height:5px; margin-left:6px;">
+                            <h3 class="margin-15">Data Prospek</h3>
+                        </div>
+                    </div>
+                    <div class="card-content" style="overflow-x:auto; width:100%; height:360px;">
+                        <table cellspacing="1" cellpadding="1" width="725px" style="border-color:#1c1c1d;">
+                            <thead class="bg-dark-gray-medium text-align-center">
+                                <tr>
+                                    <th class="" style="border-bottom :1px solid gray;" width="20%">Perusahaan</th>
+                                    <th class="" style="border-bottom :1px solid gray;" width="15%">Sales</th>
+                                    <th class="" width="13%" style="border-bottom :1px solid gray;">1</th>
+                                    <th class="" width="13%" style="border-bottom :1px solid gray;">2</th>
+                                    <th class="" width="13%" style="border-bottom :1px solid gray;">3</th>
+                                    <th class="" width="13%" style="border-bottom :1px solid gray;" colspan="2"> Opsi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-align-center" id="prospek_value_manager">
+                            </tbody>
+                            <tfoot class="bg-dark-gray-medium text-align-center">
+                                <tr>
+                                    <th id="html-content-holder" colspan="9" class="label-cell">
+                                        Total Data : <i class="text-align-center" id="total_data_manager"> </i>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

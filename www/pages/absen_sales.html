@@ -1,0 +1,526 @@
+<div class="page" data-name="absensi-sales" class="theme-dark">
+  <!-- Scrollable page content-->
+
+  <div class="popup detail-data-gaji-valid-sales">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Detail Gaji Sales <span id="karyawan-nama-detail-valid-sales"></span></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" style="width: 50px;height: 50px;"
+                data-popup=".detail-data-gaji-valid-sales"><i style="margin-right:5px;font-size: 34px;"
+                  class="f7-icons">xmark_rectangle_fill</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top bg-dark-gray-medium">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card">
+                    <div class="card-content" style="width:100%;">
+                      <table width="100%">
+                        <tr>
+                          <td colspan="2"
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                            Foto Selfie</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"
+                            style="width: 90%;text-align: center;border-left: 1px solid grey;border-right: 1px solid grey;">
+                            <img width="100%" onclick="zoom_view(this.src);" id="image-data-selfie-valid-sales"
+                              style="display: block;margin-top:10px;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;">
+                            Foto Masuk</td>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                            Foto Keluar</td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;">
+                            <img width="100%" onclick="zoom_view(this.src);" id="image-data-masuk-valid-sales"
+                              style="display: block;margin-top:10px;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                          </td>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                            <img width="100%" onclick="zoom_view(this.src);" id="image-data-keluar-valid-sales"
+                              style="display: block;margin-top:10px;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;">
+                            Lokasi Masuk</td>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-top: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;">
+                            Lokasi Keluar</td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;"
+                            id="map-masuk-valid-sales">
+
+                          </td>
+                          <td
+                            style="width: 45%;text-align: center;border-bottom: 1px solid grey;border-left: 1px solid grey;border-right: 1px solid grey;"
+                            id="map-keluar-valid-sales">
+
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="card-content" style="width:100%;">
+                      <table align="center" width="100%" border="0"
+                        style="border-collapse: collapse; border:1px solid white;">
+                        <thead>
+                          <tr>
+                            <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Tanggal
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="tanggal_gaji_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Jam Masuk
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="jam_masuk_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Jam Keluar
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="jam_keluar_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Gaji
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="gaji_pokok_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" width="25%" class="numeric-cell text-align-left">Potongan
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="potongan_detail_valid_sales" class="numeric-cell text-align-right"></td>
+                          </tr>
+                          <!-- <tr>
+                            <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Tunjangan
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="tunjangan_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr> -->
+                          <tr>
+                            <td colspan="3" width="25%" class="numeric-cell text-align-left">TOTAL
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="total_gaji_detail_valid_sales" class="numeric-cell text-align-right">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" width="25%" class="numeric-cell text-align-left">Status
+                            </td>
+                            <td width="21%" class="numeric-cell text-align-right">:</td>
+                            <td width="45%" id="status_terlambat_detail_valid_sales"
+                              class="numeric-cell text-align-right">
+                              Terlambat</td>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+                    <br>
+                    <div class="card-content" style="width:100%;">
+                      <div class="row" style="padding: 10px;">
+                        <div class="col-50">
+                          <button onclick="simpanValidSales(1);"
+                            class="btn-color-greenWhite button-small col button text-bold">Valid</button>
+                        </div>
+                        <div class="col-50">
+                          <button onclick="simpanValidSales(2);"
+                            class="card-color-red button-small col button text-bold">Tolak</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup popup-ktp-sales">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Foto KTP <span id="karyawan_nama_ktp_sales"></span></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" data-popup=".popup-ktp-sales"><i
+                  style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+
+                    <table align="center" width="100%">
+                      <tr>
+                        <td>
+                          <center>
+                            <img onclick="zoom_view(this.src);" width="300px" style="border-radius:10px;"
+                              id="file_ktp_view_now_sales" />
+                            <br>
+                          </center>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-content" style="width:100%;margin-bottom: 13px;">
+                    <table align="center" width="95%" border="0"
+                      style="border-collapse: collapse; border:1px solid grey;">
+                      <thead class="bg-dark-gray-medium text-align-center">
+                        <th class="label-cell" colspan="5"
+                          style="border-top: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                          width="100%" height="10px" align="center">Data Karyawan</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Nama
+                          </td>
+                          <td width="20%" class="numeric-cell text-align-right">:</td>
+                          <td width="45%" id="nama_ktp_sales" class="text-align-left">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">No. Hp
+                          </td>
+                          <td width="20%" class="numeric-cell text-align-right">: </td>
+                          <td width="45%" id="handphone_ktp_sales" class="numeric-cell text-align-left">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" width="25%" height="10px" class="numeric-cell text-align-left">Alamat
+                          </td>
+                          <td width="20%" class="numeric-cell text-align-right">: </td>
+                          <td width="45%" id="alamat_ktp_sales" class="text-align-left">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup data-sp-sales">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Detail <span id="status_sp_sales"></span></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" data-popup=".data-sp-sales"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i></p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100" style="padding: 10px;">
+                  <center>
+                    <img onclick="zoom_view(this.src);" width="100px" style="border-radius:10px;"
+                      id="file_foto_view_sp_now_sales" />
+                  </center>
+                </div>
+              </div>
+              <form id="insert-sp-sales">
+                <div class="row">
+                  <div class="col-50" style="margin-left: 16px;">
+                    <select name="sp_value_sales" id="sp_value_sales" onchange="btnFotoShowSales();" disabled required
+                      style="border: 1px solid white;height: 28px;width: 90%;text-align-last:center;">
+                    </select>
+                  </div>
+                  <div class="col-50" id="show-btn-foto-sales">
+                    <label for="bukti_sp_sales" id="value_bukti_sp_sales"
+                      style="background-color: lightgrey;width: 90%;"
+                      class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold custom-file-upload">
+                      FOTO SP
+                    </label>
+                    <input style="display:none;" type="file" onchange="gambarSpSales();" name="bukti_sp_sales"
+                      id="bukti_sp_sales" accept="image/*;capture=camera" />
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content theme-dark">
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold  bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/absen-sales">Absensi</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/prospek">Prospek</a></div>
+      </div>
+
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold clear-btn-color-sales" id="colorBtnGajiSales"><a
+            class="text-add-colour-white" onclick="btnShowGajiSales();">Gaji</a>
+        </div>
+        <div class="col col-border text-bold clear-btn-color-sales" id="colorBtnValidSales"><a id="btnRefreshValidSales"
+            class="text-add-colour-white" onclick="btnShowValidSales();">Validasi</a>
+        </div>
+      </div>
+
+
+      <div id="showDataGajiSales">
+        <div class="card" style=" width:98%;margin-bottom: 0px;">
+          <table width="98%;" cellspacing="0" cellpadding="1" style="border-color:gray; margin-bottom:2px;">
+            <tr class="bg-dark-gray-young">
+              <th style="padding:4px;" width="60%" align="left">
+                Data Gaji Sales
+              </th>
+
+              <th style="padding-right:10px;" width="10%" id="hideDocPeriodeSales" align="center">
+                <i class="text-align-right f7-icons" onclick="downloadPdfAllDivSalesPeriode();"
+                  style="font-size:30px; color:white;">arrow_down_doc_fill</i>
+              </th>
+              <th style="padding-right:10px;" width="10%" id="hideDocSales" align="center">
+                <i class="text-align-right f7-icons" onclick="downloadPdfAllDivSales();"
+                  style="font-size:30px; color:white;">arrow_down_doc_fill</i>
+              </th>
+              <!-- <th style="padding-right:10px;" width="10%" align="right">
+                <a class="text-add-colour-white" href="/master-pegawai">
+                  <i class="text-align-right f7-icons" style="font-size:30px; color:green;">plus_circle_fill</i></a>
+              </th> -->
+              <th style="padding-right:10px;" width="10%" align="right">
+                <i class="text-align-right f7-icons" onclick="backToabsensiGajiSales();"
+                  style="font-size:30px; color:white;">arrow_2_circlepath_circle_fill</i>
+              </th>
+            </tr>
+          </table>
+        </div>
+        <div class="card-content"
+          style="overflow-x:auto;width:98%; margin-top:2px;margin-bottom: 20x;margin-left: 5px;margin-right: 5px;">
+          <table cellspacing="1" cellpadding="1" width="98%" style="">
+            <tr id="btn-periode-sales">
+
+            </tr>
+          </table>
+        </div>
+        <table cellspacing="1" cellpadding="1" width="98%" style="margin-top:2px;margin-bottom:2px;">
+          <tr>
+            <th style="padding-left:8px;">
+              <center>
+                <input onkeyup="doSearchKaryawanAbsenSales()" type="text"
+                  style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
+                  id="karyawan_filter_sales" name="karyawan_filter_sales" placeholder="Cari Karyawan">
+              </center>
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <h4 id="periodeGajiSales" style="text-align: center;margin:0px;padding:5px;"></h4>
+            </th>
+          </tr>
+        </table>
+        <div class="card-content" style="overflow-x:auto;  height:415px; width:96%; margin-left:8px;">
+          <table cellspacing="1" cellpadding="1" style=" border-collapse: collapse; border-color:gray;" width="700px">
+            <thead class="bg-dark-gray-medium text-align-center">
+              <tr>
+                <th class="label-cell"
+                  style="border-top: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  align="center" width="3%">No</th>
+                <th class="label-cell"
+                  style="border-top: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  align="center" width="3%">NIK</th>
+                <th class="label-cell"
+                  style="border-top: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="10%">
+                  Nama</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="4%">Prospek</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="4%">Absen</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="4%">Disiplin</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="4%">Total</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="8%">Opsi</th>
+                <th align="center" class="label-cell"
+                  style="border-top: solid 1px; border-bottom: solid 1px; border-left: solid 1px;  border-color:gray; font-weight:bold;"
+                  width="2%">SP</th>
+              </tr>
+            </thead>
+            <tbody class="text-align-center" id="data_karyawan_absensi_sales">
+            </tbody>
+          </table>
+          <div style="margin:5px; font-size:20px;" id="pagination_button_absen_sales" class="text-align-center">
+          </div>
+        </div>
+      </div>
+      <div id="showDataValidasiSales">
+        <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+          <div id="btnDataValidSales" onclick="btnShowDataValidSales();"
+            class="col col-border text-bold clear-btn-color-sales-valid"><a class="text-add-colour-white"
+              id="btnReloadValidSales">Data</a>
+          </div>
+          <div id="btnDataValidTolakSales" onclick="btnShowDataTolakSales();"
+            class="col col-border text-bold clear-btn-color-sales-valid"><a class="text-add-colour-white">Tolak</a>
+          </div>
+        </div>
+        <div id="data-absen-valid-sales">
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-100">
+              <div>
+                <table cellspacing="0" cellpadding="1" style="border-color:gray;width:100%;">
+                  <tr class="bg-dark-gray-young">
+                    <th style="padding:4px;" align="left">
+                      <div style="margin-left: 12px;color: white;">Data Gaji Sales</div>
+                    </th>
+                    <th style="padding-right:20px;" width="33%" align="right">
+                      <i class="text-align-right f7-icons" id="reloadValidSales" onclick="backToabsensiGajiSales();"
+                        style="font-size:30px; color:white; margin-right:-9px;">arrow_2_circlepath_circle_fill</i>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+              <div style="overflow-x:auto;width: 100%;">
+                <table cellspacing="0" cellpadding="1" style="width:750px;">
+                  <thead class="bg-dark-gray-medium">
+                    <th class="label-cell"
+                      style="width:7%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center;">
+                      No</th>
+                    <th class="label-cell"
+                      style="width:15%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Tanggal</th>
+                    <th class="label-cell"
+                      style="width:25%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Nama</th>
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Gaji</th>
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Potongan</th>
+                    <!-- <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Tunjangan</th> -->
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Total</th>
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-right: 1px solid grey;border-top: 1px solid grey;border-bottom: 1px solid grey;text-align:center">
+                      Opsi</th>
+                  </thead>
+                  <tbody id="tabel_data_absen_valid_sales">
+
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="data-absen-tolak-sales">
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-100">
+              <div>
+                <table cellspacing="0" cellpadding="1" style="border-color:gray;width:100%;">
+                  <tr class="bg-dark-gray-young">
+                    <th style="padding:4px;" align="left">
+                      <div style="margin-left: 12px;color: white;">Data ditolak</div>
+                    </th>
+
+                    <th style="padding-right:20px;" width="33%" align="right">
+                      <i class="text-align-right f7-icons" onclick="backToabsensiGajiSales();"
+                        style="font-size:30px; color:white; margin-right:-9px;">arrow_2_circlepath_circle_fill</i>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+              <div style="overflow-x:auto;width: 100%;">
+                <table cellspacing="0" cellpadding="1" style="width:550px;">
+                  <thead class="bg-dark-gray-medium">
+                    <th class="label-cell"
+                      style="width:7%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center;">
+                      No</th>
+                    <th class="label-cell"
+                      style="width:15%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Tanggal</th>
+                    <th class="label-cell"
+                      style="width:25%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Nama</th>
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Gaji</th>
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Potongan</th>
+                    <!-- <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Tunjangan</th> -->
+                    <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-bottom: 1px solid grey;border-top: 1px solid grey;text-align:center">
+                      Total</th>
+                    <!-- <th class="label-cell"
+                      style="width:12%;border-left: 1px solid grey;border-right: 1px solid grey;border-top: 1px solid grey;border-bottom: 1px solid grey;text-align:center">
+                      Opsi</th> -->
+                  </thead>
+                  <tbody id="tabel_data_absen_tolak_sales">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

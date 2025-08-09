@@ -1,0 +1,240 @@
+<div class="page" data-name="point-admin" class="theme-dark">
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <!-- <div class="popup confirm-point-admin-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Confirm Point Produksi</div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" id="confirm_point_admin_popup_close"
+                  data-popup=".confirm-point-admin-popup"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+                      <div class="list no-hairlines-md">
+                        <div class="list">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner" style="padding-top: 20px;">
+                                <label style="height:17px; margin-top:-9px;"><b>Tanggal Akhir</b></label>
+                                <div class="item-input-wrap">
+                                  <label></label>
+                                  <input type="date" id="tanggal_akhir_point_admin" name="tanggal_akhir_point_admin"
+                                    placeholder="Tanggal Akhir" required validate readonly>
+                                  <input type="hidden" id="tot_point_admin" name="tot_point_admin" required validate>
+                                  <span class="input-clear-button"></span>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div style="padding: 5px;">
+                        <button onclick="openCameraPointAdmin();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                          id="tanggal_akhir_button_save">CONFIRM
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="popup input-alamat-kirim-admin">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Input Alamat <span id="nama-client-alamat-admin"></span></div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="backbutton" class="text-add-colour-white link popup-close"
+                  data-popup=".input-alamat-kirim-admin"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <form id="input_alamat_kirim_popup">
+              <div class="list" style="margin-top: 10px;">
+                <ul style="padding: 10px;">
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <input type="text" id="alamat_sekarang_popup_admin" name="alamat_sekarang_popup_admin" required
+                          readonly disabled validate>
+                        <input type="hidden" id="penjualan_id_alamat_admin" name="penjualan_id_alamat_admin" required
+                          validate>
+                        <input type="hidden" id="client_id_alamat_admin" name="client_id_alamat_admin" required
+                          validate>
+                        <input type="hidden" id="karyawan_id_alamat_admin" name="karyawan_id_alamat_admin" required
+                          validate>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <input type="text" id="hp_alamat_admin" name="hp_alamat_admin" required readonly disabled
+                          validate>
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <textarea type="text" value="" id="alamat_kirim_popup_admin" readonly disabled
+                          name="alamat_kirim_popup_admin" required validate></textarea>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+            href="/client">Broadcast</a>
+        </div>
+        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
+            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        </div>
+        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>
+        <div class="col col-border bg-dark-gray-medium  text-bold "><a class="text-add-colour-white"
+            href="/point-sales">Point</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
+      </div>
+
+      <div style="text-align: center; margin-top:5px;" class="row no-gap bg-dark-gray-young">
+
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-sales">Sales</a>
+        </div>
+
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-produksi">Produksi
+          </a>
+        </div>
+        <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/point-admin">Admin</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-sj">Sj</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top:5px;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/point-admin">Data</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/history-point-admin">History</a>
+        </div>
+      </div>
+
+      <table cellspacing="1" cellpadding="1" width="100%" style="margin-top:5px;">
+        <thead class="bg-dark-gray-medium text-align-center">
+          <tr>
+            <th colspan="3" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+              <center>
+                <select onchange="changeBulanAdmin()" style="font-weight:bold;" name="bulan_admin" id="bulan_admin"
+                  class="text-add-colour-black-soft">
+
+                </select>
+              </center>
+            </th>
+            <th colspan="4" class="label-cell bg-dark-gray-young"
+              style="padding:5px; font-size:16px; font-weight:bold;">
+              <center>
+                <select onchange="changeBulanAdmin()" class="point_years_admin text-add-colour-black-soft"
+                  style="font-weight:bold;" name="point_year_admin" id="point_year_admin">
+                  <option value="" selected>Pilih Tahun</option>
+                </select>
+              </center>
+            </th>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="card-content" style="width:100%;">
+        <!-- <div class="row">
+          <div class="col-40" style="padding:10px;">
+            <label><b>Tanggal Akhir : </b></label>
+          </div>
+          <div class="col-60" style="padding:10px;">
+            <input type="date" style="font-weight:bold;width: 100%;" onchange="pointAdmin();"
+              name="tanggal_akhir_point_admin_menu" id="tanggal_akhir_point_admin_menu">
+          </div>
+        </div> -->
+        <div class="row">
+          <div class="col-100">
+            <button class="bg-dark-gray-young text-add-colour-black-soft button-small col button popup-open text-bold"
+              onclick="openCameraPointAdmin();">CONFIRM</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <table width="100%" style="margin-top:-8px;">
+      <tr class="bg-dark-gray-medium text-align-center">
+
+        <th id="point_admin_total" align="left" class="label-cell"
+          style="font-size:16px; color:white; border-bottom:1px solid gray;" width="100%"></th>
+        <th align="center" class="label-cell" style="font-size:16px; color:white; border-bottom:1px solid gray;"
+          width="100%">
+          <button onclick="downloadPointAdmin();"
+            style=" background-color: white; font-weight:bold; border-radius: 4px; padding:5px; color:gray; margin-right:7px;">Download</button>
+        </th>
+      </tr>
+    </table>
+
+    <div class="card-content" style="overflow-x:auto; width:100%;">
+      <table cellspacing="1" cellpadding="1" width="100%">
+        <thead class="bg-dark-gray-medium text-align-center">
+          <tr>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="6%">Kirim</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Tgl Selesai</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="21%">SPK</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="22%">Perusahaan</th>
+
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Point</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">Qty</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Total</th>
+          </tr>
+        </thead>
+        <tbody class="text-align-center" id="point_admin">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,440 @@
+<div class="page" data-name="point-sales" class="theme-dark">
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <div class="popup input-alamat-kirim-sales">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Input Alamat <span id="nama-client-alamat-sales"></span></div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="backbutton" class="text-add-colour-white link popup-close"
+                  data-popup=".input-alamat-kirim-sales"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <form id="input_alamat_kirim_popup">
+              <div class="list" style="margin-top: 10px;">
+                <ul style="padding: 10px;">
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <input type="text" id="alamat_sekarang_popup_sales" name="alamat_sekarang_popup_sales" required
+                          readonly disabled validate>
+                        <input type="hidden" id="penjualan_id_alamat_sales" name="penjualan_id_alamat_sales" required
+                          validate>
+                        <input type="hidden" id="client_id_alamat_sales" name="client_id_alamat_sales" required
+                          validate>
+                        <input type="hidden" id="karyawan_id_alamat_sales" name="karyawan_id_alamat_sales" required
+                          validate>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <input type="text" id="hp_alamat_sales" name="hp_alamat_sales" required readonly disabled
+                          validate>
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <textarea type="text" value="" id="alamat_kirim_popup_sales" readonly disabled
+                          name="alamat_kirim_popup_sales" required validate></textarea>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup upload-foto-point">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title"> Bukti Pembayaran Point</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" id="upload_foto_btn_close"
+                  data-popup=".upload-foto-point"><i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+
+                      <table align="center" width="100%">
+                        <tr>
+                          <td>
+                            <center>
+                              <h3>Foto</h3>
+                            </center>
+
+                            <center>
+                              <img onclick="zoom_view(this.src);" width="100px" style="border-radius:10px;"
+                                id="file_foto_pembayaran_view_now_point" />
+
+                            </center>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table width="450px">
+                        <tbody>
+                          <div class="card">
+                            <form id="upload_foto_point">
+
+                              <center>
+                                <label onclick="openCameraFotoPoint('file_foto_point');"
+                                  style="width:75%; height:30px; color:white; float:center; margin-bottom:11px;"
+                                  id="file_foto_point"
+                                  class="margin-2 text-add-colour-black-soft bg-dark-gray-medium button-small col button text-bold">
+                                  Ambil Foto
+                                </label>
+                                <p id="test-foto"></p>
+                              </center>
+                              <center>
+                                <img width="100px" src="" style="border-radius:10px;" id="file_foto_point_view" />
+                                <br>
+                              </center>
+
+                            </form>
+                            <button id="btn_upload_foto_point_selesai" onclick="updateFotoPointProcess()"
+                              class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold">Simpan</button>
+
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup upload-foto-lunas-point">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title"> Bukti Pelunasan Point</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" id="upload_foto_lunas_btn_close"
+                  data-popup=".upload-foto-lunas-point"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+
+                      <center>
+                        <img onclick="zoom_view(this.src);" width="300px" style="border-radius:10px;margin-top:10px;"
+                          id="file_foto_pelunasan_view_now_point" />
+
+                      </center>
+
+                      <table width="450px">
+                        <tbody>
+                          <div class="card">
+                            <form id="upload_foto_lunas_point_admin">
+                              <center>
+                                <div class="col-25">
+                                  <label for="file_foto_lunas_point" id="label_file_foto_lunas_point"
+                                    style="font-size: 14px;"
+                                    class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold custom-file-upload">
+                                    Foto
+                                  </label>
+                                  <input type="file" id="file_foto_lunas_point" name="file_foto_lunas_point"
+                                    onchange="readURLFotoLunas(this)" placeholder="Foto"
+                                    style="width: 50%;display:none;">
+                                </div>
+                              </center>
+                            </form>
+                            <br><br>
+                            <button id="btn_upload_foto_lunas_selesai" onclick="updateFotoLunasPointProcess()"
+                              class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold">Simpan</button>
+
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup detail-sales-owner">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail SPK</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p data-popup=".detail-sales-owner" class="text-add-colour-white link popup-close"><i
+                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content" style="overflow-x:auto; width:100%;">
+                      <table width="450px">
+                        <tbody>
+                          <div class="card" id="detail_sales_data_owner">
+                          </div>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup detail-sales-admin">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Info Sales</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="backbutton" class="text-add-colour-white link popup-close"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top bg-dark-gray-medium">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card">
+
+                      <div class="card-content" style="overflow-x:auto; width:100%;">
+                        <table align="center" width="100%" border="0"
+                          style="border-collapse: collapse; border:1px solid gray;">
+                          <tr>
+                            <td align="center" width="33%"
+                              style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                              class="label-cell">Nama : <font id="nama_sales"> </font>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td align="center" width="33%"
+                              style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                              class="label-cell">No Hp : <font id="no_hp_sales"> </font>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td align="center" width="33%"
+                              style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                              class="label-cell">Alamat : <font id="alamat_sales"> </font>
+                            </td>
+                          </tr>
+
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup point-sales">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Point Penjualan : <font id="karyawan_nama_point"></font>
+              </div>
+              <div class="right">
+
+                <table width="100%">
+                  <tr>
+                    <td>
+                      <button onclick="downloadPointSales();"
+                        style=" background-color: white; font-weight:bold; border-radius: 4px; padding:5px; color:gray; margin-right:7px;">Download</button>
+                    </td>
+                    <td>
+                      <i style="margin-right:5px; margin-left:10px; padding-top:6px;"
+                        class="f7-icons link popup-close">xmark_rectangle_fill</i>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <input type="hidden" name="karyawan_id_hidden" id="karyawan_id_hidden">
+            <input type="hidden" name="karyawan_nama_hidden" id="karyawan_nama_hidden">
+            <table width="100%">
+              <tr>
+                <td width="100%" id="foto_bukti_point">
+
+                </td>
+                <!-- <td width="50%" id="foto_bukti_lunas_point">
+
+                </td> -->
+              </tr>
+            </table>
+            <div style="display: block; overflow-x: auto; white-space: nowrap;">
+              <table cellspacing="1" cellpadding="1" width="100%">
+                <thead class="bg-dark-gray-medium text-align-center">
+
+                  <tr>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">Kirim</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Tgl</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="23%">SPK</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="26%">Perusahaan</th>
+                    <!-- <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Bayar</th> -->
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Nilai Jual</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">%</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Total</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Valid</th>
+                  </tr>
+                </thead>
+                <tbody class="text-align-center" id="point_popup_sales">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+            href="/client">Broadcast</a>
+        </div>
+        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
+            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        </div>
+        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>
+        <div class="col col-border bg-dark-gray-medium  text-bold "><a class="text-add-colour-white"
+            href="/point-sales">Point</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
+      </div>
+
+      <!-- <div style="text-align: center; margin-top:5px;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white"
+            href="/point-sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-produksi">Produksi</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-admin">Admin</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-sj">Sj</a>
+        </div>
+      </div> -->
+      <table cellspacing="1" cellpadding="1" width="100%" style="margin-top:5px;">
+        <thead class="bg-dark-gray-medium text-align-center">
+          <tr>
+            <th colspan="3" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+              <center>
+                <select onchange="getSalesAdmin()" style="font-weight:bold;" name="point_bulan_admin"
+                  class="text-add-colour-black-soft" id="point_bulan_admin">
+                </select>
+              </center>
+            </th>
+            <th colspan="4" class="label-cell bg-dark-gray-young"
+              style="padding:5px; font-size:16px; font-weight:bold;">
+              <center>
+                <select onchange="getSalesAdmin()" class="point_years text-add-colour-black-soft"
+                  style="font-weight:bold;" name="point_year" id="point_year">
+                  <option value="" selected>Pilih Tahun</option>
+                </select>
+              </center>
+            </th>
+          </tr>
+        </thead>
+      </table>
+
+    </div>
+
+
+    <div class="card-content" style="overflow-x:auto; width:100%;">
+      <table cellspacing="1" cellpadding="1" width="100%">
+        <thead class="bg-dark-gray-medium text-align-center">
+
+          <tr>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="20%">Nama</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Total</th>
+            <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Point</th>
+
+          </tr>
+        </thead>
+        <tbody class="text-align-center" id="user_sales_value">
+        </tbody>
+      </table>
+      <div style="margin:5px; font-size:20px;" id="pagination_button" class="text-align-center">
+      </div>
+    </div>
+  </div>
+</div>
+</div>

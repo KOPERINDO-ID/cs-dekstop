@@ -624,7 +624,7 @@
       </div>
     </div>
 
-      <div class="popup input-alamat-kirim">
+    <div class="popup input-alamat-kirim">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -633,8 +633,9 @@
               <div class="title">Input Alamat <span id="nama-client-alamat"></span></div>
               <div class="right">
                 <!-- Link to close popup -->
-                <p id="backbutton-input-alamat-kirim" class="text-add-colour-white link popup-close" data-popup=".input-alamat-kirim"><i
-                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+                <p id="backbutton-input-alamat-kirim" class="text-add-colour-white link popup-close"
+                  data-popup=".input-alamat-kirim"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i></p>
               </div>
             </div>
           </div>
@@ -707,8 +708,7 @@
                       <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
                       <div class="item-input-wrap">
                         <label></label>
-                        <input type="date" id="tgl_kirim_cabang" name="tgl_kirim_cabang" required  readonly
-                          validate>
+                        <input type="date" id="tgl_kirim_cabang" name="tgl_kirim_cabang" required readonly validate>
                         <span class="input-clear-button"></span>
                       </div>
                     </div>
@@ -3516,6 +3516,7 @@
         <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/tools">Tools</a>
@@ -3582,8 +3583,9 @@
                 <thead class="bg-dark-gray-medium text-align-center">
                   <tr>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Tanggal</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Proforma</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="18%">Perusahaan</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Proforma</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Perusahaan</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Telp</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Sales</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">Pabrik</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">Tipe Jual</th>
@@ -3652,13 +3654,14 @@
         </div>
 
         <div class="card-content" style="overflow-x:auto;width:100%;">
-          <table cellspacing="1" cellpadding="1" width="1700px">
+          <table cellspacing="1" cellpadding="1" width="1900px">
             <thead class="bg-dark-gray-medium text-align-center">
               <tr>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Kirim</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="6%">Tgl Kirim</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">SPK</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Perusahaan</th>
+                <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Telp</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Tipe</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Sales</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="6%">Pabrik</th>

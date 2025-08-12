@@ -588,27 +588,28 @@
                         name="alamat_kirim_notif_popup" required validate></textarea>
                     </div>
                   </div>
-                </li><li class="item-content item-input">
-                    <div class="item-inner">
-                      <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
-                      <div class="item-input-wrap">
-                        <label></label>
-                        <input type="date" id="tgl_kirim_cabang_notif" name="tgl_kirim_cabang_notif" required  readonly
-                          validate>
-                        <span class="input-clear-button"></span>
-                      </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="date" id="tgl_kirim_cabang_notif" name="tgl_kirim_cabang_notif" required readonly
+                        validate>
+                      <span class="input-clear-button"></span>
                     </div>
-                  </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
-                      <div class="item-input-wrap">
-                        <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_notif"
-                          name="keterangan_cabang_notif" readonly required validate></textarea>
-                        <span class="input-clear-button"></span>
-                      </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
+                    <div class="item-input-wrap">
+                      <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_notif"
+                        name="keterangan_cabang_notif" readonly required validate></textarea>
+                      <span class="input-clear-button"></span>
                     </div>
-                  </li>
+                  </div>
+                </li>
               </ul>
             </div>
           </form>
@@ -704,6 +705,7 @@
         <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
@@ -746,7 +748,8 @@
                       Perusahaan</th>
                     <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="14%">
                       Sales</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="14%" alighn="right">
+                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="14%"
+                      alighn="right">
                       Total</th>
                     <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" colspan="2"
                       align="center" width="10%">Opsi</th>

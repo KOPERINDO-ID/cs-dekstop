@@ -25,6 +25,10 @@ var routes = [
     url: './pages/kpi_broadcast.html',
   },
   {
+    path: '/delay-go',
+    url: './pages/delay_go.html',
+  },
+  {
     path: '/log',
     url: './pages/log.html',
   },

@@ -5061,7 +5061,7 @@ function getPenjualanHeader(page) {
 
 						}
 						penjualan_value += '</td>';
-
+						penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray; " >' + item.client_telp + '</td>';
 						var tipe_grosir
 						var style_xtra = '';
 						if (item.extra == '1') {
@@ -5803,6 +5803,9 @@ function getPerformaHeaderPenjualan() {
 					performa_value += '</td>';
 					performa_value += '<td class="label-cell text-align-left" style=" background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
 					performa_value += '' + item2.client_nama + '';
+					performa_value += '</td>';
+					performa_value += '<td class="label-cell text-align-left" style=" background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
+					performa_value += '' + item2.client_telp + '';
 					performa_value += '</td>';
 					performa_value += '<td class="label-cell text-align-left" style=" background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
 					performa_value += '' + item2.karyawan_nama + '';

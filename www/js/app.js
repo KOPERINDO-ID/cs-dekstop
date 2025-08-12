@@ -117,6 +117,15 @@ $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
 });
 
+$$(document).on('page:afterin', '.page[data-name="delay_go"]', function (e) {
+  getMenuUser();
+  checkLogin();
+  checkConnection();
+  getPengumuman();
+  getViewDelayManagerShipment();
+  $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+});
+
 $$(document).on('page:afterin', '.page[data-name="kpi"]', function (e) {
   getNotifRed();
   getMenuUser();

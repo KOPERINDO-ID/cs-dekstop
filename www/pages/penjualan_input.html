@@ -34,7 +34,6 @@
         </div>
       </div>
     </div>
-    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
     <!-- And somewhere in DOM -->
     <div class="card">
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
@@ -51,6 +50,8 @@
           <input class="performa-input" id="performa" name="performa" placeholder="Masukan Kode Performa" type="hidden"
             required validate>
           <br>
+          <input type="hidden" id="budget_ongkir_total" name="budget_ongkir_total" value="0">
+          <input type="hidden" id="status_ongkir" name="status_ongkir" value="pending">
           <div id="penjualan_performa_get">
           </div>
           <ul
@@ -106,12 +107,7 @@
                 <a style="width:98%;" class="item-link smart-select smart-select-init" data-open-in="popup"
                   data-searchbar="true" data-searchbar-placeholder="Pilih Bank">
                   <select class="performa-input input-item-bank" id="bank_1" name="bank_1" required validate>
-                    <option value="">Bank</option>
-                    <option value="BCA">BCA (0183129551 A/N Sutono)</option>
-                    <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
-                    <option value="Mandiri" selected>Mandiri (1410005187422 A/N Sutono)</option>
-                    <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)</option>
-                    <option value="Tunai">Tunai</option>
+                    <!-- Options akan di-load dari API oleh JavaScript -->
                   </select>
                   <div class="item-content">
                     <div class="item-inner">
@@ -182,13 +178,15 @@
 
             <li class="item-content item-input">
               <div class="item-inner">
-                <label style="margin-top:-9px; height:17px;"><b>Biaya Kirim<span style="color:red;font-size:12px;">
-                      *Optional</span></b></label>
+                <label style="margin-top:-9px; height:17px;">
+                  <b>Biaya Kirim</b>
+                  <span id="label_status_ongkir_1" style="font-size:12px; margin-left:5px;"></span>
+                </label>
                 <div class="item-input-wrap">
-                  <input id="biaya_kirim_multiple_1" value="0"
-                    class="performa-input textbox-n input-item-biaya-kirim-multiple  biaya_kirim_multiple_number"
-                    type="text" name="biaya_kirim_multiple_1">
-                  <span class="input-clear-button"></span>
+                  <input id="biaya_kirim_multiple_1"
+                        class="performa-input textbox-n input-item-biaya-kirim-multiple biaya_kirim_multiple_number"
+                        type="text" name="biaya_kirim_multiple_1" readonly 
+                        style="cursor: not-allowed;">
                 </div>
               </div>
             </li>

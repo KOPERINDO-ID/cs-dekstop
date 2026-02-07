@@ -525,6 +525,28 @@
           </div>
         </div>
         <div class="page-content">
+          <!-- Card Warning Pembayaran Belum Lunas -->
+          <div id="card-pembayaran-belum-lunas-notif" style="display: none; margin: 15px 10px 10px 10px; padding: 15px; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); border-radius: 12px; box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="flex-shrink: 0;">
+                <i class="f7-icons" style="font-size: 32px; color: white;">exclamationmark_triangle_fill</i>
+              </div>
+              <div style="flex: 1;">
+                <div style="color: white; font-weight: bold; font-size: 16px; margin-bottom: 4px;">
+                  Pembayaran Belum Lunas
+                </div>
+                <div style="color: rgba(255, 255, 255, 0.95); font-size: 13px; line-height: 1.4;">
+                  <span style="font-size: 12px; opacity: 0.9;">Status: <strong id="notif-shipment-status-text">Menunggu Approval</strong></span>
+                </div>
+              </div>
+              <div style="flex-shrink: 0;">
+                <div id="notif-shipment-status-badge" style="padding: 6px 12px; background: rgba(255, 255, 255, 0.25); border-radius: 20px; font-size: 11px; font-weight: bold; color: white; text-align: center; min-width: 80px;">
+                  PENDING
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <form id="input_alamat_kirim_notif_popup">
             <div class="list" style="margin-top: 10px;">
               <ul style="padding: 10px;">
@@ -610,6 +632,18 @@
                     </div>
                   </div>
                 </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b></b></label>
+                    <div class="item-input-wrap">
+                      <select id="packing-select" na style="width:100%;">
+                        <option value="" selected disabled>-- Pilih Packing --</option>
+                        <option value="polos">Polos</option>
+                        <option value="plastik">Plastik</option>
+                        <option value="kardus">Kardus</option>
+                      </select>
+                    </div>
+                </li>
               </ul>
             </div>
           </form>
@@ -690,6 +724,8 @@
       </div>
     </div>
   </div>
+
+  
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
     <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
@@ -705,14 +741,16 @@
         <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
+        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
+        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
+
       </div>
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
         <div class="col col-border text-bold proformaFilterMenuNotif clearFilterMenuNotif merah-performa"><a
@@ -724,10 +762,10 @@
         <div class="col col-border text-bold bayarFilterMenuNotif clearFilterMenuNotif merah-bayar"><a
             class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('bayar');">Bayar</a>
         </div>
-        <div class="col col-border text-bold shipmentFilterMenuNotifclearFilterMenuNotif merah-shipment "><a
+        <div class="col col-border text-bold shipmentFilterMenuNotif clearFilterMenuNotif merah-shipment "><a
             class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('shipment');">Shipment</a>
         </div>
-        <div class="col col-border text-bold kirimFilterMenuNotifclearFilterMenuNotif merah-kirim "><a
+        <div class="col col-border text-bold kirimFilterMenuNotif clearFilterMenuNotif merah-kirim "><a
             class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('kirim');">Kirim</a>
         </div>
       </div>

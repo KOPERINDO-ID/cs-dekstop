@@ -180,6 +180,7 @@ function getDataClient() {
 			app.dialog.preloader('Harap Tunggu');
 		},
 		success: function (data) {
+			app.dialog.close();
 			var data_client = '';
 
 			if (data.data.length != 0) {

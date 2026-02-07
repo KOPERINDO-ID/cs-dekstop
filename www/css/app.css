@@ -17,6 +17,16 @@
   color: white;
 }
 
+.btn-color-yellow {
+  background-color: #f8eb33;
+  color: black;
+}
+
+.btn-color-orange {
+  background-color: #f87133;
+  color: white;
+}
+
 .btn-color-greenWhite {
   background-color: forestgreen;
   color: white;
@@ -40,8 +50,8 @@
 }
 
 .card-color-red-important {
-  background-color: #b20000 !important;
-  color: white !important;
+  background-color: #b20000;
+  color: white;
 }
 
 .card-color-blue {
@@ -516,3 +526,361 @@ div[class*="col-border"] {
 }
 
 /*end additional css by aris*/
+
+
+/* Additional CSS by Aryak */
+.btn-color-orange {
+  background-color: #ea480a;
+  color: #FFFFFF;
+}
+
+.btn-color-green {
+  background-color: #228b22;
+  color: #FFFFFF;
+}
+
+.btn-color-blue {
+  background-color: #000080;
+  color: #FFFFFF;
+}
+
+.custom-hr {
+  border: 0;
+  height: 1px;
+  background-color: #888888;
+  margin: 20px 0;
+}
+
+.custom-vr {
+  width: 1px;
+  background-color: #888888;
+  height: 150px;
+}
+
+.bg-dark-gray-orange {
+  background: linear-gradient(#ea480a, #909090);
+  /* Standard syntax */
+  background: -webkit-linear-gradient(#ea480a, #909090);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ea480a, #909090);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ea480a, #909090);
+  /* For Firefox 3.6 to 15 */
+}
+
+.detail-row-produksi {
+  display: none;
+  background-color: #2b2b2b;
+}
+
+.detail-row-produksi.show {
+  display: table-row;
+}
+
+.detail-content-produksi {
+  padding: 15px;
+}
+
+.detail-item-card-produksi {
+  background: #1e1e1e;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #444;
+}
+
+.detail-item-card-produksi .item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.detail-item-card-produksi .item-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.detail-item-card-produksi .item-photos img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid #444;
+  transition: border-color 0.3s;
+}
+
+.detail-item-card-produksi .item-photos img:hover {
+  border-color: #2196F3;
+}
+
+.btn-expand-produksi {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.btn-expand-produksi.expanded {
+  transform: rotate(180deg);
+}
+
+.stats-mini {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.stat-card-mini {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+}
+
+/* ===== MINIMAL SELECT2 STYLING (menggunakan class yang sudah ada) ===== */
+
+.select2-container {
+  width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: white;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 26px;
+  padding-left: 0;
+  color: #333;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 36px;
+  right: 8px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #999;
+  font-weight: 500;
+}
+
+.select2-container--default .select2-results__option {
+  padding: 8px 12px;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+  background-color: #2196F3 !important;
+  color: white !important;
+}
+
+.select2-search--dropdown .select2-search__field {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.select2-dropdown {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  .select2-container--default .select2-selection--single {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #fff;
+  }
+
+  .select2-dropdown {
+    background-color: #2d2d2d;
+    border-color: #444;
+  }
+
+  .select2-container--default .select2-results__option {
+    color: #fff;
+  }
+
+  .select2-search--dropdown .select2-search__field {
+    background-color: #1a1a1a;
+    border-color: #444;
+    color: #fff;
+  }
+}
+
+/* Custom styling untuk pembayaran tagihan */
+.input-pembayaran-tagihan {
+  text-align: right;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#tagihan-bayar-history-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tagihan-bayar-history-content th,
+#tagihan-bayar-history-content td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#tagihan-bayar-history-content th {
+  background-color: #333;
+  color: white;
+}
+
+/* < !--========================================STYLING CUSTOM (Optional)========================================-->
+/* Search Input Enhancement */
+#search-expedisi {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+}
+
+#search-expedisi:focus {
+  border-color: #2196F3;
+  outline: none;
+}
+
+/* Table Responsive */
+.card-content {
+  position: relative;
+}
+
+table {
+  font-size: 13px;
+}
+
+
+table tbody td {
+  vertical-align: middle;
+}
+
+
+/* Status Badge */
+.badge {
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.bg-color-green {
+  background-color: #4CAF50 !important;
+}
+
+.bg-color-red {
+  background-color: #F44336 !important;
+}
+
+.bg-color-orange {
+  background-color: #FF9800 !important;
+}
+
+.bg-color-blue {
+  background-color: #2196F3 !important;
+}
+
+.bg-color-gray {
+  background-color: #9E9E9E !important;
+}
+
+/* Loading Overlay */
+#loading-overlay {
+  display: none;
+}
+
+#loading-overlay.show {
+  display: flex !important;
+}
+
+/* Empty State */
+#empty-state-history i {
+  opacity: 0.3;
+}
+
+
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .card:has(#filter-panel-history),
+  .card:has(.button),
+  #loading-overlay,
+  .popup-close,
+  .button,
+  .link {
+    display: none !important;
+  }
+  
+  table {
+    page-break-inside: auto;
+  }
+  
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tfoot {
+    display: table-footer-group;
+  }
+}
+
+
+/* Filter Panel Animation */
+#filter-panel-history {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* End of Additional CSS by Aryak */
+
+/* Button Orange - Belum lunas, pending approval */
+.btn-color-orangeWhite {
+  background: linear-gradient(to bottom, #ff9500 0%, #ff7700 100%) !important;
+  color: white !important;
+  border: none !important;
+}
+
+/* Button Hijau - Belum lunas, sudah approved, view only */
+.btn-color-greenWhite {
+  background: linear-gradient(to bottom, #34c759 0%, #30b350 100%) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-color-redWhite {
+  background: linear-gradient(to bottom, #ff3b30 0%, #d32f2f 100%) !important;
+  color: white !important;
+  border: none !important;
+}

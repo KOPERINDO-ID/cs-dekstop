@@ -4,7 +4,265 @@ jQuery('.input-item-pembayaran').mask('000,000,000,000', { reverse: true });
 jQuery('.input-item-invest-molding').mask('000,000,000,000', { reverse: true });
 jQuery('#pembayaran_dp_akhir').mask('000,000,000,000', { reverse: true });
 
+// ========================================
+// VARIABEL DAN FUNCTION UNTUK BANK
+// ========================================
+var globalBankData = [];
+var isOwner = false;
+var id_provinsi_single = null;
+var id_kota_single = null;
+var id_provinsi_multiple = null;
+var id_kota_multiple = null;
 
+/**
+ * Cek apakah user adalah owner (Stn)
+ */
+function checkIsOwner() {
+    var username = localStorage.getItem("username");
+    return username === 'Stn';
+}
+
+/**
+ * Load data bank dari server
+ * Kirim username untuk filter bank (owner dapat semua, sales dapat yang umum)
+ */
+function loadBankDataInput() {
+    isOwner = checkIsOwner();
+    
+    jQuery.ajax({
+        type: 'POST',
+        url: "" + BASE_API + "/get-all-bank",
+        dataType: 'JSON',
+        data: {
+            username: localStorage.getItem("username")
+        },
+        success: function (response) {
+            if (response.status == 200) {
+                globalBankData = response.data;
+                console.log('Bank data loaded (input):', globalBankData);
+                console.log('Is Owner:', isOwner);
+                
+                // Render ke dropdown bank di halaman input
+                renderBankOptionsInput();
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error loading bank data:', error);
+        }
+    });
+}
+
+/**
+ * Generate HTML options untuk dropdown bank
+ */
+function generateBankOptionsInput(selectedValue = 3, excludeTunai = false) {
+    var options = '';
+    
+    if (globalBankData.length === 0) {
+        options = '<option value="">Loading...</option>';
+        return options;
+    }
+    
+    // Default ke Mandiri (id=3)
+    if (selectedValue === null || selectedValue === '' || selectedValue === 'null') {
+        selectedValue = 3;
+    }
+    
+    var selectedBankId = null;
+    
+    if (!isNaN(selectedValue) && parseInt(selectedValue) > 0) {
+        selectedBankId = parseInt(selectedValue);
+    } else if (typeof selectedValue === 'string') {
+        var bankByCode = globalBankData.find(function(b) {
+            return b.bank_kode === selectedValue;
+        });
+        if (bankByCode) {
+            selectedBankId = bankByCode.bank_id;
+        }
+    }
+    
+    if (selectedBankId === null) {
+        selectedBankId = 3;
+    }
+    
+    globalBankData.forEach(function(bank) {
+        if (excludeTunai && bank.bank_kode === 'Tunai') {
+            return;
+        }
+        
+        var selected = (bank.bank_id === selectedBankId) ? ' selected' : '';
+        options += '<option value="' + bank.bank_id + '"' + selected + '>' + bank.bank_label + '</option>';
+    });
+    
+    return options;
+}
+
+/**
+ * Render bank options ke dropdown di halaman input penjualan
+ */
+function renderBankOptionsInput() {
+    console.log('renderBankOptionsInput called, globalBankData:', globalBankData);
+    
+    // Untuk penjualan_input.html (multiple) - gunakan selector lebih spesifik
+    // Cari select#bank_1 yang ada di dalam form, bukan yang di tabel
+    var bankSelectMultiple = jQuery('#penjualan_form select#bank_1, form#penjualan_form select[name="bank_1"]').first();
+    
+    if (bankSelectMultiple.length) {
+        console.log('Found #bank_1 in form, rendering options...');
+        console.log('bank_1 element:', bankSelectMultiple[0]);
+        console.log('bank_1 parent:', bankSelectMultiple.parent().prop('tagName'), bankSelectMultiple.parent().attr('class'));
+        
+        bankSelectMultiple.html(generateBankOptionsInput(3));
+        
+        // Refresh Framework7 Smart Select dengan cara yang benar
+        setTimeout(function() {
+            try {
+                // Cari smart select parent dari element yang benar
+                var smartSelectEl = bankSelectMultiple.closest('.smart-select')[0];
+                
+                console.log('Smart select element for bank_1:', smartSelectEl);
+                
+                if (smartSelectEl && typeof app !== 'undefined') {
+                    var ss = app.smartSelect.get(smartSelectEl);
+                    
+                    // Jika smart select belum ada, create baru
+                    if (!ss) {
+                        console.log('Creating new smart select for bank_1');
+                        ss = app.smartSelect.create({
+                            el: smartSelectEl,
+                            openIn: 'popup',
+                            searchbar: true,
+                            searchbarPlaceholder: 'Pilih Bank'
+                        });
+                    }
+                    
+                    // Update value text display
+                    var selectedOption = bankSelectMultiple.find('option:selected').text();
+                    jQuery(smartSelectEl).find('.item-after').text(selectedOption);
+                    jQuery('.title_select_bank').text(selectedOption);
+                    console.log('Smart select updated successfully for bank_1');
+                } else {
+                    console.log('Smart select element not found or app not defined');
+                    // Fallback: update text directly
+                    var selectedOption = bankSelectMultiple.find('option:selected').text();
+                    jQuery('.title_select_bank').text(selectedOption || 'Pilih Bank');
+                }
+            } catch(e) {
+                console.log('Smart select refresh error (bank_1):', e);
+            }
+        }, 500);
+    }
+    
+    // Untuk penjualan_input_single.html - gunakan selector lebih spesifik
+    var bankSelectSingle = jQuery('#penjualan_form select#bank, form#penjualan_form select[name="bank"]').first();
+    
+    if (bankSelectSingle.length) {
+        console.log('Found #bank in form, rendering options...');
+        bankSelectSingle.html(generateBankOptionsInput(3));
+        
+        // Refresh Framework7 Smart Select dengan cara yang benar
+        setTimeout(function() {
+            try {
+                var smartSelectEl = bankSelectSingle.closest('.smart-select')[0];
+                
+                console.log('Smart select element for bank:', smartSelectEl);
+                
+                if (smartSelectEl && typeof app !== 'undefined') {
+                    var ss = app.smartSelect.get(smartSelectEl);
+                    
+                    // Jika smart select belum ada, create baru
+                    if (!ss) {
+                        console.log('Creating new smart select for bank');
+                        ss = app.smartSelect.create({
+                            el: smartSelectEl,
+                            openIn: 'popup',
+                            searchbar: true,
+                            searchbarPlaceholder: 'Pilih Bank'
+                        });
+                    }
+                    
+                    // Update value text display
+                    var selectedOption = bankSelectSingle.find('option:selected').text();
+                    jQuery(smartSelectEl).find('.item-after').text(selectedOption);
+                    jQuery('.title_select_bank').text(selectedOption);
+                    console.log('Smart select updated successfully for bank');
+                } else {
+                    console.log('Smart select element not found or app not defined');
+                    // Fallback: update text directly
+                    var selectedOption = bankSelectSingle.find('option:selected').text();
+                    jQuery('.title_select_bank').text(selectedOption || 'Pilih Bank');
+                }
+            } catch(e) {
+                console.log('Smart select refresh error (bank):', e);
+            }
+        }, 500);
+    }
+}
+
+// Panggil loadBankDataInput saat DOM ready
+jQuery(document).ready(function() {
+    console.log('DOM ready - calling loadBankDataInput');
+    loadBankDataInput();
+    
+    // Juga setup event listener untuk Framework7 jika belum ada
+    setupF7PageEvents();
+});
+
+// Function untuk setup Framework7 page events
+function setupF7PageEvents() {
+    if (typeof app !== 'undefined' && typeof $$ !== 'undefined') {
+        console.log('Setting up F7 page events for penjualan_input');
+        
+        // Event ketika page init
+        $$(document).on('page:init', '.page[data-name="penjualan_input"]', function() {
+            console.log('Page penjualan_input init - loading bank data');
+            loadBankDataInput();
+        });
+        
+        // Event ketika page mounted
+        $$(document).on('page:mounted', '.page[data-name="penjualan_input"]', function() {
+            console.log('Page penjualan_input mounted - ensuring bank data');
+            if (globalBankData.length === 0) {
+                loadBankDataInput();
+            } else {
+                renderBankOptionsInput();
+            }
+        });
+    }
+}
+
+// ========================================
+// FUNCTION LAINNYA
+// ========================================
+
+/**
+ * Helper function untuk generate label status ongkir dengan warna
+ * @param {string} statusOngkir - pending/free/nominal
+ * @returns {object} - {text: string, color: string}
+ */
+function getOngkirStatusLabel(statusOngkir) {
+	var labelText = '';
+	var labelColor = '';
+	
+	if (statusOngkir === 'pending') {
+		labelText = '(Pending)';
+		labelColor = '#ff3b30'; // Merah
+	} else if (statusOngkir === 'free') {
+		labelText = '(Free)';
+		labelColor = '#34c759'; // Hijau
+	} else if (statusOngkir === 'nominal') {
+		labelText = '(Nominal)';
+		labelColor = '#007aff'; // Biru
+	} else {
+		labelText = '(Pending)';
+		labelColor = '#ff3b30'; // Default merah
+	}
+	
+	return {
+		text: labelText,
+		color: labelColor
+	};
+}
 
 function changeDate(id) {
 	$("." + id + "").prop('type', 'date');
@@ -91,113 +349,43 @@ function deletePerformaPenjualan(performa_id_table) {
 		$$(this).attr("name", 'tanggal_kirim_' + count_tanggal_pengiriman);
 		$$(this).attr("id", 'tanggal_kirim_' + count_tanggal_pengiriman);
 		count_tanggal_pengiriman++;
-		//var count_kode_content = 1;
-		//console.log(count_tanggal_pengiriman-1);
-		//	var fix_count_tanggal_pengiriman = count_tanggal_pengiriman-1;
-		//	$$('.kode_content_'+count_tanggal_pengiriman+'').each(function(){
-		//		$$(this).attr("name",'kode_content_'+fix_count_tanggal_pengiriman+'_'+count_kode_content);
-		//		$$(this).attr("id",'kode_content_'+fix_count_tanggal_pengiriman+'_'+count_kode_content);
-		//		$$(this).addClass('kode_content_'+fix_count_tanggal_pengiriman+'');
-		//		$$(this).removeClass('kode_content_'+count_tanggal_pengiriman+'');			
-		//		count_kode_content++;
-		//	});
 	});
 
-
-
-	var count_kode_kota = 1;
-	$$('.input-item-kode-kota').each(function () {
-		$$(this).attr("name", 'kode_kota_' + count_kode_kota);
-		$$(this).attr("id", 'kode_kota_' + count_kode_kota);
-		count_kode_kota++;
+	var count_biaya_kirim = 1;
+	$$('.input-item-biaya-kirim-multiple').each(function () {
+		$$(this).attr("name", 'biaya_kirim_multiple_' + count_biaya_kirim);
+		$$(this).attr("id", 'biaya_kirim_multiple_' + count_biaya_kirim);
+		count_biaya_kirim++;
 	});
-
-	var count_no_spk = 1;
-	$$('.input-item-no-spk').each(function () {
-		$$(this).attr("name", 'no_spk_' + count_no_spk);
-		$$(this).attr("id", 'no_spk_' + count_no_spk);
-		count_no_spk++;
-	});
-
-	var count_jenis = 1;
-	$$('.input-item-jenis').each(function () {
-		$$(this).attr("name", 'jenis_' + count_jenis);
-		$$(this).attr("id", 'jenis_' + count_jenis);
-		count_jenis++;
-	});
-
-
-	var count_qty = 1;
-	$$('.input-item-qty').each(function () {
-		$$(this).attr("name", 'qty_' + count_qty);
-		$$(this).attr("id", 'qty_' + count_qty);
-		$$(this).attr("onchange", 'changeTotalValue(' + count_qty + ');');
-		count_qty++;
-	});
-
-	var count_price = 1;
-	$$('.input-item-price').each(function () {
-		$$(this).attr("name", 'price_' + count_price);
-		$$(this).attr("id", 'price_' + count_price);
-		$$(this).attr("onchange", 'changeTotalValue(' + count_price + ');');
-		count_price++;
-	});
-
-	var count_total = 1;
-	$$('.input-item-total').each(function () {
-		$$(this).attr("name", 'total_' + count_total);
-		$$(this).attr("id", 'total_' + count_total);
-		count_total++;
-	});
-
-	var count_pembayaran = 1;
-	$$('.input-item-pembayaran').each(function () {
-		$$(this).attr("name", 'pembayaran_' + count_pembayaran);
-		$$(this).attr("id", 'pembayaran_' + count_pembayaran);
-		count_pembayaran++;
-	});
-
-
-
 }
-//Multiple
 
 
-
-function deleteKodePerformaPenjualan(section, urutan) {
-
-	var count_kode_content = 0;
-	$$('.kode_content_' + section + '').each(function () {
-		count_kode_content++;
-	});
-
-
-	$$('#count_kode_' + section + '').val(count_kode_content - 1);
-
-	$$('.urutan_li_' + section + '_' + urutan + '').remove();
-
-
-	//$$('.qty_1').off('change');
-	var qty_total = 1;
-
-	$$('.qty_' + section + '').each(function () {
-		$$(this).attr("name", 'qty_' + section + '_' + qty_total);
-		$$(this).attr("id", 'qty_' + section + '_' + qty_total);
-		$$(this).attr("onchange", 'checkPrice(value,\'' + section + '\',\'' + qty_total + '\');');
-		qty_total++;
-	});
-
-	var penjualan_total = 1;
-	$$('.sub_harga_' + section + '').each(function () {
-		$$(this).attr("name", 'sub_harga_' + section + '_' + penjualan_total);
-		$$(this).attr("id", 'sub_harga_' + section + '_' + penjualan_total);
-		penjualan_total++;
-	});
+function deleteKodePerformaPenjualan(performa_id_table, urutan) {
+	console.log(performa_id_table);
+	console.log(urutan);
+	$$('#count_kode_' + performa_id_table + '').val($$('.kode_content_' + performa_id_table + '').length - 1);
+	$$('.urutan_li_' + performa_id_table + '_' + urutan + '').remove();
 
 	var kode = 1;
-	$$('.kode_content_' + section + '').each(function () {
-		$$(this).attr("name", 'kode_content_' + section + '_' + kode);
-		$$(this).attr("id", 'kode_content_' + section + '_' + kode);
+	$$('.kode_content_' + performa_id_table + '').each(function () {
+		$$(this).attr("name", 'kode_content_' + performa_id_table + '_' + kode);
+		$$(this).attr("id", 'kode_content_' + performa_id_table + '_' + kode);
+		$$(this).attr("placeholder", "Kode " + kode + "");
+		kode++;
+	});
+
+	var section = performa_id_table;
+	$$('.qty_' + section + '').each(function () {
+		$$(this).attr("name", 'qty_' + section + '_' + kode);
+		$$(this).attr("id", 'qty_' + section + '_' + kode);
+		$$(this).attr("onchange", "checkPrice(value,'" + section + "','" + kode + "')");
+		kode++;
+	});
+
+	kode = 1;
+	$$('.sub_harga_' + section + '').each(function () {
+		$$(this).attr("name", 'sub_harga_' + section + '_' + kode);
+		$$(this).attr("id", 'sub_harga_' + section + '_' + kode);
 		$$(this).attr("placeholder", "Kode " + kode + "");
 		kode++;
 	});
@@ -339,13 +527,15 @@ function addPerformaPenjualan() {
 	html_performa_group_field += '<div id="kode_content_' + ($('.performa_group_field_count').length + 1) + '_html"> </div>';
 	html_performa_group_field += '<li class="item-content item-input">';
 	html_performa_group_field += '  <div class="item-inner">';
-	html_performa_group_field += ' <label style="margin-top:-9px; height:17px;"><b>Biaya Kirim<span style="color:red;font-size:12px;"> *Optional</span></b></label>';
-	html_performa_group_field += '   <div class="item-input-wrap">';
-	html_performa_group_field += '    <input value="0" id="biaya_kirim_multiple_' + ($('.performa_group_field_count').length + 1) + '"  class="performa-input textbox-n input-item-biaya-kirim-multiple biaya_kirim_multiple_number" type="text"  name="biaya_kirim_multiple_' + ($('.performa_group_field_count').length + 1) + '"> ';
-	html_performa_group_field += '   <span class="input-clear-button"></span>';
+	html_performa_group_field += '    <label style="margin-top:-9px; height:17px;">';
+	html_performa_group_field += '      <b>Biaya Kirim</b>';
+	html_performa_group_field += '      <span id="label_status_ongkir_' + ($('.performa_group_field_count').length + 1) + '" style="font-size:12px; margin-left:5px;"></span>';
+	html_performa_group_field += '    </label>';
+	html_performa_group_field += '    <div class="item-input-wrap">';
+	html_performa_group_field += '      <input id="biaya_kirim_multiple_' + ($('.performa_group_field_count').length + 1) + '" class="performa-input textbox-n input-item-biaya-kirim-multiple biaya_kirim_multiple_number" type="text" name="biaya_kirim_multiple_' + ($('.performa_group_field_count').length + 1) + '" readonly style="cursor: not-allowed;">'; 
+	html_performa_group_field += '    </div>';
 	html_performa_group_field += '  </div>';
-	html_performa_group_field += '  </div>';
-	html_performa_group_field += ' </li>';
+	html_performa_group_field += '</li>';
 	html_performa_group_field += '<li class="item-content item-input">';
 	html_performa_group_field += '  <div class="item-inner">';
 	html_performa_group_field += ' <label style="margin-top:-9px; height:17px;"><b>Tanggal Order</b></label>';
@@ -409,14 +599,40 @@ function penjualanGetPerformaData() {
 			app.dialog.preloader('Harap Tunggu');
 		},
 		success: function (data) {
-			if (localStorage.getItem("username") != 'Stn') {
-				$$('#bank option[value="Tunai"]').remove();
-				$$('#bank_1 option[value="Tunai"]').remove();
-			}
 			app.dialog.close();
 			console.log(data.data.length);
 			if (data.data.length != 0) {
 				var penjualan_total = 0;
+				
+				// Ambil data provinsi dan kota dari data pertama untuk auto-select
+				if (data.data.length > 0) {
+					var firstData = data.data[0];
+					id_provinsi_multiple = firstData.id_provinsi;
+					id_kota_multiple = firstData.id_kota;
+					
+					console.log('Auto-select Provinsi ID:', id_provinsi_multiple);
+					console.log('Auto-select Kota ID:', id_kota_multiple);
+					
+					// Set biaya kirim dan status ongkir untuk form multiple
+					var statusOngkir = firstData.status_ongkir || 'pending';
+					var biayaKirim = parseFloat(firstData.biaya_kirim) || 0;
+					
+					console.log('Status Ongkir (Multiple):', statusOngkir, 'Biaya Kirim:', biayaKirim);
+					
+					// Set biaya kirim value (formatted)
+					$$('#biaya_kirim_multiple_1').val(number_format(biayaKirim));
+					
+					// Set hidden field untuk status_ongkir
+					$$('#status_ongkir').val(statusOngkir);
+					
+					// Set hidden field untuk budget ongkir total (jika diperlukan)
+					$$('#budget_ongkir_total').val(biayaKirim);
+					
+					// Set label status dengan warna menggunakan helper function
+					var ongkirLabel = getOngkirStatusLabel(statusOngkir);
+					$$('#label_status_ongkir_1').html('<span style="color:' + ongkirLabel.color + ';">' + ongkirLabel.text + '</span>');
+				}
+				
 				invoice_performa += '<center><table width="97%" border="0" style="border-spacing: 0; background-color:white; color:black;">';
 				invoice_performa += '	<tr>';
 				invoice_performa += '		<td colspan="5" align="center">Invoice Performa</td>';
@@ -431,10 +647,32 @@ function penjualanGetPerformaData() {
 				jQuery.each(data.data, function (i, val) {
 
 					if (localStorage.getItem("type_penjualan_input") == "single") {
-						selectBoxProvinsiSingle();
+						// Untuk single mode
+						id_provinsi_single = val.id_provinsi;
+						id_kota_single = val.id_kota;
+						selectBoxProvinsiSingle(id_provinsi_single);
 						var kode_header_image = val.jenis;
+						
+						// Set biaya kirim dan status ongkir untuk single mode (hanya sekali di iterasi pertama)
+						if (i === 0) {
+							var statusOngkir = val.status_ongkir || 'pending';
+							var biayaKirim = parseFloat(val.biaya_kirim) || 0;
+							
+							console.log('Status Ongkir (Single - penjualanGetPerformaData):', statusOngkir, 'Biaya Kirim:', biayaKirim);
+							
+							// Set biaya kirim value (formatted)
+							$$('#biaya_kirim_single').val(number_format(biayaKirim));
+							
+							// Set hidden field untuk status_ongkir
+							$$('#status_ongkir').val(statusOngkir);
+							
+							// Set label status dengan warna menggunakan helper function
+							var ongkirLabel = getOngkirStatusLabel(statusOngkir);
+							$$('#label_status_ongkir_single').html('<span style="color:' + ongkirLabel.color + ';">' + ongkirLabel.text + '</span>');
+						}
 					} else {
-						selectBoxProvinsiMultiple();
+						// Untuk multiple mode - panggil dengan parameter id_provinsi
+						selectBoxProvinsiMultiple(id_provinsi_multiple);
 						var kode_header_image = val.performa_id;
 					}
 
@@ -529,7 +767,9 @@ function penjualanProcessSingle() {
 					app.dialog.close();
 					$$('.performa-input').val('');
 					var smartSelect = app.smartSelect.get('.smart-select');
-					smartSelect.setValue([])
+					if (smartSelect) {
+						smartSelect.setValue([]);
+					}
 					$$('#total_performa').html(number_format(0));
 					$$('.performa_group_field').empty();
 					$$('#penjualan_performa_get').html("");
@@ -601,36 +841,29 @@ function penjualanProcess() {
 				contentType: false,
 				processData: false,
 				beforeSend: function () {
-					var dialog = app.dialog.progress('Loading ', 0);
-					dialog.setText('0%');
-					var xhr = new window.XMLHttpRequest();
-					xhr.upload.addEventListener("progress", function (evt) {
-
-						if (evt.lengthComputable) {
-							var percentComplete = evt.loaded / evt.total;
-							dialog.setProgress(Math.round(percentComplete * 100));
-							dialog.setText('' + (Math.round(percentComplete * 100)) + '%');
-						}
-
-					}, false);
-					return xhr;
+					app.dialog.preloader('Proses');
 				},
 				success: function (data) {
-					app.dialog.close();
+					console.log(data.status);
 					if (data.status == 'done') {
-						backToSales();
+						app.dialog.close();
 						$$('.performa-input').val('');
 						var smartSelect = app.smartSelect.get('.smart-select');
-						smartSelect.setValue([])
+						if (smartSelect) {
+							smartSelect.setValue([]);
+						}
 						$$('#total_performa').html(number_format(0));
 						$$('.performa_group_field').empty();
 
 						$$('#penjualan_performa_get').html("");
-					} else if (data.status == 'failed') {
 						backToSales();
+					} else if (data.status == 'failed') {
+						app.dialog.close();
 						$$('.performa-input').val('');
 						var smartSelect = app.smartSelect.get('.smart-select');
-						smartSelect.setValue([])
+						if (smartSelect) {
+							smartSelect.setValue([]);
+						}
 						$$('#total_performa').html(number_format(0));
 						$$('.performa_group_field').empty();
 
@@ -639,7 +872,9 @@ function penjualanProcess() {
 					} else if (data.status == 'full') {
 						$$('.performa-input').val('');
 						var smartSelect = app.smartSelect.get('.smart-select');
-						smartSelect.setValue([])
+						if (smartSelect) {
+							smartSelect.setValue([]);
+						}
 						$$('#total_performa').html(number_format(0));
 						$$('.performa_group_field').empty();
 
@@ -713,6 +948,37 @@ function getPerforma() {
 		success: function (data) {
 
 			if (data.data.length != 0) {
+				// Ambil data ongkir dan lokasi dari data pertama
+				if (data.data.length > 0) {
+					var firstData = data.data[0];
+					
+					// Auto-select provinsi dan kota
+					id_provinsi_single = firstData.id_provinsi;
+					id_kota_single = firstData.id_kota;
+					
+					console.log('Auto-select Provinsi ID (Single):', id_provinsi_single);
+					console.log('Auto-select Kota ID (Single):', id_kota_single);
+					
+					// Load provinsi dengan auto-select
+					selectBoxProvinsiSingle(id_provinsi_single);
+					
+					// Set ongkir
+					var statusOngkir = firstData.status_ongkir || 'pending';
+					var biayaKirim = parseFloat(firstData.biaya_kirim) || 0;
+					
+					console.log('Status Ongkir (Single):', statusOngkir, 'Biaya Kirim:', biayaKirim);
+					
+					// Set biaya kirim value (formatted)
+					$$('#biaya_kirim_single').val(number_format(biayaKirim));
+					
+					// Set hidden field untuk status_ongkir
+					$$('#status_ongkir').val(statusOngkir);
+					
+					// Set label status dengan warna menggunakan helper function
+					var ongkirLabel = getOngkirStatusLabel(statusOngkir);
+					$$('#label_status_ongkir_single').html('<span style="color:' + ongkirLabel.color + ';">' + ongkirLabel.text + '</span>');
+				}
+				
 				jQuery.each(data.data, function (i, val) {
 					var no = i + 1;
 					performa_data += '<table border="1">';
@@ -768,7 +1034,7 @@ function getPerforma() {
 }
 
 
-function selectBoxProvinsiMultiple() {
+function selectBoxProvinsiMultiple(selected_id = null) {
 	jQuery.ajax({
 		type: "POST",
 		url: "" + BASE_API + "/get-provinsi-penjualan",
@@ -779,19 +1045,49 @@ function selectBoxProvinsiMultiple() {
 		beforeSend: function () {
 		},
 		success: function (data) {
-			var select_box_kota;
-			select_box_kota += '<option value="" selected>-- Provinsi --</option>';
+			var select_box_provinsi = '';
+			console.log('Selected Provinsi ID:', selected_id);
+			select_box_provinsi += '<option value="">-- Provinsi --</option>';
+			
+			var provinsiFound = false;
 			jQuery.each(data.data, function (i, val) {
-				select_box_kota += '<option value="' + val.id_provinsi + '">' + val.nama_provinsi + '</option>';
+				if (selected_id && selected_id == val.id_provinsi) {
+					console.log('Matching Provinsi:', val.nama_provinsi);
+					select_box_provinsi += '<option value="' + val.id_provinsi + '" selected>' + val.nama_provinsi + '</option>';
+					provinsiFound = true;
+					
+					// Set display text
+					$$('.item_after_provinsi_multiple').html(val.nama_provinsi);
+					$$('#provinsi_multiple').val(val.id_provinsi);
+				} else {
+					select_box_provinsi += '<option value="' + val.id_provinsi + '">' + val.nama_provinsi + '</option>';
+				}
 			});
-			$$('#provinsi_multiple').html(select_box_kota);
+			
+			$$('#provinsi_multiple').html(select_box_provinsi);
+			
+			// Jika provinsi ditemukan dan ada id_kota_multiple, load kota
+			if (provinsiFound && id_kota_multiple) {
+				console.log('Triggering selectBoxKotaMultiple with:', id_kota_multiple);
+				setTimeout(function() {
+					selectBoxKotaMultiple(id_kota_multiple);
+				}, 300);
+			} else if (selected_id) {
+				// Jika provinsi terselect tapi tidak ada id_kota_multiple, tetap load kota
+				setTimeout(function() {
+					selectBoxKotaMultiple();
+				}, 300);
+			}
+			
+			// Set default text jika tidak ada yang selected
+			if (!provinsiFound) {
+				$$('.item_after_provinsi_multiple').html('PROVINSI');
+			}
 		}
 	});
-
-	$$('.item_after_provinsi_multiple').html('PROVINSI');
 }
 
-function selectBoxKotaMultiple() {
+function selectBoxKotaMultiple(selected_id = null) {
 	jQuery.ajax({
 		type: "POST",
 		url: "" + BASE_API + "/get-kota-penjualan",
@@ -804,20 +1100,37 @@ function selectBoxKotaMultiple() {
 			$$('.item_title_kota_multiple').hide();
 		},
 		success: function (data) {
-			var select_box_kota;
-			select_box_kota += '<option value="" selected>-- Kota --</option>';
+			var select_box_kota = '';
+			console.log('Selected Kota ID:', selected_id);
+			select_box_kota += '<option value="">-- Kota --</option>';
+			
+			var kotaFound = false;
 			jQuery.each(data.data, function (i, val) {
-				select_box_kota += '<option value="' + val.id_kota + '">' + val.nama_kota + '</option>';
+				if (selected_id && selected_id == val.id_kota) {
+					console.log('Matching Kota:', val.nama_kota);
+					select_box_kota += '<option value="' + val.id_kota + '" selected>' + val.nama_kota + '</option>';
+					kotaFound = true;
+					
+					// Set display text
+					$$('.item_after_kota_multiple').html(val.nama_kota);
+					$$('#kota_multiple').val(val.id_kota);
+				} else {
+					select_box_kota += '<option value="' + val.id_kota + '">' + val.nama_kota + '</option>';
+				}
 			});
+			
 			$$('#kota_multiple').html(select_box_kota);
+			
+			// Set default text jika tidak ada yang selected
+			if (!kotaFound) {
+				$$('.item_after_kota_multiple').html('KOTA');
+			}
 		}
 	});
-
-	$$('.item_after_kota_multiple').html('KOTA');
 }
 
 
-function selectBoxProvinsiSingle() {
+function selectBoxProvinsiSingle(selected_id = null) {
 	jQuery.ajax({
 		type: "POST",
 		url: "" + BASE_API + "/get-provinsi-penjualan",
@@ -828,19 +1141,49 @@ function selectBoxProvinsiSingle() {
 		beforeSend: function () {
 		},
 		success: function (data) {
-			var select_box_kota;
-			select_box_kota += '<option value="" selected>-- Provinsi --</option>';
+			var select_box_provinsi = '';
+			console.log('Selected Provinsi ID (Single):', selected_id);
+			select_box_provinsi += '<option value="">-- Provinsi --</option>';
+			
+			var provinsiFound = false;
 			jQuery.each(data.data, function (i, val) {
-				select_box_kota += '<option value="' + val.id_provinsi + '">' + val.nama_provinsi + '</option>';
+				if (selected_id && selected_id == val.id_provinsi) {
+					console.log('Matching Provinsi (Single):', val.nama_provinsi);
+					select_box_provinsi += '<option value="' + val.id_provinsi + '" selected>' + val.nama_provinsi + '</option>';
+					provinsiFound = true;
+					
+					// Set display text
+					$$('.item_after_provinsi_single').html(val.nama_provinsi);
+					$$('#provinsi_single').val(val.id_provinsi);
+				} else {
+					select_box_provinsi += '<option value="' + val.id_provinsi + '">' + val.nama_provinsi + '</option>';
+				}
 			});
-			$$('#provinsi_single').html(select_box_kota);
+			
+			$$('#provinsi_single').html(select_box_provinsi);
+			
+			// Jika provinsi ditemukan dan ada id_kota_single, load kota
+			if (provinsiFound && id_kota_single) {
+				console.log('Triggering selectBoxKotaSingle with:', id_kota_single);
+				setTimeout(function() {
+					selectBoxKotaSingle(id_kota_single);
+				}, 300);
+			} else if (selected_id) {
+				// Jika provinsi terselect tapi tidak ada id_kota_single, tetap load kota
+				setTimeout(function() {
+					selectBoxKotaSingle();
+				}, 300);
+			}
+			
+			// Set default text jika tidak ada yang selected
+			if (!provinsiFound) {
+				$$('.item_after_provinsi_single').html('PROVINSI');
+			}
 		}
 	});
-
-	$$('.item_after_provinsi_single').html('PROVINSI');
 }
 
-function selectBoxKotaSingle() {
+function selectBoxKotaSingle(selected_id = null) {
 	jQuery.ajax({
 		type: "POST",
 		url: "" + BASE_API + "/get-kota-penjualan",
@@ -853,14 +1196,54 @@ function selectBoxKotaSingle() {
 			$$('.item_title_kota_single').hide();
 		},
 		success: function (data) {
-			var select_box_kota;
-			select_box_kota += '<option value="" selected>-- Kota --</option>';
+			var select_box_kota = '';
+			console.log('Selected Kota ID (Single):', selected_id);
+			select_box_kota += '<option value="">-- Kota --</option>';
+			
+			var kotaFound = false;
 			jQuery.each(data.data, function (i, val) {
-				select_box_kota += '<option value="' + val.id_kota + '">' + val.nama_kota + '</option>';
+				if (selected_id && selected_id == val.id_kota) {
+					console.log('Matching Kota (Single):', val.nama_kota);
+					select_box_kota += '<option value="' + val.id_kota + '" selected>' + val.nama_kota + '</option>';
+					kotaFound = true;
+					
+					// Set display text
+					$$('.item_after_kota_single').html(val.nama_kota);
+					$$('#kota_single').val(val.id_kota);
+				} else {
+					select_box_kota += '<option value="' + val.id_kota + '">' + val.nama_kota + '</option>';
+				}
 			});
+			
 			$$('#kota_single').html(select_box_kota);
+			
+			// Set default text jika tidak ada yang selected
+			if (!kotaFound) {
+				$$('.item_after_kota_single').html('KOTA');
+			}
 		}
 	});
+}
 
-	$$('.item_after_kota_single').html('KOTA');
+function validateBudgetOngkir() {
+	// FUNGSI INI TIDAK DIPERLUKAN LAGI
+	// Karena semua field ongkir sudah auto-fill dengan nilai penuh dan readonly
+	// Tidak ada lagi validasi "total harus = budget"
+	
+	var budgetTotal = parseFloat($$('#budget_ongkir_total').val()) || 0;
+	
+	// Hitung total ongkir dari semua sales section
+	var totalOngkir = 0;
+	$$('.biaya_kirim_multiple_number').each(function() {
+		var value = $$(this).val().replace(/,/g, '');
+		totalOngkir += parseFloat(value) || 0;
+	});
+	
+	var sisaBudget = budgetTotal - totalOngkir;
+	
+	// Update tampilan sisa (untuk informasi saja)
+	$$('#sisa_budget_ongkir').html(number_format(Math.abs(sisaBudget)));
+	$$('#sisa_budget_ongkir').css('color', '#34c759'); // Hijau
+	
+	return true; // Selalu valid karena auto-fill
 }

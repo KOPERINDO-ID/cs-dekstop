@@ -4714,40 +4714,7 @@ function downloadPointPdf() {
 			var jumlah_point_sales = 0;
 			var no = 0;
 			$.each(data.data, function (i, item) {
-				// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-				var total_pembayaran_validated = 0;
-				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_1);
-				}
-				if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_2);
-				}
-				if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_3);
-				}
-				if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_4);
-				}
-				if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_5);
-				}
-				if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_6);
-				}
-				if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_7);
-				}
-				if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_8);
-				}
-				if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_9);
-				}
-				if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_10);
-				}
-				// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+				var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
 
 				if (kurang_bayar <= 0) {
 					no++
@@ -4861,40 +4828,7 @@ function donwloadPoint() {
 			}
 
 			$.each(data.data, function (i, item) {
-				// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-				var total_pembayaran_validated = 0;
-				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_1);
-				}
-				if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_2);
-				}
-				if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_3);
-				}
-				if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_4);
-				}
-				if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_5);
-				}
-				if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_6);
-				}
-				if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_7);
-				}
-				if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_8);
-				}
-				if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_9);
-				}
-				if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_10);
-				}
-				// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+				var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
 
 				if (kurang_bayar <= 0) {
 					no++
@@ -5280,38 +5214,6 @@ function getPenjualanHeader(page) {
 				} else {
 					var sisa_kirim_sj = parseFloat(item.penjualan_total_qty_detail) - parseFloat(data.surat_jalan_count[item.penjualan_id]);
 				}
-// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-				var total_pembayaran_validated = 0;
-				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_1);
-				}
-				if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_2);
-				}
-				if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_3);
-				}
-				if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_4);
-				}
-				if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_5);
-				}
-				if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_6);
-				}
-				if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_7);
-				}
-				if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_8);
-				}
-				if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_9);
-				}
-				if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_10);
-				}
 
 				if (localStorage.getItem('arsip') == null || localStorage.getItem('arsip') == '') {
 					var arsip_value = "empty";
@@ -5369,9 +5271,8 @@ function getPenjualanHeader(page) {
 				if (arsip_value == 'empty') {
 
 					$("#kolom-kirim-hide").show();
-					// ⭐ PERBAIKAN: Hitung sisa dari pembayaran yang sudah divalidasi
-					var sisa = (item.penjualan_grandtotal) - total_pembayaran_validated;
-					var sisa_fix = number_format(parseFloat((item.penjualan_grandtotal) - total_pembayaran_validated));
+					var sisa = (item.penjualan_grandtotal) - item.penjualan_jumlah_pembayaran;
+					var sisa_fix = number_format(parseFloat((item.penjualan_grandtotal) - item.penjualan_jumlah_pembayaran));
 
 					if (sisa <= 0) {
 						var sisa_value = sisa_fix.toString().replace(/\-/g, '+');
@@ -5381,8 +5282,7 @@ function getPenjualanHeader(page) {
 
 					if (sisa_kirim_sj > 0 || sisa > 0) {
 						no_empty++
-						// ⭐ PERBAIKAN: Cek lunas berdasarkan pembayaran yang sudah divalidasi
-						if (parseFloat(item.penjualan_grandtotal - total_pembayaran_validated) <= 0) {
+						if (parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran) <= 0) {
 							var color_class = "card-color-blue";
 						} else {
 							var color_class = "card-blank";
@@ -5529,8 +5429,7 @@ function getPenjualanHeader(page) {
 							var kurang_kirim = 999;
 						}
 
-						// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+						var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
 						var produksi_status_now = item.produksi_selesai;
 						var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -5594,7 +5493,7 @@ function getPenjualanHeader(page) {
 						penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + item.nama_kota + '</td>';
 						penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + item.type_penjualan + '</td>';
 						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(parseInt(item.penjualan_grandtotal)) + '</td>';
-						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(total_pembayaran_validated) + '</td>';
+						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(item.penjualan_jumlah_pembayaran) + '</td>';
 						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + sisa_value + '</td>';
 
 
@@ -5667,9 +5566,8 @@ function getPenjualanHeader(page) {
 					}
 				} else {
 					$("#kolom-kirim-hide").hide();
-					// ⭐ PERBAIKAN: Hitung sisa dari pembayaran yang sudah divalidasi
-					var sisa = item.penjualan_grandtotal - total_pembayaran_validated;
-					var sisa_fix = number_format(parseFloat(item.penjualan_grandtotal - total_pembayaran_validated));
+					var sisa = item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran;
+					var sisa_fix = number_format(parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran));
 					if (sisa <= 0) {
 						var sisa_value = sisa_fix.toString().replace(/\-/g, '+');
 					} else {
@@ -5677,8 +5575,7 @@ function getPenjualanHeader(page) {
 					}
 					if (sisa_kirim_sj <= 0 && sisa <= 0) {
 						no_arsip++
-						// ⭐ PERBAIKAN: Cek lunas berdasarkan pembayaran yang sudah divalidasi
-						if (parseFloat(item.penjualan_grandtotal - total_pembayaran_validated) <= 0) {
+						if (parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran) <= 0) {
 							var color_class = "card-color-blue";
 						} else {
 							var color_class = "card-blank";
@@ -5825,8 +5722,7 @@ function getPenjualanHeader(page) {
 							var kurang_kirim = 999;
 						}
 
-						// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+						var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
 						var produksi_status_now = item.produksi_selesai;
 						var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -5883,7 +5779,7 @@ function getPenjualanHeader(page) {
 						penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + item.nama_kota + '</td>';
 						penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + item.type_penjualan + '</td>';
 						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(parseInt(item.penjualan_grandtotal)) + '</td>';
-						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(total_pembayaran_validated) + '</td>';
+						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(item.penjualan_jumlah_pembayaran) + '</td>';
 						penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + sisa_value + '</td>';
 
 
@@ -6027,38 +5923,6 @@ function getPenjualanHeaderNotif(page) {
 				} else {
 					var sisa_kirim_sj = parseFloat(item.penjualan_total_qty_detail) - parseFloat(data.surat_jalan_count[item.penjualan_id]);
 				}
-// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-				var total_pembayaran_validated = 0;
-				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_1);
-				}
-				if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_2);
-				}
-				if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_3);
-				}
-				if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_4);
-				}
-				if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_5);
-				}
-				if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_6);
-				}
-				if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_7);
-				}
-				if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_8);
-				}
-				if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_9);
-				}
-				if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-					total_pembayaran_validated += parseFloat(item.pembayaran_10);
-				}
 
 				if (localStorage.getItem('arsip') == null || localStorage.getItem('arsip') == '') {
 					var arsip_value = "empty";
@@ -6105,9 +5969,8 @@ function getPenjualanHeaderNotif(page) {
 				}
 
 
-				// ⭐ PERBAIKAN: Hitung sisa dari pembayaran yang sudah divalidasi
-					var sisa = (item.penjualan_grandtotal) - total_pembayaran_validated;
-				var sisa_fix = number_format(parseFloat((item.penjualan_grandtotal) - total_pembayaran_validated));
+				var sisa = (item.penjualan_grandtotal) - item.penjualan_jumlah_pembayaran;
+				var sisa_fix = number_format(parseFloat((item.penjualan_grandtotal) - item.penjualan_jumlah_pembayaran));
 
 				if (sisa <= 0) {
 					var sisa_value = sisa_fix.toString().replace(/\-/g, '+');
@@ -6117,8 +5980,7 @@ function getPenjualanHeaderNotif(page) {
 
 				if (sisa_kirim_sj > 0 || sisa > 0) {
 					no_empty++
-					// ⭐ PERBAIKAN: Cek lunas berdasarkan pembayaran yang sudah divalidasi
-						if (parseFloat(item.penjualan_grandtotal - total_pembayaran_validated) <= 0) {
+					if (parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran) <= 0) {
 						var color_class = "card-color-blue";
 					} else {
 						var color_class = "card-blank";
@@ -6265,8 +6127,7 @@ function getPenjualanHeaderNotif(page) {
 						var kurang_kirim = 999;
 					}
 
-					// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+					var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
 					var produksi_status_now = item.produksi_selesai;
 					var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -6322,7 +6183,7 @@ function getPenjualanHeaderNotif(page) {
 					penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + lokasi + '</td>';
 					penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + item.type_penjualan + '</td>';
 					penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(parseInt(item.penjualan_grandtotal)) + '</td>';
-					penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(total_pembayaran_validated) + '</td>';
+					penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + number_format(item.penjualan_jumlah_pembayaran) + '</td>';
 					penjualan_value += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell ' + color_class + '">' + sisa_value + '</td>';
 
 

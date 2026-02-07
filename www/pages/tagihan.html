@@ -1,0 +1,842 @@
+<div class="page" data-name="tagihan" class="">
+
+  <div class="popup input-alamat-kirim-delay">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Alamat <span id="nama-client-alamat-delay"></span></div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p id="back-input-alamat-kirim-delay" class="text-add-colour-white link popup-close"
+                data-popup=".input-alamat-kirim-delay">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <form id="input_alamat_kirim_delay_popup">
+            <div class="list" style="margin-top: 10px;">
+              <ul style="padding: 10px;">
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px;"><b>Foto Produksi Selesai</b></label>
+                    <div class="item-input-wrap">
+                      <center>
+                        <img onclick="zoom_view_foto_bayar(this.src);" width="200px"
+                          style="border-radius:10px;margin-top:5px;" id="file_foto_produksi_selesai_delay_view" />
+                        <br>
+                      </center>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="alamat_sekarang_delay_popup" name="alamat_sekarang_delay_popup" required
+                        readonly disabled validate>
+                      <input type="hidden" id="penjualan_id_delay_alamat" name="penjualan_id_delay_alamat" required
+                        validate>
+                      <input type="hidden" id="client_id_delay_alamat" name="client_id_delay_alamat" required validate>
+                      <input type="hidden" id="karyawan_id_delay_alamat" name="karyawan_id_delay_alamat" required
+                        validate>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Kota</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="kota_kirim_delay_popup" name="kota_kirim_delay_popup" required readonly
+                        disabled validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="hp_delay_alamat" name="hp_delay_alamat" required readonly disabled
+                        validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <textarea type="text" value="" id="alamat_kirim_delay_popup" readonly disabled
+                        name="alamat_kirim_delay_popup" required validate></textarea>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="tgl_kirim_cabang_delay" name="tgl_kirim_cabang_delay" required readonly
+                        validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Tgl Req Kirim</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="tgl_req_kirim_cabang_delay" name="tgl_req_kirim_cabang_delay" required
+                        readonly validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
+                    <div class="item-input-wrap">
+                      <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_delay"
+                        name="keterangan_cabang_delay" readonly required validate></textarea>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Packing</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="packing_notif_alamat" name="packing_notif_alamat" required readonly
+                        disabled validate>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================ -->
+  <!-- POPUP PEMBAYARAN TAGIHAN - SAMA PERSIS DENGAN PENJUALAN.HTML -->
+  <!-- ============================================================================ -->
+  <!-- File: tagihan.html -->
+  <!-- Ganti seluruh popup detail-pembayaran-tagihan dengan kode ini -->
+  <!-- ============================================================================ -->
+
+  <!-- POPUP DETAIL PEMBAYARAN TAGIHAN -->
+  <div class="popup detail-pembayaran-tagihan">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">History Pembayaran</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p id="back-detail-pembayaran-tagihan" class="text-add-colour-white link popup-close"
+                data-popup=".detail-pembayaran-tagihan">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top bg-dark-gray-medium">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card">
+                    <h3 class="text-align-center">
+                      <span id="popup-pembayaran-tagihan-td-nospk"></span>,
+                      <span id="popup-pembayaran-tagihan-td-client_nama"></span>
+                    </h3>
+                    <form id="pembayaran_form_tagihan">
+                      <div class="card-content" style="overflow-x:auto; width:100%;">
+                        <table align="center" width="100%" border="0"
+                          style="border-collapse: collapse; border:1px solid white;">
+                          <thead>
+                            <tr>
+                              <td colspan="3" width="37%" height="10px" class="numeric-cell text-align-left">Tanggal
+                              </td>
+                              <td width="13%" class="numeric-cell text-align-left">:</td>
+                              <td width="50%" id="tanggal_pembayaran_tagihan_choose"
+                                class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" height="10px" class="numeric-cell text-align-left">Penjualan</td>
+                              <td class="numeric-cell text-align-left">:</td>
+                              <td id="popup-pembayaran-tagihan-penjualan_grandtotal"
+                                class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" height="10px" class="numeric-cell text-align-left">Ongkir</td>
+                              <td class="numeric-cell text-align-left">:</td>
+                              <td id="popup-pembayaran-tagihan-ongkir" class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="numeric-cell text-align-left">Dibayar</td>
+                              <td class="numeric-cell text-align-left">:</td>
+                              <td id="popup-pembayaran-tagihan-penjualan_jumlah_pembayaran"
+                                class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="numeric-cell text-align-left">Sisa</td>
+                              <td class="numeric-cell text-align-left">:</td>
+                              <td id="popup-pembayaran-tagihan-penjualan_kekurangan"
+                                class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="numeric-cell text-align-left">Status</td>
+                              <td class="numeric-cell text-align-left">:</td>
+                              <td id="popup-pembayaran-tagihan-penjualan_status_pembayaran"
+                                class="numeric-cell text-align-right"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="5" id="tanggal_pembayaran_tagihan_choose_td" align="left"
+                                style="border-collapse: collapse;"></td>
+                            </tr>
+                          </thead>
+                          <tbody class="pembayaran_tagihan_single_div">
+                            <tr class="bg-dark-gray-medium">
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-center">Bayar</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Tanggal</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Bank</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Jumlah</td>
+                            </tr>
+
+                            <!-- BAYAR 1 -->
+                            <tr id="content_bayar1_tagihan">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 1</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl1" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-1" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_1" name="bank_tagihan_1" value=""
+                                  class="hide_bank bank_tagihan_1 bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-1" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_1_dp_awal"
+                                  name="pembayaran_tagihan_1_dp_awal" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_1_dp_awal');" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 2 -->
+                            <tr id="content_bayar2_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 2</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl2" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-2" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_2" name="bank_tagihan_2" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-2" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_2"
+                                  name="pembayaran_tagihan_2" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_2');" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 3 -->
+                            <tr id="content_bayar3_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 3</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl3" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-3" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_3" name="bank_tagihan_3" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-3" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_3"
+                                  name="pembayaran_tagihan_3" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_3');" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 4 -->
+                            <tr id="content_bayar4_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 4</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl4" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-4" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_4" name="bank_tagihan_4" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-4" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_4');"
+                                  type="text" id="pembayaran_tagihan_4" name="pembayaran_tagihan_4"
+                                  placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 5 -->
+                            <tr id="content_bayar5_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 5</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl5" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-5" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_5" name="bank_tagihan_5" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-5" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_5');" id="pembayaran_tagihan_5"
+                                  name="pembayaran_tagihan_5" placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 6 -->
+                            <tr id="content_bayar6_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 6</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl6" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-6" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_6" name="bank_tagihan_6" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-6" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_6');"
+                                  type="text" id="pembayaran_tagihan_6" name="pembayaran_tagihan_6"
+                                  placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 7 -->
+                            <tr id="content_bayar7_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 7</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl7" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-7" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_7" name="bank_tagihan_7" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-7" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_7');"
+                                  type="text" id="pembayaran_tagihan_7" name="pembayaran_tagihan_7"
+                                  placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 8 -->
+                            <tr id="content_bayar8_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 8</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl8" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-8" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_8" name="bank_tagihan_8" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-8" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_8');"
+                                  type="text" id="pembayaran_tagihan_8" name="pembayaran_tagihan_8"
+                                  placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 9 -->
+                            <tr id="content_bayar9_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 9</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl9" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-9" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_9" name="bank_tagihan_9" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-9" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_9');"
+                                  type="text" id="pembayaran_tagihan_9" name="pembayaran_tagihan_9"
+                                  placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <!-- BAYAR 10 -->
+                            <tr id="content_bayar10_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 10</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl10" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-10" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_10" name="bank_tagihan_10" value=""
+                                  class="hide_bank bank_pembayaran_tagihan">
+                                  <option value="BCA">BCA (0183129551 A/N Sutono)</option>
+                                  <option value="BRI">BRI (058401031165502 A/N Sutono)</option>
+                                  <option value="Mandiri">Mandiri (1410005187422 A/N Sutono)</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)
+                                  </option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-10" class="numeric-cell">
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_10');" id="pembayaran_tagihan_10"
+                                  name="pembayaran_tagihan_10" placeholder="Belum Dibayar" required>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="5" class="numeric-cell text-align-left">
+                                <div class="list no-hairlines-md">
+                                  <ul>
+                                    <li class="item-content item-input">
+                                      <div class="item-inner">
+                                        <div class="item-input-wrap">
+                                          <input type="hidden" id="pembayaran-tagihan-penjualan_id"
+                                            name="pembayaran-tagihan-penjualan_id" />
+                                          <input type="hidden" id="pembayaran-tagihan-client_id"
+                                            name="pembayaran-tagihan-client_id" />
+                                          <center>
+                                            <i onclick="prosesPembayaranTagihan();" style="width:20%;"
+                                              class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Proses</i>
+                                          </center>
+                                          <span class="input-clear-button"></span>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </form>
+                    <br>
+                    <div id="history_pembayaran_tagihan_multiple" style="overflow-x:auto; width:100%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP UPLOAD FOTO PEMBAYARAN TAGIHAN -->
+  <div class="popup upload-foto-pembayaran-tagihan">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Foto Bukti Bayar</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" data-popup=".upload-foto-pembayaran-tagihan">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content">
+                    <table align="center" width="100%">
+                      <tr>
+                        <td>
+                          <center>
+                            <h3>Foto Bukti Bayar</h3>
+                          </center>
+                          <center>
+                            <img onclick="zoom_view_foto_bayar(this.src);" width="100px" style="border-radius:10px;"
+                              id="file_foto_pembayaran_tagihan_view_now" />
+                            <br>
+                          </center>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <table width="450px">
+                      <tbody>
+                        <div class="card">
+                          <form id="upload_foto_pembayaran_tagihan_form">
+                            <input type="hidden" id="penjualan_id_foto_pembayaran_tagihan"
+                              name="penjualan_id_foto_pembayaran_tagihan" value="">
+                            <input type="hidden" id="foto_urutan_tagihan" name="foto_urutan_tagihan" value="">
+                            <center>
+                              <input class="btn-payment-penjualan" style="width:90%; border:1px solid gray;" type="file"
+                                name="file_foto_pembayaran_tagihan" id="file_foto_pembayaran_tagihan" value="">
+                            </center>
+                            <center>
+                              <img width="100px" style="border-radius:10px;" id="file_foto_pembayaran_tagihan_view" />
+                              <br>
+                            </center>
+                          </form>
+                          <button id="btn_upload_foto_selesai_tagihan" onclick="updateFotoPembayaranTagihanProcess()"
+                            class="btn-payment-penjualan text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold">Simpan</button>
+                        </div>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP EDIT PEMBAYARAN TAGIHAN -->
+  <div class="popup edit-pembayaran-tagihan">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Edit Pembayaran</div>
+            <div class="right">
+              <p class="text-add-colour-white link popup-close" data-popup=".edit-pembayaran-tagihan">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top bg-dark-gray-medium">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card">
+                    <h3 class="text-align-center" id="edit_pembayaran_tagihan_title"></h3>
+                    <form id="edit_pembayaran_tagihan_form">
+                      <input type="hidden" id="edit_pembayaran_tagihan_id" />
+                      <input type="hidden" id="edit_foto_pembayaran_tagihan_ke" />
+
+                      <div class="list">
+                        <ul>
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Jumlah</div>
+                              <div class="item-input-wrap">
+                                <input type="text" id="edit_pembayaran_tagihan_nominal"
+                                  style="text-align: right; border-color:lightgray; width:100%;" />
+                              </div>
+                            </div>
+                          </li>
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Bank</div>
+                              <div class="item-input-wrap">
+                                <select id="edit_pembayaran_tagihan_bank" style="background-color:#1c1c1d;">
+                                  <option value="BCA">BCA</option>
+                                  <option value="BRI">BRI</option>
+                                  <option value="Mandiri">Mandiri</option>
+                                  <option value="Mandiri Bisnis">Mandiri Bisnis</option>
+                                  <option value="Tunai">Tunai</option>
+                                </select>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Tanggal</div>
+                              <div class="item-input-wrap">
+                                <input type="date" id="edit_pembayaran_tagihan_tgl" style="background-color:#1c1c1d;" />
+                              </div>
+                            </div>
+                          </li>
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Keterangan</div>
+                              <div class="item-input-wrap">
+                                <input type="text" id="edit_pembayaran_tagihan_keterangan"
+                                  style="background-color:#1c1c1d;" />
+                              </div>
+                            </div>
+                          </li>
+                          <li class="edit_keterangan_reject_tagihan_li" style="display:none;">
+                            <div class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label" style="color:#ff3b30;">Keterangan Reject</div>
+                                <div class="item-input-wrap">
+                                  <textarea id="edit_keterangan_reject_tagihan" readonly
+                                    style="background-color:#2c2c2e; color:#ff3b30;"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <center>
+                        <button type="button" onclick="editPembayaranTagihanProses()"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                          style="width:50%;">Simpan</button>
+                      </center>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================ -->
+  <!-- END OF POPUP PEMBAYARAN TAGIHAN -->
+  <!-- ============================================================================ -->
+   
+  <!-- Scrollable page content-->
+  <div class="page-content theme-dark">
+    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+    <!-- And somewhere in DOM -->
+
+    <div class="card">
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+            href="/client">Broadcast</a>
+        </div>
+        <div class="col col-bordertext-bold"><a class="text-add-colour-white"
+            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        </div>
+        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay
+            - Go</a></div>
+        <div class="col col-border text-bold bg-dark-gray-medium notif-merah-tagihan"><a class="text-add-colour-white"
+            href="/tagihan">Tagihan</a>
+        </div>
+        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        </div>
+        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>
+        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
+        </div>
+
+      </div>
+      <div class="card-content" style="width:100%;">
+        <table cellspacing="1" cellpadding="1" width="100%">
+          <thead class="bg-dark-gray-medium text-align-center">
+            <tr>
+              <th colspan="2" style="padding:5px;">
+                <div class="filter-perusahaan-container">
+                  <select id="perusahaan_penjualan_tagihan_filter" name="perusahaan_penjualan_tagihan_filter"
+                    style="width:100%;">
+                  </select>
+
+                  <!-- Info perusahaan yang dipilih (opsional) -->
+                  <div id="selected-perusahaan-info" class="selected-info" style="display:none;">
+                    <span id="selected-perusahaan-text"></span>
+                  </div>
+
+                  <!-- Button reset (opsional) -->
+                  <button type="button" class="btn-reset-filter" onclick="resetSelect2Perusahaan()"
+                    style="display:none;">
+                    <i class="f7-icons">xmark_circle</i> Reset Filter
+                  </button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+        </table>
+        <table cellspacing="1" cellpadding="1" width="100%">
+          <thead class=" bg-dark-gray-medium text-align-center">
+            <tr>
+              <th width="50%" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+                <center>
+                  <select onchange="getDataTagihan();" style="font-weight:bold;text-align: center;"
+                    name="transaksi_tagihan_bulan" class="transaksi_tagihan_bulan text-add-colour-black-soft"
+                    id="transaksi_tagihan_bulan">
+                  </select>
+                </center>
+              </th>
+              <th width="50%" class="label-cell bg-dark-gray-young"
+                style="padding:5px; font-size:16px; font-weight:bold;">
+                <center>
+                  <select onchange="getDataTagihan();" class="transaksi_tagihan_years text-add-colour-black-soft"
+                    style="font-weight:bold;text-align: center;" name="transaksi_tagihan_years"
+                    id="transaksi_tagihan_years">
+                  </select>
+                </center>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="row">
+        <div style="overflow-x:auto; width:100%;margin-top:5px;">
+          <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
+            <tr>
+              <td align="center" width="5%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">No</td>
+              <td align="center" width="10%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">SPK</td>
+              <td align="center" width="15%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Client</td>
+              <td align="center" width="10%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Tgl Selesai Kirim</td>
+              <td align="center" width="10%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Kota</td>
+              <td align="center" width="8%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Nilai Jual</td>
+              <td align="center" width="8%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Bayar</td>
+              <td align="center" width="8%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Sisa</td>
+              <td align="center" width="8%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young" colspan="2">Opsi</td>
+            </tr>
+            <tbody id="data_status_notif_tagihan">
+              <!-- Data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

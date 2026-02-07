@@ -95,8 +95,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Tgl Req Kirim</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="tgl_req_kirim_cabang_delay" name="tgl_req_kirim_cabang_delay" required readonly
-                        validate>
+                      <input type="text" id="tgl_req_kirim_cabang_delay" name="tgl_req_kirim_cabang_delay" required
+                        readonly validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -107,6 +107,17 @@
                     <div class="item-input-wrap">
                       <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_delay"
                         name="keterangan_cabang_delay" readonly required validate></textarea>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <label style="height:17px; margin-top:-9px;"><b>Packing</b></label>
+                    <div class="item-input-wrap">
+                      <label></label>
+                      <input type="text" id="packing_notif_alamat" name="packing_notif_alamat" required readonly
+                        disabled validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -134,16 +145,56 @@
         <div class="col col-bordertext-bold"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white"
+        <div class="col col-border bg-dark-gray-medium text-bold notif-merah-delay"><a class="text-add-colour-white"
             href="/delay-go">Delay - Go</a></div>
+        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
+
       </div>
+      <!-- <div class="card-content" style="width:100%;">
+        <table cellspacing="1" cellpadding="1" width="100%">
+          <thead class="bg-dark-gray-medium text-align-center">
+            <tr>
+              <th colspan="2" style="padding:5px;">
+                <center>
+                  <select id="perusahaan_penjualan_filter" name="perusahaan_penjualan_filter"
+                    style="width:100%;"></select>
+                </center>
+              </th>
+            </tr>
+          </thead>
+        </table>
+        <table cellspacing="1" cellpadding="1" width="100%">
+          <thead class=" bg-dark-gray-medium text-align-center">
+            <tr>
+              <th width="50%" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+                <center>
+                  <select onchange="filterDataTransaksiDelayGo();" style="font-weight:bold;text-align: center;"
+                    name="transaksi_penjualan_bulan_delay" class="transaksi_penjualan_bulan_delay text-add-colour-black-soft"
+                    id="transaksi_penjualan_bulan_delay">
+                  </select>
+                </center>
+              </th>
+              <th width="50%" class="label-cell bg-dark-gray-young"
+                style="padding:5px; font-size:16px; font-weight:bold;">
+                <center>
+                  <select onchange="filterDataTransaksiDelayGo();"
+                    class="transaksi_penjualan_years_delay text-add-colour-black-soft"
+                    style="font-weight:bold;text-align: center;" name="transaksi_penjualan_years_delay"
+                    id="transaksi_penjualan_years_delay">
+                  </select>
+                </center>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div> -->
       <div class="row">
         <div style="overflow-x:auto; width:100%;margin-top:5px;">
           <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
@@ -151,7 +202,7 @@
               <td align="center" width="5%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">No</td>
-              <td align="center" width="15%"
+              <td align="center" width="10%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">SPK</td>
               <td align="center" width="15%"
@@ -160,19 +211,22 @@
               <td align="center" width="10%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">Kota</td>
-              <td align="center" width="10%"
+              <td align="center" width="7%"
+                style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                class="label-cell bg-dark-gray-young">Hari</td>
+              <td align="center" width="8%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">Tgl Kirim</td>
-              <td align="center" width="10%"
+              <td align="center" width="8%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">Tgl Req Kirim</td>
               <td align="center" width="10%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">No HP</td>
-              <td align="center" width="20%"
+              <td align="center" width="30%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">Alamat Kirim</td>
-              <td align="center" width="10%"
+              <td align="center" width="8%"
                 style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                 class="label-cell bg-dark-gray-young">Opsi</td>
             </tr>

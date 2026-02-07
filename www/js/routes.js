@@ -113,6 +113,10 @@ var routes = [
     url: './pages/prospek.html',
   },
   {
+    path: '/tagihan',
+    url: './pages/tagihan.html',
+  },
+  {
     path: '/form/',
     url: './pages/form.html',
   },

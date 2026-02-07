@@ -2427,125 +2427,6 @@
       </div>
     </div>
 
-    <div class="popup detail-sales">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-              <div class="title">Detail Sales</div>
-              <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" data-popup=".detail-sales" id="close-detail-sales"><i
-                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
-              </div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="card card-outline margin-top">
-              <div class="card-content">
-                <div class="row">
-                  <div class="col-100">
-                    <div class="card-content" style="overflow-x:auto; width:100%;margin-top:5px;" id="detail_cs"></div>
-                    <br>
-                    <h3 class="text-align-center">
-                      <span id="popup-penjualan-nospk"></span>,
-                      <span id="popup-penjualan-client_nama_header"></span>
-                    </h3>
-                    <div class="card-content" style="overflow-x:auto; width:100%;margin-bottom: 10px;">
-                      <table width="100%">
-                        <tbody>
-
-                          <tr>
-                            <td width="35%" class="numeric-cell text-align-left">Perusahaan</td>
-                            <td width="15%" class="numeric-cell">:</td>
-                            <td width="60%" id="popup-penjualan-td-client_nama" class="numeric-cell"></td>
-                          </tr>
-
-                          <tr>
-                            <td class="numeric-cell text-align-left">Person</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-client_person" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Posisi</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-client_posisi" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Telpon / Wa</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-client_telpon" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Sales</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-karyawan_nama" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Pabrik</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-lokasi_pabrik" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Wilayah</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-wilayah" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Tanggal Order</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_tanggal" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Tanggal Kirim</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_selesai" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Jumlah Pesan</td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_jumlah" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Penjualan
-                            </td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_grandtotal" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Dibayar
-                            </td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_jumlah_pembayaran" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Sisa
-                            </td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_kekurangan" class="numeric-cell"></td>
-                          </tr>
-                          <tr>
-                            <td class="numeric-cell text-align-left">Status
-                            </td>
-                            <td class="numeric-cell">:</td>
-                            <td id="popup-penjualan-penjualan_status_pembayaran" class="numeric-cell"></td>
-                          </tr>
-                          <div class="card" id="detail_sales_data">
-                          </div>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="text-align-center" id="detail_cs_button" style="margin-bottom: 10px;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="popup detail-pembayaran">
       <div class="view">
         <div class="page">
@@ -3505,6 +3386,398 @@
       </div>
     </div>
 
+    <div class="popup popup-log-whatsapp">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title"><b>Log Whatsapp <span id="invoice_fee"></span></b>
+              </div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" id="back_popup_log_whatsapp"
+                  data-popup=".popup-log-whatsapp"><i style="margin-right:7px;"
+                    class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card-content" style="overflow-x:auto;width:100%;">
+              <table cellspacing="1" cellpadding="1" width="100%" style="padding:10px;margin-top: 10px;">
+                <thead class="bg-dark-gray-medium text-align-center">
+                  <tr>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No.</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="30%">Tanggal Hubungi</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="30%">Nama CS</th>
+                  </tr>
+                </thead>
+                <tbody class="text-align-center" id="tanggal_hubungi_wa">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP NOTIFIKASI PRODUKSI SELESAI (Auto-show) -->
+    <div class="popup popup-produksi-selesai-notif">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Notifikasi Produksi Selesai</div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" data-popup=".popup-produksi-selesai-notif">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card" style="margin: 10px;">
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table width="800px" style="border-collapse: collapse;">
+                  <thead class="bg-dark-gray-young text-align-center">
+                    <tr>
+                      <th style="border: 1px solid gray; padding: 8px;">No SPK</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Perusahaan</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Jenis</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Tanggal Order</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Tanggal Kirim</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Nilai Jual</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="produksi-selesai-notif-tbody" class="text-align-center">
+                    <!-- Data akan diisi oleh JavaScript -->
+                    <!-- Detail row akan ditambahkan secara dinamis -->
+                  </tbody>
+                </table>
+                <div class="row margin-top margin-bottom">
+                  <div class="col-100">
+                    <button class="button button-fill bg-color-blue" style="width: 100%;"
+                      onclick="confirmProduksiSelesai();">
+                      <i class="f7-icons" style="font-size: 18px; margin-right: 5px;">checkmark_circle_fill</i>
+                      OK - TANDAI SUDAH DILIHAT
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP TAMPUNGAN DATA PRODUKSI SELESAI (Button SELESAI) -->
+    <div class="popup tampungan-data-produksi-selesai">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Data Produksi Selesai</div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" data-popup=".tampungan-data-produksi-selesai">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card" style="margin: 10px;">
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table width="800px" style="border-collapse: collapse;">
+                  <thead class="bg-dark-gray-young text-align-center">
+                    <tr>
+                      <th style="border: 1px solid gray; padding: 8px;">No</th>
+                      <th style="border: 1px solid gray; padding: 8px;">No SPK</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Perusahaan</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Jenis</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Nilai Jual</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Status</th>
+                      <th style="border: 1px solid gray; padding: 8px;">Opsi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tampungan-produksi-selesai-tbody" class="text-align-center">
+                    <!-- Data akan diisi oleh JavaScript -->
+                    <!-- Detail row akan ditambahkan secara dinamis -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row margin-top" id="empty-state-tampungan" style="display: none;">
+              <div class="col-100 text-align-center">
+                <p style="color: gray; font-size: 16px; padding: 20px;">
+                  <i class="f7-icons" style="font-size: 50px;">tray</i><br>
+                  Belum ada data produksi selesai
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP DETAIL ITEM PRODUKSI -->
+    <div class="popup popup-detail-item-produksi">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail Item Produksi</div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" data-popup=".popup-detail-item-produksi">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top bg-dark-gray-medium">
+              <div class="card-header">
+                <h3 class="margin-15" id="detail-item-title">Detail Item - SPK: <span id="detail-spk-number"></span>
+                </h3>
+              </div>
+              <div class="card-content">
+                <!-- Statistik -->
+                <div class="row" style="margin: 10px;">
+                  <div class="col-25">
+                    <div class="card" style="background: #4CAF50; color: white; text-align: center;">
+                      <div class="card-content" style="padding: 10px;">
+                        <h2 id="stat-selesai">0</h2>
+                        <p style="margin: 0; font-size: 12px;">Selesai</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-25">
+                    <div class="card" style="background: #2196F3; color: white; text-align: center;">
+                      <div class="card-content" style="padding: 10px;">
+                        <h2 id="stat-proses">0</h2>
+                        <p style="margin: 0; font-size: 12px;">Proses</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-25">
+                    <div class="card" style="background: #FF9800; color: white; text-align: center;">
+                      <div class="card-content" style="padding: 10px;">
+                        <h2 id="stat-body">0</h2>
+                        <p style="margin: 0; font-size: 12px;">Body</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-25">
+                    <div class="card" style="background: #9E9E9E; color: white; text-align: center;">
+                      <div class="card-content" style="padding: 10px;">
+                        <h2 id="stat-noted">0</h2>
+                        <p style="margin: 0; font-size: 12px;">Noted</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabel Detail -->
+                <div class="card" style="margin: 10px;">
+                  <div class="card-content" style="overflow-x:auto; width:100%;">
+                    <table width="100%" style="border-collapse: collapse;">
+                      <thead class="bg-dark-gray-young text-align-center">
+                        <tr>
+                          <th style="border: 1px solid gray; padding: 8px;">No</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Jenis</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Qty</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Ukuran</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Warna</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Status</th>
+                          <th style="border: 1px solid gray; padding: 8px;">Tgl Selesai</th>
+                        </tr>
+                      </thead>
+                      <tbody id="detail-item-produksi-tbody" class="text-align-center">
+                        <!-- Data akan diisi oleh JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+     POPUP DATA EXPEDISI (REVISED)
+     ======================================== -->
+    <div class="popup popup-expedisi">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title"><b>Data Expedisi</b></div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" data-popup=".popup-expedisi">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-content">
+            <!-- Search Box -->
+            <div class="card" style="margin: 10px 10px 5px 10px;">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="list no-hairlines-md">
+                      <ul>
+                        <li class="item-content item-input">
+                          <div class="item-inner">
+                            <div class="item-input-wrap">
+                              <input type="text" id="search-expedisi"
+                                placeholder="Ketik nama expedisi, PIC, atau alamat..." onkeyup="searchExpedisi();">
+                              <span class="input-clear-button"></span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="card" style="margin: 5px 10px 10px 10px;">
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table width="100%" style="border-collapse: collapse; min-width: 1000px;">
+                  <thead class="bg-dark-gray-young text-align-center">
+                    <tr>
+                      <th style="border: 1px solid gray; padding: 10px;" width="5%">No</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="18%">Nama Expedisi</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="12%">PIC</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="18%">Alamat</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="12%">No Telp</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="12%">Opsi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="expedisi-tbody" class="text-align-center">
+                    <!-- Data akan diisi oleh JavaScript -->
+                    <tr>
+                      <td colspan="7" style="padding: 30px; text-align: center; color: gray;">
+                        <i class="f7-icons" style="font-size: 50px;">arrow_clockwise</i><br>
+                        <span style="font-size: 14px;">Memuat data expedisi...</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Info Footer -->
+            <div class="block block-strong" style="margin: 5px 10px 10px 10px;">
+              <p style="font-size: 12px; color: gray; text-align: center; margin: 0;">
+                <i class="f7-icons">info_circle</i>
+                Klik tombol <strong>Detail</strong> untuk melihat history pengiriman
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+     POPUP HISTORY EXPEDISI (REVISED)
+     ======================================== -->
+    <div class="popup popup-history-expedisi">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">
+                <b>History - <span id="nama-expedisi-history">...</span></b>
+              </div>
+              <div class="right">
+                <p class="text-add-colour-white link popup-close" data-popup=".popup-history-expedisi">
+                  <i class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-content">
+            <!-- Hidden field untuk menyimpan ID expedisi yang sedang aktif -->
+            <input type="hidden" id="current-expedisi-id" value="">
+
+            <!-- Data Table -->
+            <div class="card" style="margin: 10px;">
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table width="100%" style="border-collapse: collapse; min-width: 1200px;">
+                  <thead class="bg-dark-gray-young text-align-center">
+                    <tr>
+                      <th style="border: 1px solid gray; padding: 10px;" width="4%">No</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="8%">Tanggal</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="10%">PIC</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="9%">No Telp</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="10%">Rute</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="11%">Pengirim</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="11%">Penerima</th>
+                      <th style="border: 1px solid gray; padding: 10px;" width="10%">Nominal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="history-expedisi-tbody" class="text-align-center">
+                    <!-- Data akan diisi oleh JavaScript -->
+                    <tr>
+                      <td colspan="11" style="padding: 30px; text-align: center; color: gray;">
+                        <i class="f7-icons" style="font-size: 50px;">arrow_clockwise</i><br>
+                        <span style="font-size: 14px;">Memuat history pengiriman...</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty State -->
+              <div id="empty-state-history" style="display: none; padding: 40px 20px;">
+                <div class="text-align-center">
+                  <i class="f7-icons" style="font-size: 80px; color: #ccc;">tray</i>
+                  <h3 style="color: gray; margin: 10px 0;">Belum Ada History</h3>
+                  <p style="color: gray; font-size: 14px;">
+                    Tidak ada data history pengiriman untuk expedisi ini
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Info Footer -->
+            <div class="block block-strong" style="margin: 5px 10px 10px 10px;">
+              <p style="font-size: 12px; color: gray; text-align: center; margin: 0;">
+                <i class="f7-icons">info_circle</i>
+                Data diurutkan berdasarkan tanggal transaksi terbaru
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+     LOADING OVERLAY (Optional)
+     ======================================== -->
+    <div id="loading-overlay"
+      style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 99999; justify-content: center; align-items: center;">
+      <div style="text-align: center; color: white;">
+        <div class="preloader" style="width: 42px; height: 42px; margin: 0 auto 15px auto;"></div>
+        <p style="font-size: 14px; margin: 0;">Loading...</p>
+      </div>
+    </div>
+
+
     <div class="card">
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
         <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white" id="page_sales"
@@ -3516,14 +3789,17 @@
         <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
+        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay
+            - Go</a></div>
+        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white"
+            href="/tagihan">Tagihan</a>
+        </div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
         <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/absen-sales">Absensi</a></div>
         <div class="col col-border text-bold"><a class="text-add-colour-white" href="/prospek">Prospek</a></div> -->
       </div>
@@ -3575,6 +3851,30 @@
               </tr>
             </thead>
           </table>
+          <table cellspacing="1" cellpadding="1" width="100%">
+            <thead class=" bg-dark-gray-medium text-align-center">
+              <tr>
+                <th width="50%" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+                  <center>
+                    <select onchange="filterDataTransaksiPerforma();" style="font-weight:bold;text-align: center;"
+                      name="transaksi_performa_bulan" class="transaksi_performa_bulan text-add-colour-black-soft"
+                      id="transaksi_performa_bulan">
+                    </select>
+                  </center>
+                </th>
+                <th width="50%" class="label-cell bg-dark-gray-young"
+                  style="padding:5px; font-size:16px; font-weight:bold;">
+                  <center>
+                    <select onchange="filterDataTransaksiPerforma();"
+                      class="transaksi_performa_years text-add-colour-black-soft"
+                      style="font-weight:bold;text-align: center;" name="transaksi_performa_years"
+                      id="transaksi_performa_years">
+                    </select>
+                  </center>
+                </th>
+              </tr>
+            </thead>
+          </table>
         </div>
         <div class="card-content">
           <div class="row">
@@ -3583,13 +3883,14 @@
                 <thead class="bg-dark-gray-medium text-align-center">
                   <tr>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Tanggal</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Proforma</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Perusahaan</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Telp</th>
-                    <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Sales</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Proforma</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Perusahaan</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Telp</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Sales</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">Pabrik</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">Tipe Jual</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Opsi</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="14%" colspan="2">Contact</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Download</th>
                     <th class="label-cell" style="border-bottom:1px solid gray;" width="7%">Edit</th>
                   </tr>
@@ -3600,8 +3901,9 @@
             </div>
             <div class="col-20">
               <div class="display-flex flex-direction-column justify-content-center">
-                <img src="img/logo/logo_koperindo.png" width="250px"
-                  style="margin-top:25px;margin-right:5px;margin-left:-5px;" />
+                <a href="/katalog">
+                  <img src="img/logo/logo_koperindo.png" width="250px"
+                    style="margin-top:25px;margin-right:5px;margin-left:-5px;" /></a>
               </div>
             </div>
           </div>
@@ -3617,6 +3919,19 @@
           </div>
           <table width="20%">
             <tr>
+              <td align="right">
+                <button onclick='showTableProduksiSelesai();' data-popup='.tampungan-data-produksi-selesai'
+                  class='popup-open btn-color-blueWhite button-small col button text-bold'>SELESAI</button>
+              </td>
+              <td align="right">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24"
+                    onclick="expedisiShow();">
+                    <path fill="currentColor"
+                      d="M18 18.5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m1.5-9l1.96 2.5H17V9.5m-11 9A1.5 1.5 0 0 1 4.5 17A1.5 1.5 0 0 1 6 15.5A1.5 1.5 0 0 1 7.5 17A1.5 1.5 0 0 1 6 18.5M20 8h-3V4H3c-1.11 0-2 .89-2 2v11h2a3 3 0 0 0 3 3a3 3 0 0 0 3-3h6a3 3 0 0 0 3 3a3 3 0 0 0 3-3h2v-5z" />
+                  </svg>
+                </span>
+              </td>
               <td align="right">
                 <i class="text-align-right f7-icons" id="arsipBtn" onclick="arsipSalesLocalstorage();"
                   style="font-size:30px;">alarm</i>
@@ -3641,11 +3956,38 @@
           <table cellspacing="1" cellpadding="1" width="100%">
             <thead class="bg-dark-gray-medium text-align-center">
               <tr>
-                <th colspan="2" style="padding:5px;">
+                <th colspan="2" style="padding:0px;">
                   <center>
-                    <input onkeyup="doSearchByPerusahaanPenjualan()" type="text"
-                      style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
-                      id="perusahaan_penjualan_filter" name="perusahaan_penjualan_filter" placeholder="Cari Perusahaan">
+                    <!-- <select id="perusahaan_penjualan_filter" name="perusahaan_penjualan_filter"
+                      style="width:100%;"></select> -->
+                    <input type="text" onkeyup="filterDataTransaksiPenjualan();" id="perusahaan_penjualan_filter"
+                      name="perusahaan_penjualan_filter"
+                      style="padding:5px;width:100%;height:30px;background-color: white;color: black;"
+                      placeholder="Cari Perusahaan">
+                  </center>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table cellspacing="1" cellpadding="1" width="100%">
+            <thead class=" bg-dark-gray-medium text-align-center">
+              <tr>
+                <th width="50%" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+                  <center>
+                    <select onchange="filterDataTransaksiPenjualan();" style="font-weight:bold;text-align: center;"
+                      name="transaksi_penjualan_bulan" class="transaksi_penjualan_bulan text-add-colour-black-soft"
+                      id="transaksi_penjualan_bulan">
+                    </select>
+                  </center>
+                </th>
+                <th width="50%" class="label-cell bg-dark-gray-young"
+                  style="padding:5px; font-size:16px; font-weight:bold;">
+                  <center>
+                    <select onchange="filterDataTransaksiPenjualan();"
+                      class="transaksi_penjualan_years text-add-colour-black-soft"
+                      style="font-weight:bold;text-align: center;" name="transaksi_penjualan_years"
+                      id="transaksi_penjualan_years">
+                    </select>
                   </center>
                 </th>
               </tr>
@@ -3657,7 +3999,7 @@
           <table cellspacing="1" cellpadding="1" width="1900px">
             <thead class="bg-dark-gray-medium text-align-center">
               <tr>
-                <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Kirim</th>
+                <th class="label-cell" style="border-bottom:1px solid gray;" width="8%" id="kolom-kirim-hide">Kirim</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="6%">Tgl Kirim</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">SPK</th>
                 <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Perusahaan</th>

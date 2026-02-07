@@ -19,6 +19,8 @@ function getDataUser() {
 					app.dialog.close();
 				}, 1000);
 			} else {
+				localStorage.setItem("versioon_app_now", "1.01");
+				app.dialog.preloader('Berhasil Login');
 				app.dialog.close();
 				jQuery('#logout_logo').show();
 				startTimeMain();
@@ -31,13 +33,12 @@ function getDataUser() {
 				localStorage.setItem("jabatan_kantor", data.jabatan);
 				localStorage.setItem("sales_kota", data.kota);
 				localStorage.setItem("lokasi_pabrik_sales", data.lokasi_pabrik);
-				app.dialog.preloader('Berhasil Login');
 
 				$$('#karyawan_nama_header').html('<b>' + data.karyawan_nama + '</b>');
 				console.log(localStorage.getItem("jabatan_kantor"));
 
 				if (data.user_position == 'CS') {
-					return app.views.main.router.navigate('/sales');
+					return app.views.main.router.navigate('/notif');
 				} else {
 					app.dialog.preloader('Jabatan Tidak Sesuai');
 					setTimeout(function () {

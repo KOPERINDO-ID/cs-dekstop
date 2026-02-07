@@ -1,3 +1,32 @@
+function changeFilterSubMenu(menu) {
+    $$('.pointSalesFilterMenu').removeClass('bg-dark-gray-orange');
+    $$('.komisiFilterMenu').removeClass('bg-dark-gray-orange');
+    $$('.emoneyFilterMenu').removeClass('bg-dark-gray-orange');
+
+    switch (menu) {
+        case 'komisi':
+            $$('#submenu-point-sales').hide();
+            $$('#submenu-emoney').hide();
+            $$('.komisiFilterMenu').addClass('bg-dark-gray-orange');
+            $$('#submenu-komisi').show();
+            getDataKomisi();
+            break;
+        case 'emoney':
+            $$('#submenu-point-sales').hide();
+            $$('#submenu-komisi').hide();
+            $$('.emoneyFilterMenu').addClass('bg-dark-gray-orange');
+            $$('#submenu-emoney').show();
+            getDataEmoney();
+            break;
+        default:
+            $$('#submenu-emoney').hide();
+            $$('#submenu-komisi').hide();
+            $$('.pointSalesFilterMenu').addClass('bg-dark-gray-orange');
+            $$('#submenu-point-sales').show();
+            break;
+    }
+}
+
 function pointSalesClick(karyawan_id, karyawan_nama) {
     jQuery('#karyawan_nama_hidden').val(karyawan_nama);
     jQuery('#karyawan_id_hidden').val(karyawan_id);
@@ -33,7 +62,6 @@ function getFileEntrySales(imgUri) {
         createNewFileEntrySales(imgUri);
     });
 }
-
 
 function toDataURLSales(path, callback) {
     window.resolveLocalFileSystemURL(path, gotFile, fail);
@@ -80,7 +108,6 @@ function openCameraFotoPoint(id) {
     }, options);
 }
 
-
 function setOptionsSales(srcType) {
     var options = {
         // Some common settings are 20, 50, and 100
@@ -113,8 +140,6 @@ function detailSalesAdmin(nama, hp, alamat) {
     jQuery('#nama_sales').html(nama);
     jQuery('#no_hp_sales').html(hp);
     jQuery('#alamat_sales').html(alamat);
-
-
 }
 
 function uploadFotoPoint(penjualan_id, bulan, tahun, isi_foto, id_pembayaran_point) {
@@ -127,8 +152,6 @@ function uploadFotoLunasPoint(penjualan_id, bulan, tahun, isi_foto, id_pembayara
 }
 
 function getDataFotoPoint(id_pembayaran_point) {
-
-
     var BASE_PATH_IMAGE_FOTO_POINT = BASE_API.replace('/api', '');
     jQuery.ajax({
         type: 'POST',
@@ -194,7 +217,6 @@ function getDataFotoPoint(id_pembayaran_point) {
     });
 }
 
-
 function updateFotoPointProcess() {
     var formData = new FormData(jQuery("#upload_foto_point")[0]);
     formData.append('file_foto_point', localStorage.getItem("file_foto_point"));
@@ -240,7 +262,6 @@ function updateFotoPointProcess() {
         }
     });
 }
-
 
 function updateFotoLunasPointProcess() {
     var formData = new FormData(jQuery('#upload_foto_lunas_point_admin')[0]);
@@ -454,8 +475,10 @@ function downloadPointSales() {
 
             $.each(data.data, function (i, item) {
                 no++
-                jumlah_point_sales += (parseFloat(item.penjualan_grandtotal) * item.presentase_omset) / 100;
-                total_point_sales += parseFloat(item.penjualan_grandtotal);
+                if (item.point_valid_manager == 1) {
+                    total_point_sales += parseFloat(item.penjualan_grandtotal);
+                    jumlah_point_sales += (parseFloat(item.penjualan_grandtotal) * item.presentase_omset) / 100;
+                }
                 var kurang_bayar = parseFloat(item.penjualan_grandtotal - item.penjualan_jumlah_pembayaran);
                 var count_foto_bayar_miss = 0;
                 var text_foto_bayar_miss = "";
@@ -477,11 +500,9 @@ function downloadPointSales() {
                 point_popup += '</td>';
                 point_popup += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + number_format((parseFloat(item.penjualan_grandtotal) * item.presentase_omset) / 100) + '</td>';
 
-
-
                 point_popup += '</tr>';
 
-
+                console.log(total_point_sales);
             });
 
             point_popup += '<tr>';
@@ -512,7 +533,6 @@ function downloadPointSales() {
         }
     });
 }
-
 
 function pointSales() {
     jQuery('#karyawan_nama_point').html(jQuery('#karyawan_nama_hidden').val());
@@ -657,7 +677,7 @@ function validPointManager(penjualan_id, values) {
     })
 }
 
-function getSalesAdmin(page) { 
+function getSalesAdmin(page) {
     var year_now = new Date().getFullYear();
     if (jQuery('#point_year').val() == '') {
         var year = year_now;
@@ -683,7 +703,7 @@ function getSalesAdmin(page) {
             var warna_button = "";
             $.each(data.data, function (i, item) {
 
-                if (data.foto[item.karyawan_id] != null && data.foto[item.karyawan_id].foto_point != null ) {
+                if (data.foto[item.karyawan_id] != null && data.foto[item.karyawan_id].foto_point != null) {
                     warna_button = 'btn-color-blueLightWhite';
                 } else {
                     warna_button = 'text-add-colour-black-soft bg-dark-gray-young';
@@ -695,7 +715,7 @@ function getSalesAdmin(page) {
                 user_sales_value += '<td align="right" class="label-cell" style="border-bottom :1px solid gray; border-left :1px solid gray;" width="20%">' + number_format(data.get_total[item.karyawan_id].total.bonus) + '</td>';
                 if (data.get_total[item.karyawan_id].total.bonus != null) {
                     user_sales_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell" width="10%">';
-                    user_sales_value += '   <button  class="' + warna_button + ' button-small col button text-bold popup-open"  data-popup=".point-sales" onclick="pointSalesClick(\'' + item.karyawan_id + '\',\'' + item.karyawan_nama + '\');">Point</button>';
+                    user_sales_value += '   <button  class="' + warna_button + ' button-small col button text-bold popup-open" data-popup=".point-sales" onclick="pointSalesClick(\'' + item.karyawan_id + '\',\'' + item.karyawan_nama + '\');">Point</button>';
                     user_sales_value += '</td>';
                 } else {
                     user_sales_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell" width="10%">';
@@ -777,7 +797,376 @@ function readURLFotoLunas(input) {
     }
 }
 
+/** Fungsi Baru */
+function getDataKomisi() {
+    const formData = new FormData();
 
+    formData.append('month', 'empty');
+    formData.append('perusahaan_komisi', 'empty');
 
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + "/get-komisi-internal",
+        dataType: 'JSON',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function (response) {
+            app.dialog.close();
+            console.log(response);
+            if (response && response.data && Array.isArray(response.data)) {
+                let tableBody = '';
+                let no_row = 0;
 
+                response.data.forEach((item) => {
+                    no_row++;
+
+                    const id = item.client_id || '';
+                    const tanggal_claim = item.tanggal_claim || '';
+                    const nama_klien = item.nama_klien || '-';
+                    const total_klaim = item.grand_total_claim || 0;
+                    const foto_claim = item.foto_claim || '';
+
+                    tableBody += '<tr>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + no_row + '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + formatDateToDayMonth(tanggal_claim) + '</td>';
+                    tableBody += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + nama_klien + '</td>';
+                    tableBody += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + number_format(total_klaim) + '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
+                    tableBody += `   <button class="button-small col button popup-open text-bold text-add-colour-black-soft bg-dark-gray-young" data-popup=".detail-komisi" onclick="getDetailKomisi(${id}, ${foto_claim});">DETAIL</button>`;
+                    tableBody += '</td>';
+                    tableBody += '</tr>';
+                });
+
+                app.$('#total-data-komisi').text(no_row);
+                app.$('#tabel_data_komisi').html(tableBody);
+            } else {
+                app.dialog.alert("Data tidak valid atau kosong!", "Peringatan");
+                console.error("Invalid data:", response);
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("Gagal mengambil data! Status: " + status);
+            console.error("Error details:", xhr.responseText);
+        }
+    });
+}
+
+function getDetailKomisi(detailId, detailPicture = null) {
+    const formData = new FormData();
+
+    // formData.append('id_claim', detailId);
+    formData.append('id_claim', 22);
+    console.log("Detail Picture: ", detailPicture);
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + "/get-komisi-internal-detail",
+        dataType: 'JSON',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function (response) {
+            app.dialog.close();
+            console.log(response);
+            if (response && response.data && Array.isArray(response.data)) {
+                let tableBody = '';
+                let no_row = 0;
+                let presentase_komisi = response.data[0].komisi;
+                let total_nominal_komisi = 0;
+
+                if (detailPicture != null) {
+                    app.$('#container-upload-bukti-komisi').css('display', 'none');
+                    app.$('#btn-lihat-bukti-komisi').css('display', 'flex');
+                }
+
+                response.data.forEach((item) => {
+                    no_row++;
+
+                    const id = item.client_id || '';
+                    const tanggal_penjualan = item.tanggal_penjualan || '';
+                    const penjualan_id = item.penjualan_id || '-';
+                    const omzet = item.total_omzet || 0;
+                    const nominal_komisi = omzet * (presentase_komisi * 0.01);
+
+                    total_nominal_komisi += nominal_komisi;
+
+                    tableBody += '<tr>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray; border-left:1px solid gray;" class="label-cell">' + no_row + '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + formatDateToDayMonth(tanggal_penjualan) + '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + penjualan_id + '</td>';
+                    tableBody += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + number_format(omzet) + '</td>';
+                    tableBody += '<td align="right" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + number_format(nominal_komisi) + '</td>';
+                    tableBody += '</tr>';
+                });
+
+                app.$('.presentase-komisi').text(presentase_komisi);
+                app.$('.nominal-komisi').text(number_format(total_nominal_komisi));
+                app.$('#tabel_detail_komisi').html(tableBody);
+            } else {
+                app.dialog.alert("Data tidak valid atau kosong!", "Peringatan");
+                console.error("Invalid data:", response);
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("Gagal mengambil data! Status: " + status);
+            console.error("Error details:", xhr.responseText);
+        }
+    });
+}
+
+function triggerUploadBuktiKomisi() {
+    const input = document.getElementById('bukti-upload');
+    input.click();
+}
+
+function uploadBuktiKomisi(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + '/update-foto-claim',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            alert("MASUK");
+            app.dialog.preloader('Mengunggah file...');
+        },
+        success: function (response) {
+            app.dialog.close();
+            app.dialog.alert('File berhasil diunggah!', 'Sukses');
+            console.log('Response:', response);
+
+            app.$('#file-upload').val('');
+        },
+        error: function (xhr, status, error) {
+            app.dialog.close();
+            app.dialog.alert('Gagal mengunggah file: ' + error + ' (Status: ' + xhr.status + ')', 'Error');
+            console.error('Error details:', xhr.responseText);
+        }
+    });
+}
+
+$(document).on('popupOpen', function (popup) {
+    if (popup.el.querySelector('#container-upload-bukti-komisi')) {
+        app.$('#btn-upload-bukti-komisi').on('click', function () {
+            console.log('Upload button clicked');
+            triggerUploadBuktiKomisi();
+        });
+    }
+});
+
+function getDataEmoney() {
+    jQuery.ajax({
+        type: 'GET',
+        url: BASE_API3 + "/emoney",
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function (response) {
+            app.dialog.close();
+            if (response && response.data && Array.isArray(response.data)) {
+                let tableBody = '';
+                let no_row = 0;
+                // console.log("E-Money: ", response);
+
+                response.data.forEach((item) => {
+                    no_row++;
+
+                    const id = item.id || '';
+                    const company = item.company || '-';
+                    const name = item.name || '-';
+                    const phone = item.phone || '-';
+                    const status = item.status || '-';
+                    const valid = item.is_valid || null;
+
+                    const opsiButtonStyle = valid == true ? 'btn-color-orange' : 'text-add-colour-black-soft bg-dark-gray-young';
+
+                    let statusButtonStyle;
+                    switch (status.toUpperCase()) {
+                        case 'HOLD':
+                            statusButtonStyle = 'text-add-colour-black-soft bg-dark-gray-young';
+                            break;
+                        case 'PROSES':
+                            statusButtonStyle = 'btn-color-green';
+                            break;
+                        case 'SELESAI':
+                            statusButtonStyle = 'btn-color-blue';
+                            break;
+                        default:
+                            statusButtonStyle = 'text-add-colour-black-soft bg-dark-gray-young';
+                    }
+
+                    tableBody += '<tr>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + no_row + '</td>';
+                    tableBody += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + company + '</td>';
+                    tableBody += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + name + '</td>';
+                    tableBody += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">' + phone + '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
+                    tableBody += `   <button class="button-small col button popup-open text-bold ${opsiButtonStyle}" data-popup=".detail-emoney" onclick="getDetailEmoney(${id});">DETAIL</button>`;
+                    tableBody += '</td>';
+                    tableBody += '<td align="center" style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
+                    tableBody += `   <button class="button-small col button popup-open text-bold ${statusButtonStyle}" data-popup=".popup-delivery-emoney" onclick="getDetailEmoney(${id});">${status}</button>`;
+                    tableBody += '</td>';
+                    tableBody += '</tr>';
+                });
+
+                app.$('#total-data-emoney').text(no_row);
+                app.$('#tabel_data_emoney').html(tableBody);
+            } else {
+                app.dialog.alert("Data tidak valid atau kosong!", "Peringatan");
+                console.error("Invalid data:", response);
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("Gagal mengambil data! Status: " + status);
+            console.error("Error details:", xhr.responseText);
+        }
+    });
+}
+
+function getDetailEmoney(detailId) {
+    const formData = new FormData();
+
+    formData.append('id', detailId);
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API3 + '/emoney/detail',
+        dataType: 'JSON',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function (response) {
+            app.dialog.close();
+
+            const defaultImage = './img/logo/logo-not-found.png';
+            const invalidUrl = 'https://be.order.devkoperindo.com/storage/emoney';
+
+            if (response.logo && response.logo !== invalidUrl) {
+                app.$('#img-logo').attr('src', response.logo);
+            } else {
+                app.$('#img-logo').attr('src', defaultImage);
+            }
+
+            if (response.emoney && response.emoney !== invalidUrl) {
+                app.$('#img-emoney').attr('src', response.emoney);
+            } else {
+                app.$('#img-emoney').attr('src', defaultImage);
+            }
+
+            app.$('.nama-perusahaan').text(response.company);
+            app.$('#val-perusahaan').text(response.company);
+            app.$('#val-telepon').text(response.phone);
+            app.$('#val-pic').text(response.name);
+            app.$('#val-alamat').text(response.address);
+
+            app.$('#container-btn-valid').html(`
+                <button class="button btn-color-blueWhite button-small text-bold popup-open"
+                id="btn-valid" onclick="validEmoney(${response.id});">VALID</button>
+            `);
+
+            app.$('#nama_input_valid_emoney').val(response.company).attr('disabled', true);
+            app.$('#alamat_input_valid_emoney').val(response.address).attr('disabled', true);
+
+            app.$('#container-btn-delivery').html(`
+                <button onclick="deliveryEmoney(${response.id});"
+                class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                id="button_save_valid_emoney">SIMPAN
+                </button>
+            `);
+        },
+        error: function (xhr, status, error) {
+            app.dialog.close();
+            app.dialog.alert('Gagal: ' + error + ' (Status: ' + xhr.status + ')', 'Error');
+        }
+    })
+}
+
+function validEmoney(detailId) {
+    const formData = new FormData();
+
+    formData.append('id', detailId);
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API3 + '/emoney/update-validation',
+        dataType: 'JSON',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function () {
+            app.dialog.close();
+            app.$('#closeDetailEmoney').click();
+            getDataEmoney();
+        },
+        error: function (xhr, status, error) {
+            app.dialog.close();
+            app.dialog.alert('Gagal: ' + error + ' (Status: ' + xhr.status + ')', 'Error');
+        }
+    })
+};
+
+function deliveryEmoney(detailId) {
+    const formData = new FormData();
+
+    formData.append('emoney_id', detailId);
+    formData.append('name', app.$('#nama_input_valid_emoney').val());
+    formData.append('address', app.$('#alamat_input_valid_emoney').val());
+    formData.append('document_number', app.$('#nomor_sj_valid_emoney').val());
+    formData.append('document_file', app.$('#sj_valid_emoney').val());
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API3 + '/emoney/delivery',
+        dataType: 'JSON',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function () {
+            app.dialog.close();
+            app.$('#closeDeliveryEmoney').click();
+            getDataEmoney();
+        }
+
+    })
+
+}
+
+/** Helper Function */
+function formatDateToDayMonth(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0'); // Mendapatkan tanggal dengan 2 digit
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()]; // Mendapatkan nama bulan singkat
+    return `${day}-${month}`;
+}
+
+function searchEmoneyByCompany() {
+    const searchQuery = app.$('#search-company').val().trim();
+    getDataEmoney(searchQuery);
+}
+
+let searchTimeout;
+$(document).on('input', '#search-company', function () {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(searchEmoneyByCompany, 500);
+});
 

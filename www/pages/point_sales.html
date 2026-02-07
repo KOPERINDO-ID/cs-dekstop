@@ -64,6 +64,7 @@
         </div>
       </div>
     </div>
+
     <div class="popup upload-foto-point">
       <div class="view">
         <div class="page">
@@ -361,79 +362,451 @@
       </div>
     </div>
 
-    <div class="card">
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+    <div class="popup detail-komisi">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail Komisi (<span class="presentase-komisi"></span>%) - Rp. <span
+                  class="nominal-komisi"></span>
+              </div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="backbutton" class="text-add-colour-white link popup-close"><i style="margin-right:5px;"
+                    data-popup=".detail-emoney" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card">
+              <div class="no-margin padding">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="item-input-wrap" id="container-upload-bukti-komisi">
+                      <input type="file" id="bukti-upload" accept="image/*" style="display: none;" />
+                      <button class="button button-small text-add-colour-black-soft bg-dark-gray-young text-bold"
+                        id="btn-upload-bukti-komisi" onclick="triggerUploadBuktiKomisi()">UPLOAD</button>
+                    </div>
+                    <button
+                      class="button button-small btn-color-blue flex-direction-row justify-content-center text-bold"
+                      style="display:none;" id="btn-lihat-bukti-komisi" onclick="alert('Button Upload Clicked!')">
+                      <i class="f7-icons padding-right-half">doc_text_viewfinder</i>
+                      LIHAT BUKTI
+                    </button>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <table cellspacing="1" cellpadding="1" width="100%">
+                    <thead class="bg-dark-gray-medium text-align-center">
+                      <th class="label-cell" width="5%"
+                        style="border-bottom:1px solid gray; border-left:1px solid gray;">No</th>
+                      <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Tgl Penjualan</th>
+                      <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Penjualan ID</th>
+                      <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Omzet</th>
+                      <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Nominal Komisi</th>
+                    </thead>
+                    <tbody id="tabel_detail_komisi"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
-            href="/client">Broadcast</a>
-        </div>
-        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
-            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
-        </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
-        </div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
-        </div>
-        <div class="col col-border bg-dark-gray-medium  text-bold "><a class="text-add-colour-white"
-            href="/point-sales">Point</a>
-        </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/katalog">Katalog</a></div>
       </div>
-
-      <!-- <div style="text-align: center; margin-top:5px;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold bg-dark-gray-medium"><a class="text-add-colour-white"
-            href="/point-sales">Sales</a>
-        </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-produksi">Produksi</a>
-        </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-admin">Admin</a>
-        </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/point-sj">Sj</a>
-        </div>
-      </div> -->
-      <table cellspacing="1" cellpadding="1" width="100%" style="margin-top:5px;">
-        <thead class="bg-dark-gray-medium text-align-center">
-          <tr>
-            <th colspan="3" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
-              <center>
-                <select onchange="getSalesAdmin()" style="font-weight:bold;" name="point_bulan_admin"
-                  class="text-add-colour-black-soft" id="point_bulan_admin">
-                </select>
-              </center>
-            </th>
-            <th colspan="4" class="label-cell bg-dark-gray-young"
-              style="padding:5px; font-size:16px; font-weight:bold;">
-              <center>
-                <select onchange="getSalesAdmin()" class="point_years text-add-colour-black-soft"
-                  style="font-weight:bold;" name="point_year" id="point_year">
-                  <option value="" selected>Pilih Tahun</option>
-                </select>
-              </center>
-            </th>
-          </tr>
-        </thead>
-      </table>
-
     </div>
 
+    <div class="popup popup-delivery-emoney">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Pengiriman E-Money - <span class="nama-perusahaan"></span></div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="closeDeliveryEmoney" class="text-add-colour-white link popup-close"><i style="margin-right:5px;"
+                    data-popup=".popup-delivery-emoney" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card">
+              <div class="no-margin padding">
+                <form id="form-valid-emoeny">
+                  <div class="list">
+                    <ul>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <label style="height:17px;"><b>Nama Perusahaan</b></label>
+                          <div class="item-input-wrap">
+                            <label></label>
+                            <input type="text" id="nama_input_valid_emoney" placeholder="Nama"
+                              name="nama_input_valid_emoney" value="" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <label style="height:17px;"><b>Alamat</b></label>
+                          <div class="item-input-wrap">
+                            <label></label>
+                            <input type="text" id="alamat_input_valid_emoney" placeholder="Alamat"
+                              name="alamat_input_valid_emoney" value="" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <label style="height:17px;"><b>Nomor Surat Jalan</b></label>
+                          <div class="item-input-wrap">
+                            <label></label>
+                            <input type="text" id="nomor_sj_valid_emoney" placeholder="Nomor Surat Jalan"
+                              name="nomor_sj_valid_emoney" value="" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner">
+                          <label style="height:17px;"><b>Surat Jalan</b></label>
+                          <input type="file" style="width:90%;margin-top:12px;" required validate name="sj_valid_emoney"
+                            id="sj_valid_emoney" />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+                <div class="padding" id="container-btn-delivery">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <div class="card-content" style="overflow-x:auto; width:100%;">
-      <table cellspacing="1" cellpadding="1" width="100%">
-        <thead class="bg-dark-gray-medium text-align-center">
+    <div class="popup detail-emoney">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-medium">
+              <div class="title">Detail E-Money - <span class="nama-perusahaan"></span></div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p id="closeDetailEmoney" class="text-add-colour-white link popup-close"><i style="margin-right:5px;"
+                    data-popup=".detail-emoney" class="f7-icons">xmark_rectangle_fill</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card">
+              <div class="no-margin padding">
+                <div class="row">
+                  <div class="col-50 display-flex justify-content-center flex-direction-column text-align-center">
+                    <div class="text-bold" style="font-size: 16px;">Foto Logo</div>
+                    <span>
+                      <img src="#" alt="Logo Perusahaan" id="img-logo" height="125px">
+                    </span>
+                  </div>
+                  <span class="custom-vr"></span>
+                  <div class="col-50 display-flex justify-content-center flex-direction-column text-align-center">
+                    <div class="text-bold" style="font-size: 16px;">Foto E-Money</div>
+                    <span>
+                      <img src="#" alt="Gambar E-Money" id="img-emoney" height="125px">
+                    </span>
+                  </div>
+                </div>
+                <hr class=" custom-hr">
+                <div class="row">
+                  <div class="col-50">Perusahaan</div>
+                  <span>:</span>
+                  <div class="col-50" id="val-perusahaan"></div>
+                </div>
+                <hr class="custom-hr">
+                <div class="row">
+                  <div class="col-50">Nomor Telepon</div>
+                  <span>:</span>
+                  <div class="col-50" id="val-telepon"></div>
+                </div>
+                <hr class="custom-hr">
+                <div class="row">
+                  <div class="col-50">Nama PIC</div>
+                  <span>:</span>
+                  <div class="col-50" id="val-pic"></div>
+                </div>
+                <hr class="custom-hr">
+                <div class="row">
+                  <div class="col-50">Alamat</div>
+                  <span>:</span>
+                  <div class="col-50" id="val-alamat"></div>
+                </div>
+                <hr class="custom-hr">
+                <div class="row" style="margin-top:32px;">
+                  <div class="col-50">
+                    <button class="button card-color-red button-small text-bold" id="backButton"
+                      data-popup=".detail-emoney">REJECT</button>
+                  </div>
+                  <div class="col-50" id="container-btn-valid">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-          <tr>
-            <th class="label-cell" style="border-bottom:1px solid gray;" width="20%">Nama</th>
-            <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Total</th>
-            <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Point</th>
+    <div class="card" style="margin-top: 2px !important;">
+      <!-- Navbar -->
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border">
+          <a class="text-add-colour-white text-bold" id="page_sales" href="/Sales"
+            style="display: flex; justify-content: center; align-items: center;">
+            Sales
+          </a>
+        </div>
+        <div class="col col-border">
+          <a class="text-add-colour-white text-bold" href="/client" onclick="changeFilterMenu('sales',0);"
+            style="display: flex; justify-content: center; align-items: center;">
+            Broadcast
+          </a>
+        </div>
+        <div class="col col-border merah-notif-all">
+          <a class="text-bold text-add-colour-white" href="/notif" onclick="changeFilterMenuNotif('proforma');"
+            style="display: flex; justify-content: center; align-items: center;">
+            Notif
+          </a>
+        </div>
+        <div class="col col-border notif-merah-delay">
+          <a class="text-bold text-add-colour-white" href="/delay-go"
+            style="display: flex; justify-content: center; align-items: center;">
+            Delay - Go
+          </a>
+        </div>
+        <div class="col col-border notif-merah-tagihan">
+          <a class="text-bold text-add-colour-white" href="/tagihan"
+            style="display: flex; justify-content: center; align-items: center;">
+           Tagihan
+          </a>
+        </div>
+        <div class="col col-border">
+          <a class="text-bold text-add-colour-white" href="/kpi"
+            style="display: flex; justify-content: center; align-items: center;">
+            KPI
+          </a>
+        </div>
+        <div class="col col-border">
+          <a class="text-bold text-add-colour-white" href="/tools"
+            style="display: flex; justify-content: center; align-items: center;">
+            Tools
+          </a>
+        </div>
+        <div class="col col-border bg-dark-gray-orange">
+          <a class="text-bold text-add-colour-white" href="/point-sales"
+            style="display: flex; justify-content: center; align-items: center;">
+            Point
+          </a>
+        </div>
+      </div>
+      <!-- End of Navbar -->
 
-          </tr>
-        </thead>
-        <tbody class="text-align-center" id="user_sales_value">
-        </tbody>
-      </table>
-      <div style="margin:5px; font-size:20px;" id="pagination_button" class="text-align-center">
+      <!-- Sub Menu -->
+      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+        <div class="col col-border pointSalesFilterMenu bg-dark-gray-orange">
+          <a class="text-add-colour-white text-bold" onclick="changeFilterSubMenu('pointSales');"
+            style="display: flex; justify-content: center; align-items: center;">
+            Sales
+          </a>
+        </div>
+        <div class="col col-border komisiFilterMenu">
+          <a class="text-add-colour-white text-bold" onclick="changeFilterSubMenu('komisi');"
+            style="display: flex; justify-content: center; align-items: center;">
+            Korin
+          </a>
+        </div>
+        <div class="col col-border emoneyFilterMenu">
+          <a class="text-add-colour-white text-bold" onclick="changeFilterSubMenu('emoney');"
+            style="display: flex; justify-content: center; align-items: center;">
+            E-Money
+          </a>
+        </div>
+      </div>
+      <!-- End of Sub Menu -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+      <div class="col-100">
+        <!-- Sub Menu Point Sales -->
+        <div id="submenu-point-sales">
+          <table cellspacing="1" cellpadding="1" width="100%" style="margin-top:0px;">
+            <thead class="bg-dark-gray-medium text-align-center">
+              <tr>
+                <th colspan="3" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px; ">
+                  <center>
+                    <select onchange="getSalesAdmin()" style="font-weight:bold;" name="point_bulan_admin"
+                      class="text-add-colour-black-soft" id="point_bulan_admin">
+                    </select>
+                  </center>
+                </th>
+                <th colspan="4" class="label-cell bg-dark-gray-young"
+                  style="padding:5px; font-size:16px; font-weight:bold;">
+                  <center>
+                    <select onchange="getSalesAdmin()" class="point_years text-add-colour-black-soft"
+                      style="font-weight:bold;" name="point_year" id="point_year">
+                      <option value="" selected>Pilih Tahun</option>
+                    </select>
+                  </center>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <div class="card-content" style="overflow-x:auto; width:100%;">
+            <table cellspacing="1" cellpadding="1" width="100%">
+              <thead class="bg-dark-gray-medium text-align-center">
+
+                <tr>
+                  <th class="label-cell" style="border-bottom:1px solid gray;" width="20%">Nama</th>
+                  <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Total</th>
+                  <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Point</th>
+
+                </tr>
+              </thead>
+              <tbody class="text-align-center" id="user_sales_value">
+              </tbody>
+            </table>
+            <div style="margin:5px; font-size:20px;" id="pagination_button" class="text-align-center">
+            </div>
+          </div>
+        </div>
+        <!-- Sub Menu Komisi -->
+        <div id="submenu-komisi" style="display: none;">
+          <div class="card-content">
+            <div class="card border-actived">
+              <div class="card-header bg-dark-gray-young" style="padding:5px;">
+                <table width="100%">
+                  <tr>
+                    <td>
+                      <div class="data-table-title" style="height:2px;">
+                        <h3 class="margin-15">Data | <span id="total-data-komisi"></span></h3>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="data-table-title" style="margin-right: -10px;">
+                        <label id="change-color-eye" onclick="activeEye();"><i class="f7-icons">eye_slash</i></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="data-table-title" style="margin-right: -10px;">
+                        <label id="change-color-eye" onclick="reloadData();"><i
+                            class="f7-icons">arrow_2_circlepath_circle_fill</i></label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="card-content" style="width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center">
+                    <tr>
+                      <th style="padding:5px;" width="100%">
+                        <center>
+                          <input onkeyup="alert('Cari Nama Pelanggan...')" type="text"
+                            style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
+                            id="perusahaan_broadcast" name="perusahaan_broadcast" placeholder="Cari Perusahaan">
+                        </center>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="card-content" style="overflow-x:auto;width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center">
+                    <th class="label-cell" width="5%" style="border-bottom:1px solid gray;">No</th>
+                    <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Tanggal
+                      Klaim</th>
+                    <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Nama Klien
+                    </th>
+                    <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Total Klaim
+                    </th>
+                    <th class="label-cell" width="23.75%" style="border-bottom:1px solid gray;">Opsi
+                    </th>
+                  </thead>
+                  <tbody id="tabel_data_komisi">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sub Menu E-Money -->
+        <div id="submenu-emoney" style="display: none;">
+          <div class="card-content">
+            <div class="card border-actived">
+              <div class="card-header bg-dark-gray-young" style="padding:5px;">
+                <table width="100%">
+                  <tr>
+                    <td>
+                      <div class="data-table-title" style="height:2px;">
+                        <h3 class="margin-15">Data | <span id="total-data-emoney"></span></h3>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="data-table-title" style="margin-right: -10px;">
+                        <label id="change-color-eye" onclick="activeEye();"><i class="f7-icons">eye_slash</i></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="data-table-title" style="margin-right: -10px;">
+                        <label id="change-color-eye" onclick="reloadData();"><i
+                            class="f7-icons">arrow_2_circlepath_circle_fill</i></label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="card-content" style="width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center">
+                    <tr>
+                      <th style="padding:5px;" width="100%">
+                        <center>
+                          <input onkeyup="alert('Cari Nama Perusahaan...')" type="text"
+                            style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
+                            id="perusahaan_emoney" name="perusahaan_emoney" placeholder="Cari Perusahaan">
+                        </center>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="card-content" style="overflow-x:auto;width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center">
+                    <th class="label-cell" width="5%" style="border-bottom:1px solid gray;">No</th>
+                    <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Nama Perusahaan</th>
+                    <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Nama Klien
+                    </th>
+                    <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Nomor Telepon
+                    </th>
+                    <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Opsi
+                    </th>
+                    <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Status
+                    </th>
+                  </thead>
+                  <tbody id="tabel_data_emoney">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

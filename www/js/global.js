@@ -27,25 +27,26 @@ function checkConnection() {
 
 
 
-var BASE_API = 'https://tasindo-sale-webservice.digiseminar.id/api';
+var BASE_API = 'https://tasindo-service-staging.digiseminar.id/api';
 
-var BASE_API2 = 'https://tasindo-sale-webservice.digiseminar.id/api';
-var BASE_PATH_IMAGE_ABSEN = 'https://tasindo-sale-webservice.digiseminar.id/absen';
-var BASE_PATH_IMAGE = 'https://tasindo-sale-webservice.digiseminar.id/kunjungan';
-var BASE_PATH_IMAGE_BBM = 'https://tasindo-sale-webservice.digiseminar.id/foto_bbm';
-var BASE_PATH_IMAGE_PERFORMA = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
-var BASE_PATH_IMAGE_CUSTOMER = 'https://tasindo-sale-webservice.digiseminar.id/customer_logo';
-var BASE_PATH_IMAGE_PRODUCT = 'https://tasindo-sale-webservice.digiseminar.id/product_image_new';
-var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://tasindo-sale-webservice.digiseminar.id/foto_produksi';
-var BASE_PATH_IMAGE_SURAT_JALAN = 'https://tasindo-sale-webservice.digiseminar.id/foto_surat_jalan';
-var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://tasindo-sale-webservice.digiseminar.id/foto_pembayaran';
-var BASE_PATH_IMAGE_FOTO_FEE = 'https://tasindo-sale-webservice.digiseminar.id/foto_fee';
-var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://tasindo-sale-webservice.digiseminar.id/bukti_gaji';
-var BASE_PATH_IMAGE_FOTO_KTP = 'https://tasindo-sale-webservice.digiseminar.id/foto_ktp';
-var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://tasindo-sale-webservice.digiseminar.id/public_selfie';
-var BASE_PATH_IMAGE_BUKTI_SP = 'https://tasindo-sale-webservice.digiseminar.id/bukti_sp';
-var BASE_PATH_IMAGE_BUKTI_POINT = 'https://tasindo-sale-webservice.digiseminar.id/foto_bukti_point';
-var BASE_PATH_IMAGE_BROADCAST = 'https://tasindo-sale-webservice.digiseminar.id/gambar_broadcast';
+var BASE_API2 = 'https://tasindo-service-staging.digiseminar.id/api';
+var BASE_API3 = 'https://be.order.devkoperindo.com/api';
+var BASE_PATH_IMAGE_ABSEN = 'https://tasindo-service-staging.digiseminar.id/absen';
+var BASE_PATH_IMAGE = 'https://tasindo-service-staging.digiseminar.id/kunjungan';
+var BASE_PATH_IMAGE_BBM = 'https://tasindo-service-staging.digiseminar.id/foto_bbm';
+var BASE_PATH_IMAGE_PERFORMA = 'https://tasindo-service-staging.digiseminar.id/performa_image';
+var BASE_PATH_IMAGE_CUSTOMER = 'https://tasindo-service-staging.digiseminar.id/customer_logo';
+var BASE_PATH_IMAGE_PRODUCT = 'https://tasindo-service-staging.digiseminar.id/product_image_new';
+var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://tasindo-service-staging.digiseminar.id/foto_produksi';
+var BASE_PATH_IMAGE_SURAT_JALAN = 'https://tasindo-service-staging.digiseminar.id/foto_surat_jalan';
+var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://tasindo-service-staging.digiseminar.id/foto_pembayaran';
+var BASE_PATH_IMAGE_FOTO_FEE = 'https://tasindo-service-staging.digiseminar.id/foto_fee';
+var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://tasindo-service-staging.digiseminar.id/bukti_gaji';
+var BASE_PATH_IMAGE_FOTO_KTP = 'https://tasindo-service-staging.digiseminar.id/foto_ktp';
+var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://tasindo-service-staging.digiseminar.id/public_selfie';
+var BASE_PATH_IMAGE_BUKTI_SP = 'https://tasindo-service-staging.digiseminar.id/bukti_sp';
+var BASE_PATH_IMAGE_BUKTI_POINT = 'https://tasindo-service-staging.digiseminar.id/foto_bukti_point';
+var BASE_PATH_IMAGE_BROADCAST = 'https://tasindo-service-staging.digiseminar.id/gambar_broadcast';
 
 
 function refreshPage() {
@@ -59,52 +60,85 @@ function backToSales() {
 	}, 200);
 }
 
-function checkInternet() {
-	jQuery.ajax({
-		type: 'POST',
-		url: "" + BASE_API + "/check-internet",
-		dataType: 'JSON',
-		data: {
-			karyawan_id: localStorage.getItem("user_id"),
-			password: localStorage.getItem("password")
-		},
-		beforeSend: function () {
-			app.dialog.close();
-		},
-		success: function (data) {
-			console.log(data.password);
-			console.log(localStorage.getItem("password"));
-			if (localStorage.getItem("password") == data.password) {
-				console.log('Password Accept');
-			} else {
-				app.dialog.alert('Password Anda Tidak Sesuai', function () {
-					logOut();
-				});
-			}
 
-			localStorage.setItem("internet_koneksi", "good");
-			$("#box_internet").css("background-color", "green");
-		},
-		error: function (xmlhttprequest, textstatus, message) {
-			if (textstatus === "timeout") {
-				$("#box_internet").css("background-color", "red");
-				localStorage.setItem("internet_koneksi", "fail")
+var internetCheckQueue = {
+	isRunning: false,
+	hasPending: false,
 
-			} else {
-				$("#box_internet").css("background-color", "red");
-				localStorage.setItem("internet_koneksi", "fail")
-
-			}
+	check: function () {
+		if (this.isRunning) {
+			console.log('⏸️ checkInternet already running, marking as pending...');
+			this.hasPending = true;
+			return false;
 		}
-	});
-}
 
+		this.isRunning = true;
+		this.hasPending = false;
+		console.log('✅ checkInternet started');
+
+		var self = this;
+
+		jQuery.ajax({
+			type: 'POST',
+			url: "" + BASE_API + "/check-internet-cs",
+			dataType: 'JSON',
+			data: {
+				karyawan_id: localStorage.getItem("user_id"),
+				password: localStorage.getItem("password")
+			},
+			timeout: 10000,
+			success: function (data) {
+				console.log(data.password);
+				console.log(localStorage.getItem("password"));
+
+				if (data.version.config_value_string == localStorage.getItem("versioon_app_now")) {
+					if (localStorage.getItem("password") == data.password) {
+						console.log('Password Accept')
+					} else {
+						app.dialog.alert('Password Anda Tidak Sesuai', function () {
+							logOut();
+						});
+					}
+					console.log('Version Accept');
+				} else {
+					app.dialog.alert(data.version.config_keterangan, function () {
+						logOut();
+					});
+				}
+
+				localStorage.setItem("internet_koneksi", "good");
+				$("#box_internet").css("background-color", "green");
+			},
+			error: function (xmlhttprequest, textstatus, message) {
+				if (textstatus === "timeout") {
+					$("#box_internet").css("background-color", "red");
+					localStorage.setItem("internet_koneksi", "fail");
+				} else {
+					$("#box_internet").css("background-color", "red");
+					localStorage.setItem("internet_koneksi", "fail");
+				}
+			},
+			complete: function () {
+				self.isRunning = false;
+				console.log('✅ checkInternet completed');
+
+				// Jika ada pending request, jalankan setelah delay singkat
+				if (self.hasPending) {
+					console.log('🔄 Running pending checkInternet...');
+					setTimeout(function () {
+						self.check();
+					}, 1000); // Delay 1 detik sebelum menjalankan pending request
+				}
+			}
+		});
+	}
+};
 
 
 function getPlayAudio() {
 	jQuery.ajax({
 		type: 'POST',
-		url: "" + BASE_API + "/get-count-status-cs-notif-view",
+		url: "" + BASE_API + "/get-count-status-cs-notif-audio-view",
 		dataType: 'JSON',
 		data: {
 			lokasi_pabrik: localStorage.getItem("lokasi_pabrik_sales"),
@@ -121,10 +155,10 @@ function getPlayAudio() {
 					audio.currentTime = 0; // Mengatur ulang waktu audio ke awal
 					console.log('Audio berhenti.');
 				}, 20000);
-				$$('.merah-notif-all').removeClass("card-color-red-important");
-				$$('.merah-notif-all').addClass("card-color-red-important");
+				$$('.merah-notif-all').removeClass("card-color-red-important announcement");
+				$$('.merah-notif-all').addClass("card-color-red-important announcement");
 			} else {
-				$$('.merah-notif-all').removeClass("card-color-red-important");
+				$$('.merah-notif-all').removeClass("card-color-red-important announcement");
 			}
 
 		},
@@ -145,10 +179,35 @@ function getNotifRed() {
 		success: function (data) {
 
 			if (data.data_count_all > 0) {
-				$$('.merah-notif-all').removeClass("card-color-red-important");
-				$$('.merah-notif-all').addClass("card-color-red-important");
+				$$('.merah-notif-all').removeClass("card-color-red-important announcement");
+				$$('.merah-notif-all').addClass("card-color-red-important announcement");
 			} else {
-				$$('.merah-notif-all').removeClass("card-color-red-important");
+				$$('.merah-notif-all').removeClass("card-color-red-important announcement");
+			}
+
+		},
+		error: function (xmlhttprequest, textstatus, message) {
+		}
+	});
+}
+
+function getNotifDelayRed() {
+	jQuery.ajax({
+		type: 'POST',
+		url: "" + BASE_API + "/get-data-colunt-delay-shipment",
+		dataType: 'JSON',
+		data: {
+			lokasi_pabrik: localStorage.getItem("lokasi_pabrik_sales"),
+		},
+		beforeSend: function () {
+		},
+		success: function (data) {
+
+			if (data.data > 0) {
+				$$('.notif-merah-delay').removeClass("card-color-red-important announcement");
+				$$('.notif-merah-delay').addClass("card-color-red-important announcement");
+			} else {
+				$$('.notif-merah-delay').removeClass("card-color-red-important announcement");
 			}
 
 		},
@@ -292,12 +351,552 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 
-
-setInterval(function () {
-	checkInternet();
-}, 8000);
-
+// audio notif tiap 5 menit (cukup 1 interval saja)
 setInterval(function () {
 	getPlayAudio();
-	getNotifAllRed();
-}, 300000);
+}, 300000); // 5 menit
+
+setInterval(function () {
+	let now = new Date();
+	let jam = now.getHours();
+	let menit = now.getMinutes();
+	let tanggal = now.toDateString(); // misal: "Mon Nov 03 2025"
+
+	// simpan tanggal terakhir dijalankan
+	let lastDate = localStorage.getItem('deadline_last_date');
+	if (lastDate !== tanggal) {
+		// reset jika tanggal berubah
+		Object.keys(localStorage).forEach(k => {
+			if (k.startsWith('deadline_run_')) localStorage.removeItem(k);
+		});
+		localStorage.setItem('deadline_last_date', tanggal);
+	}
+
+	// eksekusi jam 09:00 & 13:00
+	if ((jam === 9 || jam === 13) && menit === 0) {
+		let key = 'deadline_run_' + jam + '_' + tanggal;
+		if (!localStorage.getItem(key)) {
+			localStorage.setItem(key, '1');
+			cekDeadlineDanBukaPopup();
+		}
+	}
+}, 30000);
+
+
+function renderPopupDeadlinePenjualan() {
+	let html_popup = `
+		<div class="popup popup-deadline-penjualan">
+			<div class="view view-init">
+				<div class="page">
+					<div class="navbar">
+						<div class="navbar-bg"></div>
+						<div class="navbar-inner bg-dark-gray-medium">
+							<div class="title">SPK Deadline Pengiriman</div>
+							<div class="right">
+								<a class="link popup-close" data-popup=".popup-deadline-penjualan" style="color:#fff;" onclick="alertClosePopupDeadline();">Tutup</a>
+							</div>
+						</div>
+					</div>
+					<div class="page-content">
+						<div class="table-responsive">
+							<table class="table table-sm" style="width:100%;border-collapse:collapse;">
+								<thead>
+									<tr>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">No</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">SPK</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Perusahaan</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Hari</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Tgl Kirim</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Status</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" colspan="2">Aksi</th>
+									</tr>
+								</thead>
+								<tbody id="deadline_penjualan_popup_tbody">
+									<tr><td colspan="7" align="center">Memuat…</td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>`;
+	jQuery('body').append(html_popup);
+}
+
+function BadgeLevel(row) {
+	var label = String(row.status_deadline || '-');
+	if (label === 'Hari Ini') return 'red';
+	if (/^H-\d+/.test(label)) {
+		var n = parseInt(row.hari_menuju_deadline, 10) || 0;
+		if (n <= 1) return 'red';
+		if (n <= 2) return 'orange';
+		return 'yellow';
+	}
+	return 'grey';
+}
+
+function BadgeHtml(row) {
+	var level = BadgeLevel(row);
+	var style = 'padding:2px 8px;border-radius:12px;font-size:12px;display:inline-block;';
+	if (level === 'red') style += 'background:#FF3B30;color:#fff;';
+	else if (level === 'orange') style += 'background:#FF9500;color:#222;';
+	else if (level === 'yellow') style += 'background:#FFD60A;color:#222;';
+	else style += 'background:#555;color:#eee;';
+	return '<span style="' + style + '">' + row.status_deadline + '</span>';
+}
+
+function cekDeadlineDanBukaPopup() {
+	renderPopupDeadlinePenjualan();
+	jQuery('#deadline_penjualan_popup_tbody').html('<tr><td colspan="7" align="center">Memuat…</td></tr>');
+
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + '/penjualan-deadline',
+		data: {
+			lokasi_pabrik: localStorage.getItem('lokasi_pabrik_sales')
+		},
+		dataType: 'JSON',
+		success: function (res) {
+			var $tbody = jQuery('#deadline_penjualan_popup_tbody');
+			$tbody.empty();
+
+			if (!res || !res.status || !res.data || !res.data.length) return;
+
+			jQuery.each(res.data, function (i, item) {
+
+				if (item.tgl_cs_deadline != null) {
+					if (item.keterangan_urgent != null && item.tgl_produksi_selesai != null) {
+						color_urgent_blink = 'announcement';
+						date_urgent = moment(item.tgl_cs_deadline).format('DD-MMM');
+						date_selesai = moment(item.tgl_produksi_selesai).format('DD-MMM-YYYY');
+						btn_color_urgent_blink = 'card-color-red';
+						onclick_urgent = 'onclick="detailPenjualan(\'' + item.dt_record + '\',\'' + item.penjualan_id + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.karyawan_nama + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.tgl_cs_deadline + '\',\'' + item.lokasi_pabrik + '\',\'' + item.nama_kota + '\',1);"';
+						onclick_keterangan = 'onclick="detailKeterangan(\'' + item.keterangan_urgent + '\',\'' + date_selesai + '\');"';
+						var btnKeterangan = '<button class="bg-dark-gray-young text-add-colour-black-soft button-small col button popup-open text-bold" data-popup=".detail-keterangan" ' + onclick_keterangan + ' >Keterangan</button>';
+					} else {
+						color_urgent_blink = 'announcement';
+						date_urgent = moment(item.tgl_cs_deadline).format('DD-MMM');
+						btn_color_urgent_blink = 'btn-color-orange';
+						onclick_urgent = 'onclick="detailPenjualan(\'' + item.dt_record + '\',\'' + item.penjualan_id + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.karyawan_nama + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.tgl_cs_deadline + '\',\'' + item.lokasi_pabrik + '\',\'' + item.nama_kota + '\',1);"';
+						onclick_keterangan = '';
+						var btnKeterangan = '';
+					}
+				} else {
+					color_urgent_blink = '';
+					date_urgent = moment(item.penjualan_tanggal_kirim).format('DD-MMM');
+					btn_color_urgent_blink = 'bg-dark-gray-young text-add-colour-black-soft';
+					onclick_urgent = 'onclick="detailPenjualan(\'' + item.dt_record + '\',\'' + item.penjualan_id + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.karyawan_nama + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.tgl_cs_deadline + '\',\'' + item.lokasi_pabrik + '\',\'' + item.nama_kota + '\',1);"';
+					onclick_keterangan = '';
+					var btnKeterangan = '';
+				}
+
+				// var btnPO = '<button class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" data-popup=".detail-spkpo-popup" onclick="spkPo(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.extra + '\');">Spk PO</button>';
+				var btnUrgent = '<button class="' + btn_color_urgent_blink + ' button-small col button popup-open text-bold" data-popup=".detail-sales" ' + onclick_urgent + ' >Urgent</button>';
+
+
+				moment.locale('id');
+				let hari = moment(item.penjualan_tanggal_kirim).format('dddd');
+
+				var tr =
+					'<tr>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;" align="center">' + (i + 1) + '</td>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;" align="center"><b>' + moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '') + '</b></td>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;">' + item.client_nama + '</td>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;">' + hari + '</td>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;" align="center">' + moment(item.penjualan_tanggal_kirim).format('DD-MMM-YY') + '</td>' +
+					'<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;" align="center">' + BadgeHtml(item) + '</td>' +
+					// '<td style="border-bottom: 1px solid gray;border-left: 1px solid gray;" align="center">' + btnPO + '</td>' +
+					'<td style=border-left: 1px solid gray;border-bottom: 1px solid gray;" align="center">' + btnUrgent + '</td>' +
+					'<td style=border-left: 1px solid gray;border-bottom: 1px solid gray;border-right: 1px solid gray;" align="center">' + btnKeterangan + '</td>' +
+					'</tr>';
+
+				jQuery('#deadline_penjualan_popup_tbody').append(tr);
+			});
+
+			// buka popup
+			let $popup = jQuery('.popup-deadline-penjualan');
+			if ($popup.length === 0) {
+				console.warn('Popup .popup-deadline-penjualan belum ter-append ke halaman.');
+				return;
+			}
+
+			// ===== Cek apakah popup sudah terbuka =====
+			let isOpen = $popup.hasClass('modal-in') || $popup.is(':visible');
+
+			// ===== Jika belum terbuka, buka dulu =====
+			if (!isOpen) {
+				if (window.app && app.popup && app.popup.open) {
+					app.popup.open('.popup-deadline-penjualan');
+				} else {
+					// fallback jika bukan Framework7
+					$popup.show();
+					$popup.find('.popup-close').off('click').on('click', function () {
+						$popup.hide();
+					});
+				}
+			}
+		},
+		error: function (xhr) {
+			console.error('Gagal cek deadline:', xhr);
+		}
+	});
+}
+
+function ensureRejectPopupExists() {
+	if ($('.popup.detail-keterangan-urgent').length > 0) {
+		return; // sudah ada
+	}
+
+	var popupHtml = ''
+		+ '<div class="popup detail-keterangan-urgent">'
+		+ '  <div class="view view-init">'
+		+ '    <div class="page">'
+		+ '      <div class="navbar">'
+		+ '        <div class="navbar-bg"></div>'
+		+ '        <div class="navbar-inner bg-dark-gray-medium">'
+		+ '          <div class="title">Keterangan Produksi</div>'
+		+ '          <div class="right">'
+		+ '            <p class="text-add-colour-white link popup-close"'
+		+ '               data-popup=".detail-keterangan-urgent">'
+		+ '              <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>'
+		+ '            </p>'
+		+ '          </div>'
+		+ '        </div>'
+		+ '      </div>'
+		+ '      <div class="page-content">'
+		+ '        <div class="card card-outline margin-top">'
+		+ '          <div class="card-content">'
+		+ '            <div class="row">'
+		+ '              <div class="col-100">'
+		+ '                <div class="card-content">'
+		+ '                  <div class="list no-hairlines-md">'
+		+ '                    <div class="list">'
+		+ '                      <ul>'
+		+ '                        <!-- Tanggal + Hari -->'
+		+ '                        <li class="item-content item-input">'
+		+ '                          <div class="item-inner">'
+		+ '                            <div class="item-title item-label">Tanggal Selesai</div>'
+		+ '                            <div class="item-input-wrap">'
+		+ '                              <input type="text"'
+		+ '                                     id="popup_keterangan_tanggal"'
+		+ '                                     readonly'
+		+ '                                     >'
+		+ '                            </div>'
+		+ '                          </div>'
+		+ '                        </li>'
+		+ '                        <!-- Keterangan -->'
+		+ '                        <li class="item-content item-input">'
+		+ '                          <div class="item-inner">'
+		+ '                            <div class="item-title item-label">Keterangan</div>'
+		+ '                            <div class="item-input-wrap">'
+		+ '                              <textarea id="popup_keterangan_text"'
+		+ '                                        readonly'
+		+ '                                        style="min-height:80px;"></textarea>'
+		+ '                            </div>'
+		+ '                          </div>'
+		+ '                        </li>'
+		+ '                      </ul>'
+		+ '                    </div>'
+		+ '                  </div>'
+		+ '                </div>'
+		+ '              </div>'
+		+ '            </div>'
+		+ '          </div>'
+		+ '        </div>'
+		+ '      </div>'
+		+ '    </div>'
+		+ '  </div>'
+		+ '</div>';
+
+	$('body').append(popupHtml);
+}
+
+// === 2. Fungsi global untuk render & buka popup ===
+// panggil dari button: detailKeterangan(item.keterangan_urgent, date_selesai);
+function detailKeterangan(keterangan, date_selesai) {
+	ensureRejectPopupExists();
+
+	keterangan = keterangan || '';
+	date_selesai = date_selesai || '';
+
+	// FORMAT TANGGAL + HARI (kalau ada moment.js)
+	var teksTanggal = '';
+	if (date_selesai) {
+		// contoh: "Senin, 14-Nov-2025"
+		if (typeof moment !== 'undefined') {
+			moment.locale('id');
+			var hari = moment(date_selesai).format('dddd');
+			var tgl = moment(date_selesai).format('DD-MMM-YYYY');
+			teksTanggal = hari + ', ' + tgl;
+		} else {
+			teksTanggal = date_selesai;
+		}
+	}
+
+	// set nilai ke input popup
+	$('#popup_keterangan_tanggal').val(teksTanggal);
+	$('#popup_keterangan_text').val(keterangan);
+
+	// buka popup Framework7
+	try {
+		app.popup.open('.detail-keterangan-urgent');
+	} catch (e) {
+		var popupEl = document.querySelector('.detail-keterangan-urgent');
+		if (popupEl && popupEl.f7Modal) {
+			popupEl.f7Modal.open();
+		}
+	}
+}
+
+function hasPendingItems() {
+
+	var TBODY_SEL = '#deadline_penjualan_popup_tbody';
+	var $rows = jQuery(TBODY_SEL).find('tr');
+	// anggap baris "Memuat…" bukan pending. Pending = ada tr data.
+	if ($rows.length === 0) return false;
+	if ($rows.length === 1 && $rows.eq(0).find('td').text().trim().match(/^Memuat/i)) return false;
+	return true;
+}
+
+function alertClosePopupDeadline() {
+	if (!hasPendingItems()) return;       // tidak ada data → biarkan tutup
+	var msg = 'Masih terdapat Spk yang perlu segera di kirim, dan konfirmasi ke divisi produksi, apakah anda yakin menutup notif ?';
+	var POPUP_SEL = '.popup-deadline-penjualan';
+	app.dialog.confirm(
+		msg,
+		'Konfirmasi',
+		function onOk() {
+			// user setuju menutup
+			if (app.popup && app.popup.close) app.popup.close(POPUP_SEL);
+			else jQuery(POPUP_SEL).hide();
+		},
+		function onCancel() {
+			// batal → tetap terbuka
+		}
+	);
+}
+
+function renderPopupDeadlineProduksiSelesai() {
+	let html_popup = `
+		<div class="popup popup-deadline-produksi-selesai">
+			<div class="view view-init">
+				<div class="page">
+					<div class="navbar">
+						<div class="navbar-bg"></div>
+						<div class="navbar-inner bg-dark-gray-medium">
+							<div class="title">Produksi Selesai</div>
+							<div class="right">
+								<a class="link popup-close" data-popup=".popup-deadline-produksi-selesai" style="color:#fff;" onclick="alertClosePopupProduksiSelesai();">Tutup</a>
+							</div>
+						</div>
+					</div>
+					<div class="page-content">
+						<div class="table-responsive">
+							<table class="table table-sm" style="width:100%;border-collapse:collapse;">
+								<thead>
+									<tr>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">No</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">SPK</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Perusahaan</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Tipe</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Qty</th>
+										<th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;">Aksi</th>
+									</tr>
+								</thead>
+								<tbody id="deadline_produksi_selesai_popup_tbody">
+									<tr><td colspan="7" align="center">Memuat…</td></tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>`;
+	jQuery('body').append(html_popup);
+}
+
+/* =====================================================
+   REQUEST QUEUE — jQuery Style
+   ===================================================== */
+
+let PAGE_INTERVALS = [];
+
+function addPageInterval(fn, delay) {
+	const id = setInterval(fn, delay);
+	PAGE_INTERVALS.push(id);
+	return id;
+}
+
+function clearPageIntervals() {
+	PAGE_INTERVALS.forEach(id => clearInterval(id));
+	PAGE_INTERVALS = [];
+}
+
+// Loader sederhana, gaya kamu
+function runWithLoading(fn) {
+	// buka loading
+	if (window.app && app.preloader && typeof app.preloader.show === 'function') {
+		app.preloader.show();
+	}
+
+	let result;
+	try {
+		result = fn();
+	} catch (e) {
+		console.error('runWithLoading error:', e);
+		if (window.app && app.preloader && typeof app.preloader.hide === 'function') {
+			app.preloader.hide();
+		}
+		return;
+	}
+
+	// helper tutup loader
+	const hideLoader = () => {
+		if (window.app && app.preloader && typeof app.preloader.hide === 'function') {
+			app.preloader.hide();
+		}
+	};
+
+	// jQuery ajax / Deferred
+	if (result && typeof result.always === 'function') {
+		result.always(() => {
+			hideLoader();
+		});
+	}
+	// Promise modern
+	else if (result && typeof result.finally === 'function') {
+		result.finally(() => {
+			hideLoader();
+		});
+	}
+	// Promise biasa
+	else if (result && typeof result.then === 'function') {
+		result.then(() => {
+			hideLoader();
+		}, () => {
+			hideLoader();
+		});
+	}
+	// fungsi sync / nggak return apa-apa
+	else {
+		// kasih delay dikit biar loader kelihatan
+		setTimeout(hideLoader, 400);
+	}
+
+	return result;
+}
+
+// Queue simpel, satu-per-satu
+function RequestQueue() {
+	this.running = false;
+	this.queue = [];
+}
+
+/* Tambah job */
+RequestQueue.prototype.push = function (fn) {
+	if (typeof fn !== 'function') return;
+	this.queue.push(fn);
+	this.next();
+};
+
+/* Eksekusi job berikutnya */
+RequestQueue.prototype.next = function () {
+	const self = this;
+
+	if (self.running) return;
+	if (!self.queue.length) return;
+
+	self.running = true;
+
+	const job = self.queue.shift(); // ambil job
+
+	try {
+		const res = job();
+
+		// jQuery ajax / Deferred
+		if (res && typeof res.always === 'function') {
+			res.always(() => {
+				self.running = false;
+				setTimeout(() => {
+					self.next();
+				}, 100);
+			});
+		}
+		// Promise modern
+		else if (res && typeof res.finally === 'function') {
+			res.finally(() => {
+				self.running = false;
+				setTimeout(() => {
+					self.next();
+				}, 100);
+			});
+		}
+		// Promise biasa
+		else if (res && typeof res.then === 'function') {
+			res.then(() => {
+				self.running = false;
+				setTimeout(() => {
+					self.next();
+				}, 100);
+			}, () => {
+				self.running = false;
+				setTimeout(() => {
+					self.next();
+				}, 100);
+			});
+		}
+		// fungsi sync
+		else {
+			self.running = false;
+			setTimeout(() => {
+				self.next();
+			}, 80);
+		}
+	} catch (e) {
+		console.error('RequestQueue error:', e);
+		self.running = false;
+		setTimeout(() => {
+			self.next();
+		}, 100);
+	}
+};
+
+/* Instance global */
+var rq = new RequestQueue();
+
+/* Helper biar simpel */
+function enqueueTask(fn) {
+	rq.push(fn);
+}
+// helper untuk job background TANPA loader
+function enqueueTaskSilent(fn) {
+	rq.push(fn);
+}
+
+function getYearCustom(element) {
+	let startYear = 2018;
+	let endYear = new Date().getFullYear();
+	$('.transaksi_' + element).append($('<option/>').val('all').html('All Tahun'));
+	for (i = endYear; i > startYear; i--) {
+		if (i == endYear) {
+			$('.transaksi_' + element).append($('<option selected/>').val(i).html(i));
+		} else {
+			$('.transaksi_' + element).append($('<option />').val(i).html(i));
+		}
+	}
+}
+
+function getMonthCustom(element) {
+	var m = moment.months();
+	var month_now = moment().month();
+	var n = 0;
+	$('.transaksi_' + element).append($('<option/>').val('all').html('All Bulan'));
+	for (var i = 0; i < 12; i++) {
+		n++
+		if (i == month_now) {
+			$('.transaksi_' + element).append($('<option selected/>').val(n).html(m[i]));
+		} else {
+			$('.transaksi_' + element).append($('<option />').val(n).html(m[i]));
+		}
+	}
+}

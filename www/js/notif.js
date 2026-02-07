@@ -64,38 +64,38 @@ function getCountStatusCsNotifView() {
         success: function (data) {
 
             if (data.data_kirim > 0) {
-                $$('.merah-kirim').removeClass("card-color-red-important");
-                $$('.merah-kirim').addClass("card-color-red-important");
+                $$('.merah-kirim').removeClass("card-color-red-important announcement");
+                $$('.merah-kirim').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-kirim').removeClass("card-color-red-important");
+                $$('.merah-kirim').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_performa > 0) {
-                $$('.merah-performa').removeClass("card-color-red-important");
-                $$('.merah-performa').addClass("card-color-red-important");
+                $$('.merah-performa').removeClass("card-color-red-important announcement");
+                $$('.merah-performa').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-performa').removeClass("card-color-red-important");
+                $$('.merah-performa').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_sales > 0) {
-                $$('.merah-sales').removeClass("card-color-red-important");
-                $$('.merah-sales').addClass("card-color-red-important");
+                $$('.merah-sales').removeClass("card-color-red-important announcement");
+                $$('.merah-sales').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-sales').removeClass("card-color-red-important");
+                $$('.merah-sales').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_bayar > 0) {
-                $$('.merah-bayar').removeClass("card-color-red-important");
-                $$('.merah-bayar').addClass("card-color-red-important");
+                $$('.merah-bayar').removeClass("card-color-red-important announcement");
+                $$('.merah-bayar').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-bayar').removeClass("card-color-red-important");
+                $$('.merah-bayar').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_shipment > 0) {
-                $$('.merah-shipment').removeClass("card-color-red-important");
-                $$('.merah-shipment').addClass("card-color-red-important");
+                $$('.merah-shipment').removeClass("card-color-red-important announcement");
+                $$('.merah-shipment').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-shipment').removeClass("card-color-red-important");
+                $$('.merah-shipment').removeClass("card-color-red-important announcement");
             }
         },
         error: function (xmlhttprequest, textstatus, message) {
@@ -350,28 +350,30 @@ function shipmentNotif(penjualan_id) {
             var client_nama = "";
             var hp_alamat = "";
             var client_kota = "";
-			var tgl_kirim_cabang = "";
-			var keterangan_cabang = "";
+            var tgl_kirim_cabang = "";
+            var keterangan_cabang = "";
+            var packing = "";
             if (data.data != null) {
                 alamat_client = data.data.client_alamat;
                 alamat_kirim = data.data.alamat_kirim_penjualan;
                 client_nama = data.data.client_nama;
                 hp_alamat = data.data.client_telp;
                 client_kota = data.data.client_kota;
-				if (data.data.tgl_kirim_cabang != null) {
-					tgl_kirim_cabang = moment(data.data.tgl_kirim_cabang).format('YYYY-MM-DD');
-				} else {
-					tgl_kirim_cabang = '';
-				}
-				keterangan_cabang = data.data.keterangan_cabang;
+                if (data.data.tgl_kirim_cabang != null) {
+                    tgl_kirim_cabang = moment(data.data.tgl_kirim_cabang).format('YYYY-MM-DD');
+                } else {
+                    tgl_kirim_cabang = '';
+                }
+                keterangan_cabang = data.data.keterangan_cabang;
             } else {
                 alamat_client = '-';
                 alamat_kirim = '-';
                 client_nama = '-';
                 hp_alamat = '-';
                 client_kota = '-';
-				tgl_kirim_cabang = '';
-				keterangan_cabang = '';
+                packing = '-';
+                tgl_kirim_cabang = '';
+                keterangan_cabang = '';
             }
 
             if (data.data.valid_shipment != 2) {
@@ -381,19 +383,58 @@ function shipmentNotif(penjualan_id) {
                 jQuery('#show_reset_reject_element_shipment').show();
                 jQuery('#show_reject_element_shipment').hide();
             }
+            
+            // ⭐ LOGIKA CARD PEMBAYARAN BELUM LUNAS
+            var penjualan_grandtotal = parseFloat(data.data.penjualan_grandtotal || 0);
+            var penjualan_jumlah_pembayaran = parseFloat(data.data.penjualan_jumlah_pembayaran || 0);
+            var sisa_bayar = penjualan_grandtotal - penjualan_jumlah_pembayaran;
+            var shipment_status = data.data.shipment_status || null;
+            
+            if (sisa_bayar > 0) {
+                // Belum lunas - tampilkan card warning
+                jQuery('#card-pembayaran-belum-lunas-notif').show();
+                
+                // Update status badge dan text berdasarkan shipment_status
+                if (shipment_status == 'approved') {
+                    jQuery('#notif-shipment-status-text').text('Disetujui');
+                    jQuery('#notif-shipment-status-badge')
+                        .text('APPROVED')
+                        .css('background', 'rgba(76, 175, 80, 0.9)'); // Hijau
+                } else if (shipment_status == 'requested') {
+                    jQuery('#notif-shipment-status-text').text('Menunggu Approval');
+                    jQuery('#notif-shipment-status-badge')
+                        .text('PENDING')
+                        .css('background', 'rgba(255, 193, 7, 0.9)'); // Kuning
+                } else if (shipment_status == 'rejected') {
+                    jQuery('#notif-shipment-status-text').text('Ditolak');
+                    jQuery('#notif-shipment-status-badge')
+                        .text('REJECTED')
+                        .css('background', 'rgba(244, 67, 54, 0.9)'); // Merah lebih gelap
+                } else {
+                    jQuery('#notif-shipment-status-text').text('Belum Diajukan');
+                    jQuery('#notif-shipment-status-badge')
+                        .text('PENDING')
+                        .css('background', 'rgba(255, 152, 0, 0.9)'); // Orange
+                }
+            } else {
+                // Sudah lunas - sembunyikan card warning
+                jQuery('#card-pembayaran-belum-lunas-notif').hide();
+            }
+            
             $$("#detail_valid_notif_shipment").val(data.data.valid_shipment);
             $$('#alamat_sekarang_notif_popup').val(alamat_client);
             $$('#alamat_kirim_notif_popup').val(alamat_kirim);
             $$('#kota_kirim_notif_popup').val(client_kota);
             $$('#nama-client-alamat-notif').html(client_nama);
+            $$('#penjualan_id_notif_alamat').val(penjualan_id);
             if (data.data.foto_produksi_selesai != null) {
                 jQuery('#file_foto_produksi_selesai_notif_view').attr('src', BASE_PATH_IMAGE_BUKTI_PRODUKSI + '/' + data.data.foto_produksi_selesai);
             } else {
                 jQuery('#file_foto_produksi_selesai_notif_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
             }
             $$('#hp_notif_alamat').val(hp_alamat);
-			$$('#tgl_kirim_cabang_notif').val(tgl_kirim_cabang);
-			$$('#keterangan_cabang_notif').val(keterangan_cabang);
+            $$('#tgl_kirim_cabang_notif').val(tgl_kirim_cabang);
+            $$('#keterangan_cabang_notif').val(keterangan_cabang);
         },
         error: function (xmlhttprequest, textstatus, message) {
         }
@@ -945,7 +986,7 @@ function getPerformaHeaderNotifPenjualan() {
                         // performa_value += '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\');" src="img/logo/donwloadproforma.png" width="80px" />';
                         // performa_value += '</td>';
                         performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
-                        performa_value += '   <button  class="' + btn_valid + '  button-small col button popup-open text-bold" data-popup=".detail-proforma-notif-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + item2.valid_cs + '\');">Detail</button>';
+                        performa_value += '   <button  class="' + btn_valid + '  button-small col button popup-open text-bold" data-popup=".detail-proforma-notif-popup" onclick="penjualanGetPerformaNotifDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + item2.valid_cs + '\',\'' + (item2.needs_approval || 0) + '\',\'' + (item2.approval_status || '') + '\');">Detail</button>';
                         performa_value += '</td>';
                         // performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
                         // performa_value += '   <button  class="' + btn_potongan + ' button-small col button popup-open text-bold" data-popup=".pengajuan-potongan-notif-popup" onclick="potonganPenjualanNotif(\'' + item2.performa_header_id + '\',\'' + item2.status + '\');">Potongan</button>';
@@ -1187,7 +1228,7 @@ function updateStatusNotifPerforma(performa_header_id, status_view) {
 
 }
 
-function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, client_kota, client_nama, performa_tanggal_kirim, performa_total_qty, extra, valid_cs) {
+function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, client_kota, client_nama, performa_tanggal_kirim, performa_total_qty, extra, valid_cs, needs_approval, approval_status) {
     var proforma_data = "";
     jQuery.ajax({
         type: 'POST',
@@ -1274,12 +1315,21 @@ function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, clie
                         var path_image = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
                     }
 
+                    // Potongan - LOGIKA SAMA DENGAN ICON DOWNLOAD DI PENJUALAN.JS
+                    // Tampilkan potongan HANYA jika: needs_approval = 1 DAN (approval_status = 'pending' ATAU 'rejected')
+                    var potongan = '';
+                    var potongan_total = '';
                     if (val.potongan_price != 0) {
-                        var potongan = '<span style="font-weight:bold;color:red;">' + number_format(val.potongan_price) + '<span>';
-                        var potongan_total = '<span style="font-weight:bold;color:red;">' + number_format(parseFloat(val.potongan_price) * parseFloat(val.qty)) + '<span>';
-                    } else {
-                        var potongan = '';
-                        var potongan_total = '';
+                        // Convert ke integer/string untuk perbandingan
+                        var needs_approval_check = parseInt(needs_approval || 0);
+                        var approval_status_check = (approval_status || '').toString();
+                        
+                        // Tampilkan angka potongan merah HANYA jika needs_approval dan status pending/rejected
+                        if (needs_approval_check == 1 && (approval_status_check == 'pending' || approval_status_check == 'rejected')) {
+                            potongan = '<span style="font-weight:bold;color:red;">' + number_format(val.potongan_price) + '<span>';
+                            potongan_total = '<span style="font-weight:bold;color:red;">' + number_format(parseFloat(val.potongan_price) * parseFloat(val.qty)) + '<span>';
+                        }
+                        // Jika sudah approved atau tidak perlu approval, tidak tampilkan angka potongan
                     }
 
                     proforma_data += '		<tr>';
@@ -2045,9 +2095,13 @@ function UpdateValidNotifShipment(type) {
                 success: function (data) {
                     app.dialog.close();
                     if (data.status == 'success') {
-                        app.dialog.alert('Berhasil Update Data');
-                        getViewNotifManagerShipment();
-                        app.popup.close();
+                        if (type_valid == 1) {
+                            packingProcess();
+                        } else {
+                            app.dialog.alert('Berhasil Update Data');
+                            getViewNotifManagerShipment();
+                            app.popup.close();
+                        }
                     } else if (data.status == 'failed') {
                         app.dialog.alert('Gagal Update Data');
                         getViewNotifManagerShipment();
@@ -2105,6 +2159,35 @@ function UpdateValidNotifRejectShipment() {
                 }
             });
 
+        }
+    });
+}
+
+function packingProcess() {
+    jQuery.ajax({
+        type: 'POST',
+        url: "" + BASE_API + "/update-packing-admin",
+        dataType: 'JSON',
+        data: {
+            penjualan_id: $$('#penjualan_id_notif_alamat').val(),
+            packing: $$('#packing-select').val()
+        },
+        beforeSend: function () {
+            app.dialog.preloader('Harap Tunggu');
+        },
+        success: function (data) {
+            app.dialog.close();
+            if (data.status == 'success') {
+                app.dialog.alert('Berhasil Update Data');
+                getViewNotifManagerShipment();
+                app.popup.close();
+            } else if (data.status == 'failed') {
+                app.dialog.alert('Gagal Update Data');
+                getViewNotifManagerShipment();
+                app.popup.close();
+            }
+        },
+        error: function (xmlhttprequest, textstatus, message) {
         }
     });
 }

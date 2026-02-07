@@ -24,6 +24,218 @@ function abbreviateNumber(number) {
   return numberFixed + tier.symbol
 }
 
+// ========================================
+// INTERVAL STATE - DEFINISI GLOBAL
+// ========================================
+var intervalState = {
+  isRunning: false,      // Flag apakah interval sedang berjalan
+  lastRunTime: 0,        // Timestamp terakhir interval dijalankan
+  runCount: 0,           // Jumlah interval yang sudah berjalan
+  skipCount: 0           // Jumlah interval yang di-skip karena masih pending
+};
+
+
+// ========================================
+// FUNGSI HELPER: Sequential Function Runner
+// Menjalankan fungsi secara bergantian dengan max 2 concurrent
+// ========================================
+function runFunctionsSequentially(functions, maxConcurrent) {
+  maxConcurrent = maxConcurrent || 2;
+
+  console.log('🔄 Starting sequential execution of ' + functions.length + ' functions (max ' + maxConcurrent + ' concurrent)');
+
+  return new Promise(function (resolveAll) {
+    var currentIndex = 0;
+    var activeCount = 0;
+    var completedCount = 0;
+
+    function runNext() {
+      if (completedCount >= functions.length) {
+        console.log('✅ All functions completed (' + completedCount + '/' + functions.length + ')');
+        resolveAll();
+        return;
+      }
+
+      while (activeCount < maxConcurrent && currentIndex < functions.length) {
+        var funcIndex = currentIndex;
+        var funcItem = functions[funcIndex];
+        currentIndex++;
+        activeCount++;
+
+        console.log('▶️  Running: ' + funcItem.name + ' (' + (funcIndex + 1) + '/' + functions.length + ') [Active: ' + activeCount + ']');
+
+        (function (index, item) {
+          try {
+            var result = item.func();
+
+            if (result && typeof result.then === 'function') {
+              result.then(function () {
+                onComplete(index, item.name);
+              }).catch(function (err) {
+                console.error('❌ Error in ' + item.name + ':', err);
+                onComplete(index, item.name);
+              });
+            } else {
+              setTimeout(function () {
+                onComplete(index, item.name);
+              }, 100);
+            }
+          } catch (error) {
+            console.error('❌ Error executing ' + item.name + ':', error);
+            onComplete(index, item.name);
+          }
+        })(funcIndex, funcItem);
+      }
+    }
+
+    function onComplete(index, name) {
+      activeCount--;
+      completedCount++;
+      console.log('✓ Completed: ' + name + ' (' + completedCount + '/' + functions.length + ') [Active: ' + activeCount + ']');
+      runNext();
+    }
+
+    runNext();
+  });
+}
+
+// ========================================
+// FUNGSI HELPER: Wrap function untuk compatibility
+// ========================================
+function wrapFunction(func, name) {
+  return function () {
+    return new Promise(function (resolve) {
+      try {
+        func();
+        // Tunggu sebentar untuk memastikan AJAX selesai
+        setTimeout(resolve, 200);
+      } catch (error) {
+        console.error('Error in ' + name + ':', error);
+        resolve();
+      }
+    });
+  };
+}
+
+
+/**
+ * Schedule next interval check
+ */
+function scheduleNextIntervalCheck(intervalMs) {
+  intervalMs = intervalMs || 10000;
+
+  console.log('🔄 Scheduling next interval check in ' + (intervalMs / 1000) + 's');
+
+  setTimeout(function () {
+    runIntervalChecksRecursive(intervalMs);
+  }, intervalMs);
+}
+
+/**
+ * Run interval checks recursively
+ */
+function runIntervalChecksRecursive(intervalMs) {
+  // ⭐ CEK APAKAH MASIH ADA YANG RUNNING ⭐
+  if (intervalState.isRunning) {
+    intervalState.skipCount++;
+    console.log('⏸️  Interval check SKIPPED (previous check still running) - Skip count: ' + intervalState.skipCount);
+
+    // Jadwal ulang check berikutnya
+    scheduleNextIntervalCheck(intervalMs);
+    return;  // ⭐ KELUAR TANPA MENJALANKAN CHECK ⭐
+  }
+
+  // ⭐ SET FLAG RUNNING ⭐
+  intervalState.isRunning = true;
+  intervalState.runCount++;
+
+  console.log('🔄 Interval check #' + intervalState.runCount + ' started (Skip: ' + intervalState.skipCount + ')');
+
+  var startTime = Date.now();
+
+  // Jalankan fungsi secara sequential
+  runFunctionsSequentially([
+    {
+      name: 'internetCheckQueue',
+      func: function () {
+        return new Promise(function (resolve) {
+          try {
+            internetCheckQueue.check();
+            setTimeout(resolve, 100);
+          } catch (error) {
+            console.error('Error in internetCheckQueue:', error);
+            resolve();
+          }
+        });
+      }
+    },
+    {
+      name: 'getNotifDelayRed',
+      func: function () {
+        return new Promise(function (resolve) {
+          try {
+            getNotifDelayRed();
+            setTimeout(resolve, 100);
+          } catch (error) {
+            console.error('Error in getNotifDelayRed:', error);
+            resolve();
+          }
+        });
+      }
+    },
+    {
+      name: 'getNotifRed',
+      func: function () {
+        return new Promise(function (resolve) {
+          try {
+            getNotifRed();
+            setTimeout(resolve, 100);
+          } catch (error) {
+            console.error('Error in getNotifRed:', error);
+            resolve();
+          }
+        });
+      }
+    }
+  ], 2).then(function () {
+    // ⭐ SEMUA FUNGSI SELESAI ⭐
+    var duration = Date.now() - startTime;
+    intervalState.lastRunTime = Date.now();
+    intervalState.isRunning = false;  // ⭐ RESET FLAG ⭐
+
+    console.log('✅ Interval check #' + intervalState.runCount + ' completed in ' + duration + 'ms');
+
+    // Schedule next check
+    scheduleNextIntervalCheck(intervalMs);
+
+  }).catch(function (error) {
+    // ⭐ ERROR HANDLING ⭐
+    console.error('❌ Interval check error:', error);
+    intervalState.isRunning = false;  // ⭐ RESET FLAG MESKIPUN ERROR ⭐
+
+    // Tetap schedule next check
+    scheduleNextIntervalCheck(intervalMs);
+  });
+}
+
+/**
+ * Start interval checks using recursive setTimeout
+ */
+function startIntervalChecksRecursive(intervalMs) {
+  intervalMs = intervalMs || 10000;
+  
+  console.log('🚀 Starting recursive interval checks every ' + (intervalMs / 1000) + 's');
+  console.log('⚠️  Skip mechanism: ENABLED (will skip if previous check still running)');
+  
+  // Reset counters
+  intervalState.isRunning = false;
+  intervalState.runCount = 0;
+  intervalState.skipCount = 0;
+  
+  // Run first check
+  runIntervalChecksRecursive(intervalMs);
+}
+
 
 var $$ = Dom7;
 var app = new Framework7({
@@ -31,34 +243,25 @@ var app = new Framework7({
     type: 'popup',
     toolbar: false
   },
-  root: '#app', // App root element
-  id: 'id.vertice.tasindosalesapp', // App bundle ID
-  name: 'Sales App', // App name
-  theme: 'md', // Automatic theme detection
-  // App root data
+  root: '#app',
+  id: 'id.vertice.tasindosalesapp',
+  name: 'Sales App',
+  theme: 'md',
   data: function () {
-    return {
-    };
+    return {};
   },
-  // App root methods
-  methods: {
-  },
-  // App routes
+  methods: {},
   routes: routes,
-
-  // Input settings
   input: {
     scrollIntoViewOnFocus: Framework7.device.cordova && !Framework7.device.electron,
     scrollIntoViewCentered: Framework7.device.cordova && !Framework7.device.electron,
   },
-  // Cordova Statusbar settings
   statusbar: {
     iosOverlaysWebView: true,
     androidOverlaysWebView: false,
   },
   on: {
     init: function () {
-
       var f7 = this;
       if (f7.device.cordova) {
         cordovaApp.init(f7);
@@ -70,17 +273,20 @@ var app = new Framework7({
           return app.views.main.router.navigate('/login');
         }, 300);
       } else {
-        getMenuUser();
         var jabatan = localStorage.getItem("jabatan");
-        startTimeMain();
-        showLineGraph();
-        selectBankPembayaran();
-        getPengumuman();
+
         $$('#karyawan_nama_header').html('<b>' + localStorage.getItem('karyawan_nama') + '</b>');
-        console.log(localStorage.getItem('karyawan_nama'));
-        getPengumuman();
         $$('#karyawan_nama_header').html('<img src="img/logo/logo_new.png" width="85px" />');
-        getPlayAudio();
+
+        // ========================================
+        // START INTERVAL CHECKS
+        // Tunggu 2 detik setelah app init untuk stabilitas
+        // ========================================
+        setTimeout(function () {
+          console.log('🎯 User logged in - Starting interval checks...');
+          startIntervalChecksRecursive(10000); // 10 detik interval
+        }, 2000);
+
         setTimeout(function () {
           return app.views.main.router.navigate('/notif');
         }, 300);
@@ -89,84 +295,97 @@ var app = new Framework7({
   },
 });
 
+// ========================================
+// PAGE HANDLERS - SISTEM SEQUENTIAL (MAX 2 CONCURRENT)
+// ========================================
+
 $$(document).on('page:afterin', '.page[data-name="prospek"]', function (e) {
-  getNotifRed();
-  getProspekHeaderManager();
-  selectBoxSalesProspekManager();
-  checkConnection();
-  checkLogin();
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getProspekHeaderManager', func: wrapFunction(getProspekHeaderManager, 'getProspekHeaderManager') },
+    { name: 'selectBoxSalesProspekManager', func: wrapFunction(selectBoxSalesProspekManager, 'selectBoxSalesProspekManager') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 })
 
 $$(document).on('page:afterin', '.page[data-name="share_link"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getDataKatalogText();
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getDataKatalogText', func: wrapFunction(getDataKatalogText, 'getDataKatalogText') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
   changeFilterMenuNotif('proforma');
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="delay_go"]', function (e) {
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getViewDelayManagerShipment();
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getViewDelayManagerShipment', func: wrapFunction(getViewDelayManagerShipment, 'getViewDelayManagerShipment') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="kpi"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getTargetInputBroadcastCsNotif();
-  dateRangeDeclarationKpi();
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getTargetInputBroadcastCsNotif', func: wrapFunction(getTargetInputBroadcastCsNotif, 'getTargetInputBroadcastCsNotif') },
+    { name: 'dateRangeDeclarationKpi', func: wrapFunction(dateRangeDeclarationKpi, 'dateRangeDeclarationKpi') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="kpi_broadcast"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getTargetBroadcastCsNotif();
-  dateRangeDeclarationKpiBroadcast();
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'dateRangeDeclarationKpiBroadcast', func: wrapFunction(dateRangeDeclarationKpiBroadcast, 'dateRangeDeclarationKpiBroadcast') },
+    { name: 'getTargetBroadcastCsNotif', func: wrapFunction(getTargetBroadcastCsNotif, 'getTargetBroadcastCsNotif') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
-// Page Penjualan On load
 $$(document).on('page:afterin', '.page[data-name="penjualan"]', function (e, page) {
-  getNotifRed();
   if (page.name == 'penjualan') {
     document.getElementById("page_sales").style.pointerEvents = "none";
   } else {
     document.getElementById("page_sales").style.pointerEvents = "initial";
   }
-  checkLogin();
-  checkConnection();
   localStorage.removeItem('arsip');
   localStorage.removeItem("menu_notif")
-  // openDialogViewManager();
-  getYearSalesAdmin();
-  selectMonthValues();
-  selectBankPembayaran();
-  getPengumuman();
-  tampilDataManager();
-  selectBoxClient();
 
   $$('#el_ukuran_hc_tambah_1').hide();
   $$('#el_ukuran_ts_tambah_1').hide();
@@ -182,50 +401,74 @@ $$(document).on('page:afterin', '.page[data-name="penjualan"]', function (e, pag
   $$('#el_style_hc_penjualan_tambah_1').hide();
   $$('#el_style_hc_penjualan_edit_1').hide();
   $$('#karyawan_nama_header').html('Customer Service');
+
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getYearSalesAdmin', func: wrapFunction(getYearSalesAdmin, 'getYearSalesAdmin') },
+    { name: 'selectBoxClient', func: wrapFunction(selectBoxClient, 'selectBoxClient') },
+    { name: 'getBulanTransaksiPerforma', func: wrapFunction(getBulanTransaksiPerforma, 'getBulanTransaksiPerforma') },
+    { name: 'getYearTransaksiPerforma', func: wrapFunction(getYearTransaksiPerforma, 'getYearTransaksiPerforma') },
+    { name: 'getBulanTransaksiPenjualan', func: wrapFunction(getBulanTransaksiPenjualan, 'getBulanTransaksiPenjualan') },
+    { name: 'getYearTransaksiPenjualan', func: wrapFunction(getYearTransaksiPenjualan, 'getYearTransaksiPenjualan') },
+    { name: 'selectMonthValues', func: wrapFunction(selectMonthValues, 'selectMonthValues') },
+    { name: 'selectBankPembayaran', func: wrapFunction(selectBankPembayaran, 'selectBankPembayaran') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') },
+    { name: 'tampilDataManager', func: wrapFunction(tampilDataManager, 'tampilDataManager') }
+  ], 2);
 })
 
 $$(document).on('page:afterin', '.page[data-name="tools"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getDataTools();
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getDataTools', func: wrapFunction(getDataTools, 'getDataTools') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="log"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getPengumuman();
-  getDataLogBroadcast();
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getDataLogBroadcast', func: wrapFunction(getDataLogBroadcast, 'getDataLogBroadcast') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  checkConnection();
-  getTargetBroadcastCs();
-  changeFilterMenu('sales');
   localStorage.setItem('show_eye', 'tidak_aktif');
-  getPengumuman();
-  selectBoxKotaBrodacast();
+  changeFilterMenu('sales');
   $$("#tambah_client_telp_broadcast").keypress(function (event) {
     var key = event.which;
     if (!(key >= 48 && key <= 57))
       event.preventDefault();
   });
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
+    { name: 'selectBoxKotaBrodacast', func: wrapFunction(selectBoxKotaBrodacast, 'selectBoxKotaBrodacast') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
-
-// Page penjualan input On load
 $$(document).on('page:afterin', '.page[data-name="penjualan_input"]', function (e) {
-  getNotifRed();
   var dtToday = new Date();
 
   var month = dtToday.getMonth();
@@ -241,36 +484,39 @@ $$(document).on('page:afterin', '.page[data-name="penjualan_input"]', function (
   $('.input-item-tanggal-kirim').attr('min', maxDate);
   $('.input-item-tanggal-kirim-single').attr('min', maxDate);
 
-
-
-  checkLogin();
-  selectBank();
-  penjualanGetPerformaData();
-  checkConnection();
-  getPengumuman();
-
-
   jQuery('#tanggal_pemesanan_1').val(moment().format('YYYY-MM-DD'));
   jQuery('#tanggal_pemesanan').val(moment().format('YYYY-MM-DD'));
 
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'selectBank', func: wrapFunction(selectBank, 'selectBank') },
+    { name: 'penjualanGetPerformaData', func: wrapFunction(penjualanGetPerformaData, 'penjualanGetPerformaData') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="kunjungan"]', function (e) {
-  getNotifRed();
-  checkLogin();
-  getProspekHeader();
-  selectBoxClientProspek();
-  checkConnection();
-  getPengumuman();
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getProspekHeader', func: wrapFunction(getProspekHeader, 'getProspekHeader') },
+    { name: 'selectBoxClientProspek', func: wrapFunction(selectBoxClientProspek, 'selectBoxClientProspek') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 })
 
-// Page Home / main On load
 $$(document).on('page:afterin', '.page[data-name="home"]', function (e) {
   backToSales();
 });
 
 $$(document).on('page:afterin', '.page[data-name="absensi-sales"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   $$('#showDataGajiSales').show();
@@ -279,13 +525,15 @@ $$(document).on('page:afterin', '.page[data-name="absensi-sales"]', function (e)
   $$('#hideDocPeriodeSales').hide();
   $('.clear-btn-color-sales').removeClass("bg-dark-gray-medium");
   $('#colorBtnGajiSales').addClass("bg-dark-gray-medium");
-  getDataKaryawanSales();
-  checkConnection();
-  btnPeriodeSales();
+
+  runFunctionsSequentially([
+    { name: 'getDataKaryawanSales', func: wrapFunction(getDataKaryawanSales, 'getDataKaryawanSales') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'btnPeriodeSales', func: wrapFunction(btnPeriodeSales, 'btnPeriodeSales') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="data-gaji"]', function (e) {
-  getNotifRed();
   console.log(localStorage.getItem("karyawan_nama"));
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
@@ -293,37 +541,37 @@ $$(document).on('page:afterin', '.page[data-name="data-gaji"]', function (e) {
 });
 
 $$(document).on('page:afterin', '.page[data-name="surat_jalan"]', function (e) {
-  getNotifRed();
-  getMenuUser();
-  checkLogin();
-  getHeaderPenjualanKunjungan(1);
-  checkConnection();
-  getPengumuman();
+  runFunctionsSequentially([
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getHeaderPenjualanKunjungan', func: wrapFunction(function () { getHeaderPenjualanKunjungan(1); }, 'getHeaderPenjualanKunjungan') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
-
 $$(document).on('page:afterin', '.page[data-name="kunjungan-sales"]', function (e) {
-  getNotifRed();
   console.log(localStorage.getItem("karyawan_nama"));
   console.log(localStorage.getItem("id_kunjungan_log"))
   $$("#logo_show").hide();
-  checkConnection();
-  getProspekHeaderAbsen();
+
+  runFunctionsSequentially([
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getProspekHeaderAbsen', func: wrapFunction(getProspekHeaderAbsen, 'getProspekHeaderAbsen') }
+  ], 2);
 });
 
-
-// Page penjualan input On load
 $$(document).on('page:afterin', '.page[data-name="login"]', function (e) {
-  getNotifRed();
   jQuery('#logout_logo').hide();
   app.popup.close();
-  checkConnection();
-  getPengumuman();
+
+  runFunctionsSequentially([
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 });
 
-
 $$(document).on('page:afterin', '.page[data-name="point-sales"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -348,12 +596,14 @@ $$(document).on('page:afterin', '.page[data-name="point-sales"]', function (e) {
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getSalesAdmin();
-  getYearSalesAdmin();
+
+  runFunctionsSequentially([
+    { name: 'getSalesAdmin', func: wrapFunction(getSalesAdmin, 'getSalesAdmin') },
+    { name: 'getYearSalesAdmin', func: wrapFunction(getYearSalesAdmin, 'getYearSalesAdmin') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="point-produksi"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -378,13 +628,14 @@ $$(document).on('page:afterin', '.page[data-name="point-produksi"]', function (e
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getYearProduksiAdmin();
-  pointProduksi();
+
+  runFunctionsSequentially([
+    { name: 'getYearProduksiAdmin', func: wrapFunction(getYearProduksiAdmin, 'getYearProduksiAdmin') },
+    { name: 'pointProduksi', func: wrapFunction(pointProduksi, 'pointProduksi') }
+  ], 2);
 });
 
-
 $$(document).on('page:afterin', '.page[data-name="history-point-produksi"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -409,12 +660,14 @@ $$(document).on('page:afterin', '.page[data-name="history-point-produksi"]', fun
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getYearHistoryProduksiAdmin();
-  historyPointProduksi();
+
+  runFunctionsSequentially([
+    { name: 'getYearHistoryProduksiAdmin', func: wrapFunction(getYearHistoryProduksiAdmin, 'getYearHistoryProduksiAdmin') },
+    { name: 'historyPointProduksi', func: wrapFunction(historyPointProduksi, 'historyPointProduksi') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="history-point-admin"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -439,12 +692,14 @@ $$(document).on('page:afterin', '.page[data-name="history-point-admin"]', functi
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getYearHistoryPointAdmin();
-  historyPointAdmin();
+
+  runFunctionsSequentially([
+    { name: 'getYearHistoryPointAdmin', func: wrapFunction(getYearHistoryPointAdmin, 'getYearHistoryPointAdmin') },
+    { name: 'historyPointAdmin', func: wrapFunction(historyPointAdmin, 'historyPointAdmin') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="point-admin"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -471,12 +726,13 @@ $$(document).on('page:afterin', '.page[data-name="point-admin"]', function (e) {
     text: moment().subtract(4, 'months').format('MMMM')
   }));
 
-  getYearPointAdmin();
-  pointAdmin();
+  runFunctionsSequentially([
+    { name: 'getYearPointAdmin', func: wrapFunction(getYearPointAdmin, 'getYearPointAdmin') },
+    { name: 'pointAdmin', func: wrapFunction(pointAdmin, 'pointAdmin') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="point-sj"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -502,12 +758,14 @@ $$(document).on('page:afterin', '.page[data-name="point-sj"]', function (e) {
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getYearPointSj();
-  pointSj();
+
+  runFunctionsSequentially([
+    { name: 'getYearPointSj', func: wrapFunction(getYearPointSj, 'getYearPointSj') },
+    { name: 'pointSj', func: wrapFunction(pointSj, 'pointSj') }
+  ], 2);
 });
 
 $$(document).on('page:afterin', '.page[data-name="history-point-sj"]', function (e) {
-  getNotifRed();
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
@@ -532,28 +790,31 @@ $$(document).on('page:afterin', '.page[data-name="history-point-sj"]', function 
     value: moment().subtract(4, 'months').format('M'),
     text: moment().subtract(4, 'months').format('MMMM')
   }));
-  getYearHistoryPointSj();
-  historyPointSj();
+
+  runFunctionsSequentially([
+    { name: 'getYearHistoryPointSj', func: wrapFunction(getYearHistoryPointSj, 'getYearHistoryPointSj') },
+    { name: 'historyPointSj', func: wrapFunction(historyPointSj, 'historyPointSj') }
+  ], 2);
 });
 
-// Page Katalog On load
 $$(document).on('page:afterin', '.page[data-name="katalog"]', function (e) {
-  getNotifRed();
-  checkLogin();
-  getProduk();
-  checkConnection();
-  getPengumuman();
+  runFunctionsSequentially([
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getProduk', func: wrapFunction(getProduk, 'getProduk') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
 })
 
-
-// Page Detail Product On load
 $$(document).on('page:afterin', '.page[data-name="detail_product"]', function (e) {
-  getNotifRed();
-  checkLogin();
-  getProdukDetail();
-  getProdukWarna();
-  checkConnection();
-  getPengumuman();
+  runFunctionsSequentially([
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getProdukDetail', func: wrapFunction(getProdukDetail, 'getProdukDetail') },
+    { name: 'getProdukWarna', func: wrapFunction(getProdukWarna, 'getProdukWarna') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+
   $$('.switch_frame').on('click', function () {
     jQuery("#main_frame").fadeOut('fast', function () {
       jQuery("#main_frame").fadeIn('fast');
@@ -561,3 +822,18 @@ $$(document).on('page:afterin', '.page[data-name="detail_product"]', function (e
     jQuery("#main_frame").attr("src", jQuery(this).attr('data-src'));
   });
 })
+
+$$(document).on('page:afterin', '.page[data-name="tagihan"]', function (e) {
+  $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getDataTagihan', func: wrapFunction(getDataTagihan, 'getDataTagihan') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'getYearCustom', func: wrapFunction(function () { getYearCustom('tagihan_years'); }, 'getYearCustom') },
+    { name: 'getMonthCustom', func: wrapFunction(function () { getMonthCustom('tagihan_bulan'); }, 'getMonthCustom') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+});

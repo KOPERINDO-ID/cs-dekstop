@@ -236,6 +236,32 @@ function startIntervalChecksRecursive(intervalMs) {
   runIntervalChecksRecursive(intervalMs);
 }
 
+var PageLoadTracker = {
+  loadedPages: {},
+  loadTimeout: 5000, // 5 detik cooldown
+
+  canLoad: function (pageName) {
+    var now = Date.now();
+    var lastLoad = this.loadedPages[pageName] || 0;
+
+    if (now - lastLoad < this.loadTimeout) {
+      console.log('Page ' + pageName + ' sudah di-load baru-baru ini, skip...');
+      return false;
+    }
+
+    this.loadedPages[pageName] = now;
+    return true;
+  },
+
+  reset: function (pageName) {
+    if (pageName) {
+      delete this.loadedPages[pageName];
+    } else {
+      this.loadedPages = {};
+    }
+  }
+};
+
 
 var $$ = Dom7;
 var app = new Framework7({
@@ -286,7 +312,7 @@ var app = new Framework7({
           console.log('🎯 User logged in - Starting interval checks...');
           startIntervalChecksRecursive(10000); // 10 detik interval
         }, 2000);
-
+        startTimeMain();
         setTimeout(function () {
           return app.views.main.router.navigate('/notif');
         }, 300);
@@ -830,8 +856,65 @@ $$(document).on('page:afterin', '.page[data-name="tagihan"]', function (e) {
   runFunctionsSequentially([
     { name: 'getDataTagihan', func: wrapFunction(getDataTagihan, 'getDataTagihan') },
     { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
-    { name: 'getYearCustom', func: wrapFunction(function () { getYearCustom('tagihan_years'); }, 'getYearCustom') },
-    { name: 'getMonthCustom', func: wrapFunction(function () { getMonthCustom('tagihan_bulan'); }, 'getMonthCustom') },
+    { name: 'getYearCustom', func: wrapFunction(function () { getYearCustom('tagihan_years', true); }, 'getYearCustom') },
+    { name: 'getMonthCustom', func: wrapFunction(function () { getMonthCustom('tagihan_bulan', true); }, 'getMonthCustom') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+});
+
+$$(document).on('page:afterin', '.page[data-name="sales-csm"]', function (e) {
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getYearSalesAdminCSM', func: wrapFunction(getYearSalesAdminCSM, 'getYearSalesAdminCSM') },
+    { name: 'getYearSalesAdminCSM', func: wrapFunction(getYearSalesAdminCSM, 'getYearSalesAdminCSM') },
+    { name: 'getPenjualanHeaderCSM', func: wrapFunction(getPenjualanHeaderCSM, 'getPenjualanHeaderCSM') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getPerformaHeaderPenjualanCSM', func: wrapFunction(getPerformaHeaderPenjualanCSM, 'getPerformaHeaderPenjualanCSM') },
+    { name: 'dateRangeDeclarationPenjualanCSM', func: wrapFunction(dateRangeDeclarationPenjualanCSM, 'dateRangeDeclarationPenjualanCSM') },
+    { name: 'initCalendarRangePerformaCSM', func: wrapFunction(initCalendarRangePerformaCSM, 'initCalendarRangePerformaCSM') },
+    { name: 'selectBankPembayaran', func: wrapFunction(selectBankPembayaran, 'selectBankPembayaran') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+
+  $$('#el_ukuran_hc_tambah_1_csm').hide();
+  $$('#el_ukuran_ts_tambah_1_csm').hide();
+  $$('#el_ukuran_hc_edit_1_csm').hide();
+  $$('#el_ukuran_ts_edit_1_csm').hide();
+  $$('#el_style_hc_tambah_1_csm').hide();
+  $$('#el_style_hc_edit_1_csm').hide();
+
+  $$('#el_ukuran_hc_penjualan_tambah_1_csm').hide();
+  $$('#el_ukuran_ts_penjualan_tambah_1_csm').hide();
+  $$('#el_ukuran_hc_penjualan_edit_1_csm').hide();
+  $$('#el_ukuran_ts_penjualan_edit_1_csm').hide();
+  $$('#el_style_hc_penjualan_tambah_1_csm').hide();
+  $$('#el_style_hc_penjualan_edit_1_csm').hide();
+  localStorage.removeItem('arsip');
+})
+
+$$(document).on('page:afterin', '.page[data-name="katalog-csm"]', function (e) {
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getProduk', func: wrapFunction(getProduk, 'getProduk') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+})
+
+$$(document).on('page:beforeremove', '.page[data-name="katalog-csm"]', function () {
+  PageLoadTracker.reset('katalog-csm');
+});
+
+$$(document).on('page:afterin', '.page[data-name="visit-csm"]', function (e) {
+  clearPageIntervals();
+  runFunctionsSequentially([
+    { name: 'loadVisitList', func: wrapFunction(loadVisitList, 'loadVisitList') }, 
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
     { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }

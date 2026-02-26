@@ -62,6 +62,7 @@ function getViewDelayManagerShipment() {
 
             app.dialog.close();
             jQuery('#data_status_notif_delay_go').html(penjualan_value);
+            jQuery('#count_notif_delay_go').text(no_row);
 
         },
         error: function (xmlhttprequest, textstatus, message) {
@@ -213,4 +214,15 @@ function toSentenceCase(str) {
     if (!str) return '';
     str = str.toLowerCase();
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// ========================================
+// FILTER / SEARCH DELAY GO TABLE
+// ========================================
+function filterDelayGoTable() {
+    var keyword = (jQuery('#search_delay_go_client').val() || '').toLowerCase();
+    jQuery('#data_status_notif_delay_go tr').each(function() {
+        var rowText = jQuery(this).text().toLowerCase();
+        jQuery(this).toggle(!keyword || rowText.indexOf(keyword) !== -1);
+    });
 }

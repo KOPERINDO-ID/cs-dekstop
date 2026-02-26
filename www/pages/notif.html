@@ -525,28 +525,6 @@
           </div>
         </div>
         <div class="page-content">
-          <!-- Card Warning Pembayaran Belum Lunas -->
-          <div id="card-pembayaran-belum-lunas-notif" style="display: none; margin: 15px 10px 10px 10px; padding: 15px; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); border-radius: 12px; box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="flex-shrink: 0;">
-                <i class="f7-icons" style="font-size: 32px; color: white;">exclamationmark_triangle_fill</i>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: white; font-weight: bold; font-size: 16px; margin-bottom: 4px;">
-                  Pembayaran Belum Lunas
-                </div>
-                <div style="color: rgba(255, 255, 255, 0.95); font-size: 13px; line-height: 1.4;">
-                  <span style="font-size: 12px; opacity: 0.9;">Status: <strong id="notif-shipment-status-text">Menunggu Approval</strong></span>
-                </div>
-              </div>
-              <div style="flex-shrink: 0;">
-                <div id="notif-shipment-status-badge" style="padding: 6px 12px; background: rgba(255, 255, 255, 0.25); border-radius: 20px; font-size: 11px; font-weight: bold; color: white; text-align: center; min-width: 80px;">
-                  PENDING
-                </div>
-              </div>
-            </div>
-          </div>
-          
           <form id="input_alamat_kirim_notif_popup">
             <div class="list" style="margin-top: 10px;">
               <ul style="padding: 10px;">
@@ -726,6 +704,12 @@
   </div>
 
   
+  <!-- ========================================
+   POPUP EXPEDISI - NOTIF
+   ======================================== -->
+  <!-- ========================================
+   POPUP TAMBAH EXPEDISI - NOTIF
+   ======================================== -->
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
     <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
@@ -735,21 +719,21 @@
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
         <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
             href="/client">Broadcast</a>
-        </div>
+        </div> -->
         <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white"
             onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
         <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
         <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
         <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
-        </div>
+        </div> -->
 
       </div>
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
@@ -771,185 +755,236 @@
       </div>
       <div class="row">
         <div class="col-100">
+
+          <!-- ===== PROFORMA ===== -->
           <div id="notif-proforma">
-            <div style="overflow-x:auto;width:100%;margin-top:5px;">
-              <table cellspacing="1" cellpadding="1" width="100%">
-                <thead class="bg-dark-gray-medium text-align-center">
-                  <tr>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="5%">
-                      No</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="12%">
-                      Tanggal</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="22%">
-                      Proforma</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="28%">
-                      Perusahaan</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="14%">
-                      Sales</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" width="14%"
-                      alighn="right">
-                      Total</th>
-                    <th class="label-cell bg-dark-gray-young" style="border-bottom:1px solid gray;" colspan="2"
-                      align="center" width="10%">Opsi</th>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="text-align-center" id="performa_notif_value">
-                </tbody>
-              </table>
+            <div class="card border-actived" style="margin:10px;">
+              <!-- Card Header -->
+              <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+                <div class="data-table-title" style="height:2px; margin-left:6px;">
+                  <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_proforma"> </i></h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
+                  <i class="f7-icons" onclick="getPerformaHeaderNotifPenjualan();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <!-- Truck icon orange -->
+                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Search -->
+              <div class="card-content bg-dark-gray-medium" style="padding:8px 10px; display:flex; gap:8px;">
+                <input type="text" id="search_notif_proforma_client" placeholder="Cari Client / Perusahaan..."
+                  oninput="filterNotifTable('proforma')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+                <input type="text" id="search_notif_proforma_sales" placeholder="Cari Sales..."
+                  oninput="filterNotifTable('proforma')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+              </div>
+              <!-- Table -->
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium" style="position:sticky; top:0; z-index:1;">
+                    <tr>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">No</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="12%">Tanggal</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="22%">Proforma</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="28%">Perusahaan</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Sales</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Total</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" colspan="2" width="10%">Opsi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="performa_notif_value"></tbody>
+                </table>
+              </div>
             </div>
           </div>
+
+          <!-- ===== SALES ===== -->
           <div id="notif-sales">
-            <div style="overflow-x:auto; width:100%;margin-top:5px;">
-              <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
-                <tr>
-                  <td align="center" width="5%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No</td>
-                  <td align="center" width="25%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">SPK</td>
-                  <td align="center" width="25%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Client</td>
-                  <td align="center" width="20%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Sales</td>
-                  <!-- <td align="center" width="8%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">PO</td> -->
-                  <!-- <td align="center" width="8%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Kota</td> -->
-                  <td align="left" width="8%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Wilayah</td>
-                  <td align="center" width="8%" colspan="2"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">OPSI</td>
-                </tr>
-                <tbody id="data_status_notif_manager">
-                </tbody>
-              </table>
+            <div class="card border-actived" style="margin:10px;">
+              <!-- Card Header -->
+              <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+                <div class="data-table-title" style="height:2px; margin-left:6px;">
+                  <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_sales"> </i></h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
+                  <i class="f7-icons" onclick="getViewNotifManagerSales();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Search -->
+              <div class="card-content bg-dark-gray-medium" style="padding:8px 10px; display:flex; gap:8px;">
+                <input type="text" id="search_notif_sales_client" placeholder="Cari Client..."
+                  oninput="filterNotifTable('sales')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+                <input type="text" id="search_notif_sales_sales" placeholder="Cari Sales..."
+                  oninput="filterNotifTable('sales')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+              </div>
+              <!-- Table -->
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                    <tr>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="25%">SPK</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="25%">Client</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="20%">Sales</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Wilayah</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="8%" colspan="2">OPSI</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="data_status_notif_manager"></tbody>
+                </table>
+              </div>
             </div>
           </div>
+
+          <!-- ===== BAYAR ===== -->
           <div id="notif-bayar">
-            <div style="overflow-x:auto; width:100%;margin-top:5px;">
-              <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
-                <tr>
-                  <td align="center" width="5%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No</td>
-                  <td align="center" width="11%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Tanggal</td>
-                  <td align="center" width="18%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">SPK</td>
-                  <td align="center" width="14%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Client</td>
-                  <td align="center" width="13%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Sales</td>
-                  <td align="center" width="13%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Jumlah</td>
-                  <td align="center" width="18%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Keterangan</td>
-                  <td align="center" width="4%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Bukti</td>
-                  <!-- <td align="center" width="4%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">OPSI</td> -->
-                </tr>
-                <tbody id="data_status_notif_bayar_manager">
-                </tbody>
-              </table>
+            <div class="card border-actived" style="margin:10px;">
+              <!-- Card Header -->
+              <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+                <div class="data-table-title" style="height:2px; margin-left:6px;">
+                  <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_bayar"> </i></h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
+                  <i class="f7-icons" onclick="getViewNotifManagerBayar();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Search -->
+              <div class="card-content bg-dark-gray-medium" style="padding:8px 10px; display:flex; gap:8px;">
+                <input type="text" id="search_notif_bayar_client" placeholder="Cari Client..."
+                  oninput="filterNotifTable('bayar')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+                <input type="text" id="search_notif_bayar_sales" placeholder="Cari Sales..."
+                  oninput="filterNotifTable('bayar')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+              </div>
+              <!-- Table -->
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                    <tr>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Tanggal</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="18%">SPK</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="14%">Client</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Sales</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Jumlah</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="18%">Keterangan</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="4%">Bukti</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="data_status_notif_bayar_manager"></tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div id="notif-kirim">
-            <div style="overflow-x:auto; width:100%;margin-top:5px;">
-              <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
-                <tr>
-                  <td align="center" width="5%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Tgl Kirim</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">SPK</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Client</td>
-                  <td align="center" width="18%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No SJ</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Plat</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Kendaraan</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Pengirim</td>
-                  <td align="center" width="12%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Opsi</td>
-                  <!-- <td align="center" width="8%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">PO</td>
-                  <td align="center" width="8%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">OPSI</td> -->
-                </tr>
-                <tbody id="data_status_notif_kirim_manager">
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+          <!-- ===== SHIPMENT ===== -->
           <div id="notif-shipment">
-            <div style="overflow-x:auto; width:100%;margin-top:5px;">
-              <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid gray;">
-                <tr>
-                  <td align="center" width="5%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">SPK</td>
-                  <td align="center" width="15%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Client</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Kota</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Tgl Kirim</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Tgl Req Kirim</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">No HP</td>
-                  <td align="center" width="20%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Alamat Kirim</td>
-                  <td align="center" width="10%"
-                    style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                    class="label-cell bg-dark-gray-young">Opsi</td>
-                </tr>
-                <tbody id="data_status_notif_shipment_manager">
-                </tbody>
-              </table>
+            <div class="card border-actived" style="margin:10px;">
+              <!-- Card Header -->
+              <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+                <div class="data-table-title" style="height:2px; margin-left:6px;">
+                  <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_shipment"> </i></h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
+                  <i class="f7-icons" onclick="getViewNotifManagerShipment();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Search -->
+              <div class="card-content bg-dark-gray-medium" style="padding:8px 10px; display:flex; gap:8px;">
+                <input type="text" id="search_notif_shipment_client" placeholder="Cari Client..."
+                  oninput="filterNotifTable('shipment')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+              </div>
+              <!-- Table -->
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                    <tr>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">SPK</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Client</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Kota</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Tgl Kirim</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Tgl Req Kirim</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">No HP</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="20%">Alamat Kirim</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Opsi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="data_status_notif_shipment_manager"></tbody>
+                </table>
+              </div>
             </div>
           </div>
+
+          <!-- ===== KIRIM ===== -->
+          <div id="notif-kirim">
+            <div class="card border-actived" style="margin:10px;">
+              <!-- Card Header -->
+              <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+                <div class="data-table-title" style="height:2px; margin-left:6px;">
+                  <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_kirim"> </i></h3>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
+                  <i class="f7-icons" onclick="getViewNotifManagerKirim();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Search -->
+              <div class="card-content bg-dark-gray-medium" style="padding:8px 10px; display:flex; gap:8px;">
+                <input type="text" id="search_notif_kirim_client" placeholder="Cari Client..."
+                  oninput="filterNotifTable('kirim')"
+                  style="flex:1; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
+              </div>
+              <!-- Table -->
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                    <tr>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Tgl Kirim</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">SPK</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Client</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="18%">No SJ</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Plat</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Kendaraan</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="15%">Pengirim</th>
+                      <th class="label-cell" style="border-bottom:1px solid gray;" width="12%">Opsi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="data_status_notif_kirim_manager"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

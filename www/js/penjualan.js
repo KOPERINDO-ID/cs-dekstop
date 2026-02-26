@@ -1865,9 +1865,22 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 						var path_image = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
 					}
 
+					// Cek apakah produk_id_xinyao tidak null, jika iya tampilkan dengan gambar xinyao
+					var display_jenis = val.penjualan_jenis;
+					var display_gambar = val.gambar;
+					var display_path = path_image;
+
+					if (val.produk_id_xinyao != null && val.produk_id_xinyao != '' && val.produk_id_xinyao != 'null') {
+						display_jenis = val.penjualan_jenis + ' | ' + val.produk_id_xinyao;
+						if (val.gambar_xinyao != null && val.gambar_xinyao != '' && val.gambar_xinyao != 'null') {
+							display_gambar = val.gambar_xinyao;
+							display_path = 'https://tasindo-sale-webservice.digiseminar.id/product_image_new';
+						}
+					}
+
 					invoice_penjualan += '		<tr>';
 					invoice_penjualan += '			<td width="5%" class="label-cell text-align-left" style="border-top: solid 1px; border-left: solid 1px; "><center>' + (no_invoice_penjualan += 1) + '</center></td>';
-					invoice_penjualan += '			<td width="25%" class="label-cell text-align-left" style="border-top: solid 1px; border-left: solid 1px; "><center>' + val.penjualan_jenis + '<br><img src="' + path_image + '/' + val.gambar + '" width="70%"></center></td>';
+					invoice_penjualan += '			<td width="25%" class="label-cell text-align-left" style="border-top: solid 1px; border-left: solid 1px; "><center>' + display_jenis + '<br><img src="' + display_path + '/' + display_gambar + '" width="70%"></center></td>';
 					invoice_penjualan += '			<td width="20%" class="label-cell" align="left" style="border-top: solid 1px; white-space: pre;">SPESIFIKASI<br>' + val.produk_keterangan_kustom + '<br>' + ket_item + '</td>';
 					invoice_penjualan += '				<td width="10%" class="label-cell" style="border-top: solid 1px; border-left: solid 1px;">';
 					invoice_penjualan += '					<center>' + val.penjualan_qty + '</center>';
@@ -1903,6 +1916,25 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 					invoice_penjualan += '			</td>';
 					invoice_penjualan += '		</tr>';
 				}
+				var biaya_packing_val = 0;
+				if (data.data[0].total_biaya_packing != null && 
+					data.data[0].total_biaya_packing != '' && 
+					parseFloat(data.data[0].total_biaya_packing) != 0) {
+					
+					biaya_packing_val = parseFloat(data.data[0].total_biaya_packing);
+					var nama_packing = (data.data[0].packing != null && data.data[0].packing != '') 
+										? data.data[0].packing : '-';
+					invoice_penjualan += '		<tr>';
+					invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
+					invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
+					invoice_penjualan += '				Packing : ' + nama_packing;
+					invoice_penjualan += '			</td>';
+					invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
+					invoice_penjualan += '			<font style="float:right;">' + number_format(biaya_packing_val) + '</font>';
+					invoice_penjualan += '			</td>';
+					invoice_penjualan += '		</tr>';
+				}
+
 				if (number_format(data.data[0].pembayaran_1) != 0) {
 					invoice_penjualan += '		<tr>';
 					invoice_penjualan += '			<td colspan="4" style="  font-weight:bold;" align="right"></td>';
@@ -1934,10 +1966,9 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 				invoice_penjualan += '			</td>';
 				invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
 				if (number_format(data.data[0].pembayaran_1) != 0) {
-					invoice_penjualan += '			 <font style="float:right;">' + number_format(parseFloat(penjualan_total) - parseFloat(data.data[0].pembayaran_1)) + '</font>';
+					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val - parseFloat(data.data[0].pembayaran_1)) + '</font>';
 				} else {
-					invoice_penjualan += '			 <font style="float:right;">' + number_format(parseFloat(penjualan_total)) + '</font>';
-
+					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val) + '</font>';
 				}
 				invoice_penjualan += '			</td>';
 				invoice_penjualan += '		</tr>'
@@ -1996,7 +2027,10 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 	});
 }
 
-function fullReport(penjualan_id_primary, performa_id_relation, performa_header_id, biaya_kirim, client_alamat, client_cp, client_cp_posisi, client_id, client_kota, client_nama, client_telp, jenis_penjualan, karyawan_id, penjualan_global_diskon, penjualan_grandtotal, penjualan_id, penjualan_jumlah_pembayaran, penjualan_keterangan, penjualan_status, penjualan_status_pembayaran, penjualan_tanggal, penjualan_tanggal_kirim, penjualan_total, penjualan_void_keterangan, penjualan_total_qty) {
+function fullReport(penjualan_id_primary, performa_id_relation, performa_header_id, biaya_kirim, client_alamat, client_cp, client_cp_posisi, client_id, client_kota, client_nama, client_telp, jenis_penjualan, karyawan_id, penjualan_global_diskon, penjualan_grandtotal, penjualan_id, penjualan_jumlah_pembayaran, penjualan_keterangan, penjualan_status, penjualan_status_pembayaran, penjualan_tanggal, penjualan_tanggal_kirim, penjualan_total, penjualan_void_keterangan, penjualan_total_qty, packing) {
+	// Format label packing untuk dokumen
+	var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
+	var packing_label = packing && packing !== '0' ? 'Packing ' + (packingLabels[packing] || packing.charAt(0).toUpperCase() + packing.slice(1)) : 'Packing finishing plastic';
 	var invoice_penjualan = '';
 	var pembayaran_1 = '';
 	var sj_content = '';
@@ -2997,7 +3031,11 @@ function piValue() {
 	jQuery('#performa').val('PI_');
 }
 
-function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client_cp, client_cp_posisi, client_id, client_kota, client_nama, client_telp, jenis_penjualan, karyawan_id, penjualan_global_diskon, penjualan_grandtotal, penjualan_id, penjualan_jumlah_pembayaran, penjualan_keterangan, penjualan_status, penjualan_status_pembayaran, penjualan_tanggal, penjualan_tanggal_kirim, penjualan_total, penjualan_void_keterangan, penjualan_total_qty, sisa_value, extra) {
+function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client_cp, client_cp_posisi, client_id, client_kota, client_nama, client_telp, jenis_penjualan, karyawan_id, penjualan_global_diskon, penjualan_grandtotal, penjualan_id, penjualan_jumlah_pembayaran, penjualan_keterangan, penjualan_status, penjualan_status_pembayaran, penjualan_tanggal, penjualan_tanggal_kirim, penjualan_total, penjualan_void_keterangan, penjualan_total_qty, sisa_value, extra, packing) {
+
+	// Format label packing untuk dokumen
+	var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
+	var packing_label = packing && packing !== '0' ? 'Packing ' + (packingLabels[packing] || packing.charAt(0).toUpperCase() + packing.slice(1)) : 'Packing finishing plastic';
 
 	if (extra != 1) {
 		header_koper = 'INDOKOPER';
@@ -3015,6 +3053,17 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 		var style_table = "border-spacing: 0; background-color:white; color:black;";
 	}
 
+	// ⭐ HELPER: Hitung total pembayaran yang sudah divalidasi CS
+	function hitungTotalPembayaranValidated(dataItem) {
+		var total = 0;
+		var fields = ['1','2','3','4','5','6','7','8','9','10'];
+		fields.forEach(function(n) {
+			if (dataItem['valid_cs_' + n] == 1 && dataItem['pembayaran_' + n] != null) {
+				total += parseFloat(dataItem['pembayaran_' + n]);
+			}
+		});
+		return total;
+	}
 
 	app.dialog.create({
 		title: 'Tanggal Pengiriman',
@@ -3067,23 +3116,19 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 						},
 						success: function (data) {
 
-
-
 							var no_invoice_penjualan = 0;
 
-
 							if (data.data.length != 0) {
-
 
 								var penjualan_total = 0;
 								var invest_molding = 0;
 								invest_molding = data.data[0].invest_molding;
-								var pembayaran_1 = 0;
-								pembayaran_1 = data.data[0].pembayaran_1;
+
+								// ⭐ PERBAIKAN: Hitung total pembayaran yang sudah divalidasi CS
+								var total_pembayaran_validated = hitungTotalPembayaranValidated(data.data[0]);
 
 								invoice_penjualan += '<tbody>';
 								var ongkir = 0;
-				var hasOngkirPending = false;
 								jQuery.each(data.data, function (i, val) {
 									if (val.style != null && val.style != 'none') {
 										var style = val.style;
@@ -3093,9 +3138,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									if (!val.keterangan) {
 										var ket_item = '';
 									} else {
-
 										var ket_item = '<font color="red"><br>KET :<br>' + style + ' ' + val.keterangan + '</font>';
-
 									}
 
 									invoice_penjualan += '<tr>';
@@ -3124,15 +3167,8 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									ongkir = parseInt(val.ongkir);
 								});
 								invoice_penjualan += '</tbody>';
-								// invoice_penjualan += '		<tr>';
-								// invoice_penjualan += '			<td colspan="4" style=" border-top: solid 1px; font-weight:bold;" align="right"></td>';
-								// invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
-								// invoice_penjualan += '				Total';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
-								// invoice_penjualan += '			<font style="float:right;">' + number_format(penjualan_total) + '</font>';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '		</tr>';
+
+								// Molding
 								if (number_format(data.data[0].invest_molding) != 0) {
 									invoice_penjualan += '		<tr>';
 									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;;border-top: solid 1px;" align="right"></td>';
@@ -3143,93 +3179,66 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									invoice_penjualan += '				 <font style="float:right; ">' + number_format(invest_molding) + '</font>';
 									invoice_penjualan += '			</td>';
 									invoice_penjualan += '		</tr>';
-									var invest_molding_jumlah = data.data[0].invest_molding;
-								} else {
-									var invest_molding_jumlah = 0;
-
 								}
 
-								if (number_format(data.data[0].pembayaran_1) != 0) {
-									var border_top_deposit = "border-top: solid 1px;";
-									var border_top_jumlah = "";
-								} else {
-									var border_top_deposit = "";
-									var border_top_jumlah = "border-top: solid 1px;";
-								}
-
-
+								// Biaya Kirim
 								invoice_penjualan += '		<tr>';
 								invoice_penjualan += '			<td colspan="4" style="border-top: solid 1px;;font-weight:bold;" align="right"></td>';
 								invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
 								invoice_penjualan += '				Biaya Kirim';
 								invoice_penjualan += '			</td>';
 								invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px;font-weight:bold;" align="left">';
-
-								if (ongkir != 0) {
-
-									invoice_penjualan += '			 <font style="float:right;">' + number_format(ongkir) + '</font>';
-								} else {
-									invoice_penjualan += '			 <font style="float:right;">' + number_format(0) + '</font>';
-
-								}
+								invoice_penjualan += '			 <font style="float:right;">' + number_format(ongkir != 0 ? ongkir : 0) + '</font>';
 								invoice_penjualan += '			</td>';
-								invoice_penjualan += '		</tr>'
+								invoice_penjualan += '		</tr>';
 
-								if (number_format(data.data[0].pembayaran_1) != 0) {
+								// ========== PACKING ==========
+								var biaya_packing_val = parseFloat(data.data[0].total_biaya_packing || 0);
+								var packing_label_tabel = (data.data[0].packing && data.data[0].packing !== '') ? data.data[0].packing : '-';
+								if (biaya_packing_val > 0) {
+									invoice_penjualan += '		<tr>';
+									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
+									invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '				Packing : ' + packing_label_tabel;
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '			 <font style="float:right;">' + number_format(biaya_packing_val) + '</font>';
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '		</tr>';
+								}
+								// ========== END PACKING ==========
+
+								// Deposit
+								if (total_pembayaran_validated > 0) {
 									invoice_penjualan += '		<tr>';
 									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
 									invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
 									invoice_penjualan += '				Deposit';
 									invoice_penjualan += '			</td>';
 									invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
-									invoice_penjualan += '			<font style="float:right; ">' + number_format(pembayaran_1) + '</font>';
+									invoice_penjualan += '			<font style="float:right; ">' + number_format(total_pembayaran_validated) + '</font>';
 									invoice_penjualan += '			</td>';
 									invoice_penjualan += '		</tr>';
 								}
 
-
-								// if (number_format(data.data[0].biaya_kirim) != 0 || data.data[0].biaya_kirim != null) {
-								// 	var biaya_kirim_fix = biaya_kirim;
-								// } else {
-								// 	var biaya_kirim_fix = 0;
-								// }
-
-								// invoice_penjualan += '		<tr>';
-								// invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
-								// invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
-								// invoice_penjualan += '				Biaya Kirim';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px;  font-weight:bold;" align="left">';
-								// invoice_penjualan += '			<font style="float:right;">' + number_format(biaya_kirim_fix) + '</font>';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '		</tr>';
-
-
+								// ⭐ PERBAIKAN: Jumlah = total + ongkir + packing - total_pembayaran_validated
 								invoice_penjualan += '		<tr>';
 								invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
 								invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
 								invoice_penjualan += '				Jumlah';
 								invoice_penjualan += '			</td>';
 								invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
-
-								if (pembayaran_1 != null) {
-
-									invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir)) - parseFloat(pembayaran_1)) + '</font>';
-								} else {
-									invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir))) + '</font>';
-
-								}
+								invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir) + biaya_packing_val) - total_pembayaran_validated) + '</font>';
 								invoice_penjualan += '			</td>';
-								invoice_penjualan += '		</tr>'
-
+								invoice_penjualan += '		</tr>';
 
 								var penjualan_tgl_kirim = '';
 								jQuery.ajax({
 									type: 'POST',
-									url: "" + BASE_API + "/full-report",
+									url: "" + BASE_API + "/full-report-crm",
 									dataType: 'JSON',
 									data: {
-										karyawan_id: jQuery("#sales_id").val(),
+										karyawan_id: karyawan_id,
 										performa_header_id: performa_header_id,
 										jenis_penjualan: jenis_penjualan
 									},
@@ -3242,7 +3251,6 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										var penjualan_tgl_kirim_no = 0;
 										jQuery.each(data.data, function (ikrm, valkrm) {
 											var myString = valkrm.penjualan_id;
-
 											if (valkrm.jenis_penjualan != 'PERFORMA') {
 												penjualan_tgl_kirim += '<tr>';
 												penjualan_tgl_kirim += '<td colspan="5">';
@@ -3256,22 +3264,18 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 												penjualan_tgl_kirim += '</td>';
 												penjualan_tgl_kirim += '</tr>';
 											}
-
 										});
 
 										invoice_penjualan += '<br>' + penjualan_tgl_kirim + '</br>';
-
-
 										invoice_penjualan += '		<tr>';
 										invoice_penjualan += '			<td colspan="6">:</td>';
 										invoice_penjualan += '		</tr>';
 										invoice_penjualan += '	</table>';
 
-
 										invoice_penjualan += '	<table width="100%" border="0">';
 										invoice_penjualan += '      <tr>';
 										invoice_penjualan += '          <td width="1%">-</td>';
-										invoice_penjualan += '          <td width="70%">Packing finishing plastic</td>';
+										invoice_penjualan += '          <td width="70%">' + packing_label + '</td>';
 										invoice_penjualan += '          <td width="16%" align="center"></td>';
 										invoice_penjualan += '          <td width="13%" align="center"></td>';
 										invoice_penjualan += '      </tr>';
@@ -3311,71 +3315,54 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '				</span>';
 										invoice_penjualan += '			</td>';
 										invoice_penjualan += '          <td width="13%" align="center"></td>';
-											
-											invoice_penjualan += '      </tr>';
-											var bankInfo = '';
-											if (data.data[0].bank_1_id) {
-												var bankId = parseInt(data.data[0].bank_1_id);
-												if (data.data[0].bank_1 === "Mandiri Owner") {
-													bankId = 6;
-												}
-												var bankData = getBankInfoById(bankId);
-												
-												bankInfo += '      <tr>';
-												bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">' + bankData.nama + '</td>';
-												bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-												bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">' + bankData.rekening + ' a.n ' + bankData.atas_nama + '</td>';
-												bankInfo += '          <td width="13%" align="center"></td>';
-												bankInfo += '      </tr>';
-											} else {
-												bankInfo += '      <tr>';
-												bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
-												bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-												bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
-												bankInfo += '          <td width="13%" align="center"></td>';
-												bankInfo += '      </tr>';
-												bankInfo += '      <tr>';
-												bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
-												bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-												bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 518 7422 a.n Sutono</td>';
-												bankInfo += '          <td width="13%" align="center"></td>';
-												bankInfo += '      </tr>';
+										invoice_penjualan += '      </tr>';
+
+										var bankInfo = '';
+										if (data.data[0].bank_1_id) {
+											var bankId = parseInt(data.data[0].bank_1_id);
+											if (data.data[0].bank_1 === "Mandiri Owner") {
+												bankId = 6;
 											}
-											
-											invoice_penjualan += bankInfo;
+											var bankData = getBankInfoById(bankId);
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">' + bankData.nama + '</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">' + bankData.rekening + ' a.n ' + bankData.atas_nama + '</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+										} else {
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
+											bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 518 7422 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+										}
+										invoice_penjualan += bankInfo;
+
 										invoice_penjualan += '      <tr>';
 										invoice_penjualan += '          <td width="15%" align="center" colspan="4"></td>';
 										invoice_penjualan += '          <td width="15%" align="center"><p style="font-weight: bold;">' + client_nama.replace(/\PT. /g, '').replace(/\PT/g, '').replace(/\CV. /g, '').replace(/\CV/g, '').replace(/\UD. /g, '').replace(/\UD/g, '') + '</p></td>';
 										invoice_penjualan += '      </tr>';
 										invoice_penjualan += '	</table>';
 
-
-
 										setTimeout(function () {
 											app.dialog.close();
-
 											$$('#detail_invoice_table_popup').html(invoice_penjualan);
 											app.popup.open('.detail-invoice-popup');
-											// let options = {
-											// 	documentSize: 'A4',
-											// 	type: 'share',
-											// 	fileName: 'invoice_' + client_nama + '.pdf'
-											// }
-
-
-											// pdf.fromData(invoice_penjualan, options)
-											// 	.then((stats) => console.log('status', stats))
-											// 	.catch((err) => console.err(err))
-
 										}, 1500);
 										console.log(invoice_penjualan);
 									},
 									error: function (xmlhttprequest, textstatus, message) {
 									}
 								});
-
 							}
-
 						},
 						error: function (xmlhttprequest, textstatus, message) {
 						}
@@ -3399,10 +3386,10 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 							app.dialog.preloader('Mengambil Data Penjualan');
 							invoice_penjualan += '<table width="100%" border="0" style="' + style_table + '">';
 							invoice_penjualan += '	<tr>';
-							invoice_penjualan += '		<td colspan="6"  align="center"><b>KOPERINDO</b><br>Industri Tas & Koper</td>';
+							invoice_penjualan += '		<td colspan="6"  align="center"><b>' + header_koper + '</b><br>Industri Tas & Koper</td>';
 							invoice_penjualan += '	</tr>';
 							invoice_penjualan += '	<tr>';
-							invoice_penjualan += '		<td colspan="6" align="center">www.koperindo.id';
+							invoice_penjualan += '		<td colspan="6" align="center">' + header_web + '';
 							invoice_penjualan += '			<hr>';
 							invoice_penjualan += '		</td>';
 							invoice_penjualan += '	</tr>';
@@ -3429,16 +3416,15 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 
 							var no_invoice_penjualan = 0;
 
-
 							if (data.data.length != 0) {
-
 
 								var penjualan_total = 0;
 								var invest_molding = 0;
 								invest_molding = data.data[0].invest_molding;
-								var pembayaran_1 = 0;
 								var ongkir_tidak = 0;
-								pembayaran_1 = data.data[0].pembayaran_1;
+
+								// ⭐ PERBAIKAN: Hitung total pembayaran yang sudah divalidasi CS
+								var total_pembayaran_validated = hitungTotalPembayaranValidated(data.data[0]);
 
 								invoice_penjualan += '<tbody>';
 
@@ -3451,9 +3437,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									if (!val.keterangan) {
 										var ket_item = '';
 									} else {
-
 										var ket_item = '<font color="red"><br>KET :<br>' + style + ' ' + val.keterangan + '</font>';
-
 									}
 
 									invoice_penjualan += '<tr>';
@@ -3481,15 +3465,8 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									penjualan_total += parseInt(val.penjualan_detail_grandtotal);
 								});
 								invoice_penjualan += '</tbody>';
-								// invoice_penjualan += '		<tr>';
-								// invoice_penjualan += '			<td colspan="4" style=" border-top: solid 1px; font-weight:bold;" align="right"></td>';
-								// invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
-								// invoice_penjualan += '				Total';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
-								// invoice_penjualan += '			<font style="float:right;">' + number_format(penjualan_total) + '</font>';
-								// invoice_penjualan += '			</td>';
-								// invoice_penjualan += '		</tr>';
+
+								// Molding
 								if (number_format(data.data[0].invest_molding) != 0) {
 									invoice_penjualan += '		<tr>';
 									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
@@ -3501,67 +3478,57 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									invoice_penjualan += '			</td>';
 									invoice_penjualan += '		</tr>';
 								}
-								if (number_format(data.data[0].pembayaran_1) != 0) {
-									var border_top_deposit = "border-top: solid 1px;";
-									var border_top_jumlah = "";
-								} else {
-									var border_top_deposit = "";
-									var border_top_jumlah = "border-top: solid 1px;";
-								}
-								// if (number_format(data.data[0].biaya_kirim) != 0 || data.data[0].biaya_kirim != null) {
-								// 	var biaya_kirim_fix = biaya_kirim;
-								// } else {
-								// 	var biaya_kirim_fix = 0;
-								// }
 
-
+								// Biaya Kirim
 								invoice_penjualan += '		<tr>';
 								invoice_penjualan += '			<td colspan="4" style="border-top: solid 1px;font-weight:bold;" align="right"></td>';
 								invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
 								invoice_penjualan += '				Biaya Kirim';
 								invoice_penjualan += '			</td>';
 								invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px;font-weight:bold;" align="left">';
+								invoice_penjualan += '			 <font style="float:right;">' + number_format(ongkir_tidak != 0 ? ongkir_tidak : 0) + '</font>';
+								invoice_penjualan += '			</td>';
+								invoice_penjualan += '		</tr>';
 
-								if (ongkir_tidak != 0) {
-
-									invoice_penjualan += '			 <font style="float:right;">' + number_format(ongkir_tidak) + '</font>';
-								} else {
-									invoice_penjualan += '			 <font style="float:right;">' + number_format(0) + '</font>';
-
+								// ========== PACKING ==========
+								var biaya_packing_val_tidak = parseFloat(data.data[0].total_biaya_packing || 0);
+								var packing_label_tabel_tidak = (data.data[0].packing && data.data[0].packing !== '') ? data.data[0].packing : '-';
+								if (biaya_packing_val_tidak > 0) {
+									invoice_penjualan += '		<tr>';
+									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
+									invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '				Packing : ' + packing_label_tabel_tidak;
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '			 <font style="float:right;">' + number_format(biaya_packing_val_tidak) + '</font>';
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '		</tr>';
 								}
-								invoice_penjualan += '			</td>';
-								invoice_penjualan += '		</tr>'
+								// ========== END PACKING ==========
 
-								invoice_penjualan += '		<tr>';
-								invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
-								invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
-								invoice_penjualan += '				 Deposit';
-								invoice_penjualan += '			</td>';
-								invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
-								invoice_penjualan += '				<font style="float:right; color:red !important; ">' + number_format(pembayaran_1) + '</font>';
+								// Deposit
+								if (total_pembayaran_validated > 0) {
+									invoice_penjualan += '		<tr>';
+									invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
+									invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '				 Deposit';
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; font-weight:bold;" align="left">';
+									invoice_penjualan += '				<font style="float:right; color:red !important; ">' + number_format(total_pembayaran_validated) + '</font>';
+									invoice_penjualan += '			</td>';
+									invoice_penjualan += '		</tr>';
+								}
 
-								invoice_penjualan += '			</td>';
-								invoice_penjualan += '		</tr>'
-
-
+								// ⭐ PERBAIKAN: Jumlah = total + ongkir + packing - total_pembayaran_validated
 								invoice_penjualan += '		<tr>';
 								invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
 								invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
 								invoice_penjualan += '				Jumlah';
 								invoice_penjualan += '			</td>';
 								invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
-
-								if (pembayaran_1 != null) {
-
-									invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir_tidak)) - parseFloat(pembayaran_1)) + '</font>';
-								} else {
-									invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir_tidak))) + '</font>';
-								}
-
+								invoice_penjualan += '			 <font style="float:right;">' + number_format((parseFloat(penjualan_total) + parseFloat(ongkir_tidak) + biaya_packing_val_tidak) - total_pembayaran_validated) + '</font>';
 								invoice_penjualan += '			</td>';
-								invoice_penjualan += '		</tr>'
-
-
+								invoice_penjualan += '		</tr>';
 
 								var penjualan_tgl_kirim = '';
 								jQuery.ajax({
@@ -3569,7 +3536,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									url: "" + BASE_API + "/full-report",
 									dataType: 'JSON',
 									data: {
-										karyawan_id: jQuery("#sales_id").val(),
+										karyawan_id: karyawan_id,
 										performa_header_id: performa_header_id,
 										jenis_penjualan: jenis_penjualan
 									},
@@ -3579,7 +3546,6 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 									success: function (data) {
 										app.dialog.close();
 
-
 										invoice_penjualan += '		<tr>';
 										invoice_penjualan += '			<td colspan="6"></td>';
 										invoice_penjualan += '		</tr>';
@@ -3588,7 +3554,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '	<table width="100%" border="0">';
 										invoice_penjualan += '      <tr>';
 										invoice_penjualan += '          <td width="1%">-</td>';
-										invoice_penjualan += '          <td width="70%">Packing finishing plastic</td>';
+										invoice_penjualan += '          <td width="70%">' + packing_label + '</td>';
 										invoice_penjualan += '          <td width="16%" align="center"></td>';
 										invoice_penjualan += '          <td width="13%" align="center"></td>';
 										invoice_penjualan += '      </tr>';
@@ -3615,6 +3581,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '			<td colspan="2"></td>';
 										invoice_penjualan += '		</tr>';
 										invoice_penjualan += '	</table>';
+
 										invoice_penjualan += '	<table border="0" width="100%" style="border-spacing: 0;">';
 										invoice_penjualan += '      <tr>';
 										invoice_penjualan += '          <td width="50%" align="left" colspan="3" class=""><b>Rekening</b></td>';
@@ -3646,32 +3613,16 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '      </tr>';
 										invoice_penjualan += '	</table>';
 
-
 										setTimeout(function () {
 											app.dialog.close();
 											$$('#detail_invoice_table_popup').html(invoice_penjualan);
 											app.popup.open('.detail-invoice-popup');
-
-
-											// let options = {
-											// 	documentSize: 'A4',
-											// 	type: 'share',
-											// 	fileName: 'invoice_' + client_nama + '.pdf'
-											// }
-
-
-											// pdf.fromData(invoice_penjualan, options)
-											// 	.then((stats) => console.log('status', stats))
-											// 	.catch((err) => console.err(err))
-											// console.log(invoice_penjualan);
 										}, 1500);
 									},
 									error: function (xmlhttprequest, textstatus, message) {
 									}
 								});
-
 							}
-
 						},
 						error: function (xmlhttprequest, textstatus, message) {
 						}
@@ -5606,16 +5557,38 @@ function getPenjualanHeader(page) {
 							var color_btn_sj_id = "btn-color-greenWhite";
 						}
 
-						if (sisa <= 0) {
-							var color_btn_byr = "btn-color-blueWhite";
+						// if (sisa <= 0) {
+						// 	var color_btn_byr = "btn-color-blueWhite";
+						// } else {
+						// 	var color_btn_byr = "bg-dark-gray-young text-add-colour-black-soft";
+						// }
+
+						if (total_pembayaran_validated == 0) {
+							// 🟡 KUNING - Belum ada pembayaran sama sekali yang tervalidasi
+							var color_btn_byr = "card-color-yellow-text-white";
+						} else if (sisa <= 0) {
+							var hasOngkirPending = (item.status_ongkir === 'pending');
+							var hasPendingPembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
+							
+							if (hasPendingPembayaran || hasOngkirPending) {
+								// 🟢 HIJAU - Lunas tapi ada pembayaran/ongkir pending validasi
+								var color_btn_byr = "btn-color-greenWhite";
+							} else {
+								// 🔵 BIRU - Benar-benar lunas sempurna
+								var color_btn_byr = "btn-color-blueWhite";
+							}
+						} else if (sisa > 0 && item.pembayaran1_tgl != null) {
+							// 🟢 HIJAU - Ada cicilan tapi belum lunas
+							var color_btn_byr = "btn-color-greenWhite";
+						} else if (data.log_pembayaran_rejected && data.log_pembayaran_rejected[item.penjualan_id] && data.log_pembayaran_rejected[item.penjualan_id].length > 0) {
+							// 🔴 MERAH - Ada pembayaran yang ditolak
+							var color_btn_byr = "btn-color-redWhite";
 						} else {
+							// ⚫ ABU-ABU - Default
 							var color_btn_byr = "bg-dark-gray-young text-add-colour-black-soft";
 						}
 
 
-						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="' + btn_entertain + ' button-small col button popup-open text-bold" data-popup=".input-fee-penjualan" onclick="getInputFee(\'' + item.karyawan_id + '\',\'' + item.penjualan_id + '\',\'' + entertain + '\',\'' + invoice_fee + '\');">' + number_format(entertain) + '</button>';
-						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 						penjualan_value += '   <button  class="' + btn_color_urgent_blink + ' button-small col button text-bold popup-open" data-popup=".detail-sales" ' + onclick_urgent + '>Urgent</button>';
 						penjualan_value += '</td>';
@@ -5623,7 +5596,7 @@ function getPenjualanHeader(page) {
 						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" data-popup=".detail-spkpo-popup" onclick="spkPo(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.extra + '\');">Spk PO</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\');">Invoice</button>';
+						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\',\'' + (item.packing || '') + '\');">Invoice</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\');">Bayar</button>';
@@ -5647,7 +5620,7 @@ function getPenjualanHeader(page) {
 						}
 
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open" onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\');">Report</button>';
+						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open" onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + (item.packing || '') + '\');">Report</button>';
 						penjualan_value += '</td>';
 						// if (item.valid_cs == 2) {
 						if (item.is_edit == 1) {
@@ -5901,16 +5874,13 @@ function getPenjualanHeader(page) {
 							var color_btn_byr = "bg-dark-gray-young text-add-colour-black-soft";
 						}
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="' + btn_entertain + ' button-small col button popup-open text-bold" data-popup=".input-fee-penjualan" onclick="getInputFee(\'' + item.karyawan_id + '\',\'' + item.penjualan_id + '\',\'' + entertain + '\',\'' + invoice_fee + '\');">' + number_format(entertain) + '</button>';
-						penjualan_value += '</td>';
-						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 						penjualan_value += '   <button  class="' + btn_color_urgent_blink + ' button-small col button text-bold popup-open" data-popup=".detail-sales" ' + onclick_urgent + '>Urgent</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" data-popup=".detail-spkpo-popup" onclick="spkPo(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.extra + '\');">Spk PO</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\');">Invoice</button>';
+						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\',\'' + (item.packing || '') + '\');">Invoice</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\');">Bayar</button>';
@@ -5933,7 +5903,7 @@ function getPenjualanHeader(page) {
 							penjualan_value += '</td>';
 						}
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open" onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\');">Report</button>';
+						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open" onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + (item.packing || '') + '\');">Report</button>';
 						penjualan_value += '</td>';
 						// if (item.valid_cs == 2) {
 						if (item.is_edit == 1) {
@@ -6344,7 +6314,7 @@ function getPenjualanHeaderNotif(page) {
 					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold"  onclick="spkPo(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + item.extra + '\');">Spk PO</button>';
 					penjualan_value += '</td>';
 					penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold"  onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\');">Invoice</button>';
+					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold"  onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\',\'' + (item.packing || '') + '\');">Invoice</button>';
 					penjualan_value += '</td>';
 					penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 					penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\');">Bayar</button>';
@@ -6353,7 +6323,7 @@ function getPenjualanHeaderNotif(page) {
 					penjualan_value += '  <button  class="' + color_btn_sj_id + ' button-small col button ' + popup + ' text-bold"  data-popup=".surat-jalan-penjualan" onclick="getSuratJalanDetailPenjualan(\'' + item.dt_record + '\',\'' + item.client_nama + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_total_qty + '\');">S.Jalan</button>';
 					penjualan_value += '</td>';
 					penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"  onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\');">Report</button>';
+					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"  onclick="fullReport(\'' + item.penjualan_id_primary + '\',\'' + item.performa_id_relation + '\',\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + (item.packing || '') + '\');">Report</button>';
 					penjualan_value += '</td>';
 					penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
 					penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" data-popup=".edit-penjualan" onclick="editPenjualan(\'' + item.penjualan_id + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.client_id + '\',\'' + item.karyawan_id + '\',\'' + item.client_nama + '\',\'' + item.performa_header_id + '\',\'' + item.customer_logo + '\',\'' + item.customer_logo_bordir + '\',\'' + item.customer_logo_tambahan + '\');">Edit</button>';
@@ -6674,9 +6644,9 @@ function getPerformaHeaderPenjualan() {
 					// Logika icon download: merah jika needs_approval = 1 dan status pending/rejected
 					var image_potongan = '';
 					if (item2.needs_approval == 1 && (item2.approval_status == 'pending' || item2.approval_status == 'rejected')) {
-						image_potongan = '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\');" src="img/logo/donwloadproforma_merah.png" width="80px" />';
+						image_potongan = '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + (item2.packing || '') + '\');" src="img/logo/donwloadproforma_merah.png" width="80px" />';
 					} else {
-						image_potongan = '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\');" src="img/logo/donwloadproforma.png" width="80px" />';
+						image_potongan = '<img class="popup-open" data-popup=".detail-proforma-popup" onclick="penjualanGetPerformaDownload(\'' + item2.performa_header_id + '\',\'' + item2.karyawan_id + '\',\'' + item2.client_kota + '\',\'' + item2.client_nama + '\',\'' + item2.dt_record + '\',\'' + item2.performa_total_qty + '\',\'' + item2.extra + '\',\'' + (item2.packing || '') + '\');" src="img/logo/donwloadproforma.png" width="80px" />';
 					}
 
 					performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
@@ -6706,6 +6676,7 @@ function getPerformaHeaderPenjualan() {
 			}
 
 			$$('#performa_value').html(performa_value);
+			$$('#total_data_proforma').html(no);
 			app.dialog.close();
 		},
 		error: function (xmlhttprequest, textstatus, message) {
@@ -7554,6 +7525,7 @@ function kirimAlamat(penjualan_id) {
 			var hp_alamat = "";
 			var tgl_kirim_cabang = "";
 			var keterangan_cabang = "";
+			var packing_kirim = "";
 			if (data.data != null) {
 				alamat_client = data.data.client_alamat;
 				alamat_kirim = data.data.alamat_kirim_penjualan;
@@ -7565,6 +7537,7 @@ function kirimAlamat(penjualan_id) {
 					tgl_kirim_cabang = '';
 				}
 				keterangan_cabang = data.data.keterangan_cabang;
+				packing_kirim = data.data.packing || '';
 			} else {
 				alamat_client = '-';
 				alamat_kirim = '-';
@@ -7573,6 +7546,12 @@ function kirimAlamat(penjualan_id) {
 				tgl_kirim_cabang = '';
 				keterangan_cabang = '';
 			}
+
+			// Format label packing
+			var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
+			var packingDisplay = packing_kirim
+				? (packingLabels[packing_kirim] || packing_kirim.charAt(0).toUpperCase() + packing_kirim.slice(1))
+				: 'Belum dipilih';
 
 			if (data.data.foto_produksi_selesai != null) {
 				jQuery('#file_foto_produksi_selesai_sales_view').attr('src', BASE_PATH_IMAGE_BUKTI_PRODUKSI + '/' + data.data.foto_produksi_selesai);
@@ -7587,6 +7566,7 @@ function kirimAlamat(penjualan_id) {
 			$$('#client_alamat_kota').val(data.data.client_kota);
 			$$('#tgl_kirim_cabang').val(tgl_kirim_cabang);
 			$$('#keterangan_cabang').val(keterangan_cabang);
+			$$('#packing_kirim_view').val(packingDisplay);
 		},
 		error: function (xmlhttprequest, textstatus, message) {
 		}
@@ -7918,8 +7898,11 @@ function openPopupALamat(client_telp, client_cp, client_nama, client_alamat) {
 	$('#no_hp_sj').html(client_telp);
 }
 
-function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_kota, client_nama, performa_tanggal_kirim, performa_total_qty, extra) {
+function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_kota, client_nama, performa_tanggal_kirim, performa_total_qty, extra, packing) {
 	var proforma_data = "";
+	// Format label packing untuk dokumen
+	var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
+	var packing_label = packing && packing !== '0' ? 'Packing ' + (packingLabels[packing] || packing.charAt(0).toUpperCase() + packing.slice(1)) : 'Packing finishing plastic';
 	if (extra != 1) {
 		header_koper = 'INDOKOPER';
 		header_web = '';
@@ -8091,7 +8074,7 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 				proforma_data += '		</tr>';
 				proforma_data += '      <tr>';
 				proforma_data += '          <td width="1%">-</td>';
-				proforma_data += '          <td width="70%">Packing finishing plastic</td>';
+				proforma_data += '          <td width="70%">' + packing_label + '</td>';
 				proforma_data += '          <td width="16%" align="center"></td>';
 				proforma_data += '          <td width="13%" align="center"></td>';
 				proforma_data += '      </tr>';
@@ -9993,542 +9976,3 @@ function zoomFotoProduksi(photoUrl) {
 // ========================================
 // FUNGSI: Buka Popup Data Expedisi
 // ========================================
-function expedisiShow() {
-	console.log('🚚 Opening expedisi popup...');
-
-	// Buka popup
-	app.popup.open('.popup-expedisi');
-
-	// Load data expedisi
-	loadDataExpedisi();
-}
-
-// ========================================
-// FUNGSI: Load Data Expedisi dari Server
-// ========================================
-function loadDataExpedisi() {
-	console.log('📦 Loading expedisi data...');
-
-	// Show preloader
-	app.preloader.show();
-
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/get-expedisi-list",
-		dataType: 'JSON',
-		data: {},
-		success: function (response) {
-			app.preloader.hide();
-
-			if (response.status === 200) {
-				console.log('✅ Expedisi data loaded:', response.data.length + ' items');
-				renderExpedisiTable(response.data);
-			} else {
-				console.error('❌ Failed to load expedisi:', response.message);
-				app.dialog.alert(response.message, 'Error');
-			}
-		},
-		error: function (xhr, status, error) {
-			app.preloader.hide();
-			console.error('❌ AJAX Error:', error);
-			app.dialog.alert('Gagal memuat data expedisi. Silakan coba lagi.', 'Error');
-		}
-	});
-}
-
-// ========================================
-// FUNGSI: Render Tabel Expedisi
-// ========================================
-function renderExpedisiTable(data) {
-	var tbody = jQuery('#expedisi-tbody');
-
-	if (tbody.length === 0) {
-		console.error('❌ expedisi-tbody not found');
-		return;
-	}
-
-	if (!data || data.length === 0) {
-		tbody.html(`
-			<tr>
-				<td colspan="7" style="padding: 20px; text-align: center; color: gray;">
-					<i class="f7-icons" style="font-size: 40px;">tray</i><br>
-					Tidak ada data expedisi
-				</td>
-			</tr>
-		`);
-		return;
-	}
-
-	var html = '';
-
-	jQuery.each(data, function (index, item) {
-		// Escape string untuk keamanan
-		var perusahaan = escapeHtml(item.perusahaan_acc || '-');
-		var pic = escapeHtml(item.pic || '-');
-		var alamat = escapeHtml(item.alamat || '-');
-		var no_telp = escapeHtml(item.no_telp || '-');
-		var nama_bank = item.nama_bank ? escapeHtml(item.nama_bank) + '<br>' : '';
-		var no_rekening = item.no_rekening ? escapeHtml(item.no_rekening) + '<br>' : '';
-		var nama_rekening = item.nama_rekening ? 'A/N ' + escapeHtml(item.nama_rekening) : '';
-
-		html += '<tr>';
-		html += '<td style="border: 1px solid gray;">' + (index + 1) + '</td>';
-		html += '<td style="border: 1px solid gray;text-align:left;">' + perusahaan + '</td>';
-		html += '<td style="border: 1px solid gray;text-align:left;">' + pic + '</td>';
-		html += '<td style="border: 1px solid gray;text-align:left;">' + alamat + '</td>';
-		html += '<td style="border: 1px solid gray;">' + no_telp + '</td>';
-		html += '<td style="border: 1px solid gray;">';
-		html += '  <button class="button button-small button-fill bg-color-blue" ';
-		html += '          onclick="showHistoryExpedisi(' + item.id_perusahaan_acc + ', \'' + escapeHtml(item.perusahaan_acc) + '\');" ';
-		html += '          style="width: 100%;">';
-		html += '    <i class="f7-icons" style="font-size: 14px;">doc_text_search</i> Detail';
-		html += '  </button>';
-		html += '</td>';
-		html += '</tr>';
-	});
-
-	tbody.html(html);
-}
-
-// ========================================
-// FUNGSI: Tampilkan History Pengiriman Expedisi
-// ========================================
-function showHistoryExpedisi(idExpedisi, namaExpedisi) {
-	console.log('🚛 Opening history for expedisi:', namaExpedisi);
-
-	// Simpan ID ke global variable atau localStorage
-	window.currentExpedisiId = idExpedisi;
-
-	// Set nama expedisi di title
-	var titleElement = document.getElementById('nama-expedisi-history');
-	if (titleElement) {
-		titleElement.textContent = namaExpedisi;
-	}
-
-	// Reset filter panel jika ada
-	var filterPanel = jQuery('#filter-panel-history');
-	if (filterPanel.length > 0) {
-		filterPanel.hide();
-	}
-
-	// Buka popup history
-	app.popup.open('.popup-history-expedisi');
-
-	// Load history data
-	loadHistoryExpedisi(idExpedisi);
-}
-
-// ========================================
-// FUNGSI: Load History Pengiriman dari Laravel API
-// ========================================
-function loadHistoryExpedisi(idExpedisi) {
-	console.log('📋 Loading history for expedisi ID:', idExpedisi);
-
-	// Show preloader
-	app.preloader.show();
-
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/get-expedisi-history",
-		dataType: 'JSON',
-		data: {
-			id_expedisi: idExpedisi
-		},
-		success: function (response) {
-			app.preloader.hide();
-
-			if (response.status === 200) {
-				console.log('✅ History loaded:', response.data.length + ' items');
-				console.log('Expedisi:', response.expedisi);
-				console.log('Total:', response.total);
-				renderHistoryTable(response.data);
-			} else if (response.status === 404) {
-				console.log('ℹ️ No history found');
-				renderHistoryTable([]);
-			} else {
-				console.error('❌ Failed to load history:', response.message);
-				app.dialog.alert(response.message, 'Error');
-			}
-		},
-		error: function (xhr, status, error) {
-			app.preloader.hide();
-			console.error('❌ AJAX Error:', error);
-			app.dialog.alert('Gagal memuat history pengiriman. Silakan coba lagi.', 'Error');
-		}
-	});
-}
-
-// ========================================
-// FUNGSI: Load History dengan Filter
-// ========================================
-function loadHistoryExpedisiWithFilter(idExpedisi, startDate, endDate, statusPembayaran, month, year) {
-	console.log('📋 Loading history with filter for expedisi ID:', idExpedisi);
-
-	// Show preloader
-	app.preloader.show();
-
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/get-expedisi-history-filter",
-		dataType: 'JSON',
-		data: {
-			id_expedisi: idExpedisi,
-			startdate: startDate || 'empty',
-			enddate: endDate || 'empty',
-			status_pembayaran: statusPembayaran || 'empty',
-			month: month || 'empty',
-			year: year || 'empty'
-		},
-		success: function (response) {
-			app.preloader.hide();
-
-			if (response.status === 200) {
-				console.log('✅ History loaded:', response.data.length + ' items');
-				console.log('Total Nominal:', response.total_nominal);
-				renderHistoryTable(response.data);
-
-				// Tampilkan total nominal jika ada
-				if (response.total_nominal) {
-					displayTotalNominal(response.total_nominal);
-				}
-			} else if (response.status === 404) {
-				console.log('ℹ️ No history found');
-				renderHistoryTable([]);
-				displayTotalNominal(0);
-			} else {
-				console.error('❌ Failed to load history:', response.message);
-				app.dialog.alert(response.message, 'Error');
-			}
-		},
-		error: function (xhr, status, error) {
-			app.preloader.hide();
-			console.error('❌ AJAX Error:', error);
-			app.dialog.alert('Gagal memuat history pengiriman. Silakan coba lagi.', 'Error');
-		}
-	});
-}
-
-// ========================================
-// FUNGSI: Render Tabel History Pengiriman
-// ========================================
-function renderHistoryTable(data) {
-	var tbody = jQuery('#history-expedisi-tbody');
-	var emptyState = document.getElementById('empty-state-history');
-
-	if (tbody.length === 0) {
-		console.error('❌ history-expedisi-tbody not found');
-		return;
-	}
-
-	if (!data || data.length === 0) {
-		tbody.html('');
-		if (emptyState) {
-			emptyState.style.display = 'block';
-		}
-		// Update summary
-		jQuery('#total-transaksi-expedisi').text('0');
-		jQuery('#total-nominal-expedisi').text('Rp 0');
-		return;
-	}
-
-	// Hide empty state
-	if (emptyState) {
-		emptyState.style.display = 'none';
-	}
-
-	var html = '';
-	var totalNominal = 0;
-
-	jQuery.each(data, function (index, item) {
-		// Format tanggal
-		var tanggal = formatTanggal(item.tanggal_transaksi);
-
-		// Format nominal
-		var nominal = parseFloat(item.nominal_acc || 0);
-		totalNominal += nominal;
-		var nominalFormatted = 'Rp ' + formatRupiah(nominal);
-
-		// Status pembayaran
-		var statusClass = '';
-		var statusText = item.operasional_status_pembayaran || '-';
-
-		if (statusText.toLowerCase() === 'lunas') {
-			statusClass = 'bg-color-green';
-		} else if (statusText.toLowerCase() === 'belum lunas') {
-			statusClass = 'bg-color-red';
-		} else {
-			statusClass = 'bg-color-gray';
-		}
-
-		html += '<tr>';
-		html += '<td style="border: 1px solid gray;">' + (index + 1) + '</td>';
-		html += '<td style="border: 1px solid gray;">' + tanggal + '</td>';
-		html += '<td style="border: 1px solid gray;">' + escapeHtml(item.perusahaan_pic || '-') + '</td>';
-		html += '<td style="border: 1px solid gray;">' + escapeHtml(item.perusahaan_no_hp || '-') + '</td>';
-		html += '<td style="border: 1px solid gray;">' +
-			escapeHtml((item.perusahaan_dari ? item.perusahaan_dari : '-') + ' -> ' + (item.perusahaan_tujuan ? item.perusahaan_tujuan : '-')) +
-			'</td>';
-		html += '<td style="border: 1px solid gray;">' + escapeHtml(item.pengirim_acc || '-') + '</td>';
-		html += '<td style="border: 1px solid gray;">' + escapeHtml(item.penerima_acc || '-') + '</td>';
-		html += '<td style="border: 1px solid gray; text-align: right;"><strong>' + nominalFormatted + '</strong></td>';
-		html += '</tr>';
-	});
-
-	tbody.html(html);
-
-	// Update summary
-	jQuery('#total-transaksi-expedisi').text(data.length);
-	jQuery('#total-nominal-expedisi').text(formatRupiah(totalNominal));
-}
-
-// ========================================
-// HELPER: Format Number to IDR
-// ========================================
-function formatRupiah(number) {
-	if (!number || isNaN(number)) return '0';
-
-	return parseFloat(number).toLocaleString('id-ID', {
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0
-	});
-}
-
-// ========================================
-// HELPER: Format Date
-// ========================================
-function formatTanggal(dateString) {
-	if (!dateString) return '-';
-
-	try {
-		var date = new Date(dateString);
-
-		// Check if date is valid
-		if (isNaN(date.getTime())) {
-			return dateString;
-		}
-
-		return date.toLocaleDateString('id-ID', {
-			day: '2-digit',
-			month: 'short',
-			year: 'numeric'
-		});
-	} catch (e) {
-		console.error('Error formatting date:', e);
-		return dateString;
-	}
-}
-
-// ========================================
-// HELPER: Escape HTML untuk keamanan
-// ========================================
-function escapeHtml(text) {
-	if (!text) return '';
-
-	var map = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&quot;',
-		"'": '&#039;'
-	};
-
-	return String(text).replace(/[&<>"']/g, function (m) {
-		return map[m];
-	});
-}
-
-// ========================================
-// HELPER: Display Total Nominal
-// ========================================
-function displayTotalNominal(totalNominal) {
-	var totalElement = jQuery('#total-nominal-expedisi');
-
-	if (totalElement.length > 0) {
-		var formatted = formatRupiah(totalNominal);
-		totalElement.html('<strong>Total: Rp ' + formatted + '</strong>');
-	}
-}
-
-// ========================================
-// FUNGSI: Refresh Data Expedisi
-// ========================================
-function refreshExpedisiData() {
-	console.log('🔄 Refreshing expedisi data...');
-	loadDataExpedisi();
-}
-
-// ========================================
-// FUNGSI: Refresh History
-// ========================================
-function refreshHistoryExpedisi(idExpedisi) {
-	console.log('🔄 Refreshing history...');
-
-	// Jika tidak ada parameter, gunakan dari global variable
-	if (!idExpedisi && window.currentExpedisiId) {
-		idExpedisi = window.currentExpedisiId;
-	}
-
-	if (idExpedisi) {
-		loadHistoryExpedisi(idExpedisi);
-	} else {
-		console.error('No expedisi ID available');
-		app.dialog.alert('ID Expedisi tidak ditemukan', 'Error');
-	}
-}
-
-// ========================================
-// FUNGSI: Export History ke Excel
-// ========================================
-function exportHistoryToExcel(idExpedisi, namaExpedisi) {
-	console.log('📊 Exporting history to Excel...');
-
-	// Show preloader
-	app.preloader.show();
-
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/export-expedisi-history",
-		dataType: 'JSON',
-		data: {
-			id_expedisi: idExpedisi,
-			nama_expedisi: namaExpedisi
-		},
-		success: function (response) {
-			app.preloader.hide();
-
-			if (response.status === 200 && response.file_url) {
-				// Download file
-				window.location.href = response.file_url;
-				app.dialog.alert('Export berhasil!', 'Success');
-			} else {
-				app.dialog.alert(response.message || 'Export gagal', 'Error');
-			}
-		},
-		error: function (xhr, status, error) {
-			app.preloader.hide();
-			console.error('❌ Export Error:', error);
-			app.dialog.alert('Export gagal. Silakan coba lagi.', 'Error');
-		}
-	});
-}
-
-// ========================================
-// FUNGSI: Print History
-// ========================================
-function printHistory() {
-	console.log('🖨️ Printing history...');
-	window.print();
-}
-
-// ========================================
-// FUNGSI: Search/Filter dalam tabel
-// ========================================
-function searchExpedisi() {
-	var input = jQuery('#search-expedisi').val().toLowerCase();
-	jQuery('#expedisi-tbody tr').filter(function () {
-		jQuery(this).toggle(jQuery(this).text().toLowerCase().indexOf(input) > -1);
-	});
-}
-
-// ========================================
-// FUNGSI: Apply Filter History
-// ========================================
-function applyFilterHistory() {
-	var idExpedisi = window.currentExpedisiId;
-	var startDate = jQuery('#filter-start-date').val();
-	var endDate = jQuery('#filter-end-date').val();
-	var statusPembayaran = jQuery('#filter-status-pembayaran').val();
-	var month = jQuery('#filter-month').val();
-	var year = jQuery('#filter-year').val();
-
-	if (!idExpedisi) {
-		app.dialog.alert('ID Expedisi tidak ditemukan', 'Error');
-		return;
-	}
-
-	loadHistoryExpedisiWithFilter(idExpedisi, startDate, endDate, statusPembayaran, month, year);
-}
-
-// ========================================
-// FUNGSI: Reset Filter
-// ========================================
-function resetFilterHistory() {
-	jQuery('#filter-start-date').val('');
-	jQuery('#filter-end-date').val('');
-	jQuery('#filter-status-pembayaran').val('');
-	jQuery('#filter-month').val('');
-	jQuery('#filter-year').val('');
-
-	var idExpedisi = window.currentExpedisiId;
-
-	if (idExpedisi) {
-		loadHistoryExpedisi(idExpedisi);
-	} else {
-		console.error('No expedisi ID available');
-		app.dialog.alert('ID Expedisi tidak ditemukan', 'Error');
-	}
-}
-
-// ========================================
-// FUNGSI: Toggle Filter Panel
-// ========================================
-function toggleFilterHistory() {
-	var filterPanel = jQuery('#filter-panel-history');
-	var btnToggle = jQuery('#btn-toggle-filter');
-
-	if (filterPanel.length === 0) return;
-
-	if (filterPanel.is(':visible')) {
-		filterPanel.slideUp(300);
-		if (btnToggle.length > 0) {
-			btnToggle.html('<i class="f7-icons">slider_horizontal_3</i>');
-		}
-	} else {
-		filterPanel.slideDown(300);
-		if (btnToggle.length > 0) {
-			btnToggle.html('<i class="f7-icons">xmark</i>');
-		}
-	}
-}
-
-// ========================================
-// FUNGSI: Get Detail Expedisi (Bonus)
-// ========================================
-function getDetailExpedisi(idExpedisi) {
-	console.log('📄 Loading detail for expedisi ID:', idExpedisi);
-
-	app.preloader.show();
-
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/get-expedisi-detail",
-		dataType: 'JSON',
-		data: {
-			id_expedisi: idExpedisi
-		},
-		success: function (response) {
-			app.preloader.hide();
-
-			if (response.status === 200) {
-				console.log('✅ Detail loaded:', response.data);
-				// Lakukan sesuatu dengan data detail
-				// Misalnya tampilkan di popup atau sheet
-			} else {
-				console.error('❌ Failed to load detail:', response.message);
-				app.dialog.alert(response.message, 'Error');
-			}
-		},
-		error: function (xhr, status, error) {
-			app.preloader.hide();
-			console.error('❌ AJAX Error:', error);
-			app.dialog.alert('Gagal memuat detail expedisi.', 'Error');
-		}
-	});
-}
-
-console.log('✅ Expedisi functions loaded (Pattern Project Version)');
-// ============================================
-// END OF PATCH
-// ============================================
-
-console.log('✅ Produksi Selesai Expandable Version Loaded');

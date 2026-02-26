@@ -884,3 +884,56 @@ table tbody td {
   color: white !important;
   border: none !important;
 }
+
+/* ==========================================
+   BADGE & ROW STATUS COLORS
+   Mapping:
+   - F (ERROR/Failed) = Merah
+   - NULL (PENDING) = Merah  
+   - S (SENT) = Hijau
+   - D (DELIVERED) = Orange
+   - R (READ) = Biru
+   ========================================== */
+
+/* Badge color-orange untuk status DELIVERED */
+.badge.color-orange {
+  background-color: #ff9800 !important;
+  color: white !important;
+}
+
+/* Row color untuk status DELIVERED (orange) */
+.card-color-orange {
+  background-color: #ff9800 !important;
+  color: white !important;
+}
+
+.card-color-orange td {
+  color: white !important;
+}
+
+/* Ensure existing colors are consistent */
+.btn-color-greenWhite {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.card-color-red {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-color-orangeWhite {
+  background: linear-gradient(to bottom, #ff9500 0%, #ff7700 100%) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.card-color-yellow-text-white {
+  background-color: #f2903c;
+  color: white;
+}
+
+.btn-color-redWhite {
+  background-color: #dc3545 !important;
+  color: white !important;
+}

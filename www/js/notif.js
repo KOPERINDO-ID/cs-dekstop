@@ -384,43 +384,6 @@ function shipmentNotif(penjualan_id) {
                 jQuery('#show_reject_element_shipment').hide();
             }
             
-            // ⭐ LOGIKA CARD PEMBAYARAN BELUM LUNAS
-            var penjualan_grandtotal = parseFloat(data.data.penjualan_grandtotal || 0);
-            var penjualan_jumlah_pembayaran = parseFloat(data.data.penjualan_jumlah_pembayaran || 0);
-            var sisa_bayar = penjualan_grandtotal - penjualan_jumlah_pembayaran;
-            var shipment_status = data.data.shipment_status || null;
-            
-            if (sisa_bayar > 0) {
-                // Belum lunas - tampilkan card warning
-                jQuery('#card-pembayaran-belum-lunas-notif').show();
-                
-                // Update status badge dan text berdasarkan shipment_status
-                if (shipment_status == 'approved') {
-                    jQuery('#notif-shipment-status-text').text('Disetujui');
-                    jQuery('#notif-shipment-status-badge')
-                        .text('APPROVED')
-                        .css('background', 'rgba(76, 175, 80, 0.9)'); // Hijau
-                } else if (shipment_status == 'requested') {
-                    jQuery('#notif-shipment-status-text').text('Menunggu Approval');
-                    jQuery('#notif-shipment-status-badge')
-                        .text('PENDING')
-                        .css('background', 'rgba(255, 193, 7, 0.9)'); // Kuning
-                } else if (shipment_status == 'rejected') {
-                    jQuery('#notif-shipment-status-text').text('Ditolak');
-                    jQuery('#notif-shipment-status-badge')
-                        .text('REJECTED')
-                        .css('background', 'rgba(244, 67, 54, 0.9)'); // Merah lebih gelap
-                } else {
-                    jQuery('#notif-shipment-status-text').text('Belum Diajukan');
-                    jQuery('#notif-shipment-status-badge')
-                        .text('PENDING')
-                        .css('background', 'rgba(255, 152, 0, 0.9)'); // Orange
-                }
-            } else {
-                // Sudah lunas - sembunyikan card warning
-                jQuery('#card-pembayaran-belum-lunas-notif').hide();
-            }
-            
             $$("#detail_valid_notif_shipment").val(data.data.valid_shipment);
             $$('#alamat_sekarang_notif_popup').val(alamat_client);
             $$('#alamat_kirim_notif_popup').val(alamat_kirim);
@@ -943,7 +906,7 @@ function getPerformaHeaderNotifPenjualan() {
                     no++
                     if (item2.valid_cs == 2) {
                         color_tr = 'red';
-                        if (data.potongan[item2.performa_header_id] != 0) {
+                        if (data.potongan[item2.performa_header_id] != 0 && item2.needs_approval != 1 && item2.approval_status != 'rejected' && item2.approval_status != 'approved') {
                             var btn_valid = 'card-color-red';
                         } else {
                             var btn_valid = 'card-color-red';
@@ -1323,9 +1286,11 @@ function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, clie
                         // Convert ke integer/string untuk perbandingan
                         var needs_approval_check = parseInt(needs_approval || 0);
                         var approval_status_check = (approval_status || '').toString();
+                        console.log('approval_status_check:', approval_status);
                         
-                        // Tampilkan angka potongan merah HANYA jika needs_approval dan status pending/rejected
-                        if (needs_approval_check == 1 && (approval_status_check == 'pending' || approval_status_check == 'rejected')) {
+                        console.log('performa_header_id:', performa_header_id, 'needs_approval_check:', needs_approval_check, 'approval_status_check:', approval_status_check);
+                        // Tampilkan angka potongan merah HANYA jika tidak needs_approval dan status tidak approved atau rejected
+                        if (needs_approval_check == 0 && (approval_status_check == 'approved' || approval_status_check == 'rejected' || approval_status_check == '' || approval_status_check == null)) {
                             potongan = '<span style="font-weight:bold;color:red;">' + number_format(val.potongan_price) + '<span>';
                             potongan_total = '<span style="font-weight:bold;color:red;">' + number_format(parseFloat(val.potongan_price) * parseFloat(val.qty)) + '<span>';
                         }
@@ -2189,5 +2154,40 @@ function packingProcess() {
         },
         error: function (xmlhttprequest, textstatus, message) {
         }
+    });
+}
+// ========================================
+// FILTER / SEARCH NOTIF TABLES
+// ========================================
+function filterNotifTable(type) {
+    var rows, clientVal, salesVal;
+
+    if (type === 'proforma') {
+        clientVal = (jQuery('#search_notif_proforma_client').val() || '').toLowerCase();
+        salesVal  = (jQuery('#search_notif_proforma_sales').val() || '').toLowerCase();
+        rows = jQuery('#performa_notif_value tr');
+    } else if (type === 'sales') {
+        clientVal = (jQuery('#search_notif_sales_client').val() || '').toLowerCase();
+        salesVal  = (jQuery('#search_notif_sales_sales').val() || '').toLowerCase();
+        rows = jQuery('#data_status_notif_manager tr');
+    } else if (type === 'bayar') {
+        clientVal = (jQuery('#search_notif_bayar_client').val() || '').toLowerCase();
+        salesVal  = (jQuery('#search_notif_bayar_sales').val() || '').toLowerCase();
+        rows = jQuery('#data_status_notif_bayar_manager tr');
+    } else if (type === 'shipment') {
+        clientVal = (jQuery('#search_notif_shipment_client').val() || '').toLowerCase();
+        salesVal  = '';
+        rows = jQuery('#data_status_notif_shipment_manager tr');
+    } else if (type === 'kirim') {
+        clientVal = (jQuery('#search_notif_kirim_client').val() || '').toLowerCase();
+        salesVal  = '';
+        rows = jQuery('#data_status_notif_kirim_manager tr');
+    } else { return; }
+
+    rows.each(function() {
+        var rowText = jQuery(this).text().toLowerCase();
+        var matchClient = !clientVal || rowText.indexOf(clientVal) !== -1;
+        var matchSales  = !salesVal  || rowText.indexOf(salesVal)  !== -1;
+        jQuery(this).toggle(matchClient && matchSales);
     });
 }

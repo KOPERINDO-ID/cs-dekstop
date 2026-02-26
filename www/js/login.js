@@ -36,7 +36,7 @@ function getDataUser() {
 
 				$$('#karyawan_nama_header').html('<b>' + data.karyawan_nama + '</b>');
 				console.log(localStorage.getItem("jabatan_kantor"));
-
+				
 				if (data.user_position == 'CS') {
 					return app.views.main.router.navigate('/notif');
 				} else {
@@ -45,6 +45,7 @@ function getDataUser() {
 						app.dialog.close();
 					}, 1000);
 				}
+
 
 			}
 

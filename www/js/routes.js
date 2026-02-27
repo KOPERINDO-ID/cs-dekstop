@@ -183,6 +183,10 @@ var routes = [
   },
   // Default route (404 page). MUST BE THE LAST
   {
+    path: '/performa/input',
+    url: './pages/performa_input.html',
+  },
+  {
     path: '(.*)',
     url: './pages/404.html',
   },

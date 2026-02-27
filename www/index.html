@@ -36,7 +36,7 @@
       <div class="navbar">
         <div class="navbar-bg"></div>
         <div class="navbar-inner bg-dark-gray-medium">
-          <div class="title" style="margin-left:10px;"id="karyawan_nama_header"></div>
+          <div class="title" style="margin-left:10px;" id="karyawan_nama_header"></div>
           <div class="kotak" id="box_internet" style="float:right;"></div>
           <div class="popup popup-pengumuman">
             <div class="view">
@@ -55,7 +55,7 @@
                   <div class="card card-outline margin-top table-color-lightgray">
                     <div class="card-content">
                       <div class="row">
-                        <div class="col-100" id="data_pengumuman">                                                   
+                        <div class="col-100" id="data_pengumuman">
                         </div>
                       </div>
                     </div>
@@ -69,14 +69,14 @@
             <!-- Notifikasi -->
             <a style="color:#dcdcdcfa;" data-popup=".popup-pengumuman" class="popup-open">
               <i class="f7-icons">bell_fill
-                <span style="left:13% !important;margin-top: 12px !important;" 
-                      class="badge color-red" id="count_pengumuman"></span>
+                <span style="left:13% !important;margin-top: 12px !important;" class="badge color-red"
+                  id="count_pengumuman"></span>
               </i>
             </a>
-            
+
             <!-- Jam -->
             <div style="color:#dcdcdcfa; font-size:14px;" id="clock_view"></div>
-            
+
             <!-- Logout -->
             <img onclick="logOut();" id="logout_logo" src="img/logo/logout.png" width="45px" />
           </div>
@@ -88,7 +88,7 @@
         <div class="page-content">
           <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
           <!-- And somewhere in DOM -->
-          
+
         </div>
       </div>
     </div>
@@ -102,188 +102,207 @@
 
   <!-- 1. Popup: Daftar Expedisi -->
   <div class="popup popup-expedisi-global">
-    <div class="view"><div class="page">
-      <div class="navbar"><div class="navbar-bg"></div>
-        <div class="navbar-inner bg-dark-gray-medium">
-          <div class="title"><b>Data Expedisi</b></div>
-          <div class="right">
-            <p class="text-add-colour-white link popup-close" data-popup=".popup-expedisi-global">
-              <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
-            </p>
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title"><b>Data Expedisi</b></div>
+            <div class="right">
+              <p class="text-add-colour-white link popup-close" data-popup=".popup-expedisi-global">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content theme-dark">
+          <div class="card border-actived" style="margin:10px;">
+
+            <!-- Card Header -->
+            <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+              <div class="data-table-title" style="height:2px; margin-left:6px;">
+                <h3 class="margin-15" style="color:white;">Expedisi | <i id="expedisi-global-count"> </i></h3>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-right:10px;">
+                <i class="f7-icons" onclick="loadDataExpedisiGlobal();"
+                  style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                <i class="f7-icons popup-open" data-popup=".popup-tambah-expedisi-global"
+                  style="font-size:28px; color:#009500; cursor:pointer;">plus_circle_fill</i>
+              </div>
+            </div>
+
+            <!-- Search -->
+            <div class="card-content" style="width:100%;">
+              <table cellspacing="1" cellpadding="1" width="100%">
+                <thead class="bg-dark-gray-medium text-align-center">
+                  <tr>
+                    <th colspan="2" style="padding:5px;">
+                      <center><input type="text" id="expedisi-global-search" onkeyup="searchExpedisiGlobal();"
+                          style="padding:5px; width:100%; height:30px; background-color:white; color:black;"
+                          placeholder="Cari nama expedisi, PIC, atau alamat..."></center>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+            <!-- Tabel -->
+            <div class="card-content" style="width:100%; overflow-x:auto;">
+              <table cellspacing="1" cellpadding="1" width="100%" style="min-width:900px;">
+                <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                  <tr>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="22%">Nama Expedisi</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">PIC</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="22%">Alamat</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">No Telp</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Opsi</th>
+                  </tr>
+                </thead>
+                <tbody id="expedisi-global-tbody" class="text-align-center">
+                  <tr>
+                    <td colspan="6" style="padding:30px; text-align:center; color:gray;">
+                      <i class="f7-icons" style="font-size:50px;">arrow_clockwise</i><br>
+                      <span style="font-size:14px;">Memuat data expedisi...</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
         </div>
       </div>
-      <div class="page-content theme-dark">
-        <div class="card border-actived" style="margin:10px;">
-
-          <!-- Card Header -->
-          <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
-            <div class="data-table-title" style="height:2px; margin-left:6px;">
-              <h3 class="margin-15" style="color:white;">Expedisi | <i id="expedisi-global-count"> </i></h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin-right:10px;">
-              <i class="f7-icons" onclick="loadDataExpedisiGlobal();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
-              <i class="f7-icons popup-open" data-popup=".popup-tambah-expedisi-global" style="font-size:28px; color:#009500; cursor:pointer;">plus_circle_fill</i>
-            </div>
-          </div>
-
-          <!-- Search -->
-          <div class="card-content" style="width:100%;">
-            <table cellspacing="1" cellpadding="1" width="100%">
-              <thead class="bg-dark-gray-medium text-align-center">
-                <tr><th colspan="2" style="padding:5px;">
-                  <center><input type="text" id="expedisi-global-search" onkeyup="searchExpedisiGlobal();"
-                    style="padding:5px; width:100%; height:30px; background-color:white; color:black;"
-                    placeholder="Cari nama expedisi, PIC, atau alamat..."></center>
-                </th></tr>
-              </thead>
-            </table>
-          </div>
-
-          <!-- Tabel -->
-          <div class="card-content" style="width:100%; overflow-x:auto;">
-            <table cellspacing="1" cellpadding="1" width="100%" style="min-width:900px;">
-              <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
-                <tr>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="5%">No</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="22%">Nama Expedisi</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">PIC</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="22%">Alamat</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">No Telp</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="13%">Opsi</th>
-                </tr>
-              </thead>
-              <tbody id="expedisi-global-tbody" class="text-align-center">
-                <tr><td colspan="6" style="padding:30px; text-align:center; color:gray;">
-                  <i class="f7-icons" style="font-size:50px;">arrow_clockwise</i><br>
-                  <span style="font-size:14px;">Memuat data expedisi...</span>
-                </td></tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div></div>
+    </div>
   </div>
 
   <!-- 2. Popup: Tambah Expedisi -->
   <div class="popup popup-tambah-expedisi-global">
-    <div class="view"><div class="page">
-      <div class="navbar"><div class="navbar-bg"></div>
-        <div class="navbar-inner bg-dark-gray-medium">
-          <div class="title"><b>Tambah Expedisi</b></div>
-          <div class="right">
-            <p class="text-add-colour-white link popup-close" data-popup=".popup-tambah-expedisi-global">
-              <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title"><b>Tambah Expedisi</b></div>
+            <div class="right">
+              <p class="text-add-colour-white link popup-close" data-popup=".popup-tambah-expedisi-global">
+                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content theme-dark">
+          <div style="margin:16px;">
+
+            <!-- Satu kotak untuk semua input -->
+            <div style="border:1px solid #444; border-radius:6px; overflow:hidden; margin-bottom:16px;">
+              <input type="text" id="expedisi-global-perusahaan"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="Nama Perusahaan *">
+              <input type="text" id="expedisi-global-pic"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="Nama PIC (Opsional)">
+              <input type="text" id="expedisi-global-alamat"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="Alamat (Opsional)">
+              <input type="text" id="expedisi-global-telp"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="No Telpon / WA (Opsional)">
+              <input type="text" id="expedisi-global-bank"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="Nama Bank (Opsional)">
+              <input type="text" id="expedisi-global-rekening"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="No Rekening (Opsional)">
+              <input type="text" id="expedisi-global-nama-rekening"
+                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; outline:none; box-sizing:border-box; font-size:14px;"
+                placeholder="Nama Rekening (Opsional)">
+            </div>
+
+            <p style="font-size:12px; color:gray; margin-bottom:16px;">
+              <i class="f7-icons" style="font-size:14px;">info_circle</i>
+              Tanda (*) menunjukkan field wajib diisi. Field lainnya bersifat opsional.
             </p>
+
+            <button onclick="simpanExpedisiGlobal();"
+              style="width:100%; padding:14px; background-color:#444; color:white; border:none; border-radius:4px; font-weight:bold; font-size:15px; cursor:pointer; letter-spacing:1px;">
+              SIMPAN
+            </button>
+
           </div>
         </div>
       </div>
-      <div class="page-content theme-dark">
-        <div style="margin:16px;">
-
-          <!-- Satu kotak untuk semua input -->
-          <div style="border:1px solid #444; border-radius:6px; overflow:hidden; margin-bottom:16px;">
-            <input type="text" id="expedisi-global-perusahaan"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="Nama Perusahaan *">
-            <input type="text" id="expedisi-global-pic"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="Nama PIC (Opsional)">
-            <input type="text" id="expedisi-global-alamat"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="Alamat (Opsional)">
-            <input type="text" id="expedisi-global-telp"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="No Telpon / WA (Opsional)">
-            <input type="text" id="expedisi-global-bank"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="Nama Bank (Opsional)">
-            <input type="text" id="expedisi-global-rekening"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="No Rekening (Opsional)">
-            <input type="text" id="expedisi-global-nama-rekening"
-              style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; outline:none; box-sizing:border-box; font-size:14px;"
-              placeholder="Nama Rekening (Opsional)">
-          </div>
-
-          <p style="font-size:12px; color:gray; margin-bottom:16px;">
-            <i class="f7-icons" style="font-size:14px;">info_circle</i>
-            Tanda (*) menunjukkan field wajib diisi. Field lainnya bersifat opsional.
-          </p>
-
-          <button onclick="simpanExpedisiGlobal();"
-            style="width:100%; padding:14px; background-color:#444; color:white; border:none; border-radius:4px; font-weight:bold; font-size:15px; cursor:pointer; letter-spacing:1px;">
-            SIMPAN
-          </button>
-
-        </div>
-      </div>
-    </div></div>
+    </div>
   </div>
 
   <!-- 3. Popup: History Expedisi -->
   <div class="popup popup-history-expedisi-global">
-    <div class="view"><div class="page">
-      <div class="navbar"><div class="navbar-bg"></div>
-        <div class="navbar-inner bg-dark-gray-medium">
-          <div class="title">
-            <b>History - <span id="expedisi-global-history-nama">...</span></b>
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">
+              <b>History - <span id="expedisi-global-history-nama">...</span></b>
+            </div>
+            <div class="right">
+              <p class="text-add-colour-white link popup-close" data-popup=".popup-history-expedisi-global"
+                style="margin-right:5px;">
+                <i class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
           </div>
-          <div class="right">
-            <p class="text-add-colour-white link popup-close" data-popup=".popup-history-expedisi-global" style="margin-right:5px;">
-              <i class="f7-icons">xmark_rectangle_fill</i>
-            </p>
+        </div>
+        <div class="page-content theme-dark">
+          <input type="hidden" id="expedisi-global-current-id" value="">
+          <div class="card border-actived" style="margin:10px;">
+
+            <!-- Card Header -->
+            <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
+              <div class="data-table-title" style="height:2px; margin-left:6px;">
+                <h3 class="margin-15" style="color:white;">History | <i id="expedisi-global-history-count"> </i></h3>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-right:10px;">
+                <i class="f7-icons" onclick="reloadHistoryExpedisiGlobal();"
+                  style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+              </div>
+            </div>
+
+            <!-- Tabel -->
+            <div class="card-content" style="width:100%; overflow-x:auto;">
+              <table cellspacing="1" cellpadding="1" width="100%" style="min-width:1200px;">
+                <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
+                  <tr>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="4%">No</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Tanggal</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">PIC</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">No Telp</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Rute</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Pengirim</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Penerima</th>
+                    <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Nominal</th>
+                  </tr>
+                </thead>
+                <tbody id="expedisi-global-history-tbody" class="text-align-center">
+                  <tr>
+                    <td colspan="8" style="padding:30px; text-align:center; color:gray;">
+                      <i class="f7-icons" style="font-size:50px;">arrow_clockwise</i><br>
+                      <span style="font-size:14px;">Memuat history pengiriman...</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="expedisi-global-history-empty" style="display:none; padding:40px 20px; text-align:center;">
+                <i class="f7-icons" style="font-size:80px; color:#ccc;">tray</i>
+                <h3 style="color:gray; margin:10px 0;">Belum Ada History</h3>
+                <p style="color:gray; font-size:14px;">Tidak ada data history pengiriman untuk expedisi ini</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-      <div class="page-content theme-dark">
-        <input type="hidden" id="expedisi-global-current-id" value="">
-        <div class="card border-actived" style="margin:10px;">
-
-          <!-- Card Header -->
-          <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
-            <div class="data-table-title" style="height:2px; margin-left:6px;">
-              <h3 class="margin-15" style="color:white;">History | <i id="expedisi-global-history-count"> </i></h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin-right:10px;">
-              <i class="f7-icons" onclick="reloadHistoryExpedisiGlobal();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
-            </div>
-          </div>
-
-          <!-- Tabel -->
-          <div class="card-content" style="width:100%; overflow-x:auto;">
-            <table cellspacing="1" cellpadding="1" width="100%" style="min-width:1200px;">
-              <thead class="bg-dark-gray-medium text-align-center" style="position:sticky; top:0; z-index:1;">
-                <tr>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="4%">No</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="8%">Tanggal</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">PIC</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="9%">No Telp</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Rute</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Pengirim</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="11%">Penerima</th>
-                  <th class="label-cell" style="border-bottom:1px solid gray;" width="10%">Nominal</th>
-                </tr>
-              </thead>
-              <tbody id="expedisi-global-history-tbody" class="text-align-center">
-                <tr><td colspan="8" style="padding:30px; text-align:center; color:gray;">
-                  <i class="f7-icons" style="font-size:50px;">arrow_clockwise</i><br>
-                  <span style="font-size:14px;">Memuat history pengiriman...</span>
-                </td></tr>
-              </tbody>
-            </table>
-            <div id="expedisi-global-history-empty" style="display:none; padding:40px 20px; text-align:center;">
-              <i class="f7-icons" style="font-size:80px; color:#ccc;">tray</i>
-              <h3 style="color:gray; margin:10px 0;">Belum Ada History</h3>
-              <p style="color:gray; font-size:14px;">Tidak ada data history pengiriman untuk expedisi ini</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div></div>
+    </div>
   </div>
 
   <!-- CORDOVA_PLACEHOLDER_DONT_REMOVE -->
@@ -314,6 +333,7 @@
   <script src="js/additional/jquery.mask.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/penjualan.js"></script>
+  <script src="js/performa_input.js"></script>
   <script src="js/penjualan_input.js"></script>
   <script src="js/katalog.js"></script>
   <script src="js/detail_product.js"></script>
@@ -349,7 +369,7 @@
   <script src="js/app.js"></script>
 
   <!-- End App Global JS -->
-  
+
 </body>
 
 </html>

@@ -819,6 +819,7 @@ table tbody td {
 
 /* Print Styles */
 @media print {
+
   .navbar,
   .card:has(#filter-panel-history),
   .card:has(.button),
@@ -828,20 +829,20 @@ table tbody td {
   .link {
     display: none !important;
   }
-  
+
   table {
     page-break-inside: auto;
   }
-  
+
   tr {
     page-break-inside: avoid;
     page-break-after: auto;
   }
-  
+
   thead {
     display: table-header-group;
   }
-  
+
   tfoot {
     display: table-footer-group;
   }
@@ -858,11 +859,13 @@ table tbody td {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 /* End of Additional CSS by Aryak */
 
 /* Button Orange - Belum lunas, pending approval */
@@ -936,4 +939,59 @@ table tbody td {
 .btn-color-redWhite {
   background-color: #dc3545 !important;
   color: white !important;
+}
+
+/* ADDITION CSS By Aryakkk */
+.color_proforma_input_koper {
+  position: absolute;
+  right: calc(100vw - 90%);
+}
+
+/* Mobile M (sekitar 375px - 425px) */
+@media (min-width: 375px) and (max-width: 424px) {
+  .color_proforma_input_koper {
+    right: calc(100vw - 99%);
+    /* atau right: 13% */
+  }
+}
+
+/* Mobile L (sekitar 426px - 768px) */
+@media (min-width: 425px) {
+  .color_proforma_input_koper {
+    right: calc(100vw - 105%);
+    /* atau right: 15% */
+  }
+}
+
+/* ==========================================
+     Popover Bottom Style 
+     Membuat popover muncul dari bawah dengan width 100%
+     ========================================== */
+.popover-bottom,
+.popover.smart-select-popover {
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  transform: translate3d(0, 100%, 0);
+}
+
+.popover-bottom.modal-in,
+.popover.smart-select-popover.modal-in {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease-out;
+}
+
+.popover-bottom.modal-out,
+.popover.smart-select-popover.modal-out {
+  transform: translate3d(0, 100%, 0);
+  transition: transform 0.3s ease-in;
+}
+
+.popover-bottom .popover-inner,
+.popover.smart-select-popover .popover-inner {
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 16px 16px 0 0;
 }

@@ -223,15 +223,15 @@ function runIntervalChecksRecursive(intervalMs) {
  */
 function startIntervalChecksRecursive(intervalMs) {
   intervalMs = intervalMs || 10000;
-  
+
   console.log('🚀 Starting recursive interval checks every ' + (intervalMs / 1000) + 's');
   console.log('⚠️  Skip mechanism: ENABLED (will skip if previous check still running)');
-  
+
   // Reset counters
   intervalState.isRunning = false;
   intervalState.runCount = 0;
   intervalState.skipCount = 0;
-  
+
   // Run first check
   runIntervalChecksRecursive(intervalMs);
 }
@@ -914,9 +914,68 @@ $$(document).on('page:beforeremove', '.page[data-name="katalog-csm"]', function 
 $$(document).on('page:afterin', '.page[data-name="visit-csm"]', function (e) {
   clearPageIntervals();
   runFunctionsSequentially([
-    { name: 'loadVisitList', func: wrapFunction(loadVisitList, 'loadVisitList') }, 
+    { name: 'loadVisitList', func: wrapFunction(loadVisitList, 'loadVisitList') },
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
     { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
   ], 2);
+});
+
+$$(document).on('page:beforein', '.page[data-name="performa_input"]', function () {
+  console.log('📄 Performa Input page beforein');
+
+  // Reset state jika bukan edit mode
+  if (localStorage.getItem('edit_performa_mode') !== 'true') {
+    isEditMode = false;
+    editPerformaHeaderId = null;
+    editPerformaData = null;
+
+    // Reset UI ke normal
+    $$('#edit_mode_badge').remove();
+    $$('#performa_input_button_save span').text('Simpan');
+    $$('.smart-select-perusahaan').removeClass('disabled');
+    $$('.smart-select-perusahaan').css('pointer-events', '');
+    $$('.smart-select-perusahaan').css('opacity', '');
+    $$('#show-add-perusahaan').show();
+  }
+});
+
+$$(document).on('page:afterin', '.page[data-name="performa_input"]', function (e) {
+  checkLogin();
+  selectBoxClient();
+  $$('#count_performa').val($$('.performa_group_field_count').length);
+  jQuery('.input-item-price').mask('000,000,000,000', { reverse: true });
+  jQuery('.input-item-potongan-price').mask('000,000,000,000', { reverse: true });
+  checkConnection();
+  getPengumuman();
+  $$('#el_ukuran_hc_1').hide();
+  $$('#el_ukuran_ts_1').hide();
+  $$('#el_style_hc_1').hide();
+  $$('#el_material_hc_1').hide();
+  clearArray();
+  $$('#bank-section-performa').hide();
+  // $("#show-add-perusahaan").hide();
+  if (localStorage.getItem('username') != 'Stn') {
+    // $("#display_extra").css({ display: "none" });
+    $("#display_stock").css({ display: "none" });
+  }
+
+  // Check edit mode
+  checkEditMode();
+
+  // Initialize edit mode process handler
+  initEditModeProcessHandler();
+  setTimeout(function () {
+    initBankChangeHandler();
+  }, 500);
+
+  // $('#extra').on('click', function () {
+  //   if ($$('#extra').is(':checked')) {
+  //     $("#pilihWilayah").css({ display: "initial" });
+  //   } else {
+  //     $("#pilihWilayah").css({ display: "none" });
+  //     $('#wilayah').val('');
+  //     $('#wilayah').trigger('change')
+  //   }
+  // });
 });

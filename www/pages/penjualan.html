@@ -727,9 +727,8 @@
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Packing</b></label>
                       <div class="item-input-wrap">
-                        <input type="text" id="packing_kirim_view" name="packing_kirim_view"
-                          placeholder="Belum dipilih" readonly
-                          style="background:transparent; border:none; pointer-events:none;">
+                        <input type="text" id="packing_kirim_view" name="packing_kirim_view" placeholder="Belum dipilih"
+                          readonly style="background:transparent; border:none; pointer-events:none;">
                       </div>
                     </div>
                   </li>
@@ -1123,7 +1122,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="popup tambah-header-penjualan-popup">
       <div class="view view-init">
@@ -1552,7 +1550,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="popup edit-performa-header-penjualan-popup">
       <div class="view view-init">
@@ -3619,18 +3616,6 @@
       </div>
     </div>
 
-    <!-- ========================================
-     POPUP DATA EXPEDISI (REVISED)
-     ======================================== -->
-    <!-- ========================================
-     POPUP TAMBAH EXPEDISI
-     ======================================== -->
-    <!-- ========================================
-     POPUP HISTORY EXPEDISI (REVISED)
-     ======================================== -->
-    <!-- ========================================
-     LOADING OVERLAY (Optional)
-     ======================================== -->
     <div id="loading-overlay"
       style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 99999; justify-content: center; align-items: center;">
       <div style="text-align: center; color: white;">
@@ -3688,12 +3673,14 @@
       </div>
 
       <div class="card border-actived">
-        <div class="card-header bg-dark-gray-young">
-          <div class="data-table-title" style="height:2px; margin-left:6px;">
-            <h3 class="margin-15" style="color:white;">Proforma
-              | <i id="total_data_proforma"> </i>
-            </h3>
-          </div>
+        <div class="card-header bg-dark-gray-young" style="justify-content: center;">
+          <a href="/performa/input">
+            <div class="data-table-title" style="color:white;">
+              <h3 style="margin: 0;">Proforma
+                | <i id="total_data_proforma"> </i>
+              </h3>
+            </div>
+          </a>
         </div>
         <div class="card-content" style="width:100%;">
           <table cellspacing="1" cellpadding="1" width="100%">
@@ -3781,8 +3768,8 @@
             <i class="f7-icons" id="arsipBtn" onclick="arsipSalesLocalstorage();"
               style="font-size:28px; cursor:pointer;">alarm</i>
             <span id="download_point_hide">
-              <i data-popup=".donwload-point-popup" class="f7-icons popup-open"
-                onclick="donwloadPoint();" style="font-size:28px; color:#1c66a6; cursor:pointer;">doc_checkmark_fill</i>
+              <i data-popup=".donwload-point-popup" class="f7-icons popup-open" onclick="donwloadPoint();"
+                style="font-size:28px; color:#1c66a6; cursor:pointer;">doc_checkmark_fill</i>
             </span>
             <i class="f7-icons" onclick="tampilDataManager();"
               style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>

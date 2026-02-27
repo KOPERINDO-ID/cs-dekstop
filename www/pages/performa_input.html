@@ -1,0 +1,868 @@
+<div class="page" data-name="performa_input" class="theme-dark">
+    <style>
+        /* ===== Smart Select Popup Styling ===== */
+        /* Close link warna putih */
+        .smart-select-popup .navbar a,
+        .smart-select-popup .navbar .link {
+            color: white !important;
+        }
+
+        /* Jarak kecil antara searchbar dan list dropdown */
+        .smart-select-popup .page-content .list {
+            margin-top: 5px !important;
+        }
+
+        .smart-select-popup .list ul {
+            margin-top: 0 !important;
+        }
+
+        /* ===== Badge PAY untuk Smart Select Popup ===== */
+        /* Popup container */
+        .smart-select-page li,
+        .page-content .list li {
+            position: relative;
+        }
+
+        /* Badge styling - Bulatan Light Grey */
+        .pay-badge {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #EA480A;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* Adjust padding untuk text agar tidak tertimpa badge */
+        .smart-select-page li.has-pay-badge .item-inner,
+        .page-content .list li.has-pay-badge .item-inner {
+            padding-right: 35px !important;
+        }
+    </style>
+    <!-- Scrollable page content-->
+    <div class="page-content theme-dark" data-name="performa_input">
+        <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
+        <!-- And somewhere in DOM -->
+        <div class="popup invoice-performa">
+            <div class="view">
+                <div class="page" style="background-color:white;">
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-100">
+                                <div id="invoice_performa_data" style="overflow-x:auto; width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup katalog-popup">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner bg-dark-gray-medium">
+                            <div class="title">Katalog</div>
+                            <div class="right">
+                                <!-- Link to close popup -->
+                                <p class="text-add-colour-white">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <i class="f7-icons  link popup-close"
+                                                id="close-katalog-popup">xmark_rectangle_fill</i>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div>
+                            <div class="row" style="padding:5px; font-size:20px;" id="katalog_data">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup katalog-ts-popup">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner bg-dark-gray-medium">
+                            <div class="title">Pilih Tas</div>
+                            <div class="right">
+                                <!-- Link to close popup -->
+                                <p class="text-add-colour-white">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <i class="f7-icons  link popup-close" data-popup=".katalog-ts-popup"
+                                                id="close-katalog-ts-popup">xmark_rectangle_fill</i>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div class="list">
+                            <ul id="katalog_ts_data">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup all-katalog-popup">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner bg-dark-gray-medium">
+                            <div class="title">Katalog</div>
+                            <div class="right">
+                                <!-- Link to close popup -->
+                                <p class="text-add-colour-white">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <i class="f7-icons  link popup-close" id="close-all-katalog-popup"
+                                                data-popup=".all-katalog-popup">xmark_rectangle_fill</i>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div class="card-content"
+                            style="overflow-x:auto;  height:550px; width:99.6%; margin-top:-12px;">
+                            <div>
+                                <div class="row" style="padding:5px; font-size:20px;" id="produk_data_all_katalog">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Pilihan TAS/KOPER -->
+        <div class="popup choose-katalog-type-popup">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner bg-dark-gray-medium">
+                            <div class="title">Pilih Tipe Produk</div>
+                            <div class="right">
+                                <p class="text-add-colour-white">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <i class="f7-icons link popup-close"
+                                                id="close-choose-katalog-type-popup">xmark_rectangle_fill</i>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div class="list no-hairlines">
+                            <ul
+                                style="background-color:#1c1c1d; border-radius:2px; border:1px solid gray; margin: 10px;">
+                                <li>
+                                    <a href="#" class="item-link item-content" onclick="openKatalogByType('koper');">
+                                        <div class="item-inner">
+                                            <div class="item-title" style="color: white; font-size: 18px;">
+                                                KOPER
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="item-link item-content" onclick="openKatalogByType('tas');">
+                                        <div class="item-inner">
+                                            <div class="item-title" style="color: white; font-size: 18px;">
+                                                TAS
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup fullcolour-performa-popup">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-bg"></div>
+                        <div class="navbar-inner bg-dark-gray-medium">
+                            <div class="title">Warna Aksesoris</div>
+                            <div class="right">
+                                <i class="f7-icons link popup-close" id="close-katalog-popup">xmark_rectangle_fill</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div class="block">
+                            <div class="row" style="gap:8px;align-items:center">
+                                <div class="col"><b>Pilih warna</b></div>
+                            </div>
+                            <div class="color-grid" id="swatch-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="display-flex flex-direction-row justify-content-space-between align-items-center"
+                style="gap:2px;">
+                <div class="display-flex justify-content-center align-items-center bg-dark-gray-medium text-bold"
+                    style="height: 32px; flex: 1;">
+                    <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+                </div>
+                <div class="display-flex justify-content-center align-items-center bg-dark-gray-young text-bold merah-notif-all"
+                    style="height: 32px; flex: 1;">
+                    <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');"
+                        href="/notif">Notif</a>
+                </div>
+                <div class="display-flex justify-content-center align-items-center bg-dark-gray-young text-bold notif-merah-delay"
+                    style="height: 32px; flex: 1;">
+                    <a class="text-add-colour-white" href="/delay-go">Delay
+                        - Go</a>
+                </div>
+                <div class="display-flex justify-content-center align-items-center bg-dark-gray-young text-bold notif-merah-tagihan"
+                    style="height: 32px; flex: 1;">
+                    <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-content" style="overflow-x:auto;">
+            <div class="list no-hairlines-md" style="padding: 8px; margin: 0;">
+                <span class=" text-bold">Total : Rp <i id="total_performa">0</i></span>
+                <form id="performa_form">
+                    <input type="hidden" id="status_perusahaan" name="status_perusahaan" value="perusahaan_database">
+                    <div class="display-flex flex-direction-row align-items-center"
+                        style="height: 48px; gap: 2px; background: -webkit-linear-gradient(#1e4920, #ffffff82); border-collapse: collapse;">
+                        <div class="perusahaan_database" style="flex: 5;">
+                            <a class="item-link smart-select smart-select-init smart-select-perusahaan"
+                                data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Cari Client"
+                                data-close-on-select="true">
+                                <select name="client_id" id="client_id" required validate>
+                                </select>
+                                <div class="item-content"
+                                    style="display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px;">
+                                    <div class="item-inner" style="width: 100%; padding: 0;">
+                                        <div class=""
+                                            style="width:100%; display: flex; justify-content: center; align-items: center;">
+                                            <div class="item-after"
+                                                style="font-size:18px; text-align:center; font-weight:bold; color:#e7edf2; margin: 0; line-height: 1.2;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div id="show-add-perusahaan" class="perusahaan_database" style="flex: 1; text-align: center;">
+                            <i onclick="inputPerusahaan();" style="color:white; font-size:24px;"
+                                class="perusahaan_database f7-icons">person_badge_plus_fill</i>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <ul>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <input class="perusahaan-tambah-input" type="text" id="client_nama"
+                                            name="client_nama" placeholder="Perusahaan (Max 15 Character)" value="-"
+                                            maxlength="15" required validate>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-input-wrap">
+                                    <a class="item-link smart-select smart-select-init" data-searchbar="true"
+                                        data-searchbar-placeholder="Cari Kota" data-open-in="popup"
+                                        data-close-on-select="true" style="width: 100%;">
+                                        <select name="kota" id="kota" required validate class="perusahaan-tambah-input">
+                                        </select>
+                                        <div class="item-content" style="float:left;width:96%;">
+                                            <div class="item-inner">
+                                                <div class="item-after item_after_kota"
+                                                    style="font-size:16px;margin-top:7px;margin-left: -23px;float:left; color:grey;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <input class="perusahaan-tambah-input" type="text" id="alamat" name="alamat"
+                                            placeholder="Alamat" value="-" required validate>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <input class="perusahaan-tambah-input" type="text" id="person" name="person"
+                                            placeholder="Person" value="-" required validate>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <select id="posisi" name="posisi" required validate>
+                                            <option value="">Pilih Posisi</option>
+                                            <option value="Owner">Owner</option>
+                                            <option value="Direktur">Direktur</option>
+                                            <option value="Purchase">Purchase</option>
+                                        </select>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input" style="display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <input class="perusahaan-tambah-input" type="text" id="telepon" name="telepon"
+                                            placeholder="Telpon / Wa" value="-" onblur="checkClientPhoneExists();"
+                                            required validate>
+                                        <span class="input-clear-button"></span>
+                                    </div>
+                                    <small id="phone_check_message" style="display: none; margin-top: 5px;"></small>
+                                </div>
+                            </li>
+                            <li class="perusahaan_tambah item-content item-input"
+                                style="height:20px; background: linear-gradient(#015cab , #909090);display:none;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <center onclick="cariPerusahaan();"
+                                            style="margin-right:auto; margin-left:auto;text-align:center;">
+                                            <i style="color:#b2c2d0;  display:none; font-size:19px;"
+                                                class="perusahaan_tambah f7-icons">arrow_uturn_left_circle</i>
+                                            <font class="perusahaan_tambah"
+                                                style="color:#b2c2d0;  font-weight:bold; display:none; font-size:20px; margin-top:6px;">
+                                                Cari
+                                                Perusahaan </font><br>
+                                            <span class="input-clear-button"></span>
+                                        </center>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="display-flex flex-direction-row justify-content-space-evenly align-items-center"
+                        style="background-color:#1c1c1d; border-radius:2px; border:1px solid gray; ">
+                        <div id="display_xtra" class="item-content item-input"
+                            style="flex: 1; margin: 0; justify-content: center;">
+                            <label class="item-checkbox item-content" style="padding-left: 0px;">
+                                <input type="checkbox" name="xtra" id="xtra" value="0" checked
+                                    onclick="handleXtraPoloToggle('xtra');" />
+                                <i class="icon icon-checkbox"
+                                    style="margin-right:10px;width: 22px;height: 22px;padding: 3px;"></i>
+                                <div class="item-inner" style="padding-top: 13px;">
+                                    <div class="item-title ">XTRA</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div id="display_stock" class="item-content item-input"
+                            style="flex: 1; margin: 0; justify-content: center;">
+                            <label class="item-checkbox item-content" style="padding-left: 0px;">
+                                <input type="checkbox" name="stock" id="stock" value="1" />
+                                <i class="icon icon-checkbox"
+                                    style="margin-right:10px;width: 22px;height: 22px;padding: 3px;"></i>
+                                <div class="item-inner" style="padding-top: 13px;">
+                                    <div class="item-title ">STOCK</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div id="display_extra" class="item-content item-input"
+                            style="flex: 1; margin: 0; justify-content: center;">
+                            <label class="item-checkbox item-content" style="padding-left: 0px;">
+                                <input type="checkbox" name="extra" id="extra" value="1"
+                                    onclick="handleXtraPoloToggle('polo');" />
+                                <i class="icon icon-checkbox"
+                                    style="margin-right:10px;width: 22px;height: 22px;padding: 3px;"></i>
+                                <div class="item-inner" style="padding-top: 13px;">
+                                    <div class="item-title ">POLO</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <input id="count_performa" name="count_performa" type="hidden" />
+                        <input id="total_performa_sum" name="total_performa_sum" type="hidden" />
+                        <input id="total_performa_qty" name="total_performa_qty" type="hidden" />
+                        <h4 id="title_1" class="title-performa" style="margin-bottom: 10px;">Proforma #1</h4>
+                    </div>
+                    <ul id="performa_1" class="performa_group_field_count"
+                        style="background-color:#1c1c1d; border-radius:2px; border:1px solid gray; ">
+                        <div class="row no-gap" style="margin-top: 5px;">
+                            <li class="item-content item-input margin-8 col-100 el_type_proforma_input"
+                                id="type_proforma_input_1">
+                                <div class="item-inner" style="height:8px;">
+                                    <div class="item-input-wrap" style="display: flex; align-items: center;">
+                                        <input oninput="this.value = this.value.toUpperCase()"
+                                            onkeyup="doSearchByType();" placeholder="Type" name="jenis_1" id="jenis_1"
+                                            class="performa-input input-item-jenis text-add-colour-black-soft bg-dark-gray-young button-small text-bold jenis_1"
+                                            type="text" required validate style="flex: 1;">
+                                        <span id="input-clear-button-type-1" class="input-clear-button-jenis"></span>
+                                        <i class="f7-icons" id="dropdown-katalog-icon-1"
+                                            onclick="handleDropdownKatalog();"
+                                            style="cursor: pointer; margin-left: 5px; font-size: 21px; color: #aaaaaa;z-index: 2;">chevron_down_circle_fill</i>
+                                    </div>
+                                    <input type="hidden" id="openPopup_1" class="popup-open open_popup_1"
+                                        data-popup=".katalog-popup" name="openPopup_1">
+                                    <input type="hidden" id="openPopupAll_1" class="popup-open open_popup_all_1"
+                                        data-popup=".all-katalog-popup" name="openPopupAll_1">
+                                    <input type="hidden" id="openPopupChoose_1" class="popup-open open_popup_choose_1"
+                                        data-popup=".choose-katalog-type-popup" name="openPopupChoose_1">
+                                    <input type="hidden" id="openPopupTs_1" class="popup-open open_popup_ts"
+                                        data-popup=".katalog-ts-popup" name="openPopupTs_1">
+                                    <input type="hidden" class="el_proforma_produk_detail_id"
+                                        id="proforma_produk_detail_id_1" name="proforma_produk_detail_id_1">
+                                    <input type="hidden" class="el_proforma_produk_id" id="proforma_produk_id_1"
+                                        name="proforma_produk_id_1">
+                                    <input type="hidden" class="el_proforma_harga_satuan" id="harga_satuan_1"
+                                        name="harga_satuan_1" value="0">
+                                    <input type="hidden" class="el_proforma_harga_style" id="harga_style_1"
+                                        name="harga_style_1" value="0">
+                                    <input type="hidden" class="el_proforma_harga_material" id="harga_material_1"
+                                        name="harga_material_1" value="0">
+                                    <input type="hidden" class="el_id_produk_ts" id="id_produk_ts_1"
+                                        name="id_produk_ts_1" value="">
+                                </div>
+                            </li>
+                            <li class="item-content item-input margin-8 col-100 el-input-ukuran-ts" id="el_ukuran_ts_1">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <input type="text" id="ukuran_ts_1" name="ukuran_ts_1" onchange="fillHargaTs(1)"
+                                            class="performa-input input-item-ukuran-ts text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                            required validate readonly>
+                                        <span class="input-clear-button" onclick="clearInputSelect(1);"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-content item-input margin-8 col-50 el_color_proforma_input color_proforma_input_koper"
+                                id="color_proforma_input_1" style="display: none; position:absolute;">
+                                <div class="item-inner" style="height:8px;">
+                                    <div class="item-input-wrap" id="color_input_1" style="border-radius: 5px;">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-content item-input margin-16 col-20 el_gambar_proforma_input"
+                                id="gambar_proforma_input_1" style="display: none;margin-left: 0px;padding-left: 0px;">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <br>
+                                        <center>
+                                            <label style="width:100%;height:27px;  float:left; margin-bottom:10px;"
+                                                for="file_1" id="value_performa_1"
+                                                class="margin-12 text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold custom-file-upload value_performa">
+                                                <i class="f7-icons">photo_fill</i>
+                                            </label>
+                                            <input
+                                                class="performa-input input-item-file text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold"
+                                                type="file" style="display:none;" onchange="gambarPerforma(1);"
+                                                name="file_1" id="file_1" accept="image/*">
+                                        </center>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+                        <li class="item-content item-input margin-4 item-input-el-extra" id="el_extra_1"
+                            style="display:none;">
+                            <div class="item-inner">
+                                <div class="item-input-wrap">
+                                    <select style="color:gray;" id="extra_detail_1" name="extra_detail_1"
+                                        class="performa-input input-item-extra resizable" onchange="callbackHarga(1);"
+                                        required validate>
+                                        <option value="0">Xtra</option>
+                                        <option value="1">Polo</option>
+                                    </select>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-4 el-input-ukuran-hc" id="el_ukuran_hc_1">
+                            <div class="item-inner">
+                                <div class="item-input-wrap">
+                                    <select style="color:gray;" id="ukuran_hc_1" name="ukuran_hc_1"
+                                        onchange="fillHargaProduk(1);"
+                                        class="performa-input input-item-ukuran-hc resizable" required validate>
+                                    </select>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-4 el-input-material-hc" id="el_material_hc_1">
+                            <div class="item-inner">
+                                <div class="item-input-wrap">
+                                    <!-- <select style="border-color:white;" id="material_1" name="material_1"
+                    onchange="fillHargaMaterialProduk(1);" class="performa-input input-item-material"> -->
+                                    <!-- Author: Crysna Wima - 24 Desember 2025 -->
+                                    <select style="border-color:white;" id="material_1" name="material_1"
+                                        onchange="fillHargaMaterialProdukUniversal(1);"
+                                        class="performa-input input-item-material">
+                                        <!-- End Author -->
+                                    </select>
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-4" id="el_keterangan_full_1">
+                            <div class="item-inner">
+                                <div class="item-input-wrap"><textarea style="border-color:white;"
+                                        id="keterangan_full_1" name="keterangan_full_1"
+                                        class="performa-input input-item-ket-full resizable" placeholder="Warna"
+                                        required validate></textarea><span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-4 el-input-style-hc" style="width: 100%;"
+                            id="el_style_hc_1">
+                            <div class="item-inner">
+                                <div class="item-input-wrap" onclick="openStyleSmartSelect(1);"
+                                    style="display: flex; align-items: center; cursor: pointer;">
+                                    <!-- Container untuk text style dan button warna -->
+                                    <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
+                                        <!-- Text style di kiri -->
+                                        <span id="style_hc_input_1" class="el_style_hc_input"
+                                            style="color: white; font-size: 16px;"></span>
+
+                                        <!-- Div warna (bukan button, style seperti Type) -->
+                                        <div id="color_button_1" class="color-box-style" style="display: none; padding: 5px 12px; 
+                             font-size: 11px; font-weight: bold; color: white; 
+                             text-align: center; text-transform: uppercase; 
+                             letter-spacing: 0.5px; border-radius: 5px; 
+                             margin-left: auto;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Icon chevron di ujung kanan (sama seperti Type) -->
+                                    <i class="f7-icons" style="margin-left: 5px; font-size: 21px; color: #aaaaaa;">
+                                        chevron_down_circle_fill
+                                    </i>
+                                </div>
+
+                                <!-- Smart select yang tersembunyi -->
+                                <a class="item-link smart-select smart-select-init el-smart-style" id="ss_style_hc_1"
+                                    data-open-in="popover" data-close-on-select="true"
+                                    style="display: none; width: 100%; height: 100%; margin: 0 !important; padding: 0 !important; top: 77% ! important; left: 0 !important;">
+                                    <select id="style_hc_1" name="style_hc_1"
+                                        onchange="fillHargaVariasiProduk(1);changeWarnaFullColor(1);"
+                                        class="performa-input input-item-style-hc resizable" multiple>
+                                    </select>
+                                </a>
+                            </div>
+                            <input class="input-selected-color" type="hidden" id="selected_color_1"
+                                name="selected_color_1">
+                            <input class="input-selected-hex-color" type="hidden" id="selected_hex_color_1"
+                                name="selected_hex_color_1">
+                            <small class="show-selected-color" id="show_color_fullcolor_1"
+                                style="display:none;"></small>
+                        </li>
+                        <li class="item-content item-input margin-4">
+                            <div class="item-inner">
+                                <div class="item-input-wrap"><textarea style="border-color:white;"
+                                        id="keterangan_singkat_1" name="keterangan_singkat_1"
+                                        class="performa-input input-item-keterangan-singkat resizable"
+                                        placeholder="Keterangan"></textarea><span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-8">
+                            <div class="item-inner" style="height:8px;">
+                                <div class="item-input-wrap">
+                                    <div class="row no-gap">
+                                        <!-- Kolom Kiri 75% untuk Input Qty -->
+                                        <div class="col-75">
+                                            <input placeholder="Qty" name="qty_1" id="qty_1" value="100"
+                                                onchange="changeTotalValue(1);changeQtyTs(1);"
+                                                onclick="resetValueQty(1);" min="1"
+                                                class="performa-input input-item-qty text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                                type="number" required validate>
+                                        </div>
+
+                                        <!-- Kolom Kanan 25% untuk Nominal dan Icon Copy -->
+                                        <div class="col-25"
+                                            style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding-right: 10px; margin-top: 10px;">
+                                            <!-- NOMINAL POTONGAN -->
+                                            <span id="nominal_potongan_display_1"
+                                                style="display: none; font-size: 16px; color: #4CAF50; font-weight: bold; white-space: nowrap;"></span>
+
+                                            <!-- ICON COPY POTONGAN -->
+                                            <i class="f7-icons icon-copy-potongan" id="copy_potongan_icon_1"
+                                                onclick="copyPotonganToNetHarga(1);"
+                                                style="display: none; font-size: 20px; color: #4CAF50; cursor: pointer;">doc_on_doc_fill</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-5">
+                            <div class="item-inner">
+                                <div class="item-input-wrap">
+                                    <div class="row no-gap">
+                                        <div class="col">
+                                            <input placeholder="Harga" name="price_1" id="price_1"
+                                                onchange="changeTotalValue(1);" onclick="resetValueHarga(1);"
+                                                class="performa-input input-item-price text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                                type="text" required readonly validate>
+                                        </div>
+                                        <div class="col">
+                                            <input placeholder="Net Harga" name="potongan_price_1" id="potongan_price_1"
+                                                onclick="resetValueNetHarga(1);" onblur="validateNetHargaChange(1);"
+                                                oninput="handleNetHargaInput(1);"
+                                                class="performa-input input-item-potongan-price text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                                type="text" validate style="text-align: right;">
+
+                                            <!-- Info potongan (hidden by default) -->
+                                            <small id="info_potongan_1" class="show-potongan-info" data-count="1"
+                                                style="display: none; color: #4CAF50; font-size: 11px; margin-top: 2px; cursor: pointer;">
+                                            </small>
+
+                                            <!-- Warning perubahan (hidden by default) -->
+                                            <small id="warning_perubahan_1"
+                                                style="display: none; color: #FF9800; font-size: 11px; margin-top: 2px;">
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input margin-8">
+                            <div class="item-inner">
+                                <div class="item-input-wrap" style="margin-bottom:5px;"><input placeholder="Total"
+                                        name="total_1" id="total_1" required validate
+                                        class="performa-input input-item-total total-value grand-total-value text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                        type="text" readonly><span class="input-clear-button"></span></div>
+                            </div>
+                        </li>
+
+                        <input type="hidden" id="potongan_otomatis_1" name="potongan_otomatis_1"
+                            class="performa-input input-item-potongan-otomatis">
+                        <input type="hidden" id="needs_approval_1" name="needs_approval_1" value="0"
+                            class="performa-input input-item-needs-approval">
+                        <input type="hidden" id="id_ukuran_hc_1" name="id_ukuran_hc_1"
+                            class="performa-input input-item-id-ukuran-hc">
+                        <input type="hidden" id="id_material_1" name="id_material_1"
+                            class="performa-input input-item-id-material">
+                        <input type="hidden" id="is_editing_1" class="is-editing-flag" value="false">
+
+                        <p style="padding-top:5px;"><a id="add_performa" onclick="addPerforma();"
+                                style="float:right; font-size:39px;  margin-bottom:10px; margin-right:14px; margin-top:-27px;  color:forestgreen;"
+                                class="add_performa f7-icons">plus_rectangle_fill</a> </p>
+
+
+                    </ul>
+                    <div class="performa_group_field">
+                    </div>
+
+                    <!-- ========== ONGKOS KIRIM SECTION ========== -->
+                    <div style="margin-top: 20px; margin-bottom: 10px;">
+                        <h4 style="margin-bottom: 10px; color: white;">Ongkos Kirim</h4>
+
+                        <div class="list no-hairlines" style="margin: 0;">
+                            <ul
+                                style="background-color:#1c1c1d; border-radius:2px; border:1px solid gray; padding: 0; margin: 0;">
+
+                                <!-- Radio Option 1: Nominal (dengan input inline) -->
+                                <li style="display: flex; align-items: center; flex-wrap: nowrap;">
+                                    <label class="item-radio item-content" onclick="handleOngkirChange('nominal');"
+                                        style="flex: 0 0 auto; min-width: 150px;">
+                                        <input type="radio" name="status_ongkir" value="nominal" />
+                                        <i class="icon icon-radio"></i>
+                                        <div class="item-inner" style="padding-right: 0;">
+                                            <div class="item-title" style="color: white;">Nominal</div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Input Nominal (inline, hidden by default) -->
+                                    <div id="input_nominal_ongkir" style="display: none; flex: 1; margin-left: 10px;">
+                                        <div class="item-input-wrap" style="margin: 0;">
+                                            <input placeholder="Biaya Kirim (Rp)" name="biaya_kirim" id="biaya_kirim"
+                                                onclick="resetValueBiayaKirim();"
+                                                class="performa-input input-item-biaya-kirim text-add-colour-black-soft bg-dark-gray-young button-small text-bold"
+                                                type="text" style="height: 32px; padding: 5px 10px;">
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Radio Option 2: Free -->
+                                <li>
+                                    <label class="item-radio item-content" onclick="handleOngkirChange('free');">
+                                        <input type="radio" name="status_ongkir" value="free" />
+                                        <i class="icon icon-radio"></i>
+                                        <div class="item-inner">
+                                            <div class="item-title" style="color: white;">Free Ongkir (Gratis)</div>
+                                        </div>
+                                    </label>
+                                </li>
+
+                                <!-- Radio Option 3: Pending -->
+                                <li>
+                                    <label class="item-radio item-content" onclick="handleOngkirChange('pending');">
+                                        <input type="radio" name="status_ongkir" value="pending" checked />
+                                        <i class="icon icon-radio"></i>
+                                        <div class="item-inner">
+                                            <div class="item-title" style="color: white;">Pending (Belum Ditentukan)
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ========== END ONGKOS KIRIM SECTION ========== -->
+
+                    <!-- ========== BANK SECTION ========== -->
+                    <div style="margin-top: 20px; margin-bottom: 10px;" id="bank-section-performa">
+                        <h4 style="margin-bottom: 10px; color: white;">Bank</h4>
+
+                        <div class="list no-hairlines" style="margin: 0;">
+                            <ul
+                                style="background-color:#1c1c1d; border-radius:2px; border:1px solid gray; margin: 0; padding: 0;">
+                                <li class="item-content item-input">
+                                    <div class="item-input-wrap">
+                                        <a class="item-link smart-select smart-select-init smart-select-bank"
+                                            data-open-in="popup" data-searchbar="true"
+                                            data-searchbar-placeholder="Cari Bank" data-close-on-select="true">
+
+                                            <select name="bank_performa" id="bank_performa">
+                                                <option value="" disabled selected>Pilih Bank</option>
+                                            </select>
+
+                                            <div class="item-content" style="float:left; width:100%; padding-left: 0;">
+                                                <div class="item-inner">
+                                                    <div class="item-after"
+                                                        style="font-size:16px; margin-left:0; text-align:left; font-weight:normal; float:left; color:#e7edf2;">
+                                                        Pilih Bank
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ========== END BANK SECTION ========== -->
+
+                    <!-- ========== NOTE REJECT CRM SECTION ========== -->
+                    <div style="margin-top: 20px; margin-bottom: 10px; display: none;" id="note-reject-crm-section">
+                        <h4 style="margin-bottom: 10px; color: #ff5252;">Catatan Reject dari CRM</h4>
+
+                        <div class="list no-hairlines" style="margin: 0;">
+                            <ul
+                                style="background-color:#1c1c1d; border-radius:2px; border:1px solid #ff5252; margin: 0; padding: 0;">
+                                <li class="item-content item-input">
+                                    <div class="item-inner" style="padding: 15px 0 15px 0;">
+                                        <div id="note-reject-crm-text"
+                                            style="color: #ff8a80; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">
+                                            <!-- Note akan diisi via JavaScript -->
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ========== END NOTE REJECT CRM SECTION ========== -->
+
+                    <!-- ========== NOTE REJECT CS SECTION ========== -->
+                    <div style="margin-top: 20px; margin-bottom: 10px; display: none;" id="note-reject-cs-section">
+                        <h4 style="margin-bottom: 10px; color: #ff5252;">Catatan Reject dari CS</h4>
+
+                        <div class="list no-hairlines" style="margin: 0;">
+                            <ul
+                                style="background-color:#1c1c1d; border-radius:2px; border:1px solid #ff5252; margin: 0; padding: 0;">
+                                <li class="item-content item-input">
+                                    <div class="item-inner" style="padding: 15px 0 15px 0;">
+                                        <div id="note-reject-cs-text"
+                                            style="color: #ff8a80; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">
+                                            <!-- Note akan diisi via JavaScript -->
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ========== END NOTE REJECT CS SECTION ========== -->
+
+                    <div class="row" style="margin: 20px 0;">
+                        <!-- Each "cell" has col-[width in percents] class -->
+                        <div class="col-33">
+                            <label for="customer_logo" id="value_customer_logo"
+                                style="font-size: 16px; height: 48px; border-radius: 4px; cursor: pointer;"
+                                class="display-flex align-items-center justify-content-center text-add-colour-black-soft bg-dark-gray-young text-bold custom-file-upload">
+                                Emblem
+                            </label>
+                            <input onchange="logoPerusahaan();" style="display:none;" id="customer_logo" type="file"
+                                name="customer_logo" id="customer_logo" accept="image/*;capture=camera" required
+                                validate />
+                        </div>
+                        <div class="col-33">
+                            <label for="customer_logo_bordir" id="value_customer_logo_bordir"
+                                style="font-size: 16px; height: 48px; border-radius: 4px; cursor: pointer;"
+                                class="display-flex align-items-center justify-content-center text-add-colour-black-soft bg-dark-gray-young text-bold custom-file-upload">
+                                Bordir
+                            </label>
+                            <input onchange="logoPerusahaanBordir();" style="display:none;" type="file"
+                                name="customer_logo_bordir" id="customer_logo_bordir" accept="image/*;capture=camera" />
+                        </div>
+                        <div class="col-33">
+                            <label for="customer_logo_tambahan" id="value_customer_logo_tambahan"
+                                style="font-size: 16px; height: 48px; border-radius: 4px; cursor: pointer;"
+                                class="display-flex align-items-center justify-content-center text-add-colour-black-soft bg-dark-gray-young text-bold custom-file-upload">
+                                + Logo
+                            </label>
+                            <input onchange="logoPerusahaanTambahan();" style="display:none;"
+                                id="customer_logo_tambahan" type="file" name="customer_logo_tambahan"
+                                accept="image/*;capture=camera" />
+                        </div>
+                    </div>
+                </form>
+                <button onclick="performaProcess();" style="width:100%;height:40px;margin-top: 10px;"
+                    class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                    id="performa_input_button_save">
+                    <span style="font-size: 14px;" id="performa_input_button_save">Simpan</span>
+                </button>
+                <div id="cetak_invoice" style="display:none;">
+                    <h4> Proforma Berhasil Di Inputkan, Klik <i id="alert_performa_invoice"></i> Untuk Cetak Invoice
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

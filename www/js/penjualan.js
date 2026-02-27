@@ -2,204 +2,204 @@ var globalBankData = [];
 var isOwner = false;
 
 function loadBankData() {
-    isOwner = checkIsOwner();
-    
-    jQuery.ajax({
-        type: 'POST',
-        url: "" + BASE_API + "/get-all-bank",
-        dataType: 'JSON',
-        data: {
-            username: localStorage.getItem("username")
-        },
-        success: function (response) {
-            if (response.status == 200) {
-                globalBankData = response.data;
-                console.log('Bank data loaded:', globalBankData);
-                renderBankOptionsToStaticDropdowns();
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error('Error loading bank data:', error);
-        }
-    });
+	isOwner = checkIsOwner();
+
+	jQuery.ajax({
+		type: 'POST',
+		url: "" + BASE_API + "/get-all-bank",
+		dataType: 'JSON',
+		data: {
+			username: localStorage.getItem("username")
+		},
+		success: function (response) {
+			if (response.status == 200) {
+				globalBankData = response.data;
+				console.log('Bank data loaded:', globalBankData);
+				renderBankOptionsToStaticDropdowns();
+			}
+		},
+		error: function (xhr, status, error) {
+			console.error('Error loading bank data:', error);
+		}
+	});
 }
 
 function checkIsOwner() {
-    var username = localStorage.getItem("username");
-    return username === 'Stn';
+	var username = localStorage.getItem("username");
+	return username === 'Stn';
 }
 
 function generateBankOptions(defaultBankId) {
-    var options = '';
-    
-    if (globalBankData.length === 0) {
-        return generateBankOptionsHardcoded(defaultBankId);
-    }
-    
-    globalBankData.forEach(function(bank) {
-        var selected = (bank.bank_id == defaultBankId) ? ' selected' : '';
-        options += '<option value="' + bank.bank_id + '"' + selected + '>' + bank.bank_label + '</option>';
-    });
-    
-    return options;
+	var options = '';
+
+	if (globalBankData.length === 0) {
+		return generateBankOptionsHardcoded(defaultBankId);
+	}
+
+	globalBankData.forEach(function (bank) {
+		var selected = (bank.bank_id == defaultBankId) ? ' selected' : '';
+		options += '<option value="' + bank.bank_id + '"' + selected + '>' + bank.bank_label + '</option>';
+	});
+
+	return options;
 }
 
 function generateBankOptionsHardcoded(defaultBankId) {
-    var options = '';
-    var banks = [
-        { id: 1, label: 'BCA - Sutono' },
-        { id: 2, label: 'BRI - Sutono' },
-        { id: 3, label: 'Mandiri - Sutono' },
-        { id: 4, label: 'Mandiri Bisnis - Santoso' },
-        { id: 5, label: 'Tunai' },
-        { id: 6, label: 'Mandiri - Yu Shujin' }
-    ];
-    
-    banks.forEach(function(bank) {
-        var selected = (bank.id == defaultBankId) ? ' selected' : '';
-        options += '<option value="' + bank.id + '"' + selected + '>' + bank.label + '</option>';
-    });
-    
-    return options;
+	var options = '';
+	var banks = [
+		{ id: 1, label: 'BCA - Sutono' },
+		{ id: 2, label: 'BRI - Sutono' },
+		{ id: 3, label: 'Mandiri - Sutono' },
+		{ id: 4, label: 'Mandiri Bisnis - Santoso' },
+		{ id: 5, label: 'Tunai' },
+		{ id: 6, label: 'Mandiri - Yu Shujin' }
+	];
+
+	banks.forEach(function (bank) {
+		var selected = (bank.id == defaultBankId) ? ' selected' : '';
+		options += '<option value="' + bank.id + '"' + selected + '>' + bank.label + '</option>';
+	});
+
+	return options;
 }
 
 function renderBankOptionsToStaticDropdowns() {
-    for (var i = 1; i <= 10; i++) {
-        var selectElement = jQuery('#bank_' + i);
-        if (selectElement.length) {
-            selectElement.html(generateBankOptions(3));
-        }
-    }
-    
-    var bankEditElement = jQuery('#bank_edit');
-    if (bankEditElement.length) {
-        bankEditElement.html(generateBankOptions(3));
-    }
+	for (var i = 1; i <= 10; i++) {
+		var selectElement = jQuery('#bank_' + i);
+		if (selectElement.length) {
+			selectElement.html(generateBankOptions(3));
+		}
+	}
+
+	var bankEditElement = jQuery('#bank_edit');
+	if (bankEditElement.length) {
+		bankEditElement.html(generateBankOptions(3));
+	}
 }
 
 function getBankLabelById(bankId) {
-    var bank = globalBankData.find(function(b) {
-        return b.bank_id == bankId;
-    });
-    
-    return bank ? bank.bank_label : '-';
+	var bank = globalBankData.find(function (b) {
+		return b.bank_id == bankId;
+	});
+
+	return bank ? bank.bank_label : '-';
 }
 
 function getBankLabelByCode(bankCode) {
-    if (globalBankData.length > 0) {
-        var bankById = globalBankData.find(function(b) {
-            return b.bank_id == bankCode;
-        });
-        
-        if (bankById) {
-            return bankById.bank_label;
-        }
-    }
-    
-    var hardcodedBankLabels = {
-        1: 'BCA - Sutono',
-        2: 'BRI - Sutono',
-        3: 'Mandiri - Sutono',
-        4: 'Mandiri Bisnis - Santoso',
-        5: 'Tunai',
-        6: 'Mandiri - Yu Shujin'
-    };
-    
-    var bankByCode = globalBankData.find(function(b) {
-        return b.bank_kode == bankCode;
-    });
-    
-    if (bankByCode) {
-        return bankByCode.bank_label;
-    }
-    
-    return hardcodedBankLabels[bankCode] || 'Unknown Bank';
+	if (globalBankData.length > 0) {
+		var bankById = globalBankData.find(function (b) {
+			return b.bank_id == bankCode;
+		});
+
+		if (bankById) {
+			return bankById.bank_label;
+		}
+	}
+
+	var hardcodedBankLabels = {
+		1: 'BCA - Sutono',
+		2: 'BRI - Sutono',
+		3: 'Mandiri - Sutono',
+		4: 'Mandiri Bisnis - Santoso',
+		5: 'Tunai',
+		6: 'Mandiri - Yu Shujin'
+	};
+
+	var bankByCode = globalBankData.find(function (b) {
+		return b.bank_kode == bankCode;
+	});
+
+	if (bankByCode) {
+		return bankByCode.bank_label;
+	}
+
+	return hardcodedBankLabels[bankCode] || 'Unknown Bank';
 }
 
 function getBankLabelFromPayment(bankId, bankCode) {
-    if (bankId !== null && bankId !== undefined && bankId !== 'null' && bankId !== 'undefined' && bankId !== '') {
-        return getBankLabelByCode(bankId);
-    }
-    if (bankCode !== null && bankCode !== undefined && bankCode !== 'null' && bankCode !== 'undefined' && bankCode !== '') {
-        return getBankLabelByCode(bankCode);
-    }
-    return '-';
+	if (bankId !== null && bankId !== undefined && bankId !== 'null' && bankId !== 'undefined' && bankId !== '') {
+		return getBankLabelByCode(bankId);
+	}
+	if (bankCode !== null && bankCode !== undefined && bankCode !== 'null' && bankCode !== 'undefined' && bankCode !== '') {
+		return getBankLabelByCode(bankCode);
+	}
+	return '-';
 }
 
 function handleOngkirClick(element, index, penjualanId, originalValue, status) {
-    var currentValue = jQuery(element).val() || 0;
-    app.dialog.confirm(
-        'Edit ongkir dari ' + number_format(currentValue) + ' ke berapa?',
-        'Konfirmasi Edit Ongkir',
-        function() {
-            jQuery(element).attr('readonly', false);
-            jQuery(element).css({'background-color': '#ffcc00', 'color': '#000', 'font-weight': 'bold'});
-            jQuery(element).focus();
-            jQuery(element).off('blur').on('blur', function() {
-                var newValue = jQuery(this).val().replace(/\,/g, '') || 0;
-                if (newValue != currentValue) {
-                    confirmOngkirEdit(element, index, penjualanId, originalValue, newValue, status);
-                } else {
-                    jQuery(element).attr('readonly', true);
-                    jQuery(element).css({'background-color': '#e5e5e7', 'color': '#3a3a3c'});
-                }
-            });
-        }
-    );
+	var currentValue = jQuery(element).val() || 0;
+	app.dialog.confirm(
+		'Edit ongkir dari ' + number_format(currentValue) + ' ke berapa?',
+		'Konfirmasi Edit Ongkir',
+		function () {
+			jQuery(element).attr('readonly', false);
+			jQuery(element).css({ 'background-color': '#ffcc00', 'color': '#000', 'font-weight': 'bold' });
+			jQuery(element).focus();
+			jQuery(element).off('blur').on('blur', function () {
+				var newValue = jQuery(this).val().replace(/\,/g, '') || 0;
+				if (newValue != currentValue) {
+					confirmOngkirEdit(element, index, penjualanId, originalValue, newValue, status);
+				} else {
+					jQuery(element).attr('readonly', true);
+					jQuery(element).css({ 'background-color': '#e5e5e7', 'color': '#3a3a3c' });
+				}
+			});
+		}
+	);
 }
 
 function confirmOngkirEdit(element, index, penjualanId, originalValue, newValue, status) {
-    app.dialog.confirm(
-        'Konfirmasi perubahan ongkir menjadi ' + number_format(newValue) + '?<br><br><strong>Setelah dikonfirmasi, ongkir tidak bisa diedit lagi!</strong>',
-        'Konfirmasi Akhir',
-        function() {
-            saveOngkirEdit(element, index, penjualanId, originalValue, newValue, status);
-        },
-        function() {
-            jQuery(element).val(number_format(originalValue));
-            jQuery(element).attr('readonly', true);
-            jQuery(element).css({'background-color': '#e5e5e7', 'color': '#3a3a3c'});
-        }
-    );
+	app.dialog.confirm(
+		'Konfirmasi perubahan ongkir menjadi ' + number_format(newValue) + '?<br><br><strong>Setelah dikonfirmasi, ongkir tidak bisa diedit lagi!</strong>',
+		'Konfirmasi Akhir',
+		function () {
+			saveOngkirEdit(element, index, penjualanId, originalValue, newValue, status);
+		},
+		function () {
+			jQuery(element).val(number_format(originalValue));
+			jQuery(element).attr('readonly', true);
+			jQuery(element).css({ 'background-color': '#e5e5e7', 'color': '#3a3a3c' });
+		}
+	);
 }
 
 function saveOngkirEdit(element, index, penjualanId, originalValue, newValue, status) {
-    jQuery.ajax({
-        type: 'POST',
-        url: BASE_API + "/update-ongkir-detail-pembayaran-manager",
-        dataType: 'JSON',
-        data: {
-            penjualan_id: penjualanId,
-            ongkir: newValue,
-            ongkir_original: originalValue,
-            status_ongkir: 'nominal',
-            is_ongkir_edited: 1
-        },
-        beforeSend: function() {
-            app.dialog.preloader('Menyimpan...');
-        },
-        success: function(response) {
-            app.dialog.close();
-            if (response.status == 200) {
-                jQuery(element).attr('readonly', true);
-                jQuery(element).css({'background-color': '#34c759', 'color': 'white', 'cursor': 'not-allowed', 'font-weight': 'bold'});
-                jQuery(element).val(number_format(newValue));
-                jQuery(element).closest('td').css('background-color', '#34c759');
-                jQuery(element).attr('data-is-edited', 'true');
-                jQuery(element).off('click');
-                app.dialog.alert('Ongkir berhasil diupdate dan telah dikunci!', 'Sukses');
-                setTimeout(function() {
-                    location.reload();
-                }, 1500);
-            } else {
-                app.dialog.alert('Gagal mengupdate ongkir', 'Error');
-            }
-        },
-        error: function(xhr, status, error) {
-            app.dialog.close();
-            app.dialog.alert('Error: ' + error, 'Error');
-        }
-    });
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + "/update-ongkir-detail-pembayaran-manager",
+		dataType: 'JSON',
+		data: {
+			penjualan_id: penjualanId,
+			ongkir: newValue,
+			ongkir_original: originalValue,
+			status_ongkir: 'nominal',
+			is_ongkir_edited: 1
+		},
+		beforeSend: function () {
+			app.dialog.preloader('Menyimpan...');
+		},
+		success: function (response) {
+			app.dialog.close();
+			if (response.status == 200) {
+				jQuery(element).attr('readonly', true);
+				jQuery(element).css({ 'background-color': '#34c759', 'color': 'white', 'cursor': 'not-allowed', 'font-weight': 'bold' });
+				jQuery(element).val(number_format(newValue));
+				jQuery(element).closest('td').css('background-color', '#34c759');
+				jQuery(element).attr('data-is-edited', 'true');
+				jQuery(element).off('click');
+				app.dialog.alert('Ongkir berhasil diupdate dan telah dikunci!', 'Sukses');
+				setTimeout(function () {
+					location.reload();
+				}, 1500);
+			} else {
+				app.dialog.alert('Gagal mengupdate ongkir', 'Error');
+			}
+		},
+		error: function (xhr, status, error) {
+			app.dialog.close();
+			app.dialog.alert('Error: ' + error, 'Error');
+		}
+	});
 }
 
 /// KATALOG PERFORMA EDIT & TAMBAH
@@ -210,41 +210,41 @@ function saveOngkirEdit(element, index, penjualanId, originalValue, newValue, st
  * Digunakan untuk menampilkan rekening bank secara dinamis di proforma
  */
 function getBankInfoById(bankId) {
-    // Default fallback
-    var defaultBank = {
-        nama: 'Mandiri',
-        rekening: '141 000 225 5818',
-        atas_nama: 'Sutono'
-    };
-    
-    if (!bankId) return defaultBank;
-    
-    // Cari di globalBankData (jika tersedia)
-    if (typeof globalBankData !== 'undefined' && globalBankData.length > 0) {
-        var bank = globalBankData.find(function(b) {
-            return b.bank_id === bankId;
-        });
-        
-        if (bank) {
-            return {
-                nama: bank.bank_nama || bank.bank_kode,
-                rekening: bank.bank_no_rekening || '',
-                atas_nama: bank.bank_atas_nama || ''
-            };
-        }
-    }
-    
-    // Fallback hardcoded berdasarkan bank_id
-    var hardcodedBanks = {
-        1: { nama: 'BCA', rekening: '01831 29551', atas_nama: 'Sutono' },
-        2: { nama: 'BRI', rekening: '058401031165502', atas_nama: 'Sutono' },
-        3: { nama: 'Mandiri', rekening: '141 000 225 5818', atas_nama: 'Sutono' },
-        4: { nama: 'Mandiri Bisnis', rekening: '1410506070895', atas_nama: 'Santoso' },
-        5: { nama: 'Tunai', rekening: '-', atas_nama: '-' },
-        6: { nama: 'Mandiri', rekening: '1180014824725', atas_nama: 'Yu Shujin' }
-    };
-    
-    return hardcodedBanks[bankId] || defaultBank;
+	// Default fallback
+	var defaultBank = {
+		nama: 'Mandiri',
+		rekening: '141 000 225 5818',
+		atas_nama: 'Sutono'
+	};
+
+	if (!bankId) return defaultBank;
+
+	// Cari di globalBankData (jika tersedia)
+	if (typeof globalBankData !== 'undefined' && globalBankData.length > 0) {
+		var bank = globalBankData.find(function (b) {
+			return b.bank_id === bankId;
+		});
+
+		if (bank) {
+			return {
+				nama: bank.bank_nama || bank.bank_kode,
+				rekening: bank.bank_no_rekening || '',
+				atas_nama: bank.bank_atas_nama || ''
+			};
+		}
+	}
+
+	// Fallback hardcoded berdasarkan bank_id
+	var hardcodedBanks = {
+		1: { nama: 'BCA', rekening: '01831 29551', atas_nama: 'Sutono' },
+		2: { nama: 'BRI', rekening: '058401031165502', atas_nama: 'Sutono' },
+		3: { nama: 'Mandiri', rekening: '141 000 225 5818', atas_nama: 'Sutono' },
+		4: { nama: 'Mandiri Bisnis', rekening: '1410506070895', atas_nama: 'Santoso' },
+		5: { nama: 'Tunai', rekening: '-', atas_nama: '-' },
+		6: { nama: 'Mandiri', rekening: '1180014824725', atas_nama: 'Yu Shujin' }
+	};
+
+	return hardcodedBanks[bankId] || defaultBank;
 }
 
 function doSearchByTypeEdit(text) {
@@ -1917,13 +1917,13 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 					invoice_penjualan += '		</tr>';
 				}
 				var biaya_packing_val = 0;
-				if (data.data[0].total_biaya_packing != null && 
-					data.data[0].total_biaya_packing != '' && 
+				if (data.data[0].total_biaya_packing != null &&
+					data.data[0].total_biaya_packing != '' &&
 					parseFloat(data.data[0].total_biaya_packing) != 0) {
-					
+
 					biaya_packing_val = parseFloat(data.data[0].total_biaya_packing);
-					var nama_packing = (data.data[0].packing != null && data.data[0].packing != '') 
-										? data.data[0].packing : '-';
+					var nama_packing = (data.data[0].packing != null && data.data[0].packing != '')
+						? data.data[0].packing : '-';
 					invoice_penjualan += '		<tr>';
 					invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
 					invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
@@ -3056,8 +3056,8 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 	// ⭐ HELPER: Hitung total pembayaran yang sudah divalidasi CS
 	function hitungTotalPembayaranValidated(dataItem) {
 		var total = 0;
-		var fields = ['1','2','3','4','5','6','7','8','9','10'];
-		fields.forEach(function(n) {
+		var fields = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+		fields.forEach(function (n) {
 			if (dataItem['valid_cs_' + n] == 1 && dataItem['pembayaran_' + n] != null) {
 				total += parseFloat(dataItem['pembayaran_' + n]);
 			}
@@ -5231,7 +5231,7 @@ function getPenjualanHeader(page) {
 				} else {
 					var sisa_kirim_sj = parseFloat(item.penjualan_total_qty_detail) - parseFloat(data.surat_jalan_count[item.penjualan_id]);
 				}
-// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
+				// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
 				var total_pembayaran_validated = 0;
 				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
 					total_pembayaran_validated += parseFloat(item.pembayaran_1);
@@ -5396,82 +5396,82 @@ function getPenjualanHeader(page) {
 
 
 
-					// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-					var total_pembayaran_validated = 0;
-					
-					// Cek setiap pembayaran (1-10) apakah sudah divalidasi
-					if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_1);
-					}
-					if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_2);
-					}
-					if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_3);
-					}
-					if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_4);
-					}
-					if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_5);
-					}
-					if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_6);
-					}
-					if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_7);
-					}
-					if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_8);
-					}
-					if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_9);
-					}
-					if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_10);
-					}
+						// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
+						var total_pembayaran_validated = 0;
 
-					// ⭐⭐⭐ PERBAIKAN: LOGIKA BUTTON SHIPMENT (menggunakan total_pembayaran_validated) ⭐⭐⭐
-					var btn_alamat_kirim_penjualan = "";
-					var btn_shipment_text = "Shipment";
-					var sisa_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
-					
-					// Cek apakah ada pembayaran yang belum divalidasi
-					var has_pending_pembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
+						// Cek setiap pembayaran (1-10) apakah sudah divalidasi
+						if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_1);
+						}
+						if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_2);
+						}
+						if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_3);
+						}
+						if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_4);
+						}
+						if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_5);
+						}
+						if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_6);
+						}
+						if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_7);
+						}
+						if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_8);
+						}
+						if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_9);
+						}
+						if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_10);
+						}
 
-					// PRIORITAS 1: Cek apakah SJ sudah lengkap (semua barang sudah dikirim)
-					if (sisa_kirim_sj <= 0) {
-						// 🟦 BIRU - Semua barang sudah dikirim (SJ lengkap)
-						btn_alamat_kirim_penjualan = "btn-color-blueWhite";
-					}
-					// PRIORITAS 2: Cek apakah belum ada alamat
-					else if (item.alamat_kirim_penjualan == null) {
-						// ⚫ ABU-ABU - Belum ada alamat (lunas atau belum)
-						btn_alamat_kirim_penjualan = "bg-dark-gray-young text-add-colour-black-soft";
-					}
-					// PRIORITAS 3: Sudah ada alamat
-					else {
-						// PERBAIKAN: Dianggap lunas HANYA jika sisa_bayar <= 0 DAN tidak ada pembayaran pending
-						if (sisa_bayar <= 0 && !has_pending_pembayaran) {
-							// 🟢 HIJAU - Sudah lunas (tidak perlu approval)
-							btn_alamat_kirim_penjualan = "btn-color-greenWhite";
-						} else {
-							// Belum lunas atau ada pembayaran pending - cek status approval
-							if (item.shipment_status == 'approved') {
-								// 🟢 HIJAU - Approved (boleh kirim)
+						// ⭐⭐⭐ PERBAIKAN: LOGIKA BUTTON SHIPMENT (menggunakan total_pembayaran_validated) ⭐⭐⭐
+						var btn_alamat_kirim_penjualan = "";
+						var btn_shipment_text = "Shipment";
+						var sisa_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+
+						// Cek apakah ada pembayaran yang belum divalidasi
+						var has_pending_pembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
+
+						// PRIORITAS 1: Cek apakah SJ sudah lengkap (semua barang sudah dikirim)
+						if (sisa_kirim_sj <= 0) {
+							// 🟦 BIRU - Semua barang sudah dikirim (SJ lengkap)
+							btn_alamat_kirim_penjualan = "btn-color-blueWhite";
+						}
+						// PRIORITAS 2: Cek apakah belum ada alamat
+						else if (item.alamat_kirim_penjualan == null) {
+							// ⚫ ABU-ABU - Belum ada alamat (lunas atau belum)
+							btn_alamat_kirim_penjualan = "bg-dark-gray-young text-add-colour-black-soft";
+						}
+						// PRIORITAS 3: Sudah ada alamat
+						else {
+							// PERBAIKAN: Dianggap lunas HANYA jika sisa_bayar <= 0 DAN tidak ada pembayaran pending
+							if (sisa_bayar <= 0 && !has_pending_pembayaran) {
+								// 🟢 HIJAU - Sudah lunas (tidak perlu approval)
 								btn_alamat_kirim_penjualan = "btn-color-greenWhite";
-							} else if (item.shipment_status == 'requested') {
-								// 🟠 ORANGE - Requested (menunggu approval CS)
-								btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
-							} else if (item.shipment_status == 'rejected') {
-								// 🔴 MERAH - Rejected (ditolak)
-								btn_alamat_kirim_penjualan = "btn-color-redWhite";
 							} else {
-								// 🟠 ORANGE - Belum ada status (baru input alamat, belum request)
-								btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								// Belum lunas atau ada pembayaran pending - cek status approval
+								if (item.shipment_status == 'approved') {
+									// 🟢 HIJAU - Approved (boleh kirim)
+									btn_alamat_kirim_penjualan = "btn-color-greenWhite";
+								} else if (item.shipment_status == 'requested') {
+									// 🟠 ORANGE - Requested (menunggu approval CS)
+									btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								} else if (item.shipment_status == 'rejected') {
+									// 🔴 MERAH - Rejected (ditolak)
+									btn_alamat_kirim_penjualan = "btn-color-redWhite";
+								} else {
+									// 🟠 ORANGE - Belum ada status (baru input alamat, belum request)
+									btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								}
 							}
 						}
-					}
 
 						// kasi warna SPK
 						if (item.penjualan_total_qty_detail != 0) {
@@ -5481,7 +5481,7 @@ function getPenjualanHeader(page) {
 						}
 
 						// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+						var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
 						var produksi_status_now = item.produksi_selesai;
 						var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -5569,7 +5569,7 @@ function getPenjualanHeader(page) {
 						} else if (sisa <= 0) {
 							var hasOngkirPending = (item.status_ongkir === 'pending');
 							var hasPendingPembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
-							
+
 							if (hasPendingPembayaran || hasOngkirPending) {
 								// 🟢 HIJAU - Lunas tapi ada pembayaran/ongkir pending validasi
 								var color_btn_byr = "btn-color-greenWhite";
@@ -5714,82 +5714,82 @@ function getPenjualanHeader(page) {
 
 
 
-					// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
-					var total_pembayaran_validated = 0;
-					
-					// Cek setiap pembayaran (1-10) apakah sudah divalidasi
-					if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_1);
-					}
-					if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_2);
-					}
-					if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_3);
-					}
-					if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_4);
-					}
-					if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_5);
-					}
-					if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_6);
-					}
-					if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_7);
-					}
-					if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_8);
-					}
-					if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_9);
-					}
-					if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
-						total_pembayaran_validated += parseFloat(item.pembayaran_10);
-					}
+						// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
+						var total_pembayaran_validated = 0;
 
-					// ⭐⭐⭐ PERBAIKAN: LOGIKA BUTTON SHIPMENT (menggunakan total_pembayaran_validated) ⭐⭐⭐
-					var btn_alamat_kirim_penjualan = "";
-					var btn_shipment_text = "Shipment";
-					var sisa_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
-					
-					// Cek apakah ada pembayaran yang belum divalidasi
-					var has_pending_pembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
+						// Cek setiap pembayaran (1-10) apakah sudah divalidasi
+						if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_1);
+						}
+						if (item.valid_cs_2 == 1 && item.pembayaran_2 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_2);
+						}
+						if (item.valid_cs_3 == 1 && item.pembayaran_3 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_3);
+						}
+						if (item.valid_cs_4 == 1 && item.pembayaran_4 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_4);
+						}
+						if (item.valid_cs_5 == 1 && item.pembayaran_5 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_5);
+						}
+						if (item.valid_cs_6 == 1 && item.pembayaran_6 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_6);
+						}
+						if (item.valid_cs_7 == 1 && item.pembayaran_7 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_7);
+						}
+						if (item.valid_cs_8 == 1 && item.pembayaran_8 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_8);
+						}
+						if (item.valid_cs_9 == 1 && item.pembayaran_9 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_9);
+						}
+						if (item.valid_cs_10 == 1 && item.pembayaran_10 != null) {
+							total_pembayaran_validated += parseFloat(item.pembayaran_10);
+						}
 
-					// PRIORITAS 1: Cek apakah SJ sudah lengkap (semua barang sudah dikirim)
-					if (sisa_kirim_sj <= 0) {
-						// 🟦 BIRU - Semua barang sudah dikirim (SJ lengkap)
-						btn_alamat_kirim_penjualan = "btn-color-blueWhite";
-					}
-					// PRIORITAS 2: Cek apakah belum ada alamat
-					else if (item.alamat_kirim_penjualan == null) {
-						// ⚫ ABU-ABU - Belum ada alamat (lunas atau belum)
-						btn_alamat_kirim_penjualan = "bg-dark-gray-young text-add-colour-black-soft";
-					}
-					// PRIORITAS 3: Sudah ada alamat
-					else {
-						// PERBAIKAN: Dianggap lunas HANYA jika sisa_bayar <= 0 DAN tidak ada pembayaran pending
-						if (sisa_bayar <= 0 && !has_pending_pembayaran) {
-							// 🟢 HIJAU - Sudah lunas (tidak perlu approval)
-							btn_alamat_kirim_penjualan = "btn-color-greenWhite";
-						} else {
-							// Belum lunas atau ada pembayaran pending - cek status approval
-							if (item.shipment_status == 'approved') {
-								// 🟢 HIJAU - Approved (boleh kirim)
+						// ⭐⭐⭐ PERBAIKAN: LOGIKA BUTTON SHIPMENT (menggunakan total_pembayaran_validated) ⭐⭐⭐
+						var btn_alamat_kirim_penjualan = "";
+						var btn_shipment_text = "Shipment";
+						var sisa_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+
+						// Cek apakah ada pembayaran yang belum divalidasi
+						var has_pending_pembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
+
+						// PRIORITAS 1: Cek apakah SJ sudah lengkap (semua barang sudah dikirim)
+						if (sisa_kirim_sj <= 0) {
+							// 🟦 BIRU - Semua barang sudah dikirim (SJ lengkap)
+							btn_alamat_kirim_penjualan = "btn-color-blueWhite";
+						}
+						// PRIORITAS 2: Cek apakah belum ada alamat
+						else if (item.alamat_kirim_penjualan == null) {
+							// ⚫ ABU-ABU - Belum ada alamat (lunas atau belum)
+							btn_alamat_kirim_penjualan = "bg-dark-gray-young text-add-colour-black-soft";
+						}
+						// PRIORITAS 3: Sudah ada alamat
+						else {
+							// PERBAIKAN: Dianggap lunas HANYA jika sisa_bayar <= 0 DAN tidak ada pembayaran pending
+							if (sisa_bayar <= 0 && !has_pending_pembayaran) {
+								// 🟢 HIJAU - Sudah lunas (tidak perlu approval)
 								btn_alamat_kirim_penjualan = "btn-color-greenWhite";
-							} else if (item.shipment_status == 'requested') {
-								// 🟠 ORANGE - Requested (menunggu approval CS)
-								btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
-							} else if (item.shipment_status == 'rejected') {
-								// 🔴 MERAH - Rejected (ditolak)
-								btn_alamat_kirim_penjualan = "btn-color-redWhite";
 							} else {
-								// 🟠 ORANGE - Belum ada status (baru input alamat, belum request)
-								btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								// Belum lunas atau ada pembayaran pending - cek status approval
+								if (item.shipment_status == 'approved') {
+									// 🟢 HIJAU - Approved (boleh kirim)
+									btn_alamat_kirim_penjualan = "btn-color-greenWhite";
+								} else if (item.shipment_status == 'requested') {
+									// 🟠 ORANGE - Requested (menunggu approval CS)
+									btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								} else if (item.shipment_status == 'rejected') {
+									// 🔴 MERAH - Rejected (ditolak)
+									btn_alamat_kirim_penjualan = "btn-color-redWhite";
+								} else {
+									// 🟠 ORANGE - Belum ada status (baru input alamat, belum request)
+									btn_alamat_kirim_penjualan = "btn-color-orangeWhite";
+								}
 							}
 						}
-					}
 
 						// kasi warna SPK
 						if (item.penjualan_total_qty_detail != 0) {
@@ -5799,7 +5799,7 @@ function getPenjualanHeader(page) {
 						}
 
 						// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+						var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
 						var produksi_status_now = item.produksi_selesai;
 						var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -5997,7 +5997,7 @@ function getPenjualanHeaderNotif(page) {
 				} else {
 					var sisa_kirim_sj = parseFloat(item.penjualan_total_qty_detail) - parseFloat(data.surat_jalan_count[item.penjualan_id]);
 				}
-// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
+				// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
 				var total_pembayaran_validated = 0;
 				if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
 					total_pembayaran_validated += parseFloat(item.pembayaran_1);
@@ -6076,7 +6076,7 @@ function getPenjualanHeaderNotif(page) {
 
 
 				// ⭐ PERBAIKAN: Hitung sisa dari pembayaran yang sudah divalidasi
-					var sisa = (item.penjualan_grandtotal) - total_pembayaran_validated;
+				var sisa = (item.penjualan_grandtotal) - total_pembayaran_validated;
 				var sisa_fix = number_format(parseFloat((item.penjualan_grandtotal) - total_pembayaran_validated));
 
 				if (sisa <= 0) {
@@ -6088,7 +6088,7 @@ function getPenjualanHeaderNotif(page) {
 				if (sisa_kirim_sj > 0 || sisa > 0) {
 					no_empty++
 					// ⭐ PERBAIKAN: Cek lunas berdasarkan pembayaran yang sudah divalidasi
-						if (parseFloat(item.penjualan_grandtotal - total_pembayaran_validated) <= 0) {
+					if (parseFloat(item.penjualan_grandtotal - total_pembayaran_validated) <= 0) {
 						var color_class = "card-color-blue";
 					} else {
 						var color_class = "card-blank";
@@ -6153,7 +6153,7 @@ function getPenjualanHeaderNotif(page) {
 
 					// ⭐⭐⭐ PERBAIKAN: HITUNG TOTAL PEMBAYARAN YANG SUDAH DIVALIDASI CS ⭐⭐⭐
 					var total_pembayaran_validated = 0;
-					
+
 					// Cek setiap pembayaran (1-10) apakah sudah divalidasi
 					if (item.valid_cs_1 == 1 && item.pembayaran_1 != null) {
 						total_pembayaran_validated += parseFloat(item.pembayaran_1);
@@ -6190,7 +6190,7 @@ function getPenjualanHeaderNotif(page) {
 					var btn_alamat_kirim_penjualan = "";
 					var btn_shipment_text = "Shipment";
 					var sisa_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
-					
+
 					// Cek apakah ada pembayaran yang belum divalidasi
 					var has_pending_pembayaran = (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0);
 
@@ -6236,7 +6236,7 @@ function getPenjualanHeaderNotif(page) {
 					}
 
 					// ⭐ PERBAIKAN: Hitung kurang bayar dari pembayaran yang sudah divalidasi
-				var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
+					var kurang_bayar = parseFloat(item.penjualan_grandtotal - total_pembayaran_validated);
 					var produksi_status_now = item.produksi_selesai;
 					var invoice_fee = moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '');
 
@@ -7978,7 +7978,7 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 						// Cek needs_approval dan approval_status dari header (data.data[0])
 						var needsApproval = data.data[0].needs_approval || 0;
 						var approvalStatus = data.data[0].approval_status || '';
-						
+
 						if (needsApproval == 1 && (approvalStatus == 'pending' || approvalStatus == 'rejected')) {
 							// Tampilkan tulisan merah jika masih pending/rejected
 							var potongan = '<span style="font-weight:bold;color:red;">' + number_format(val.potongan_price) + '<span>';
@@ -8112,22 +8112,22 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 				proforma_data += '      </tr>';
 				proforma_data += '          <td width="13%" align="center"></td>';
 				proforma_data += '      </tr>';
-				
+
 				// ========================================
 				// REKENING BANK - Dinamis berdasarkan bank_id di header
 				// Jika ada bank_id dan bank_label: tampilkan bank yang dipilih
 				// Jika tidak ada: tampilkan BCA dan Mandiri (default)
 				// ========================================
 				let bankInfo = '';
-				
+
 				// Cek apakah ada bank_id di header proforma
 				if (data.data[0].bank_id && data.data[0].bank_label) {
 					console.log('Bank dipilih:', data.data[0].bank_id, data.data[0].bank_label);
-					
+
 					// Tampilkan HANYA 1 bank sesuai yang dipilih
 					var bankId = parseInt(data.data[0].bank_id);
 					var bankData = getBankInfoById(bankId);
-					
+
 					bankInfo += '      <tr>';
 					bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">' + bankData.nama + '</td>';
 					bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
@@ -8136,7 +8136,7 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 					bankInfo += '      </tr>';
 				} else {
 					console.log('Tidak ada bank dipilih, tampilkan default BCA dan Mandiri');
-					
+
 					// Default: tampilkan BCA dan Mandiri
 					bankInfo += '      <tr>';
 					bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
@@ -8151,7 +8151,7 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 					bankInfo += '          <td width="13%" align="center"></td>';
 					bankInfo += '      </tr>';
 				}
-				
+
 				proforma_data += bankInfo;
 				proforma_data += '      <tr>';
 				proforma_data += '          <td width="15%" align="center" colspan="4"></td>';
@@ -9970,9 +9970,5 @@ function zoomFotoProduksi(photoUrl) {
 }
 
 // ========================================
-// FUNGSI EXPEDISI - REVISED (Sesuai Pattern Project)
-// ========================================
-
-// ========================================
-// FUNGSI: Buka Popup Data Expedisi
+// MENU PROFORMA INPUT - Created by: Aryakkk
 // ========================================

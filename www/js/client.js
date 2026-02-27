@@ -1,5 +1,4 @@
-
-function changeFilterMenu(menu = 'new') {
+function changeFilterMenu(menu) {
 	if (localStorage.getItem("stat_log") == 1) {
 		if (localStorage.getItem("menu_log") == 'new') {
 			localStorage.setItem('menu', 'new');
@@ -79,6 +78,7 @@ function changeFilterMenu(menu = 'new') {
 	console.log(localStorage.getItem("menu_log"));
 	getDataClientHead();
 }
+
 function activeEye() {
 	if (localStorage.getItem('show_eye') == 'aktif') {
 		localStorage.setItem('show_eye', 'tidak_aktif');
@@ -151,8 +151,6 @@ function toggle(source) {
 function reloadData() {
 	getDataClient();
 }
-
-
 
 function getDataClient() {
 

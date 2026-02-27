@@ -495,7 +495,7 @@ $$(document).on('page:afterin', '.page[data-name="log"]', function (e) {
 
 $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
   localStorage.setItem('show_eye', 'tidak_aktif');
-  changeFilterMenu('sales');
+  // changeFilterMenu('sales');
   $$("#tambah_client_telp_broadcast").keypress(function (event) {
     var key = event.which;
     if (!(key >= 48 && key <= 57))
@@ -505,8 +505,9 @@ $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
   clearPageIntervals();
 
   runFunctionsSequentially([
-    { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
+    // { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
     { name: 'selectBoxKotaBrodacast', func: wrapFunction(selectBoxKotaBrodacast, 'selectBoxKotaBrodacast') },
+    { name: 'getDataClientHead', func: wrapFunction(getDataClientHead, 'getDataClientHead') },
     { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },

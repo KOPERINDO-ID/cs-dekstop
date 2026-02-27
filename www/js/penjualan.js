@@ -3793,8 +3793,715 @@ function updateOngkirDetailPembayaran(replace_Ongkir, penjualan_id) {
 	}
 }
 
-function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relation, bank_1, bank_2, bank_3, bank_4, bank_5, bank_6, bank_7, bank_8, bank_9, bank_10, pembayaran1_tgl, pembayaran2_tgl, pembayaran3_tgl, pembayaran4_tgl, pembayaran5_tgl, pembayaran6_tgl, pembayaran7_tgl, pembayaran8_tgl, pembayaran9_tgl, pembayaran10_tgl, bank, pembayaran_1, pembayaran_2, pembayaran_3, pembayaran_4, pembayaran_5, pembayaran_6, pembayaran_7, pembayaran_8, pembayaran_9, pembayaran_10, client_nama, penjualan_jumlah_pembayaran, penjualan_total_qty, penjualan_grandtotal, penjualan_id, client_id, penjualan_status_pembayaran, biaya_kirim) {
+//! NOTE
+// function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relation, bank_1, bank_2, bank_3, bank_4, bank_5, bank_6, bank_7, bank_8, bank_9, bank_10, pembayaran1_tgl, pembayaran2_tgl, pembayaran3_tgl, pembayaran4_tgl, pembayaran5_tgl, pembayaran6_tgl, pembayaran7_tgl, pembayaran8_tgl, pembayaran9_tgl, pembayaran10_tgl, bank, pembayaran_1, pembayaran_2, pembayaran_3, pembayaran_4, pembayaran_5, pembayaran_6, pembayaran_7, pembayaran_8, pembayaran_9, pembayaran_10, client_nama, penjualan_jumlah_pembayaran, penjualan_total_qty, penjualan_grandtotal, penjualan_id, client_id, penjualan_status_pembayaran, biaya_kirim) {
+// 	jQuery('#history_pembayaran_multiple').html("");
+// 	if (performa_id_relation != "single") {
+// 		jQuery('.pembayaran_single_div').hide();
+// 		jQuery.ajax({
+// 			type: 'POST',
+// 			url: "" + BASE_API + "/detail-pembayaran-multiple-manager",
+// 			dataType: 'JSON',
+// 			data: {
+// 				performa_id: performa_id_relation
+// 			},
+// 			beforeSend: function () {
+// 				app.dialog.preloader('Harap Tunggu');
+// 			},
+// 			success: function (data) {
+// 				app.dialog.close();
+
+// 				jQuery("#bayar_pembayaran").val('');
+// 				$$('#popup-pembayaran-td-nospk').html('' + moment(dt_record).format('DDMMYY') + '-' + penjualan_id.replace(/\INV_/g, '').replace(/^0+/, ''));
+// 				$$('#popup-pembayaran-td-client_nama').html(client_nama);
+// 				$$('#popup-pembayaran-bank').html(getBankLabelByCode(bank));
+// 				$$(".bank_pembayaran").val(bank);
+// 				$$('#popup-pembayaran-penjualan_jumlah_pembayaran').html(number_format(data.penjualan_jumlah_pembayaran) + ' ,-');
+
+
+// 				var history_pembayaran_multiple = "";
+// 				var no = 1;
+// 				var total_jumlah_pembayaran = 0;
+// 				var ongkir = 0;
+// 				var hasOngkirPending = false;
+// 				jQuery.each(data.pembayaran_data, function (i, val) {
+// 					var no = i++;
+// 					pembayaran_1 = number_format(val.pembayaran_1).replace(/\,/g, '');
+// 					pembayaran_2 = number_format(val.pembayaran_2).replace(/\,/g, '');
+// 					pembayaran_3 = number_format(val.pembayaran_3).replace(/\,/g, '');
+// 					pembayaran_4 = number_format(val.pembayaran_4).replace(/\,/g, '');
+// 					pembayaran_5 = number_format(val.pembayaran_5).replace(/\,/g, '');
+// 					pembayaran_6 = number_format(val.pembayaran_6).replace(/\,/g, '');
+// 					pembayaran_7 = number_format(val.pembayaran_7).replace(/\,/g, '');
+// 					pembayaran_8 = number_format(val.pembayaran_8).replace(/\,/g, '');
+// 					pembayaran_9 = number_format(val.pembayaran_9).replace(/\,/g, '');
+// 					pembayaran_10 = number_format(val.pembayaran_10).replace(/\,/g, '');
+
+// 					total_jumlah_pembayaran = parseInt(pembayaran_1) + parseInt(pembayaran_2) + parseInt(pembayaran_3) + parseInt(pembayaran_4) + parseInt(pembayaran_5) + parseInt(pembayaran_6) + parseInt(pembayaran_7) + parseInt(pembayaran_8) + parseInt(pembayaran_9) + parseInt(pembayaran_10);
+
+// 					if (parseInt(val.penjualan_grandtotal) <= parseInt(total_jumlah_pembayaran)) {
+// 						var background_multiple = "#133788";
+// 						var status_lunas = "lunas";
+// 					} else {
+// 						var background_multiple = "";
+// 						var status_lunas = "belum_lunas";
+// 					}
+
+// 					if (val.ongkir != null) {
+// 						ongkir += val.ongkir;
+// 					} else {
+// 						ongkir = 0;
+// 					}
+
+
+// 					$('#ongkir_' + i + '').mask('000,000,000,000', { reverse: true });
+// 					history_pembayaran_multiple += '<table  align="center" width="650px" border="0" style="border-collapse: collapse; border:1px solid white;">';
+
+// 					history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 					history_pembayaran_multiple += '<td align="center" width="25%" colspan="2">';
+// 					history_pembayaran_multiple += '<input type="hidden" id="status_lunas_' + i + '" value="' + status_lunas + '" name="status_lunas_' + i + '"  /><input type="hidden"  id="total_harus_bayar_' + val.pembayaran_id + '" value="' + val.penjualan_grandtotal + '" name="total_harus_bayar_' + val.pembayaran_id + '"  /><input type="hidden" id="sudah_bayar_' + val.pembayaran_id + '" value="' + total_jumlah_pembayaran + '" name="sudah_bayar_' + val.pembayaran_id + '"  />Deadline ' + i + ' : <br>' + moment(val.penjualan_tanggal_kirim).format('DD-MMM-YY') + '';
+// 					history_pembayaran_multiple += '</td>';
+// 					history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;" colspan="1"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Total : <br>' + number_format(val.penjualan_grandtotal) + '';
+// 					history_pembayaran_multiple += '</td>';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="1"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Terbayar : <br>' + number_format(total_jumlah_pembayaran) + '';
+// 					history_pembayaran_multiple += '</td>';
+
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Sisa : <br>' + number_format(val.penjualan_grandtotal - total_jumlah_pembayaran) + '';
+// 					history_pembayaran_multiple += '</td>';
+
+// 					history_pembayaran_multiple += '<td width="25%" colspan="3"  style="border-collapse: collapse; border-left:1px solid white;border-top:1px solid white;border-bottom:1px solid white;" colspan="1"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Ongkir : <br><input disabled style="text-align:center;width:100%;" placeholder="0" value="' + ongkir + '" onkeyup="fillOngkir(\'' + i + '\',\'' + val.penjualan_id + '\')" name="ongkir_' + i + '" id="ongkir_' + i + '" class="text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="text">';
+// 					history_pembayaran_multiple += '</td>';
+
+// 					history_pembayaran_multiple += ' </tr>';
+// 					history_pembayaran_multiple += '<tr class="bg-dark-gray-medium">';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar';
+// 					history_pembayaran_multiple += '</td>';
+// 					history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Tanggal</td>';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += '  class="numeric-cell text-align-center">Bank</td>';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Jumlah</td>';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Keterangan</td>';
+// 					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Opsi</td>';
+
+// 					history_pembayaran_multiple += '  </tr>';
+// 					history_pembayaran_multiple += '<tbody id="table_num_' + i + '">';
+// 					if (val.pembayaran_1 != null && val.pembayaran_1 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 1';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran1_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_1_id, val.bank_1) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="total_jumlah_pembayaran_' + i + ' numeric-cell text-align-center">' + number_format(val.pembayaran_1) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_1 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_1 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_1 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_1\',\'' + val.pembayaran_id + '\',\'' + val.foto_1 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+// 					if (val.pembayaran_2 != null && val.pembayaran_2 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 2';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran2_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_2_id, val.bank_2) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_2) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_2 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_2 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center"></td>';
+// 						}
+
+// 						if (val.foto_2 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_2\',\'' + val.pembayaran_id + '\',\'' + val.foto_2 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+// 					if (val.pembayaran_3 != null && val.pembayaran_3 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 3';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran3_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_3_id, val.bank_3) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_3) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_3 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_3 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_3 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_3\',\'' + val.pembayaran_id + '\',\'' + val.foto_3 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+
+// 					if (val.pembayaran_4 != null && val.pembayaran_4 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 4';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran4_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_4_id, val.bank_4) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_4) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_4 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_4 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_4 != null) {
+// 							history_pembayaran_multiple += '<td  class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_4\',\'' + val.pembayaran_id + '\',\'' + val.foto_4 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+// 					if (val.pembayaran_5 != null && val.pembayaran_5 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 5';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran5_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_5_id, val.bank_5) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_5) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+
+// 						if (val.keterangan_5 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_5 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_5 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_5\',\'' + val.pembayaran_id + '\',\'' + val.foto_5 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+
+// 					if (val.pembayaran_6 != null && val.pembayaran_6 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 6';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran6_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_6_id, val.bank_6) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_6) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_6 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_6 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_6 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_6\',\'' + val.pembayaran_id + '\',\'' + val.foto_6 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+// 					if (val.pembayaran_7 != null && val.pembayaran_7 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 7';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran7_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_7_id, val.bank_7) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_7) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						if (val.keterangan_7 != null) {
+// 							history_pembayaran_multiple += 'class="numeric-cell text-align-center">' + val.keterangan_7 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += 'class="numeric-cell text-align-center">-</td>';
+// 						}
+
+// 						if (val.foto_7 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_7\',\'' + val.pembayaran_id + '\',\'' + val.foto_7 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+
+// 					if (val.pembayaran_8 != null && val.pembayaran_8 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 8';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran8_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_8_id, val.bank_8) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_8) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+
+// 						if (val.keterangan_8 != null) {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_8 + '</td>';
+// 						} else {
+// 							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
+// 						}
+// 						if (val.foto_8 != null) {
+// 							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_8\',\'' + val.pembayaran_id + '\',\'' + val.foto_8 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+// 						}
+
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+
+// 					if (val.pembayaran_9 != null && val.pembayaran_9 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 9';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran9_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_9_id, val.bank_9) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_9) + '</td>';
+// 					}
+
+// 					if (val.pembayaran_10 != null && val.pembayaran_10 != 0) {
+// 						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 10';
+// 						history_pembayaran_multiple += '</td>';
+// 						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran10_tgl).format('DD-MMM-YYYY') + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_10_id, val.bank_10) + '</td>';
+// 						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
+// 						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_10) + '</td>';
+// 						history_pembayaran_multiple += ' </tr>';
+// 					}
+// 					history_pembayaran_multiple += '<tbody>';
+// 					history_pembayaran_multiple += '</table><br>';
+// 				});
+
+// 				$$('#popup-pembayaran-penjualan_grandtotal').html(number_format(parseInt(data.penjualan_grandtotal)) + ' ,-');
+// 				$$('#popup-pembayaran-penjualan_kekurangan').html(number_format((parseInt(data.penjualan_grandtotal)) - data.penjualan_jumlah_pembayaran) + ' ,-');
+
+// 				if (((data.penjualan_grandtotal + ongkir) - data.penjualan_jumlah_pembayaran) <= 0) {
+// 					$$('#popup-pembayaran-penjualan_status_pembayaran').html('<b>Lunas</b>');
+// 					$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-blue');
+
+
+// 				} else {
+// 					$$('#popup-pembayaran-penjualan_status_pembayaran').html('<b>Belum Lunas</b>');
+// 					$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-green');
+
+
+// 				}
+
+// 				jQuery('#history_pembayaran_multiple').html(history_pembayaran_multiple);
+// 				jQuery('#table_num_1').show()
+// 				jQuery('#table_num_2').show()
+// 				jQuery('#table_num_3').show()
+// 				jQuery('#table_num_4').show()
+// 				jQuery('#table_num_5').show()
+// 				jQuery('#table_num_6').show()
+// 				jQuery('#table_num_7').show()
+// 				jQuery('#table_num_8').show()
+// 				jQuery('#table_num_9').show()
+// 				jQuery('#table_num_10').show()
+// 				console.log(jQuery('#status_lunas_2').val());
+
+
+
+
+// 				var today = moment().format('YYYY-MM-DD');
+// 				document.getElementsByClassName("date-multiple-penbayaran")[0].setAttribute('min', today);
+// 			},
+// 			error: function (xmlhttprequest, textstatus, message) {
+// 			}
+// 		});
+
+// 	} else {
+// 		jQuery('.pembayaran_single_div').show();
+
+// 		jQuery("#bayar_pembayaran").val('');
+// 		$$('#popup-pembayaran-td-client_nama').html(client_nama + ', PT');
+// 		$$('#popup-pembayaran-bank').html(getBankLabelByCode(bank));
+// 		$$(".bank_pembayaran").val(bank);
+// 		$$('#popup-pembayaran-penjualan_grandtotal').html(number_format(penjualan_grandtotal) + ' ,-');
+// 		$$('#popup-pembayaran-penjualan_jumlah_pembayaran').html(number_format(penjualan_jumlah_pembayaran) + ' ,-');
+// 		$$('#popup-pembayaran-penjualan_kekurangan').html(number_format((penjualan_grandtotal + biaya_kirim) - penjualan_jumlah_pembayaran) + ' ,-');
+// 		$$('#popup-pembayaran-penjualan_status_pembayaran').html('<b>' + penjualan_status_pembayaran + '</b>');
+
+// 		if (penjualan_status_pembayaran == 'Lunas') {
+// 			$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-blue');
+// 			$$('#content_bayar1').css("background-color", "#133788");
+// 			$$('#content_bayar2').css("background-color", "#133788");
+// 			$$('#content_bayar3').css("background-color", "#133788");
+// 			$$('#content_bayar4').css("background-color", "#133788");
+// 			$$('#content_bayar5').css("background-color", "#133788");
+// 			$$('#content_bayar6').css("background-color", "#133788");
+// 			$$('#content_bayar7').css("background-color", "#133788");
+// 			$$('#content_bayar8').css("background-color", "#133788");
+// 			$$('#content_bayar9').css("background-color", "#133788");
+// 			$$('#content_bayar10').css("background-color", "#133788");
+// 		} else {
+// 			$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-green');
+// 		}
+// 	}
+
+
+
+// 	$$('#tanggal_pembayaran_choose').html(moment(penjualan_tanggal_choose).format('DD-MMM-YYYY'));
+
+// 	if (number_format(pembayaran_1) != 0) {
+// 		$$('#content_bayar2').show();
+// 		$$('#pembayaran_1_dp_awal').val(number_format(pembayaran_1));
+// 		$$('#popup-pembayaran-tgl1').html(moment(pembayaran1_tgl).format('DD-MMM-YYYY'));
+// 		$$('#pembayaran_1_dp_awal').attr('readonly', true);
+// 		$$('#pembayaran_1_dp_awal').prop("onclick", null).off("click");
+// 		$$('#bank_1').val(bank);
+
+// 	} else {
+// 		$$('#pembayaran_1_dp_awal').val(number_format(0));
+// 		$$('#content_bayar2').hide();
+// 		$$('#popup-pembayaran-tgl1').html("");
+// 		$$('#pembayaran_1_dp_awal').removeAttr("readonly");
+// 		$$('#pembayaran_1_dp_awal').attr('onClick', 'emptyValue("pembayaran_1")');
+// 		$$('#bank_1').val(bank);
+// 	}
+// 	if (number_format(pembayaran_2) != 0) {
+// 		$$('#content_bayar3').show();
+// 		$$('#pembayaran_2').val(number_format(pembayaran_2));
+// 		$$('#popup-pembayaran-tgl2').html(moment(pembayaran2_tgl).format('DD-MMM-YYYY'));
+// 		$$('#pembayaran_2').attr('readonly', true);
+// 		$$('#pembayaran_2').prop("onclick", null).off("click");
+// 		$$('#bank_2').val(bank_2);
+
+// 	} else {
+// 		$$('#pembayaran_2').val(number_format(0));
+// 		$$('#content_bayar3').hide();
+// 		$$('#popup-pembayaran-tgl2').html("");
+// 		$$('#pembayaran_2').removeAttr("readonly");
+// 		$$('#pembayaran_2').attr('onClick', 'emptyValue("pembayaran_2")');
+// 		$$('#bank_2').val(bank);
+// 	}
+
+// 	if (number_format(pembayaran_3) != 0) {
+// 		$$('#pembayaran_3').val(number_format(pembayaran_3));
+// 		$$('#popup-pembayaran-tgl3').html(moment(pembayaran3_tgl).format('DD-MMM-YYYY'));
+// 		$$('#pembayaran_3').attr('readonly', true);
+// 		$$('#content_bayar4').show();
+// 		$$('#pembayaran_3').prop("onclick", null).off("click");
+// 		$$('#bank_3').val(bank_3);
+// 	} else {
+// 		$$('#pembayaran_3').val(number_format(0));
+// 		$$('#content_bayar4').hide();
+// 		$$('#popup-pembayaran-tgl3').html("");
+// 		$$('#pembayaran_3').removeAttr("readonly");
+// 		$$('#pembayaran_3').attr('onClick', 'emptyValue("pembayaran_3")');
+// 		$$('#bank_3').val(bank);
+// 	}
+// 	if (number_format(pembayaran_4) != 0) {
+// 		$$('#pembayaran_4').val(number_format(pembayaran_4));
+// 		$$('#popup-pembayaran-tgl4').html(moment(pembayaran4_tgl).format('DD-MMM-YYYY'));
+// 		$$('#pembayaran_4').attr('readonly', true);
+// 		$$('#content_bayar5').show();
+// 		$$('#pembayaran_4').prop("onclick", null).off("click");
+// 		$$('#bank_4').val(bank_4);
+// 	} else {
+// 		$$('#pembayaran_4').val(number_format(0));
+// 		$$('#content_bayar5').hide();
+// 		$$('#popup-pembayaran-tgl4').html("");
+// 		$$('#pembayaran_4').removeAttr("readonly");
+// 		$$('#pembayaran_4').attr('onClick', 'emptyValue("pembayaran_4")');
+// 		$$('#bank_4').val(bank);
+// 	}
+// 	if (number_format(pembayaran_5) != 0) {
+// 		$$('#pembayaran_5').val(number_format(pembayaran_5));
+// 		$$('#pembayaran_5').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl5').html(moment(pembayaran5_tgl).format('DD-MMM-YYYY'));
+// 		$$('#content_bayar6').show();
+// 		$$('#pembayaran_5').prop("onclick", null).off("click");
+// 		$$('#bank_5').val(bank_5);
+// 	} else {
+// 		$$('#pembayaran_5').val(number_format(0));
+// 		$$('#content_bayar6').hide();
+// 		$$('#popup-pembayaran-tgl5').html("");
+// 		$$('#pembayaran_5').removeAttr("readonly");
+// 		$$('#pembayaran_5').attr('onClick', 'emptyValue("pembayaran_5")');
+// 		$$('#bank_5').val(bank);
+// 	}
+// 	if (number_format(pembayaran_6) != 0) {
+// 		$$('#pembayaran_6').val(number_format(pembayaran_6));
+// 		$$('#pembayaran_6').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl6').html(moment(pembayaran6_tgl).format('DD-MMM-YYYY'));
+// 		$$('#content_bayar7').show();
+// 		$$('#pembayaran_6').prop("onclick", null).off("click");
+// 		$$('#bank_6').val(bank_6);
+// 	} else {
+// 		$$('#pembayaran_6').val(number_format(0));
+// 		$$('#content_bayar7').hide();
+// 		$$('#popup-pembayaran-tgl6').html("");
+// 		$$('#pembayaran_6').removeAttr("readonly");
+// 		$$('#pembayaran_6').attr('onClick', 'emptyValue("pembayaran_6")');
+// 		$$('#bank_6').val(bank);
+// 	}
+// 	if (number_format(pembayaran_7) != 0) {
+// 		$$('#pembayaran_7').val(number_format(pembayaran_7));
+// 		$$('#pembayaran_7').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl7').html(moment(pembayaran7_tgl).format('DD-MMM-YYYY'));
+// 		$$('#content_bayar8').show();
+// 		$$('#pembayaran_7').prop("onclick", null).off("click");
+// 		$$('#bank_7').val(bank_7);
+// 	} else {
+// 		$$('#pembayaran_7').val(number_format(0));
+// 		$$('#content_bayar8').hide();
+// 		$$('#popup-pembayaran-tgl7').html("");
+// 		$$('#pembayaran_7').removeAttr("readonly");
+// 		$$('#pembayaran_7').attr('onClick', 'emptyValue("pembayaran_7")');
+// 		$$('#bank_7').val(bank);
+// 	}
+// 	if (number_format(pembayaran_8) != 0) {
+// 		$$('#pembayaran_8').val(number_format(pembayaran_8));
+// 		$$('#pembayaran_8').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl8').html(moment(pembayaran8_tgl).format('DD-MMM-YYYY'));
+// 		$$('#content_bayar9').show();
+// 		$$('#pembayaran_8').prop("onclick", null).off("click");
+// 		$$('#bank_8').val(bank_8);
+// 	} else {
+// 		$$('#pembayaran_8').val(number_format(0));
+// 		$$('#content_bayar9').hide();
+// 		$$('#popup-pembayaran-tgl8').html("");
+// 		$$('#pembayaran_8').removeAttr("readonly");
+// 		$$('#pembayaran_8').attr('onClick', 'emptyValue("pembayaran_8")');
+// 		$$('#bank_8').val(bank);
+// 	}
+// 	if (number_format(pembayaran_9) != 0) {
+// 		$$('#pembayaran_9').val(number_format(pembayaran_9));
+// 		$$('#pembayaran_9').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl9').html(moment(pembayaran9_tgl).format('DD-MMM-YYYY'));
+// 		$$('#content_bayar10').show();
+// 		$$('#pembayaran_9').prop("onclick", null).off("click");
+// 		$$('#bank_9').val(bank_9);
+// 	} else {
+// 		$$('#pembayaran_9').val(number_format(0));
+// 		$$('#content_bayar10').hide();
+// 		$$('#popup-pembayaran-tgl9').html("");
+// 		$$('#pembayaran_9').removeAttr("readonly");
+// 		$$('#pembayaran_9').attr('onClick', 'emptyValue("pembayaran_9")');
+// 		$$('#bank_9').val(bank);
+// 	}
+// 	if (number_format(pembayaran_10) != 0) {
+// 		$$('#pembayaran_10').val(number_format(pembayaran_10));
+// 		$$('#pembayaran_10').prop("onclick", null).off("click");
+// 		$$('#pembayaran_10').attr('readonly', true);
+// 		$$('#popup-pembayaran-tgl10').html(moment(pembayaran10_tgl).format('DD-MMM-YYYY'));
+// 	} else {
+// 		$$('#pembayaran_10').val(number_format(0));
+// 		$$('#popup-pembayaran-tgl10').html("");
+// 		$$('#pembayaran_10').removeAttr("readonly");
+// 		$$('#pembayaran_10').attr('onClick', 'emptyValue("pembayaran_10")');
+// 	}
+
+// 	$$('#pembayaran-penjualan_id').val(penjualan_id);
+// 	$$('#pembayaran-client_id').val(client_id);
+// }
+
+// =====================================================================
+// HELPER: Cek apakah user yang login adalah pemilik SPK
+// Diset ulang setiap kali detailPembayaran dipanggil
+// =====================================================================
+var _currentIsOwner = false;
+function checkIsOwner() { return _currentIsOwner; }
+
+// =====================================================================
+// HELPER: Kontrol akses tampilan form pembayaran
+// Untuk mode single (static bayar 1-10)
+// =====================================================================
+function _applyPembayaranAccess(is_owner) {
+	if (is_owner) {
+		jQuery('.pembayaran-input').not('[readonly]').prop('disabled', false);
+		jQuery('#proses_pembayaran_btn').show();
+		jQuery('#view_only_badge').hide();
+		jQuery('.bank_pembayaran').not('[disabled]').prop('disabled', false);
+	} else {
+		jQuery('.pembayaran-input').prop('disabled', true);
+		jQuery('#proses_pembayaran_btn').hide();
+		jQuery('#view_only_badge').show();
+		jQuery('.bank_pembayaran').prop('disabled', true);
+	}
+}
+
+// =====================================================================
+// HELPER: Generate opsi bank untuk dropdown form input multiple
+// Fallback sederhana jika generateBankOptions belum ada di project ini
+// =====================================================================
+function _getBankOptionsHtml(selectedId) {
+	// Gunakan generateBankOptions jika tersedia di project ini
+	if (typeof generateBankOptions === 'function') {
+		return generateBankOptions(selectedId || 3, false);
+	}
+	// Fallback: hardcode opsi bank
+	var banks = [
+		{ id: 1, label: 'BCA (0183129551 A/N Sutono)' },
+		{ id: 2, label: 'BRI (058401031165502 A/N Sutono)' },
+		{ id: 3, label: 'Mandiri (1410005187422 A/N Sutono)' },
+		{ id: 4, label: 'Mandiri Bisnis (Luar Pulau) (1410506070895 A/N Santoso)' },
+		{ id: 5, label: 'Tunai' },
+	];
+	var html = '';
+	banks.forEach(function (b) {
+		html += '<option value="' + b.id + '"' + (b.id == selectedId ? ' selected' : '') + '>' + b.label + '</option>';
+	});
+	return html;
+}
+
+// =====================================================================
+// HELPER: Render satu baris form input pembayaran (untuk slot kosong)
+// ns = nomor slot (1-10), pembayaran_id = id record pembayaran
+// ownerBankDefault = bank id default jika owner, null jika bukan owner
+// =====================================================================
+function _renderInputSlotHtml(ns, pembayaran_id, ownerBankDefault) {
+	var html = '';
+	html += '<form id="pembayaran_form_multiple_' + ns + '_' + pembayaran_id + '"><tr>';
+	html += '<td width="8%" style="border-collapse:collapse;border:1px solid white;" colspan="2" class="numeric-cell text-align-center">Bayar ' + ns + '</td>';
+	html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+	html += '<input style="width:105px;text-align:center;" id="tanggal_' + ns + '_' + pembayaran_id + '" name="tanggal_' + ns + '_' + pembayaran_id + '" type="date" value="' + moment().format('YYYY-MM-DD') + '" class="date-multiple-penbayaran" readonly>';
+	html += '</td>';
+	html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+	html += '<select style="width:100%;background-color:#1c1c1d;" class="hide_bank performa-input input-item-bank" id="bank_' + ns + '_' + pembayaran_id + '" name="bank_' + ns + '_' + pembayaran_id + '">';
+	html += _getBankOptionsHtml(ownerBankDefault || 3);
+	html += '</select>';
+	html += '</td>';
+	html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+	html += '<input style="width:100%;" class="input-pembayaran-multiple" id="pembayaran_' + ns + '_' + pembayaran_id + '" name="pembayaran_' + ns + '_' + pembayaran_id + '" type="text">';
+	html += '</td>';
+	html += '<td width="20%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+	html += '<input style="width:100%;" id="keterangan_' + ns + '_' + pembayaran_id + '" name="keterangan_' + ns + '_' + pembayaran_id + '" type="text">';
+	html += '</td>';
+	html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+	html += '<label class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" for="foto_bukti_' + ns + '_' + pembayaran_id + '">FOTO</label>';
+	html += '<input style="display:none;width:100%;" id="foto_bukti_' + ns + '_' + pembayaran_id + '" name="foto_bukti_' + ns + '_' + pembayaran_id + '" type="file" onchange="prosesPembayaranMultiple(' + pembayaran_id + ',' + ns + ');">';
+	html += '</td>';
+	html += '</tr></form>';
+	return html;
+}
+
+// =====================================================================
+// HELPER: Render baris pembayaran yang sudah terisi (read-only display)
+// validCs: 0=pending, 1=approved(biru), 2=rejected(merah)
+// =====================================================================
+function _renderFilledSlotHtml(ns, val, fieldNum, ownerBankDefault, sisa_pembayaran, total_pembayaran_valid) {
+	var pembayaranVal = val['pembayaran_' + fieldNum];
+	var tglVal = val['pembayaran' + fieldNum + '_tgl'];
+	var bankIdVal = val['bank_' + fieldNum + '_id'];
+	var bankVal = val['bank_' + fieldNum];
+	var keteranganVal = val['keterangan_' + fieldNum];
+	var fotoVal = val['foto_' + fieldNum];
+	var validCs = val['valid_cs_' + fieldNum];
+	var keteranganValidCs = val['keterangan_valid_cs_' + fieldNum];
+	var pembayaran_id = val.pembayaran_id;
+
+	var html = '';
+
+	if (validCs == 2) {
+		// REJECTED — merah + tombol Edit
+		html += '<tr class="card-color-red">';
+		html += '<td width="8%" style="border-collapse:collapse;border:1px solid white;" colspan="2" class="numeric-cell text-align-center">Bayar ' + fieldNum + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + moment(tglVal).format('DD-MMM-YYYY') + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + getBankLabelFromPayment(bankIdVal, bankVal) + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="total_jumlah_pembayaran numeric-cell text-align-center">' + number_format(pembayaranVal) + '</td>';
+		html += '<td width="20%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + (keteranganVal != null ? keteranganVal : '-') + '</td>';
+		html += '<td style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">';
+		if (checkIsOwner()) {
+			html += '<button data-popup=".edit-pembayaran" onclick="editPembayaranPopup(\'Bayar ' + fieldNum + '\',\'foto_' + fieldNum + '\',\'' + pembayaran_id + '\',\'' + fotoVal + '\',\'' + pembayaranVal + '\',\'' + keteranganVal + '\',\'' + bankVal + '\',\'' + tglVal + '\',\'' + sisa_pembayaran + '\',\'' + val.penjualan_grandtotal + '\',\'' + total_pembayaran_valid + '\',\'' + keteranganValidCs + '\')" class="popup-open text-add-colour-black-soft button-small col button text-bold bg-dark-gray-young">Edit</button>';
+		}
+		html += '</td>';
+		html += '</tr>';
+	} else {
+		// APPROVED (biru) atau PENDING (kosong)
+		var bgRow = (validCs == 1) ? '#133788' : '';
+		html += '<tr style="background-color:' + bgRow + '">';
+		html += '<td width="8%" style="border-collapse:collapse;border:1px solid white;" colspan="2" class="numeric-cell text-align-center">Bayar ' + fieldNum + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + moment(tglVal).format('DD-MMM-YYYY') + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + getBankLabelFromPayment(bankIdVal, bankVal) + '</td>';
+		html += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="total_jumlah_pembayaran numeric-cell text-align-center">' + number_format(pembayaranVal) + '</td>';
+		html += '<td width="20%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">' + (keteranganVal != null ? keteranganVal : '-') + '</td>';
+		if (fotoVal != null) {
+			html += '<td style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_' + fieldNum + '\',\'' + pembayaran_id + '\',\'' + fotoVal + '\')" class="popup-open text-add-colour-black-soft card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
+		} else {
+			html += '<td style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_' + fieldNum + '\',\'' + pembayaran_id + '\',\'' + fotoVal + '\')" class="popup-open text-add-colour-black-soft button-small col button text-bold bg-dark-gray-young">Foto</button></td>';
+		}
+		html += '</tr>';
+	}
+	return html;
+}
+
+// =====================================================================
+// detailPembayaran — parameter karyawan_id_spk ditambahkan di akhir
+// Pola input: dinamis seperti project referensi (nextSlot + renderedInputSlot)
+// =====================================================================
+function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relation, bank_1, bank_2, bank_3, bank_4, bank_5, bank_6, bank_7, bank_8, bank_9, bank_10, pembayaran1_tgl, pembayaran2_tgl, pembayaran3_tgl, pembayaran4_tgl, pembayaran5_tgl, pembayaran6_tgl, pembayaran7_tgl, pembayaran8_tgl, pembayaran9_tgl, pembayaran10_tgl, bank, pembayaran_1, pembayaran_2, pembayaran_3, pembayaran_4, pembayaran_5, pembayaran_6, pembayaran_7, pembayaran_8, pembayaran_9, pembayaran_10, client_nama, penjualan_jumlah_pembayaran, penjualan_total_qty, penjualan_grandtotal, penjualan_id, client_id, penjualan_status_pembayaran, biaya_kirim, karyawan_id_spk) {
+
+	// ⭐ CEK AKSES: bandingkan karyawan_id SPK dengan user yang login
+	var current_user_id = localStorage.getItem("user_id");
+	_currentIsOwner = (String(karyawan_id_spk) === String(current_user_id));
+
+	// Bank default untuk owner (ambil dari parameter bank SPK)
+	var ownerBankDefault = null;
+	if (_currentIsOwner) {
+		// Coba parse bank sebagai numeric id, atau fallback ke 3 (Mandiri)
+		if (bank && !isNaN(bank) && parseInt(bank) > 0) {
+			ownerBankDefault = parseInt(bank);
+		} else if (typeof getBankIdByCode === 'function' && bank) {
+			ownerBankDefault = getBankIdByCode(bank) || 3;
+		} else {
+			ownerBankDefault = 3;
+		}
+	}
+
 	jQuery('#history_pembayaran_multiple').html("");
+
 	if (performa_id_relation != "single") {
 		jQuery('.pembayaran_single_div').hide();
 		jQuery.ajax({
@@ -3802,7 +4509,8 @@ function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relat
 			url: "" + BASE_API + "/detail-pembayaran-multiple-manager",
 			dataType: 'JSON',
 			data: {
-				performa_id: performa_id_relation
+				performa_id: performa_id_relation,
+				user_id: localStorage.getItem("user_id"),
 			},
 			beforeSend: function () {
 				app.dialog.preloader('Harap Tunggu');
@@ -3817,28 +4525,61 @@ function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relat
 				$$(".bank_pembayaran").val(bank);
 				$$('#popup-pembayaran-penjualan_jumlah_pembayaran').html(number_format(data.penjualan_jumlah_pembayaran) + ' ,-');
 
-
 				var history_pembayaran_multiple = "";
-				var no = 1;
 				var total_jumlah_pembayaran = 0;
 				var ongkir = 0;
 				var hasOngkirPending = false;
+
 				jQuery.each(data.pembayaran_data, function (i, val) {
 					var no = i++;
-					pembayaran_1 = number_format(val.pembayaran_1).replace(/\,/g, '');
-					pembayaran_2 = number_format(val.pembayaran_2).replace(/\,/g, '');
-					pembayaran_3 = number_format(val.pembayaran_3).replace(/\,/g, '');
-					pembayaran_4 = number_format(val.pembayaran_4).replace(/\,/g, '');
-					pembayaran_5 = number_format(val.pembayaran_5).replace(/\,/g, '');
-					pembayaran_6 = number_format(val.pembayaran_6).replace(/\,/g, '');
-					pembayaran_7 = number_format(val.pembayaran_7).replace(/\,/g, '');
-					pembayaran_8 = number_format(val.pembayaran_8).replace(/\,/g, '');
-					pembayaran_9 = number_format(val.pembayaran_9).replace(/\,/g, '');
-					pembayaran_10 = number_format(val.pembayaran_10).replace(/\,/g, '');
 
-					total_jumlah_pembayaran = parseInt(pembayaran_1) + parseInt(pembayaran_2) + parseInt(pembayaran_3) + parseInt(pembayaran_4) + parseInt(pembayaran_5) + parseInt(pembayaran_6) + parseInt(pembayaran_7) + parseInt(pembayaran_8) + parseInt(pembayaran_9) + parseInt(pembayaran_10);
+					// ============================================================
+					// Hitung slot berikutnya yang kosong (nextSlot)
+					// ============================================================
+					var allSlots = [
+						val.pembayaran_1, val.pembayaran_2, val.pembayaran_3, val.pembayaran_4, val.pembayaran_5,
+						val.pembayaran_6, val.pembayaran_7, val.pembayaran_8, val.pembayaran_9, val.pembayaran_10
+					];
+					var nextSlot = 1;
+					for (var s = 0; s < allSlots.length; s++) {
+						// Anggap kosong jika null, undefined, atau 0 — konsisten dengan logika render
+						if (allSlots[s] === null || allSlots[s] === undefined || allSlots[s] == 0) {
+							nextSlot = s + 1;
+							break;
+						}
+						nextSlot = s + 2;
+					}
+					if (nextSlot > 10) { nextSlot = null; } // semua slot penuh
 
-					if (parseInt(val.penjualan_grandtotal) <= parseInt(total_jumlah_pembayaran)) {
+					var renderedInputSlot = null; // catat slot form input yang sudah di-render
+
+					// ============================================================
+					// Format semua nilai pembayaran
+					// ============================================================
+					var p = {};
+					for (var n = 1; n <= 10; n++) {
+						p[n] = parseInt(number_format(val['pembayaran_' + n]).replace(/\,/g, '') || '0');
+					}
+					total_jumlah_pembayaran = p[1] + p[2] + p[3] + p[4] + p[5] + p[6] + p[7] + p[8] + p[9] + p[10];
+
+					// ============================================================
+					// Hitung total pembayaran yang sudah divalidasi CS
+					// dan cek apakah ada pending
+					// ============================================================
+					var total_pembayaran_valid = 0;
+					var has_pending_payment = false;
+					for (var n = 1; n <= 10; n++) {
+						var vc = val['valid_cs_' + n];
+						var pn = p[n];
+						if (val['pembayaran_' + n] != null && val['pembayaran_' + n] != 0) {
+							if (vc == 1) { total_pembayaran_valid += pn; }
+							else if (vc == 0) { has_pending_payment = true; }
+						}
+					}
+
+					var sisa_pembayaran = parseFloat(val.penjualan_grandtotal - total_pembayaran_valid);
+
+					if (parseInt(val.penjualan_grandtotal) <= parseInt(total_pembayaran_valid) && !has_pending_payment) {
 						var background_multiple = "#133788";
 						var status_lunas = "lunas";
 					} else {
@@ -3846,320 +4587,115 @@ function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relat
 						var status_lunas = "belum_lunas";
 					}
 
-					if (val.ongkir != null) {
-						ongkir += val.ongkir;
-					} else {
-						ongkir = 0;
-					}
+					if (val.ongkir != null) { ongkir += val.ongkir; } else { ongkir = 0; }
 
+					$('#ongkir_' + i + '').mask && $('#ongkir_' + i + '').mask('000,000,000,000', { reverse: true });
 
-					$('#ongkir_' + i + '').mask('000,000,000,000', { reverse: true });
-					history_pembayaran_multiple += '<table  align="center" width="650px" border="0" style="border-collapse: collapse; border:1px solid white;">';
-
+					// ============================================================
+					// Header baris (deadline, total, terbayar, sisa, ongkir)
+					// ============================================================
+					history_pembayaran_multiple += '<table align="center" width="800px" border="0" style="border-collapse:collapse;border:1px solid white;">';
 					history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-					history_pembayaran_multiple += '<td align="center" width="25%" colspan="2">';
-					history_pembayaran_multiple += '<input type="hidden" id="status_lunas_' + i + '" value="' + status_lunas + '" name="status_lunas_' + i + '"  /><input type="hidden"  id="total_harus_bayar_' + val.pembayaran_id + '" value="' + val.penjualan_grandtotal + '" name="total_harus_bayar_' + val.pembayaran_id + '"  /><input type="hidden" id="sudah_bayar_' + val.pembayaran_id + '" value="' + total_jumlah_pembayaran + '" name="sudah_bayar_' + val.pembayaran_id + '"  />Deadline ' + i + ' : <br>' + moment(val.penjualan_tanggal_kirim).format('DD-MMM-YY') + '';
+					history_pembayaran_multiple += '<td align="center" width="15%" colspan="2">';
+					history_pembayaran_multiple += '<input type="hidden" id="status_lunas_' + i + '" value="' + status_lunas + '" name="status_lunas_' + i + '"/>';
+					history_pembayaran_multiple += '<input type="hidden" id="total_harus_bayar_' + val.pembayaran_id + '" value="' + val.penjualan_grandtotal + '" name="total_harus_bayar_' + val.pembayaran_id + '"/>';
+					history_pembayaran_multiple += '<input type="hidden" id="sudah_bayar_' + val.pembayaran_id + '" value="' + total_pembayaran_valid + '" name="sudah_bayar_' + val.pembayaran_id + '"/>';
+					history_pembayaran_multiple += 'Deadline ' + i + ' :<br>' + moment(val.penjualan_tanggal_kirim).format('DD-MMM-YY');
 					history_pembayaran_multiple += '</td>';
-					history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;" colspan="1"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Total : <br>' + number_format(val.penjualan_grandtotal) + '';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Total :<br>' + number_format(val.penjualan_grandtotal) + '</td>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Terbayar :<br>' + number_format(total_pembayaran_valid) + '</td>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Sisa :<br>' + number_format(val.penjualan_grandtotal - total_pembayaran_valid) + '</td>';
+					history_pembayaran_multiple += '<td width="25%" colspan="3" style="border-collapse:collapse;border-left:1px solid white;border-top:1px solid white;border-bottom:1px solid white;" class="numeric-cell text-align-center">';
+					history_pembayaran_multiple += 'Ongkir :<br><input disabled style="text-align:center;width:100%;" placeholder="0" value="' + ongkir + '" name="ongkir_' + i + '" id="ongkir_' + i + '" class="text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="text">';
 					history_pembayaran_multiple += '</td>';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="1"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Terbayar : <br>' + number_format(total_jumlah_pembayaran) + '';
-					history_pembayaran_multiple += '</td>';
+					history_pembayaran_multiple += '</tr>';
 
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Sisa : <br>' + number_format(val.penjualan_grandtotal - total_jumlah_pembayaran) + '';
-					history_pembayaran_multiple += '</td>';
-
-					history_pembayaran_multiple += '<td width="25%" colspan="3"  style="border-collapse: collapse; border-left:1px solid white;border-top:1px solid white;border-bottom:1px solid white;" colspan="1"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Ongkir : <br><input disabled style="text-align:center;width:100%;" placeholder="0" value="' + ongkir + '" onkeyup="fillOngkir(\'' + i + '\',\'' + val.penjualan_id + '\')" name="ongkir_' + i + '" id="ongkir_' + i + '" class="text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="text">';
-					history_pembayaran_multiple += '</td>';
-
-					history_pembayaran_multiple += ' </tr>';
+					// Sub-header kolom
 					history_pembayaran_multiple += '<tr class="bg-dark-gray-medium">';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar';
-					history_pembayaran_multiple += '</td>';
-					history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Tanggal</td>';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += '  class="numeric-cell text-align-center">Bank</td>';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Jumlah</td>';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Keterangan</td>';
-					history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-					history_pembayaran_multiple += ' class="numeric-cell text-align-center">Opsi</td>';
-
-					history_pembayaran_multiple += '  </tr>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" colspan="2" class="numeric-cell text-align-center">Bayar</td>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Tanggal</td>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Bank</td>';
+					history_pembayaran_multiple += '<td width="15%" style="border-collapse:collapse;border:1px solid white;" class="numeric-cell text-align-center">Jumlah</td>';
+					history_pembayaran_multiple += '<td width="25%" style="border-collapse:collapse;border:1px solid white;" colspan="3" class="numeric-cell text-align-center">Keterangan</td>';
+					history_pembayaran_multiple += '</tr>';
 					history_pembayaran_multiple += '<tbody id="table_num_' + i + '">';
-					if (val.pembayaran_1 != null && val.pembayaran_1 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 1';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran1_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_1_id, val.bank_1) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="total_jumlah_pembayaran_' + i + ' numeric-cell text-align-center">' + number_format(val.pembayaran_1) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_1 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_1 + '</td>';
+
+					// ============================================================
+					// Render slot 1 - 10
+					// ============================================================
+					for (var slotNum = 1; slotNum <= 10; slotNum++) {
+						var slotVal = val['pembayaran_' + slotNum];
+						var slotValidCs = val['valid_cs_' + slotNum];
+						var prevSlotVal = slotNum > 1 ? val['pembayaran_' + (slotNum - 1)] : null;
+						var prevValidCs = slotNum > 1 ? val['valid_cs_' + (slotNum - 1)] : null;
+
+						if (slotVal != null && slotVal != 0) {
+							// Slot ini sudah terisi → tampilkan baris read-only
+							history_pembayaran_multiple += _renderFilledSlotHtml(slotNum, val, slotNum, ownerBankDefault, sisa_pembayaran, total_pembayaran_valid);
+
 						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_1 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_1\',\'' + val.pembayaran_id + '\',\'' + val.foto_1 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
+							// Slot ini kosong
+							// Render form input HANYA jika:
+							//   (a) ini adalah nextSlot (slot kosong pertama dari atas), ATAU
+							//   (b) slot sebelumnya sudah terisi DAN approved (valid_cs=1) DAN belum lunas
+							// Dan slot ini belum pernah di-render (renderedInputSlot == null)
 
-						history_pembayaran_multiple += ' </tr>';
+							if (renderedInputSlot == null) {
+								var shouldRender = false;
+
+								if (slotNum == nextSlot) {
+									if (slotNum == 1) {
+										// Slot 1 kosong, belum ada pembayaran sama sekali — owner langsung bisa input
+										shouldRender = _currentIsOwner;
+									} else {
+										// Slot N kosong, ada pembayaran sebelumnya
+										// Render jika: owner + prev slot sudah approved (valid_cs=1) + belum lunas
+										shouldRender = _currentIsOwner && (parseInt(prevValidCs) === 1) && (status_lunas !== "lunas");
+									}
+								}
+
+								if (shouldRender) {
+									renderedInputSlot = slotNum;
+									history_pembayaran_multiple += _renderInputSlotHtml(slotNum, val.pembayaran_id, ownerBankDefault);
+								}
+							}
+						}
 					}
 
-					if (val.pembayaran_2 != null && val.pembayaran_2 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 2';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran2_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_2_id, val.bank_2) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_2) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_2 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_2 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center"></td>';
-						}
-
-						if (val.foto_2 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_2\',\'' + val.pembayaran_id + '\',\'' + val.foto_2 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-					if (val.pembayaran_3 != null && val.pembayaran_3 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 3';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran3_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_3_id, val.bank_3) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_3) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_3 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_3 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_3 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_3\',\'' + val.pembayaran_id + '\',\'' + val.foto_3 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-
-					if (val.pembayaran_4 != null && val.pembayaran_4 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 4';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran4_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_4_id, val.bank_4) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_4) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_4 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_4 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_4 != null) {
-							history_pembayaran_multiple += '<td  class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_4\',\'' + val.pembayaran_id + '\',\'' + val.foto_4 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-					if (val.pembayaran_5 != null && val.pembayaran_5 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 5';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran5_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_5_id, val.bank_5) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_5) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-
-						if (val.keterangan_5 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_5 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_5 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_5\',\'' + val.pembayaran_id + '\',\'' + val.foto_5 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-
-					if (val.pembayaran_6 != null && val.pembayaran_6 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 6';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran6_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_6_id, val.bank_6) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_6) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_6 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_6 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_6 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_6\',\'' + val.pembayaran_id + '\',\'' + val.foto_6 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-					if (val.pembayaran_7 != null && val.pembayaran_7 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 7';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran7_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_7_id, val.bank_7) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_7) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						if (val.keterangan_7 != null) {
-							history_pembayaran_multiple += 'class="numeric-cell text-align-center">' + val.keterangan_7 + '</td>';
-						} else {
-							history_pembayaran_multiple += 'class="numeric-cell text-align-center">-</td>';
-						}
-
-						if (val.foto_7 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_7\',\'' + val.pembayaran_id + '\',\'' + val.foto_7 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-
-					if (val.pembayaran_8 != null && val.pembayaran_8 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 8';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran8_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_8_id, val.bank_8) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_8) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-
-						if (val.keterangan_8 != null) {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + val.keterangan_8 + '</td>';
-						} else {
-							history_pembayaran_multiple += ' class="numeric-cell text-align-center">-</td>';
-						}
-						if (val.foto_8 != null) {
-							history_pembayaran_multiple += '<td class="numeric-cell text-align-center"><button data-popup=".upload-foto-pembayaran" onclick="uploadFotoPembayaran(\'foto_8\',\'' + val.pembayaran_id + '\',\'' + val.foto_8 + '\')" class="popup-open text-add-colour-black-soft  card-color-blue button-small col button text-bold" style="color:white;">Foto</button></td>';
-						}
-
-						history_pembayaran_multiple += ' </tr>';
-					}
-
-					if (val.pembayaran_9 != null && val.pembayaran_9 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 9';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran9_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_9_id, val.bank_9) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_9) + '</td>';
-					}
-
-					if (val.pembayaran_10 != null && val.pembayaran_10 != 0) {
-						history_pembayaran_multiple += '<tr style="background-color:' + background_multiple + '">';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">Bayar 10';
-						history_pembayaran_multiple += '</td>';
-						history_pembayaran_multiple += '<td width="15%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + moment(val.pembayaran10_tgl).format('DD-MMM-YYYY') + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += '  class="numeric-cell text-align-center">' + getBankLabelFromPayment(val.bank_10_id, val.bank_10) + '</td>';
-						history_pembayaran_multiple += '<td width="25%" style="border-collapse: collapse; border:1px solid white;"';
-						history_pembayaran_multiple += ' class="numeric-cell text-align-center">' + number_format(val.pembayaran_10) + '</td>';
-						history_pembayaran_multiple += ' </tr>';
-					}
-					history_pembayaran_multiple += '<tbody>';
+					history_pembayaran_multiple += '</tbody>';
 					history_pembayaran_multiple += '</table><br>';
 				});
 
 				$$('#popup-pembayaran-penjualan_grandtotal').html(number_format(parseInt(data.penjualan_grandtotal)) + ' ,-');
 				$$('#popup-pembayaran-penjualan_kekurangan').html(number_format((parseInt(data.penjualan_grandtotal)) - data.penjualan_jumlah_pembayaran) + ' ,-');
 
-				if (((data.penjualan_grandtotal + ongkir) - data.penjualan_jumlah_pembayaran) <= 0) {
+				if (((data.penjualan_grandtotal) - data.penjualan_jumlah_pembayaran) <= 0 && !hasOngkirPending) {
 					$$('#popup-pembayaran-penjualan_status_pembayaran').html('<b>Lunas</b>');
 					$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-blue');
-
-
 				} else {
 					$$('#popup-pembayaran-penjualan_status_pembayaran').html('<b>Belum Lunas</b>');
 					$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-green');
-
-
 				}
 
 				jQuery('#history_pembayaran_multiple').html(history_pembayaran_multiple);
-				jQuery('#table_num_1').show()
-				jQuery('#table_num_2').show()
-				jQuery('#table_num_3').show()
-				jQuery('#table_num_4').show()
-				jQuery('#table_num_5').show()
-				jQuery('#table_num_6').show()
-				jQuery('#table_num_7').show()
-				jQuery('#table_num_8').show()
-				jQuery('#table_num_9').show()
-				jQuery('#table_num_10').show()
+				for (var t = 1; t <= 10; t++) { jQuery('#table_num_' + t).show(); }
 				console.log(jQuery('#status_lunas_2').val());
 
-
-
-
 				var today = moment().format('YYYY-MM-DD');
-				document.getElementsByClassName("date-multiple-penbayaran")[0].setAttribute('min', today);
+				var dateFields = document.getElementsByClassName("date-multiple-penbayaran");
+				if (dateFields.length > 0) { dateFields[0].setAttribute('min', today); }
+
+				// ⭐ Akses single-div controls (tombol proses & view_only badge tidak relevan di mode multiple)
+				// Mode multiple sudah dikontrol via _renderInputSlotHtml + _currentIsOwner
 			},
 			error: function (xmlhttprequest, textstatus, message) {
 			}
 		});
 
 	} else {
+		// ============================================================
+		// MODE SINGLE — static form bayar 1-10
+		// ============================================================
 		jQuery('.pembayaran_single_div').show();
 
 		jQuery("#bayar_pembayaran").val('');
@@ -4173,230 +4709,90 @@ function detailPembayaran(dt_record, penjualan_tanggal_choose, performa_id_relat
 
 		if (penjualan_status_pembayaran == 'Lunas') {
 			$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-blue');
-			$$('#content_bayar1').css("background-color", "#133788");
-			$$('#content_bayar2').css("background-color", "#133788");
-			$$('#content_bayar3').css("background-color", "#133788");
-			$$('#content_bayar4').css("background-color", "#133788");
-			$$('#content_bayar5').css("background-color", "#133788");
-			$$('#content_bayar6').css("background-color", "#133788");
-			$$('#content_bayar7').css("background-color", "#133788");
-			$$('#content_bayar8').css("background-color", "#133788");
-			$$('#content_bayar9').css("background-color", "#133788");
-			$$('#content_bayar10').css("background-color", "#133788");
+			for (var c = 1; c <= 10; c++) { $$('#content_bayar' + c).css("background-color", "#133788"); }
 		} else {
 			$$('#popup-pembayaran-penjualan_status_pembayaran').removeClass('card-color-green').removeClass('card-color-blue').addClass('card-color-green');
 		}
+
+		// ⭐ Terapkan kontrol akses untuk mode single
+		_applyPembayaranAccess(_currentIsOwner);
 	}
-
-
 
 	$$('#tanggal_pembayaran_choose').html(moment(penjualan_tanggal_choose).format('DD-MMM-YYYY'));
 
-	if (number_format(pembayaran_1) != 0) {
-		$$('#content_bayar2').show();
-		$$('#pembayaran_1_dp_awal').val(number_format(pembayaran_1));
-		$$('#popup-pembayaran-tgl1').html(moment(pembayaran1_tgl).format('DD-MMM-YYYY'));
-		$$('#pembayaran_1_dp_awal').attr('readonly', true);
-		$$('#pembayaran_1_dp_awal').prop("onclick", null).off("click");
-		$$('#bank_1').val(bank);
+	// ============================================================
+	// Isi nilai & readonly untuk bayar 1-10 (mode single)
+	// ============================================================
+	var bankParams = [null, bank, bank_2, bank_3, bank_4, bank_5, bank_6, bank_7, bank_8, bank_9, bank_10];
+	var pembayaranVals = [null, pembayaran_1, pembayaran_2, pembayaran_3, pembayaran_4, pembayaran_5, pembayaran_6, pembayaran_7, pembayaran_8, pembayaran_9, pembayaran_10];
+	var tglVals = [null, pembayaran1_tgl, pembayaran2_tgl, pembayaran3_tgl, pembayaran4_tgl, pembayaran5_tgl, pembayaran6_tgl, pembayaran7_tgl, pembayaran8_tgl, pembayaran9_tgl, pembayaran10_tgl];
+	var inputIds = [null, 'pembayaran_1_dp_awal', 'pembayaran_2', 'pembayaran_3', 'pembayaran_4', 'pembayaran_5', 'pembayaran_6', 'pembayaran_7', 'pembayaran_8', 'pembayaran_9', 'pembayaran_10'];
+	var emptyValueKeys = [null, 'pembayaran_1', 'pembayaran_2', 'pembayaran_3', 'pembayaran_4', 'pembayaran_5', 'pembayaran_6', 'pembayaran_7', 'pembayaran_8', 'pembayaran_9', 'pembayaran_10'];
 
-	} else {
-		$$('#pembayaran_1_dp_awal').val(number_format(0));
-		$$('#content_bayar2').hide();
-		$$('#popup-pembayaran-tgl1').html("");
-		$$('#pembayaran_1_dp_awal').removeAttr("readonly");
-		$$('#pembayaran_1_dp_awal').attr('onClick', 'emptyValue("pembayaran_1")');
-		$$('#bank_1').val(bank);
-	}
-	if (number_format(pembayaran_2) != 0) {
-		$$('#content_bayar3').show();
-		$$('#pembayaran_2').val(number_format(pembayaran_2));
-		$$('#popup-pembayaran-tgl2').html(moment(pembayaran2_tgl).format('DD-MMM-YYYY'));
-		$$('#pembayaran_2').attr('readonly', true);
-		$$('#pembayaran_2').prop("onclick", null).off("click");
-		$$('#bank_2').val(bank_2);
+	for (var n = 1; n <= 10; n++) {
+		var inputId = inputIds[n];
+		var val_n = pembayaranVals[n];
+		var tgl_n = tglVals[n];
+		var bank_n = bankParams[n];
+		var nextContent = n < 10 ? '#content_bayar' + (n + 1) : null;
 
-	} else {
-		$$('#pembayaran_2').val(number_format(0));
-		$$('#content_bayar3').hide();
-		$$('#popup-pembayaran-tgl2').html("");
-		$$('#pembayaran_2').removeAttr("readonly");
-		$$('#pembayaran_2').attr('onClick', 'emptyValue("pembayaran_2")');
-		$$('#bank_2').val(bank);
-	}
-
-	if (number_format(pembayaran_3) != 0) {
-		$$('#pembayaran_3').val(number_format(pembayaran_3));
-		$$('#popup-pembayaran-tgl3').html(moment(pembayaran3_tgl).format('DD-MMM-YYYY'));
-		$$('#pembayaran_3').attr('readonly', true);
-		$$('#content_bayar4').show();
-		$$('#pembayaran_3').prop("onclick", null).off("click");
-		$$('#bank_3').val(bank_3);
-	} else {
-		$$('#pembayaran_3').val(number_format(0));
-		$$('#content_bayar4').hide();
-		$$('#popup-pembayaran-tgl3').html("");
-		$$('#pembayaran_3').removeAttr("readonly");
-		$$('#pembayaran_3').attr('onClick', 'emptyValue("pembayaran_3")');
-		$$('#bank_3').val(bank);
-	}
-	if (number_format(pembayaran_4) != 0) {
-		$$('#pembayaran_4').val(number_format(pembayaran_4));
-		$$('#popup-pembayaran-tgl4').html(moment(pembayaran4_tgl).format('DD-MMM-YYYY'));
-		$$('#pembayaran_4').attr('readonly', true);
-		$$('#content_bayar5').show();
-		$$('#pembayaran_4').prop("onclick", null).off("click");
-		$$('#bank_4').val(bank_4);
-	} else {
-		$$('#pembayaran_4').val(number_format(0));
-		$$('#content_bayar5').hide();
-		$$('#popup-pembayaran-tgl4').html("");
-		$$('#pembayaran_4').removeAttr("readonly");
-		$$('#pembayaran_4').attr('onClick', 'emptyValue("pembayaran_4")');
-		$$('#bank_4').val(bank);
-	}
-	if (number_format(pembayaran_5) != 0) {
-		$$('#pembayaran_5').val(number_format(pembayaran_5));
-		$$('#pembayaran_5').attr('readonly', true);
-		$$('#popup-pembayaran-tgl5').html(moment(pembayaran5_tgl).format('DD-MMM-YYYY'));
-		$$('#content_bayar6').show();
-		$$('#pembayaran_5').prop("onclick", null).off("click");
-		$$('#bank_5').val(bank_5);
-	} else {
-		$$('#pembayaran_5').val(number_format(0));
-		$$('#content_bayar6').hide();
-		$$('#popup-pembayaran-tgl5').html("");
-		$$('#pembayaran_5').removeAttr("readonly");
-		$$('#pembayaran_5').attr('onClick', 'emptyValue("pembayaran_5")');
-		$$('#bank_5').val(bank);
-	}
-	if (number_format(pembayaran_6) != 0) {
-		$$('#pembayaran_6').val(number_format(pembayaran_6));
-		$$('#pembayaran_6').attr('readonly', true);
-		$$('#popup-pembayaran-tgl6').html(moment(pembayaran6_tgl).format('DD-MMM-YYYY'));
-		$$('#content_bayar7').show();
-		$$('#pembayaran_6').prop("onclick", null).off("click");
-		$$('#bank_6').val(bank_6);
-	} else {
-		$$('#pembayaran_6').val(number_format(0));
-		$$('#content_bayar7').hide();
-		$$('#popup-pembayaran-tgl6').html("");
-		$$('#pembayaran_6').removeAttr("readonly");
-		$$('#pembayaran_6').attr('onClick', 'emptyValue("pembayaran_6")');
-		$$('#bank_6').val(bank);
-	}
-	if (number_format(pembayaran_7) != 0) {
-		$$('#pembayaran_7').val(number_format(pembayaran_7));
-		$$('#pembayaran_7').attr('readonly', true);
-		$$('#popup-pembayaran-tgl7').html(moment(pembayaran7_tgl).format('DD-MMM-YYYY'));
-		$$('#content_bayar8').show();
-		$$('#pembayaran_7').prop("onclick", null).off("click");
-		$$('#bank_7').val(bank_7);
-	} else {
-		$$('#pembayaran_7').val(number_format(0));
-		$$('#content_bayar8').hide();
-		$$('#popup-pembayaran-tgl7').html("");
-		$$('#pembayaran_7').removeAttr("readonly");
-		$$('#pembayaran_7').attr('onClick', 'emptyValue("pembayaran_7")');
-		$$('#bank_7').val(bank);
-	}
-	if (number_format(pembayaran_8) != 0) {
-		$$('#pembayaran_8').val(number_format(pembayaran_8));
-		$$('#pembayaran_8').attr('readonly', true);
-		$$('#popup-pembayaran-tgl8').html(moment(pembayaran8_tgl).format('DD-MMM-YYYY'));
-		$$('#content_bayar9').show();
-		$$('#pembayaran_8').prop("onclick", null).off("click");
-		$$('#bank_8').val(bank_8);
-	} else {
-		$$('#pembayaran_8').val(number_format(0));
-		$$('#content_bayar9').hide();
-		$$('#popup-pembayaran-tgl8').html("");
-		$$('#pembayaran_8').removeAttr("readonly");
-		$$('#pembayaran_8').attr('onClick', 'emptyValue("pembayaran_8")');
-		$$('#bank_8').val(bank);
-	}
-	if (number_format(pembayaran_9) != 0) {
-		$$('#pembayaran_9').val(number_format(pembayaran_9));
-		$$('#pembayaran_9').attr('readonly', true);
-		$$('#popup-pembayaran-tgl9').html(moment(pembayaran9_tgl).format('DD-MMM-YYYY'));
-		$$('#content_bayar10').show();
-		$$('#pembayaran_9').prop("onclick", null).off("click");
-		$$('#bank_9').val(bank_9);
-	} else {
-		$$('#pembayaran_9').val(number_format(0));
-		$$('#content_bayar10').hide();
-		$$('#popup-pembayaran-tgl9').html("");
-		$$('#pembayaran_9').removeAttr("readonly");
-		$$('#pembayaran_9').attr('onClick', 'emptyValue("pembayaran_9")');
-		$$('#bank_9').val(bank);
-	}
-	if (number_format(pembayaran_10) != 0) {
-		$$('#pembayaran_10').val(number_format(pembayaran_10));
-		$$('#pembayaran_10').prop("onclick", null).off("click");
-		$$('#pembayaran_10').attr('readonly', true);
-		$$('#popup-pembayaran-tgl10').html(moment(pembayaran10_tgl).format('DD-MMM-YYYY'));
-	} else {
-		$$('#pembayaran_10').val(number_format(0));
-		$$('#popup-pembayaran-tgl10').html("");
-		$$('#pembayaran_10').removeAttr("readonly");
-		$$('#pembayaran_10').attr('onClick', 'emptyValue("pembayaran_10")');
+		if (number_format(val_n) != 0) {
+			if (nextContent) $$(nextContent).show();
+			$$('' + '#' + inputId).val(number_format(val_n));
+			if (tgl_n) $$('#popup-pembayaran-tgl' + n).html(moment(tgl_n).format('DD-MMM-YYYY'));
+			$$('' + '#' + inputId).attr('readonly', true);
+			$$('' + '#' + inputId).prop("onclick", null).off("click");
+			$$('#bank_' + n).val(bank_n);
+		} else {
+			$$('' + '#' + inputId).val(number_format(0));
+			if (nextContent) $$(nextContent).hide();
+			$$('#popup-pembayaran-tgl' + n).html("");
+			$$('' + '#' + inputId).removeAttr("readonly");
+			$$('' + '#' + inputId).attr('onClick', 'emptyValue("' + emptyValueKeys[n] + '")');
+			$$('#bank_' + n).val(bank);
+		}
 	}
 
 	$$('#pembayaran-penjualan_id').val(penjualan_id);
 	$$('#pembayaran-client_id').val(client_id);
 }
 
+// =====================================================================
+// prosesPembayaran — untuk mode single
+// dengan double-check akses
+// =====================================================================
 function prosesPembayaran() {
+	// ⭐ Double-check keamanan: tombol tidak boleh tereksekusi jika view-only
+	if (jQuery('#proses_pembayaran_btn').is(':hidden')) {
+		app.dialog.alert('Anda tidak memiliki akses untuk memproses pembayaran ini.');
+		return;
+	}
+
 	if (!$$('#pembayaran_form')[0].checkValidity()) {
 		app.dialog.alert('Cek Isian Pembayaran Anda');
 	} else {
-		sisa_pembayaran = jQuery('#popup-pembayaran-penjualan_kekurangan').text();
-		sudah_dibayar = jQuery('#popup-pembayaran-penjualan_jumlah_pembayaran').text();
-		pembayaran_1 = jQuery('#pembayaran_1_dp_awal').val();
-		pembayaran_2 = jQuery('#pembayaran_2').val();
-		pembayaran_3 = jQuery('#pembayaran_3').val();
-		pembayaran_4 = jQuery('#pembayaran_4').val();
-		pembayaran_5 = jQuery('#pembayaran_5').val();
-		pembayaran_6 = jQuery('#pembayaran_6').val();
-		pembayaran_7 = jQuery('#pembayaran_7').val();
-		pembayaran_8 = jQuery('#pembayaran_8').val();
-		pembayaran_9 = jQuery('#pembayaran_9').val();
-		pembayaran_10 = jQuery('#pembayaran_10').val();
+		var sisa_pembayaran = jQuery('#popup-pembayaran-penjualan_kekurangan').text();
+		var sudah_dibayar = jQuery('#popup-pembayaran-penjualan_jumlah_pembayaran').text();
+
+		var fields = {};
+		for (var n = 1; n <= 10; n++) {
+			var inputId = (n == 1) ? 'pembayaran_1_dp_awal' : 'pembayaran_' + n;
+			fields['pembayaran_' + n] = jQuery('#' + inputId).val().replace(/\,/g, '').replace(/\ -/g, '');
+			fields['bank_' + n] = jQuery("#bank_" + n).val();
+		}
 
 		jQuery.ajax({
 			type: 'POST',
 			url: "" + BASE_API + "/pembayaran",
 			dataType: 'JSON',
-			data: {
-				pembayaran_1: pembayaran_1.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_2: pembayaran_2.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_3: pembayaran_3.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_4: pembayaran_4.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_5: pembayaran_5.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_6: pembayaran_6.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_7: pembayaran_7.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_8: pembayaran_8.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_9: pembayaran_9.replace(/\,/g, '').replace(/\ -/g, ''),
-				pembayaran_10: pembayaran_10.replace(/\,/g, '').replace(/\ -/g, ''),
-				bank_1: jQuery("#bank_1").val(),
-				bank_2: jQuery("#bank_2").val(),
-				bank_3: jQuery("#bank_3").val(),
-				bank_4: jQuery("#bank_4").val(),
-				bank_5: jQuery("#bank_5").val(),
-				bank_6: jQuery("#bank_6").val(),
-				bank_7: jQuery("#bank_7").val(),
-				bank_8: jQuery("#bank_8").val(),
-				bank_9: jQuery("#bank_9").val(),
-				bank_10: jQuery("#bank_10").val(),
+			data: Object.assign(fields, {
 				karyawan_id: jQuery("#sales_id").val(),
 				client_id: jQuery("#pembayaran-client_id").val(),
 				penjualan_id: jQuery("#pembayaran-penjualan_id").val(),
 				sisa_pembayaran: sisa_pembayaran.replace(/\,/g, '').replace(/\ -/g, ''),
 				sudah_dibayar: sudah_dibayar.replace(/\,/g, '').replace(/\ -/g, '')
-			},
-			beforeSend: function () {
-				app.dialog.preloader('Harap Tunggu');
-			},
+			}),
+			beforeSend: function () { app.dialog.preloader('Harap Tunggu'); },
 			success: function (data) {
 				getPenjualanHeader(1);
 				app.dialog.close();
@@ -4408,8 +4804,7 @@ function prosesPembayaran() {
 					app.dialog.alert('Gagal Input Pembayaran');
 				}
 			},
-			error: function (xmlhttprequest, textstatus, message) {
-			}
+			error: function () { }
 		});
 	}
 }
@@ -5599,7 +5994,7 @@ function getPenjualanHeader(page) {
 						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\',\'' + (item.packing || '') + '\');">Invoice</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\');">Bayar</button>';
+						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran-sales" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\',\'' + item.karyawan_id + '\');">Bayar</button>';
 						penjualan_value += '</td>';
 						if (data.surat_jalan_customer[item.penjualan_id].length > 0) {
 							var color_btn_sjc_id = "btn-color-greenWhite";
@@ -5883,7 +6278,7 @@ function getPenjualanHeader(page) {
 						penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" onclick="invoicePenjualan(\'' + item.performa_id_relation + '\',\'' + item.biaya_kirim + '\',\'' + item.client_alamat + '\',\'' + item.client_cp + '\',\'' + item.client_cp_posisi + '\',\'' + item.client_id + '\',\'' + item.client_kota + '\',\'' + item.client_nama + '\',\'' + item.client_telp + '\',\'' + item.jenis_penjualan + '\',\'' + item.karyawan_id + '\',\'' + item.penjualan_global_diskon + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_keterangan + '\',\'' + item.penjualan_status + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.penjualan_tanggal + '\',\'' + item.penjualan_tanggal_kirim + '\',\'' + item.penjualan_total + '\',\'' + item.penjualan_void_keterangan + '\',\'' + item.penjualan_total_qty + '\',\'' + sisa_value + '\',\'' + item.extra + '\',\'' + (item.packing || '') + '\');">Invoice</button>';
 						penjualan_value += '</td>';
 						penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\');">Bayar</button>';
+						penjualan_value += '   <button  class="' + color_btn_byr + '  button-small col button popup-open text-bold" data-popup=".detail-pembayaran-sales" onclick="detailPembayaran(\'' + item.dt_record + '\',\'' + item.penjualan_tanggal + '\',\'' + item.performa_id_relation + '\',\'' + item.bank_1 + '\',\'' + item.bank_2 + '\',\'' + item.bank_3 + '\',\'' + item.bank_4 + '\',\'' + item.bank_5 + '\',\'' + item.bank_6 + '\',\'' + item.bank_7 + '\',\'' + item.bank_8 + '\',\'' + item.bank_9 + '\',\'' + item.bank_10 + '\',\'' + item.pembayaran1_tgl + '\',\'' + item.pembayaran2_tgl + '\',\'' + item.pembayaran3_tgl + '\',\'' + item.pembayaran4_tgl + '\',\'' + item.pembayaran5_tgl + '\',\'' + item.pembayaran6_tgl + '\',\'' + item.pembayaran7_tgl + '\',\'' + item.pembayaran8_tgl + '\',\'' + item.pembayaran9_tgl + '\',\'' + item.pembayaran10_tgl + '\',\'' + item.bank + '\',\'' + item.pembayaran_1 + '\',\'' + item.pembayaran_2 + '\',\'' + item.pembayaran_3 + '\',\'' + item.pembayaran_4 + '\',\'' + item.pembayaran_5 + '\',\'' + item.pembayaran_6 + '\',\'' + item.pembayaran_7 + '\',\'' + item.pembayaran_8 + '\',\'' + item.pembayaran_9 + '\',\'' + item.pembayaran_10 + '\',\'' + item.client_nama + '\',\'' + item.penjualan_jumlah_pembayaran + '\',\'' + item.penjualan_total_qty + '\',\'' + item.penjualan_grandtotal + '\',\'' + item.penjualan_id + '\',\'' + item.client_id + '\',\'' + item.penjualan_status_pembayaran + '\',\'' + item.ongkir + '\',\'' + item.karyawan_id + '\');">Bayar</button>';
 						penjualan_value += '</td>';
 						if (data.surat_jalan_customer[item.penjualan_id].length > 0) {
 							var color_btn_sjc_id = "btn-color-greenWhite";

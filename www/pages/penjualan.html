@@ -2476,7 +2476,7 @@
       </div>
     </div>
 
-    <div class="popup detail-pembayaran">
+    <div class="popup detail-pembayaran-sales">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -2485,8 +2485,8 @@
               <div class="title">History Pembayaran</div>
               <div class="right">
                 <!-- Link to close popup -->
-                <p id="backbutton" class="text-add-colour-white link popup-close" data-popup=".detail-pembayaran"><i
-                    style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
+                <p id="backbutton" class="text-add-colour-white link popup-close" data-popup=".detail-pembayaran-sales">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i></p>
               </div>
             </div>
           </div>
@@ -2843,9 +2843,18 @@
                                             <input type="hidden" id="pembayaran-client_id"
                                               name="pembayaran-client_id" />
                                             <center>
-                                              <i onclick="prosesPembayaran();" style="width:20%;"
-                                                class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Proses
+                                              <!-- ⭐ TOMBOL PROSES: hanya tampil jika is_owner = true -->
+                                              <i id="proses_pembayaran_btn" onclick="prosesPembayaran();"
+                                                style="width:20%; display:none;"
+                                                class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">
+                                                Proses
                                               </i>
+
+                                              <!-- ⭐ BADGE VIEW ONLY: tampil jika is_owner = false -->
+                                              <span id="view_only_badge"
+                                                style="display:none; color:#aaaaaa; font-size:12px; font-style:italic; padding:6px 10px; border:1px solid #555; border-radius:4px; background-color:#2a2a2a;">
+                                                &#128274; View Only — Bukan SPK Anda
+                                              </span>
                                             </center>
                                             <span class="input-clear-button"></span>
                                           </div>

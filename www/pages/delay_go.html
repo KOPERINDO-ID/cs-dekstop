@@ -147,7 +147,8 @@
         </div>
         <div class="col col-border bg-dark-gray-medium text-bold notif-merah-delay"><a class="text-add-colour-white"
             href="/delay-go">Delay - Go</a></div>
-        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        <div id="menuTagihan" class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white"
+            href="/tagihan">Tagihan</a>
         </div>
         <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
@@ -205,19 +206,21 @@
                 <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_delay_go"> </i></h3>
               </div>
               <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                <i class="f7-icons" onclick="getViewDelayManagerShipment();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                <i class="f7-icons" onclick="getViewDelayManagerShipment();"
+                  style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
               </div>
-              <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+              <div class="popup-open" data-popup=".popup-expedisi-global"
+                style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-                  </svg>
+                  <path
+                    d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                </svg>
               </div>
             </div>
 
             <!-- Search -->
             <div class="card-content bg-dark-gray-medium" style="padding:8px 10px;">
-              <input type="text" id="search_delay_go_client" placeholder="Cari Client..."
-                oninput="filterDelayGoTable()"
+              <input type="text" id="search_delay_go_client" placeholder="Cari Client..." oninput="filterDelayGoTable()"
                 style="width:100%; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">
             </div>
 
@@ -228,13 +231,18 @@
                   <tr>
                     <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">No</th>
                     <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">SPK</th>
-                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="15%">Client</th>
+                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="15%">Client
+                    </th>
                     <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">Kota</th>
                     <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="7%">Hari</th>
-                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Kirim</th>
-                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Req Kirim</th>
-                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">No HP</th>
-                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="19%">Alamat Kirim</th>
+                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Kirim
+                    </th>
+                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Req
+                      Kirim</th>
+                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">No HP
+                    </th>
+                    <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="19%">Alamat
+                      Kirim</th>
                     <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Opsi</th>
                   </tr>
                 </thead>

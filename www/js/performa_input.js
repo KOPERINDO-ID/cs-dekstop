@@ -624,9 +624,9 @@ function updateUIForEditMode() {
     $$('#performa_input_button_save').text('Update');
 
     // Tambah badge/indicator edit mode
-    $$('#total_performa').parent().prepend(
-        '<span id="edit_mode_badge" style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 10px;">EDIT MODE</span>'
-    );
+    // $$('#total_performa').parent().prepend(
+    //     '<span id="edit_mode_badge" style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 10px;">EDIT MODE</span>'
+    // );
 
     // Disable client selection (tidak boleh ganti client saat edit)
     $$('.smart-select-perusahaan').addClass('disabled');

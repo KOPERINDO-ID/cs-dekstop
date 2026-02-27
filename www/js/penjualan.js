@@ -6658,7 +6658,7 @@ function getPerformaHeaderPenjualan() {
 						performa_value += '</td>';
 					} else {
 						performa_value += '<td class="label-cell" style="border-right:1px solid gray; border-bottom:1px solid gray;">';
-						performa_value += '		<a class="popup-open" style="color:#cf400a;" data-popup=".edit-performa-header-penjualan" onclick="editPerformaHeaderPenjualanPageClick(\'' + item2.performa_header_id + '\',\'' + item2.status + '\');"><i  class="f7-icons">pencil_circle_fill</i></a>';
+						performa_value += '		<a class="popup-open" style="color:#cf400a;" data-popup=".edit-performa-header-penjualan" onclick="redirectToEditPerforma(\'' + item2.performa_header_id + '\');"><i  class="f7-icons">pencil_circle_fill</i></a>';
 						performa_value += '</td>';
 					}
 
@@ -9970,5 +9970,36 @@ function zoomFotoProduksi(photoUrl) {
 }
 
 // ========================================
-// MENU PROFORMA INPUT - Created by: Aryakkk
+// MENU PROFORMA - Created by: Aryakkk
 // ========================================
+
+/**
+ * Redirect ke halaman Performa Input dalam mode EDIT
+ * Fungsi ini dipanggil ketika user klik tombol "Edit" pada performa
+ * 
+ * @param {string} performa_header_id - ID header performa yang akan diedit
+ */
+function redirectToEditPerforma(performa_header_id) {
+	console.log('🔄 Redirecting to Edit Performa...');
+	console.log('performa_header_id:', performa_header_id);
+
+	if (!performa_header_id) {
+		app.dialog.alert('Error: ID Performa tidak valid');
+		return;
+	}
+
+	// Simpan ke localStorage
+	localStorage.setItem('edit_performa_mode', 'true');
+	localStorage.setItem('edit_performa_header_id', performa_header_id);
+
+	console.log('✅ Edit mode data saved to localStorage');
+
+	// Close popup jika ada yang terbuka
+	app.popup.close();
+
+	// Redirect ke halaman performa_input
+	app.views.main.router.navigate('/performa/input', {
+		reloadCurrent: false,
+		ignoreCache: true
+	});
+}

@@ -6,7 +6,7 @@ function changeFilterMenuNotif(menu) {
 }
 
 function changeFilterMenuNotifType() {
-    $('.' + localStorage.getItem("menu_notif") + 'FilterMenuNotif').addClass("bg-dark-gray-medium");
+    $('.' + localStorage.getItem("menu_notif") + 'FilterMenuNotif').addClass("bg-dark-gray-medium ");
     if (localStorage.getItem("menu_notif") == 'proforma') {
         $$('#notif-proforma').show();
         $$('#notif-prospek').hide();
@@ -64,38 +64,38 @@ function getCountStatusCsNotifView() {
         success: function (data) {
 
             if (data.data_kirim > 0) {
-                $$('.merah-kirim').removeClass("card-color-red-important announcement");
-                $$('.merah-kirim').addClass("card-color-red-important announcement");
+                $$('#kirimFilterMenuNotif').removeClass("card-color-red-important announcement");
+                $$('#kirimFilterMenuNotif').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-kirim').removeClass("card-color-red-important announcement");
+                $$('#kirimFilterMenuNotif').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_performa > 0) {
-                $$('.merah-performa').removeClass("card-color-red-important announcement");
-                $$('.merah-performa').addClass("card-color-red-important announcement");
+                $$('#proformaFilterMenuNotif').removeClass("card-color-red-important announcement");
+                $$('#proformaFilterMenuNotif').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-performa').removeClass("card-color-red-important announcement");
+                $$('#proformaFilterMenuNotif').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_sales > 0) {
-                $$('.merah-sales').removeClass("card-color-red-important announcement");
-                $$('.merah-sales').addClass("card-color-red-important announcement");
+                $$('#salesFilterMenuNotif').removeClass("card-color-red-important announcement");
+                $$('#salesFilterMenuNotif').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-sales').removeClass("card-color-red-important announcement");
+                $$('#salesFilterMenuNotif').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_bayar > 0) {
-                $$('.merah-bayar').removeClass("card-color-red-important announcement");
-                $$('.merah-bayar').addClass("card-color-red-important announcement");
+                $$('#bayarFilterMenuNotif').removeClass("card-color-red-important announcement");
+                $$('#bayarFilterMenuNotif').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-bayar').removeClass("card-color-red-important announcement");
+                $$('#bayarFilterMenuNotif').removeClass("card-color-red-important announcement");
             }
 
             if (data.data_shipment > 0) {
-                $$('.merah-shipment').removeClass("card-color-red-important announcement");
-                $$('.merah-shipment').addClass("card-color-red-important announcement");
+                $$('#shipmentFilterMenuNotif').removeClass("card-color-red-important announcement");
+                $$('#shipmentFilterMenuNotif').addClass("card-color-red-important announcement");
             } else {
-                $$('.merah-shipment').removeClass("card-color-red-important announcement");
+                $$('#shipmentFilterMenuNotif').removeClass("card-color-red-important announcement");
             }
         },
         error: function (xmlhttprequest, textstatus, message) {
@@ -383,7 +383,7 @@ function shipmentNotif(penjualan_id) {
                 jQuery('#show_reset_reject_element_shipment').show();
                 jQuery('#show_reject_element_shipment').hide();
             }
-            
+
             $$("#detail_valid_notif_shipment").val(data.data.valid_shipment);
             $$('#alamat_sekarang_notif_popup').val(alamat_client);
             $$('#alamat_kirim_notif_popup').val(alamat_kirim);
@@ -1287,7 +1287,7 @@ function penjualanGetPerformaNotifDownload(performa_header_id, karyawan_id, clie
                         var needs_approval_check = parseInt(needs_approval || 0);
                         var approval_status_check = (approval_status || '').toString();
                         console.log('approval_status_check:', approval_status);
-                        
+
                         console.log('performa_header_id:', performa_header_id, 'needs_approval_check:', needs_approval_check, 'approval_status_check:', approval_status_check);
                         // Tampilkan angka potongan merah HANYA jika tidak needs_approval dan status tidak approved atau rejected
                         if (needs_approval_check == 0 && (approval_status_check == 'approved' || approval_status_check == 'rejected' || approval_status_check == '' || approval_status_check == null)) {
@@ -2164,30 +2164,30 @@ function filterNotifTable(type) {
 
     if (type === 'proforma') {
         clientVal = (jQuery('#search_notif_proforma_client').val() || '').toLowerCase();
-        salesVal  = (jQuery('#search_notif_proforma_sales').val() || '').toLowerCase();
+        salesVal = (jQuery('#search_notif_proforma_sales').val() || '').toLowerCase();
         rows = jQuery('#performa_notif_value tr');
     } else if (type === 'sales') {
         clientVal = (jQuery('#search_notif_sales_client').val() || '').toLowerCase();
-        salesVal  = (jQuery('#search_notif_sales_sales').val() || '').toLowerCase();
+        salesVal = (jQuery('#search_notif_sales_sales').val() || '').toLowerCase();
         rows = jQuery('#data_status_notif_manager tr');
     } else if (type === 'bayar') {
         clientVal = (jQuery('#search_notif_bayar_client').val() || '').toLowerCase();
-        salesVal  = (jQuery('#search_notif_bayar_sales').val() || '').toLowerCase();
+        salesVal = (jQuery('#search_notif_bayar_sales').val() || '').toLowerCase();
         rows = jQuery('#data_status_notif_bayar_manager tr');
     } else if (type === 'shipment') {
         clientVal = (jQuery('#search_notif_shipment_client').val() || '').toLowerCase();
-        salesVal  = '';
+        salesVal = '';
         rows = jQuery('#data_status_notif_shipment_manager tr');
     } else if (type === 'kirim') {
         clientVal = (jQuery('#search_notif_kirim_client').val() || '').toLowerCase();
-        salesVal  = '';
+        salesVal = '';
         rows = jQuery('#data_status_notif_kirim_manager tr');
     } else { return; }
 
-    rows.each(function() {
+    rows.each(function () {
         var rowText = jQuery(this).text().toLowerCase();
         var matchClient = !clientVal || rowText.indexOf(clientVal) !== -1;
-        var matchSales  = !salesVal  || rowText.indexOf(salesVal)  !== -1;
+        var matchSales = !salesVal || rowText.indexOf(salesVal) !== -1;
         jQuery(this).toggle(matchClient && matchSales);
     });
 }

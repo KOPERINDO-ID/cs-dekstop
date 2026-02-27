@@ -351,9 +351,26 @@ $$(document).on('page:afterin', '.page[data-name="share_link"]', function (e) {
 });
 
 $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
-  changeFilterMenuNotif('proforma');
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
   clearPageIntervals();
+
+  if (localStorage.getItem('username') === 'CSO') {
+    changeFilterMenuNotif('bayar');
+    $$('#menuTagihan').show();
+    $$('#bayarFilterMenuNotif').show();
+    $$('#shipmentFilterMenuNotif').show();
+    $$('#kirimFilterMenuNotif').show();
+    $$('#proformaFilterMenuNotif').hide();
+    $$('#salesFilterMenuNotif').hide();
+  } else {
+    changeFilterMenuNotif('proforma');
+    $$('#menuTagihan').hide();
+    $$('#proformaFilterMenuNotif').show();
+    $$('#salesFilterMenuNotif').show();
+    $$('#bayarFilterMenuNotif').hide();
+    $$('#shipmentFilterMenuNotif').hide();
+    $$('#kirimFilterMenuNotif').hide();
+  }
 
   runFunctionsSequentially([
     { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },

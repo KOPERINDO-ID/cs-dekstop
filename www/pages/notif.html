@@ -703,54 +703,74 @@
     </div>
   </div>
 
-  
-  <!-- ========================================
-   POPUP EXPEDISI - NOTIF
-   ======================================== -->
-  <!-- ========================================
-   POPUP TAMBAH EXPEDISI - NOTIF
-   ======================================== -->
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
     <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
     <!-- And somewhere in DOM -->
 
     <div class="card">
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
-        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
+        <!-- <div class="align-items-center justify-content-center text-bold"
+         style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);"
             href="/client">Broadcast</a>
         </div> -->
-        <div class="col col-border bg-dark-gray-medium text-bold"><a class="text-add-colour-white"
-            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        <div class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
-        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        <div class="align-items-center justify-content-center text-bold notif-merah-delay"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/delay-go">Delay
+            - Go</a>
         </div>
-        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
+        <!-- <div class="align-items-center justify-content-center text-bold"
+         style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
+        <div class="align-items-center justify-content-center text-bold "
+        style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold "
+        style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/point-sales">Point</a>
         </div> -->
 
       </div>
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold proformaFilterMenuNotif clearFilterMenuNotif merah-performa"><a
-            class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');">Proforma</a>
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div id="proformaFilterMenuNotif"
+          class="align-items-center justify-content-center text-bold proformaFilterMenuNotif clearFilterMenuNotif "
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');">Proforma</a>
         </div>
-        <div class="col col-border text-bold salesFilterMenuNotif clearFilterMenuNotif merah-sales"><a
-            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('sales');">Sales</a>
+        <div id="salesFilterMenuNotif"
+          class="align-items-center justify-content-center text-bold salesFilterMenuNotif clearFilterMenuNotif "
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('sales');">Sales</a>
         </div>
-        <div class="col col-border text-bold bayarFilterMenuNotif clearFilterMenuNotif merah-bayar"><a
-            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('bayar');">Bayar</a>
+        <div id="bayarFilterMenuNotif"
+          class="align-items-center justify-content-center text-bold bayarFilterMenuNotif clearFilterMenuNotif "
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('bayar');">Bayar</a>
         </div>
-        <div class="col col-border text-bold shipmentFilterMenuNotif clearFilterMenuNotif merah-shipment "><a
-            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('shipment');">Shipment</a>
+        <div id="shipmentFilterMenuNotif"
+          class="align-items-center justify-content-center text-bold shipmentFilterMenuNotif clearFilterMenuNotif "
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('shipment');">Shipment</a>
         </div>
-        <div class="col col-border text-bold kirimFilterMenuNotif clearFilterMenuNotif merah-kirim "><a
-            class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('kirim');">Kirim</a>
+        <div id="kirimFilterMenuNotif"
+          class="align-items-center justify-content-center text-bold kirimFilterMenuNotif clearFilterMenuNotif "
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-color-new text-add-colour-white" onclick="changeFilterMenuNotif('kirim');">Kirim</a>
         </div>
       </div>
       <div class="row">
@@ -758,19 +778,22 @@
 
           <!-- ===== PROFORMA ===== -->
           <div id="notif-proforma">
-            <div class="card border-actived" style="margin:10px;">
+            <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
                 <div class="data-table-title" style="height:2px; margin-left:6px;">
                   <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_proforma"> </i></h3>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                  <i class="f7-icons" onclick="getPerformaHeaderNotifPenjualan();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                  <i class="f7-icons" onclick="getPerformaHeaderNotifPenjualan();"
+                    style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
                 </div>
                 <!-- Truck icon orange -->
-                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <div class="popup-open" data-popup=".popup-expedisi-global"
+                  style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    <path
+                      d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                   </svg>
                 </div>
               </div>
@@ -789,12 +812,18 @@
                   <thead class="bg-dark-gray-medium" style="position:sticky; top:0; z-index:1;">
                     <tr>
                       <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">No</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="12%">Tanggal</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="22%">Proforma</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="28%">Perusahaan</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Sales</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Total</th>
-                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" colspan="2" width="10%">Opsi</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="12%">Tanggal
+                      </th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="22%">
+                        Proforma</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="28%">
+                        Perusahaan</th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Sales
+                      </th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Total
+                      </th>
+                      <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" colspan="2"
+                        width="10%">Opsi</th>
                     </tr>
                   </thead>
                   <tbody class="text-align-center" id="performa_notif_value"></tbody>
@@ -805,18 +834,21 @@
 
           <!-- ===== SALES ===== -->
           <div id="notif-sales">
-            <div class="card border-actived" style="margin:10px;">
+            <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
                 <div class="data-table-title" style="height:2px; margin-left:6px;">
                   <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_sales"> </i></h3>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                  <i class="f7-icons" onclick="getViewNotifManagerSales();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                  <i class="f7-icons" onclick="getViewNotifManagerSales();"
+                    style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
                 </div>
-                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <div class="popup-open" data-popup=".popup-expedisi-global"
+                  style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    <path
+                      d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                   </svg>
                 </div>
               </div>
@@ -850,18 +882,21 @@
 
           <!-- ===== BAYAR ===== -->
           <div id="notif-bayar">
-            <div class="card border-actived" style="margin:10px;">
+            <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
                 <div class="data-table-title" style="height:2px; margin-left:6px;">
                   <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_bayar"> </i></h3>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                  <i class="f7-icons" onclick="getViewNotifManagerBayar();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                  <i class="f7-icons" onclick="getViewNotifManagerBayar();"
+                    style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
                 </div>
-                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <div class="popup-open" data-popup=".popup-expedisi-global"
+                  style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    <path
+                      d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                   </svg>
                 </div>
               </div>
@@ -897,18 +932,21 @@
 
           <!-- ===== SHIPMENT ===== -->
           <div id="notif-shipment">
-            <div class="card border-actived" style="margin:10px;">
+            <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
                 <div class="data-table-title" style="height:2px; margin-left:6px;">
                   <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_shipment"> </i></h3>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                  <i class="f7-icons" onclick="getViewNotifManagerShipment();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                  <i class="f7-icons" onclick="getViewNotifManagerShipment();"
+                    style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
                 </div>
-                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <div class="popup-open" data-popup=".popup-expedisi-global"
+                  style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    <path
+                      d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                   </svg>
                 </div>
               </div>
@@ -942,18 +980,21 @@
 
           <!-- ===== KIRIM ===== -->
           <div id="notif-kirim">
-            <div class="card border-actived" style="margin:10px;">
+            <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
                 <div class="data-table-title" style="height:2px; margin-left:6px;">
                   <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_kirim"> </i></h3>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-                  <i class="f7-icons" onclick="getViewNotifManagerKirim();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+                  <i class="f7-icons" onclick="getViewNotifManagerKirim();"
+                    style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
                 </div>
-                <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <div class="popup-open" data-popup=".popup-expedisi-global"
+                  style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    <path
+                      d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                   </svg>
                 </div>
               </div>

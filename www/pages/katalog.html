@@ -4,40 +4,26 @@
     <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
     <!-- And somewhere in DOM -->
     <div class="card">
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div class="align-items-center justify-content-center bg-dark-gray-young text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
+        <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
         </div>
-        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
-            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        <div class="align-items-center justify-content-center text-bold merah-notif-all"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay
-            - Go</a></div>
-        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white"
-            href="/tagihan">Tagihan</a>
+        <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
-        <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
-          <div class="align-items-center justify-content-center text-bold"
-            style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-            <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
-          </div>
-          <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
-            style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-            <a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
-          </div>
-          <div class="align-items-center justify-content-center text-bold merah-notif-all"
-            style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-            <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
-          </div>
-          <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
-            style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-            <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
-          </div>
-          <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
-            style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-            <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
-          </div>
+        <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
       </div>
     </div>

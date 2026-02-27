@@ -504,6 +504,10 @@ $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
   clearPageIntervals();
 
+  // RequestManager.add(function () {
+  //   getDataClientHead();
+  // });
+
   runFunctionsSequentially([
     // { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
     { name: 'selectBoxKotaBrodacast', func: wrapFunction(selectBoxKotaBrodacast, 'selectBoxKotaBrodacast') },

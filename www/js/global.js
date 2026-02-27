@@ -921,218 +921,225 @@ window._expedisiGlobalCurrentNama = null;
 
 // ------ BUKA POPUP ------
 function openExpedisiGlobal() {
-    app.popup.open('.popup-expedisi-global');
-    loadDataExpedisiGlobal();
+	app.popup.open('.popup-expedisi-global');
+	loadDataExpedisiGlobal();
 }
 
 // ------ LOAD DAFTAR ------
 function loadDataExpedisiGlobal() {
-    app.preloader.show();
-    jQuery.ajax({
-        type: 'POST',
-        url: BASE_API + '/get-expedisi-list',
-        dataType: 'JSON',
-        data: {},
-        success: function(res) {
-            app.preloader.hide();
-            if (res.status === 200) {
-                window._expedisiGlobalData = res.data || [];
-                renderExpedisiGlobal(window._expedisiGlobalData);
-            } else {
-                app.dialog.alert(res.message || 'Gagal memuat data.', 'Error');
-            }
-        },
-        error: function() {
-            app.preloader.hide();
-            app.dialog.alert('Gagal menghubungi server.', 'Error');
-        }
-    });
+	app.preloader.show();
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + '/get-expedisi-list',
+		dataType: 'JSON',
+		data: {},
+		success: function (res) {
+			app.preloader.hide();
+			if (res.status === 200) {
+				window._expedisiGlobalData = res.data || [];
+				renderExpedisiGlobal(window._expedisiGlobalData);
+			} else {
+				app.dialog.alert(res.message || 'Gagal memuat data.', 'Error');
+			}
+		},
+		error: function () {
+			app.preloader.hide();
+			app.dialog.alert('Gagal menghubungi server.', 'Error');
+		}
+	});
 }
 
 // ------ RENDER TABEL ------
 function renderExpedisiGlobal(data) {
-    var tbody = jQuery('#expedisi-global-tbody');
-    jQuery('#expedisi-global-count').text(data.length);
+	var tbody = jQuery('#expedisi-global-tbody');
+	jQuery('#expedisi-global-count').text(data.length);
 
-    if (!data || data.length === 0) {
-        tbody.html('<tr><td colspan="6" style="padding:30px; text-align:center; color:gray;">' +
-            '<i class="f7-icons" style="font-size:40px;">tray</i><br>Tidak ada data expedisi</td></tr>');
-        return;
-    }
+	if (!data || data.length === 0) {
+		tbody.html('<tr><td colspan="6" style="padding:30px; text-align:center; color:gray;">' +
+			'<i class="f7-icons" style="font-size:40px;">tray</i><br>Tidak ada data expedisi</td></tr>');
+		return;
+	}
 
-    var html = '';
-    jQuery.each(data, function(i, item) {
-        var nama = escapeHtmlGlobal(item.perusahaan_acc || '-');
-        html += '<tr>';
-        html += '<td style="border:1px solid gray;">' + (i + 1) + '</td>';
-        html += '<td style="border:1px solid gray; text-align:left;">' + nama + '</td>';
-        html += '<td style="border:1px solid gray; text-align:left;">' + escapeHtmlGlobal(item.pic || '-') + '</td>';
-        html += '<td style="border:1px solid gray; text-align:left;">' + escapeHtmlGlobal(item.alamat || '-') + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.no_telp || '-') + '</td>';
-        html += '<td style="border:1px solid gray;">';
-        html += '<button class="button button-small button-fill bg-color-blue" ';
-        html += 'onclick="showHistoryExpedisiGlobal(' + item.id_perusahaan_acc + ', \'' + nama + '\')" ';
-        html += 'style="width:100%;">';
-        html += '<i class="f7-icons" style="font-size:14px;">doc_text_search</i> Detail';
-        html += '</button>';
-        html += '</td>';
-        html += '</tr>';
-    });
-    tbody.html(html);
+	var html = '';
+	jQuery.each(data, function (i, item) {
+		var nama = escapeHtmlGlobal(item.perusahaan_acc || '-');
+		html += '<tr>';
+		html += '<td style="border:1px solid gray;">' + (i + 1) + '</td>';
+		html += '<td style="border:1px solid gray; text-align:left;">' + nama + '</td>';
+		html += '<td style="border:1px solid gray; text-align:left;">' + escapeHtmlGlobal(item.pic || '-') + '</td>';
+		html += '<td style="border:1px solid gray; text-align:left;">' + escapeHtmlGlobal(item.alamat || '-') + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.no_telp || '-') + '</td>';
+		html += '<td style="border:1px solid gray;">';
+		html += '<button class="button button-small button-fill bg-color-blue" ';
+		html += 'onclick="showHistoryExpedisiGlobal(' + item.id_perusahaan_acc + ', \'' + nama + '\')" ';
+		html += 'style="width:100%;">';
+		html += '<i class="f7-icons" style="font-size:14px;">doc_text_search</i> Detail';
+		html += '</button>';
+		html += '</td>';
+		html += '</tr>';
+	});
+	tbody.html(html);
 }
 
 // ------ SEARCH ------
 function searchExpedisiGlobal() {
-    var keyword = (jQuery('#expedisi-global-search').val() || '').toLowerCase();
-    var data = window._expedisiGlobalData || [];
-    if (!keyword) { renderExpedisiGlobal(data); return; }
-    var filtered = data.filter(function(item) {
-        return (item.perusahaan_acc || '').toLowerCase().indexOf(keyword) !== -1
-            || (item.pic    || '').toLowerCase().indexOf(keyword) !== -1
-            || (item.alamat || '').toLowerCase().indexOf(keyword) !== -1;
-    });
-    renderExpedisiGlobal(filtered);
+	var keyword = (jQuery('#expedisi-global-search').val() || '').toLowerCase();
+	var data = window._expedisiGlobalData || [];
+	if (!keyword) { renderExpedisiGlobal(data); return; }
+	var filtered = data.filter(function (item) {
+		return (item.perusahaan_acc || '').toLowerCase().indexOf(keyword) !== -1
+			|| (item.pic || '').toLowerCase().indexOf(keyword) !== -1
+			|| (item.alamat || '').toLowerCase().indexOf(keyword) !== -1;
+	});
+	renderExpedisiGlobal(filtered);
 }
 
 // ------ SIMPAN BARU ------
 function simpanExpedisiGlobal() {
-    var perusahaan = jQuery('#expedisi-global-perusahaan').val().trim();
-    if (!perusahaan) { app.dialog.alert('Nama Perusahaan wajib diisi!', 'Perhatian'); return; }
+	var perusahaan = jQuery('#expedisi-global-perusahaan').val().trim();
+	if (!perusahaan) { app.dialog.alert('Nama Perusahaan wajib diisi!', 'Perhatian'); return; }
 
-    var payload = {
-        perusahaan_acc : perusahaan,
-        pic            : jQuery('#expedisi-global-pic').val().trim(),
-        alamat         : jQuery('#expedisi-global-alamat').val().trim(),
-        no_telp        : jQuery('#expedisi-global-telp').val().trim(),
-        nama_bank      : jQuery('#expedisi-global-bank').val().trim(),
-        no_rekening    : jQuery('#expedisi-global-rekening').val().trim(),
-        nama_rekening  : jQuery('#expedisi-global-nama-rekening').val().trim(),
-        user_record    : localStorage.getItem('karyawan_nama') || 'System'
-    };
+	var payload = {
+		perusahaan_acc: perusahaan,
+		pic: jQuery('#expedisi-global-pic').val().trim(),
+		alamat: jQuery('#expedisi-global-alamat').val().trim(),
+		no_telp: jQuery('#expedisi-global-telp').val().trim(),
+		nama_bank: jQuery('#expedisi-global-bank').val().trim(),
+		no_rekening: jQuery('#expedisi-global-rekening').val().trim(),
+		nama_rekening: jQuery('#expedisi-global-nama-rekening').val().trim(),
+		user_record: localStorage.getItem('karyawan_nama') || 'System'
+	};
 
-    app.preloader.show();
-    jQuery.ajax({
-        type: 'POST',
-        url: BASE_API + '/create-expedisi',
-        dataType: 'JSON',
-        data: payload,
-        success: function(res) {
-            app.preloader.hide();
-            if (res.status === 200) {
-                app.dialog.alert('Expedisi berhasil ditambahkan!', 'Berhasil', function() {
-                    // Reset form
-                    jQuery('#expedisi-global-perusahaan, #expedisi-global-pic, #expedisi-global-alamat, ' +
-                           '#expedisi-global-telp, #expedisi-global-bank, #expedisi-global-rekening, ' +
-                           '#expedisi-global-nama-rekening').val('');
-                    app.popup.close('.popup-tambah-expedisi-global');
-                    loadDataExpedisiGlobal();
-                });
-            } else if (res.status === 409) {
-                app.dialog.alert('Nama perusahaan sudah terdaftar!', 'Duplikat');
-            } else {
-                app.dialog.alert(res.message || 'Gagal menyimpan data.', 'Error');
-            }
-        },
-        error: function() {
-            app.preloader.hide();
-            app.dialog.alert('Gagal menghubungi server.', 'Error');
-        }
-    });
+	app.preloader.show();
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + '/create-expedisi',
+		dataType: 'JSON',
+		data: payload,
+		success: function (res) {
+			app.preloader.hide();
+			if (res.status === 200) {
+				app.dialog.alert('Expedisi berhasil ditambahkan!', 'Berhasil', function () {
+					// Reset form
+					jQuery('#expedisi-global-perusahaan, #expedisi-global-pic, #expedisi-global-alamat, ' +
+						'#expedisi-global-telp, #expedisi-global-bank, #expedisi-global-rekening, ' +
+						'#expedisi-global-nama-rekening').val('');
+					app.popup.close('.popup-tambah-expedisi-global');
+					loadDataExpedisiGlobal();
+				});
+			} else if (res.status === 409) {
+				app.dialog.alert('Nama perusahaan sudah terdaftar!', 'Duplikat');
+			} else {
+				app.dialog.alert(res.message || 'Gagal menyimpan data.', 'Error');
+			}
+		},
+		error: function () {
+			app.preloader.hide();
+			app.dialog.alert('Gagal menghubungi server.', 'Error');
+		}
+	});
 }
 
 // ------ HISTORY ------
 function showHistoryExpedisiGlobal(idExpedisi, namaExpedisi) {
-    window._expedisiGlobalCurrentId   = idExpedisi;
-    window._expedisiGlobalCurrentNama = namaExpedisi;
+	window._expedisiGlobalCurrentId = idExpedisi;
+	window._expedisiGlobalCurrentNama = namaExpedisi;
 
-    jQuery('#expedisi-global-history-nama').text(namaExpedisi);
-    jQuery('#expedisi-global-current-id').val(idExpedisi);
+	jQuery('#expedisi-global-history-nama').text(namaExpedisi);
+	jQuery('#expedisi-global-current-id').val(idExpedisi);
 
-    app.popup.open('.popup-history-expedisi-global');
-    loadHistoryExpedisiGlobal(idExpedisi);
+	app.popup.open('.popup-history-expedisi-global');
+	loadHistoryExpedisiGlobal(idExpedisi);
 }
 
 function loadHistoryExpedisiGlobal(idExpedisi) {
-    jQuery('#expedisi-global-history-tbody').html(
-        '<tr><td colspan="8" style="padding:30px; text-align:center; color:gray;">' +
-        '<i class="f7-icons" style="font-size:40px;">arrow_clockwise</i><br>Memuat...</td></tr>'
-    );
-    app.preloader.show();
-    jQuery.ajax({
-        type: 'POST',
-        url: BASE_API + '/get-expedisi-history',
-        dataType: 'JSON',
-        data: { id_expedisi: idExpedisi },
-        success: function(res) {
-            app.preloader.hide();
-            if (res.status === 200) {
-                renderHistoryExpedisiGlobal(res.data || []);
-            } else if (res.status === 404) {
-                renderHistoryExpedisiGlobal([]);
-            } else {
-                app.dialog.alert(res.message || 'Gagal memuat history.', 'Error');
-            }
-        },
-        error: function() {
-            app.preloader.hide();
-            app.dialog.alert('Gagal menghubungi server.', 'Error');
-        }
-    });
+	jQuery('#expedisi-global-history-tbody').html(
+		'<tr><td colspan="8" style="padding:30px; text-align:center; color:gray;">' +
+		'<i class="f7-icons" style="font-size:40px;">arrow_clockwise</i><br>Memuat...</td></tr>'
+	);
+	app.preloader.show();
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + '/get-expedisi-history',
+		dataType: 'JSON',
+		data: { id_expedisi: idExpedisi },
+		success: function (res) {
+			app.preloader.hide();
+			if (res.status === 200) {
+				renderHistoryExpedisiGlobal(res.data || []);
+			} else if (res.status === 404) {
+				renderHistoryExpedisiGlobal([]);
+			} else {
+				app.dialog.alert(res.message || 'Gagal memuat history.', 'Error');
+			}
+		},
+		error: function () {
+			app.preloader.hide();
+			app.dialog.alert('Gagal menghubungi server.', 'Error');
+		}
+	});
 }
 
 function renderHistoryExpedisiGlobal(data) {
-    var tbody   = jQuery('#expedisi-global-history-tbody');
-    var emptyEl = document.getElementById('expedisi-global-history-empty');
+	var tbody = jQuery('#expedisi-global-history-tbody');
+	var emptyEl = document.getElementById('expedisi-global-history-empty');
 
-    jQuery('#expedisi-global-history-count').text(data.length);
+	jQuery('#expedisi-global-history-count').text(data.length);
 
-    if (!data || data.length === 0) {
-        tbody.html('');
-        if (emptyEl) emptyEl.style.display = 'block';
-        return;
-    }
-    if (emptyEl) emptyEl.style.display = 'none';
+	if (!data || data.length === 0) {
+		tbody.html('');
+		if (emptyEl) emptyEl.style.display = 'block';
+		return;
+	}
+	if (emptyEl) emptyEl.style.display = 'none';
 
-    var html = '';
-    var totalNominal = 0;
-    jQuery.each(data, function(i, item) {
-        var nominal = parseFloat(item.nominal_acc || 0);
-        totalNominal += nominal;
-        var tanggal = item.tanggal_transaksi ? item.tanggal_transaksi.substring(0, 10) : '-';
-        var rute = (item.perusahaan_dari || '-') + ' -> ' + (item.perusahaan_tujuan || '-');
+	var html = '';
+	var totalNominal = 0;
+	jQuery.each(data, function (i, item) {
+		var nominal = parseFloat(item.nominal_acc || 0);
+		totalNominal += nominal;
+		var tanggal = item.tanggal_transaksi ? item.tanggal_transaksi.substring(0, 10) : '-';
+		var rute = (item.perusahaan_dari || '-') + ' -> ' + (item.perusahaan_tujuan || '-');
 
-        html += '<tr>';
-        html += '<td style="border:1px solid gray;">' + (i + 1) + '</td>';
-        html += '<td style="border:1px solid gray;">' + tanggal + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.perusahaan_pic   || '-') + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.perusahaan_no_hp || '-') + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(rute) + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.pengirim_acc  || '-') + '</td>';
-        html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.penerima_acc  || '-') + '</td>';
-        html += '<td style="border:1px solid gray; text-align:right;"><strong>Rp ' +
-                parseFloat(nominal).toLocaleString('id-ID') + '</strong></td>';
-        html += '</tr>';
-    });
-    tbody.html(html);
+		html += '<tr>';
+		html += '<td style="border:1px solid gray;">' + (i + 1) + '</td>';
+		html += '<td style="border:1px solid gray;">' + tanggal + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.perusahaan_pic || '-') + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.perusahaan_no_hp || '-') + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(rute) + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.pengirim_acc || '-') + '</td>';
+		html += '<td style="border:1px solid gray;">' + escapeHtmlGlobal(item.penerima_acc || '-') + '</td>';
+		html += '<td style="border:1px solid gray; text-align:right;"><strong>Rp ' +
+			parseFloat(nominal).toLocaleString('id-ID') + '</strong></td>';
+		html += '</tr>';
+	});
+	tbody.html(html);
 }
 
 function reloadHistoryExpedisiGlobal() {
-    if (window._expedisiGlobalCurrentId) {
-        loadHistoryExpedisiGlobal(window._expedisiGlobalCurrentId);
-    }
+	if (window._expedisiGlobalCurrentId) {
+		loadHistoryExpedisiGlobal(window._expedisiGlobalCurrentId);
+	}
 }
 
 // ------ HELPER ------
 function escapeHtmlGlobal(text) {
-    if (!text) return '';
-    return String(text).replace(/[&<>"']/g, function(m) {
-        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m];
-    });
+	if (!text) return '';
+	return String(text).replace(/[&<>"']/g, function (m) {
+		return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+	});
 }
 
 // Auto-load saat popup list dibuka
-jQuery(document).on('popup:open', '.popup-expedisi-global', function() {
-    loadDataExpedisiGlobal();
+jQuery(document).on('popup:open', '.popup-expedisi-global', function () {
+	loadDataExpedisiGlobal();
 });
 
 console.log('✅ Expedisi Global loaded');
+
+/**
+ * Clean text - remove KAB./KOTA prefix
+ */
+function cleanText(text) {
+	return text.replace(/^(KAB\.|KOTA)\s*/i, '').trim();
+}

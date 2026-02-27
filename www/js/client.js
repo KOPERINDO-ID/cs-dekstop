@@ -1,83 +1,83 @@
-function changeFilterMenu(menu) {
-	if (localStorage.getItem("stat_log") == 1) {
-		if (localStorage.getItem("menu_log") == 'new') {
-			localStorage.setItem('menu', 'new');
-			localStorage.setItem('api_menu', 'get-data-client-new');
-			localStorage.setItem('eye_menu', 'get-data-client-new-hide');
-			$(".newFilterMenu").addClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "inline")
-			$("#label_kolom_new").html('New');
-		} else if (localStorage.getItem("menu_log") == 'proforma') {
-			localStorage.setItem('menu', 'proforma');
-			localStorage.setItem('api_menu', 'get-data-client-proforma');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").addClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		} else if (localStorage.getItem("menu_log") == 'sales') {
-			localStorage.setItem('menu', 'sales');
-			localStorage.setItem('api_menu', 'get-data-client-sales');
-			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		} else if (localStorage.getItem("menu_log") == null) {
-			localStorage.setItem('menu', 'sales');
-			localStorage.setItem('api_menu', 'get-data-client-sales');
-			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		}
+// function changeFilterMenu(menu) {
+// 	if (localStorage.getItem("stat_log") == 1) {
+// 		if (localStorage.getItem("menu_log") == 'new') {
+// 			localStorage.setItem('menu', 'new');
+// 			localStorage.setItem('api_menu', 'get-data-client-new');
+// 			localStorage.setItem('eye_menu', 'get-data-client-new-hide');
+// 			$(".newFilterMenu").addClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "inline")
+// 			$("#label_kolom_new").html('New');
+// 		} else if (localStorage.getItem("menu_log") == 'proforma') {
+// 			localStorage.setItem('menu', 'proforma');
+// 			localStorage.setItem('api_menu', 'get-data-client-proforma');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").addClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		} else if (localStorage.getItem("menu_log") == 'sales') {
+// 			localStorage.setItem('menu', 'sales');
+// 			localStorage.setItem('api_menu', 'get-data-client-sales');
+// 			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		} else if (localStorage.getItem("menu_log") == null) {
+// 			localStorage.setItem('menu', 'sales');
+// 			localStorage.setItem('api_menu', 'get-data-client-sales');
+// 			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		}
 
-		getDataClient();
-		localStorage.removeItem("stat_log");
-	} else if (localStorage.getItem("stat_log") == null) {
-		if (menu == 'new') {
-			localStorage.setItem('menu', 'new');
-			localStorage.setItem('api_menu', 'get-data-client-new');
-			localStorage.setItem('eye_menu', 'get-data-client-new-hide');
-			$(".newFilterMenu").addClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "inline")
-			$("#label_kolom_new").html('New');
-		} else if (menu == 'proforma') {
-			localStorage.setItem('menu', 'proforma');
-			localStorage.setItem('api_menu', 'get-data-client-proforma');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").addClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		} else if (menu == 'sales') {
-			localStorage.setItem('menu', 'sales');
-			localStorage.setItem('api_menu', 'get-data-client-sales');
-			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		} else if (menu == null) {
-			localStorage.setItem('menu', 'sales');
-			localStorage.setItem('api_menu', 'get-data-client-sales');
-			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
-			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
-			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
-			$("#hide_prospek_icon").css("display", "none")
-		}
+// 		getDataClientHead();
+// 		localStorage.removeItem("stat_log");
+// 	} else if (localStorage.getItem("stat_log") == null) {
+// 		if (menu == 'new') {
+// 			localStorage.setItem('menu', 'new');
+// 			localStorage.setItem('api_menu', 'get-data-client-new');
+// 			localStorage.setItem('eye_menu', 'get-data-client-new-hide');
+// 			$(".newFilterMenu").addClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "inline")
+// 			$("#label_kolom_new").html('New');
+// 		} else if (menu == 'proforma') {
+// 			localStorage.setItem('menu', 'proforma');
+// 			localStorage.setItem('api_menu', 'get-data-client-proforma');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").addClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		} else if (menu == 'sales') {
+// 			localStorage.setItem('menu', 'sales');
+// 			localStorage.setItem('api_menu', 'get-data-client-sales');
+// 			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		} else if (menu == null) {
+// 			localStorage.setItem('menu', 'sales');
+// 			localStorage.setItem('api_menu', 'get-data-client-sales');
+// 			localStorage.setItem('eye_menu', 'get-data-client-sales-hide');
+// 			$(".newFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".performaFilterMenu").removeClass("bg-dark-gray-medium");
+// 			$(".salesFilterMenu").addClass("bg-dark-gray-medium");
+// 			$("#hide_prospek_icon").css("display", "none")
+// 		}
 
-		getDataClient();
-	}
-	console.log(localStorage.getItem("stat_log"));
-	console.log(localStorage.getItem("menu"));
-	console.log(localStorage.getItem("menu_log"));
-	getDataClientHead();
-}
+// 		getDataClientHead();
+// 	}
+// 	console.log(localStorage.getItem("stat_log"));
+// 	console.log(localStorage.getItem("menu"));
+// 	console.log(localStorage.getItem("menu_log"));
+// 	getDataClientHead();
+// }
 
 function activeEye() {
 	if (localStorage.getItem('show_eye') == 'aktif') {
@@ -90,34 +90,34 @@ function activeEye() {
 	showEyeLocalstorage()
 }
 
-function showEyeLocalstorage() {
-	console.log(localStorage.getItem('show_eye'));
-	console.log(localStorage.getItem('menu'));
-	if (localStorage.getItem('show_eye') == 'tidak_aktif') {
-		$$("#change-color-eye").css("color", "white");
-		if (localStorage.getItem('menu') == 'new') {
-			getDataClient();
-		} else if (localStorage.getItem('menu') == 'proforma') {
-			getDataClient();
-		} else if (localStorage.getItem('menu') == 'sales') {
-			getDataClient();
-		} else if (localStorage.getItem('menu') == null) {
-			getDataClient();
-		}
-	} else if (localStorage.getItem('show_eye') == 'aktif') {
-		$$("#change-color-eye").css("color", "red");
-		if (localStorage.getItem('menu') == 'new') {
-			getDataClientHide();
-		} else if (localStorage.getItem('menu') == 'proforma') {
-			getDataClientHide();
-		} else if (localStorage.getItem('menu') == 'sales') {
-			getDataClientHide();
-		} else if (localStorage.getItem('menu') == null) {
-			getDataClientHide();
-		}
+// function showEyeLocalstorage() {
+// 	console.log(localStorage.getItem('show_eye'));
+// 	console.log(localStorage.getItem('menu'));
+// 	if (localStorage.getItem('show_eye') == 'tidak_aktif') {
+// 		$$("#change-color-eye").css("color", "white");
+// 		if (localStorage.getItem('menu') == 'new') {
+// 			getDataClientHead();
+// 		} else if (localStorage.getItem('menu') == 'proforma') {
+// 			getDataClientHead();
+// 		} else if (localStorage.getItem('menu') == 'sales') {
+// 			getDataClientHead();
+// 		} else if (localStorage.getItem('menu') == null) {
+// 			getDataClientHead();
+// 		}
+// 	} else if (localStorage.getItem('show_eye') == 'aktif') {
+// 		$$("#change-color-eye").css("color", "red");
+// 		if (localStorage.getItem('menu') == 'new') {
+// 			getDataClientHide();
+// 		} else if (localStorage.getItem('menu') == 'proforma') {
+// 			getDataClientHide();
+// 		} else if (localStorage.getItem('menu') == 'sales') {
+// 			getDataClientHide();
+// 		} else if (localStorage.getItem('menu') == null) {
+// 			getDataClientHide();
+// 		}
 
-	}
-}
+// 	}
+// }
 
 var delayTimer;
 function doSearchByPerusahaan(text) {
@@ -149,153 +149,154 @@ function toggle(source) {
 }
 
 function reloadData() {
-	getDataClient();
+	getDataClientHead();
 }
 
-function getDataClient() {
+//! NOTE
+// function getDataClient() {
 
-	if (jQuery('#perusahaan_broadcast').val() == '' || jQuery('#perusahaan_broadcast').val() == null) {
-		perusahaan_broadcast_value = "empty";
-	} else {
-		perusahaan_broadcast_value = jQuery('#perusahaan_broadcast').val();
-	}
+// 	if (jQuery('#perusahaan_broadcast').val() == '' || jQuery('#perusahaan_broadcast').val() == null) {
+// 		perusahaan_broadcast_value = "empty";
+// 	} else {
+// 		perusahaan_broadcast_value = jQuery('#perusahaan_broadcast').val();
+// 	}
 
-	if (jQuery('#filter_bulan').val() == '0' || jQuery('#filter_bulan').val() == null) {
-		bulan_value = "empty";
-	} else {
-		bulan_value = jQuery('#filter_bulan').val();
-	}
+// 	if (jQuery('#filter_bulan').val() == '0' || jQuery('#filter_bulan').val() == null) {
+// 		bulan_value = "empty";
+// 	} else {
+// 		bulan_value = jQuery('#filter_bulan').val();
+// 	}
 
-	jQuery.ajax({
-		type: 'POST',
-		url: "" + BASE_API + "/" + localStorage.getItem("api_menu"),
-		dataType: 'JSON',
-		data: {
-			perusahaan_broadcast_value: perusahaan_broadcast_value,
-			bulan_value: bulan_value,
-		},
-		beforeSend: function () {
-			app.dialog.preloader('Harap Tunggu');
-		},
-		success: function (data) {
-			app.dialog.close();
-			var data_client = '';
+// 	jQuery.ajax({
+// 		type: 'POST',
+// 		url: "" + BASE_API + "/" + localStorage.getItem("api_menu"),
+// 		dataType: 'JSON',
+// 		data: {
+// 			perusahaan_broadcast_value: perusahaan_broadcast_value,
+// 			bulan_value: bulan_value,
+// 		},
+// 		beforeSend: function () {
+// 			app.dialog.preloader('Harap Tunggu');
+// 		},
+// 		success: function (data) {
+// 			app.dialog.close();
+// 			var data_client = '';
 
-			if (data.data.length != 0) {
-				var no = 0;
-				if (bulan_value != 'empty') {
+// 			if (data.data.length != 0) {
+// 				var no = 0;
+// 				if (bulan_value != 'empty') {
 
-					jQuery.each(data.data, function (i, val) {
-						var status_client = '';
-						if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
-							status_client = 'new';
-						} else if (val.bulan_selisih > 2) {
-							status_client = 'non_aktif';
-						} else if (val.bulan_selisih > 0 && val.bulan_selisih <= 2) {
-							status_client = 'aktif';
-						}
-
-
-						var warna_status = '';
-						if (data.client_log[val.client_id] != null) {
-							if (data.client_log[val.client_id].status_broadcast == 'F' || data.client_log[val.client_id].status_broadcast == 'A' || data.client_log[val.client_id].status_broadcast == null) {
-								warna_status = 'card-color-red';
-							} else if (data.client_log[val.client_id].status_broadcast == 'S') {
-								warna_status = 'btn-color-greenWhite';
-							} else if (data.client_log[val.client_id].status_broadcast == 'D' || data.client_log[val.client_id].status_broadcast == 'R') {
-								warna_status = 'btn-color-blueWhite';
-							}
-						} else {
-							warna_status = '';
-						}
-
-						no++
-						data_client += '<tr class="' + warna_status + '">';
-						data_client += '     <td align="center" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + no + '</td>';
-						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_nama + '</td>';
-						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
-						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
-						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
-						data_client += '	 </td>';
-						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
-						// data_client += '	 </td>';
-						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
-						// data_client += '	</td>';
-						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
-						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
-						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
-						// data_client += '	 </td>';
-						data_client += '</tr>';
-
-					});
-
-				} else {
-					jQuery.each(data.data, function (i, val) {
-						no++
-						var status_client = '';
-						if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
-							status_client = 'new';
-						} else if (val.bulan_selisih > 2) {
-							status_client = 'non_aktif';
-						} else if (val.bulan_selisih > 0 && val.bulan_selisih <= 2) {
-							status_client = 'aktif';
-						}
-
-						var warna_status = '';
-						if (data.client_log[val.client_id] != null) {
-							if (data.client_log[val.client_id].status_broadcast == 'F' || data.client_log[val.client_id].status_broadcast == 'A' || data.client_log[val.client_id].status_broadcast == null) {
-								warna_status = 'card-color-red';
-							} else if (data.client_log[val.client_id].status_broadcast == 'S') {
-								warna_status = 'btn-color-greenWhite';
-							} else if (data.client_log[val.client_id].status_broadcast == 'D' || data.client_log[val.client_id].status_broadcast == 'R') {
-								warna_status = 'btn-color-blueWhite';
-							}
-						} else {
-							warna_status = '';
-						}
-
-						data_client += '<tr class="' + warna_status + '">';
-						data_client += '     <td align="center" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + no + '</td>';
-						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_nama + '</td>';
-						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
-						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
-						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
-						data_client += '	 </td>';
-						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
-						// data_client += '	 </td>';
-						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
-						// data_client += '	</td>';
-						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
-						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
-						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
-						// data_client += '	 </td>';
-						data_client += '</tr>';
-					});
-
-				}
+// 					jQuery.each(data.data, function (i, val) {
+// 						var status_client = '';
+// 						if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
+// 							status_client = 'new';
+// 						} else if (val.bulan_selisih > 2) {
+// 							status_client = 'non_aktif';
+// 						} else if (val.bulan_selisih > 0 && val.bulan_selisih <= 2) {
+// 							status_client = 'aktif';
+// 						}
 
 
-				jQuery("#tabel_data_client").html(data_client);
-				jQuery("#total-client-broadcast").html(no);
-			} else {
-				jQuery("#tabel_data_client").html('<tr><td colspan="6" align="center">Tidak Ada Data</td></tr>');
-				jQuery("#total-client-broadcast").html('0');
-			}
+// 						var warna_status = '';
+// 						if (data.client_log[val.client_id] != null) {
+// 							if (data.client_log[val.client_id].status_broadcast == 'F' || data.client_log[val.client_id].status_broadcast == 'A' || data.client_log[val.client_id].status_broadcast == null) {
+// 								warna_status = 'card-color-red';
+// 							} else if (data.client_log[val.client_id].status_broadcast == 'S') {
+// 								warna_status = 'btn-color-greenWhite';
+// 							} else if (data.client_log[val.client_id].status_broadcast == 'D' || data.client_log[val.client_id].status_broadcast == 'R') {
+// 								warna_status = 'btn-color-blueWhite';
+// 							}
+// 						} else {
+// 							warna_status = '';
+// 						}
 
-			app.dialog.close();
-		},
-		error: function (xmlhttprequest, textstatus, message) {
-		}
-	});
-}
+// 						no++
+// 						data_client += '<tr class="' + warna_status + '">';
+// 						data_client += '     <td align="center" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + no + '</td>';
+// 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_nama + '</td>';
+// 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+// 						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+// 						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
+// 						data_client += '	 </td>';
+// 						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+// 						// data_client += '	 </td>';
+// 						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
+// 						// data_client += '	</td>';
+// 						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
+// 						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
+// 						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
+// 						// data_client += '	 </td>';
+// 						data_client += '</tr>';
+
+// 					});
+
+// 				} else {
+// 					jQuery.each(data.data, function (i, val) {
+// 						no++
+// 						var status_client = '';
+// 						if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
+// 							status_client = 'new';
+// 						} else if (val.bulan_selisih > 2) {
+// 							status_client = 'non_aktif';
+// 						} else if (val.bulan_selisih > 0 && val.bulan_selisih <= 2) {
+// 							status_client = 'aktif';
+// 						}
+
+// 						var warna_status = '';
+// 						if (data.client_log[val.client_id] != null) {
+// 							if (data.client_log[val.client_id].status_broadcast == 'F' || data.client_log[val.client_id].status_broadcast == 'A' || data.client_log[val.client_id].status_broadcast == null) {
+// 								warna_status = 'card-color-red';
+// 							} else if (data.client_log[val.client_id].status_broadcast == 'S') {
+// 								warna_status = 'btn-color-greenWhite';
+// 							} else if (data.client_log[val.client_id].status_broadcast == 'D' || data.client_log[val.client_id].status_broadcast == 'R') {
+// 								warna_status = 'btn-color-blueWhite';
+// 							}
+// 						} else {
+// 							warna_status = '';
+// 						}
+
+// 						data_client += '<tr class="' + warna_status + '">';
+// 						data_client += '     <td align="center" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + no + '</td>';
+// 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_nama + '</td>';
+// 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+// 						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+// 						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
+// 						data_client += '	 </td>';
+// 						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+// 						// data_client += '	 </td>';
+// 						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
+// 						// data_client += '	</td>';
+// 						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+// 						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
+// 						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
+// 						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
+// 						// data_client += '	 </td>';
+// 						data_client += '</tr>';
+// 					});
+
+// 				}
+
+
+// 				jQuery("#tabel_data_client").html(data_client);
+// 				jQuery("#total-client-broadcast").html(no);
+// 			} else {
+// 				jQuery("#tabel_data_client").html('<tr><td colspan="6" align="center">Tidak Ada Data</td></tr>');
+// 				jQuery("#total-client-broadcast").html('0');
+// 			}
+
+// 			app.dialog.close();
+// 		},
+// 		error: function (xmlhttprequest, textstatus, message) {
+// 		}
+// 	});
+// }
 
 
 function getDataClientHide() {
@@ -467,7 +468,7 @@ function updateHideBroadcast(client_id, hide_broadcast) {
 							if (hide_broadcast == 0) {
 								getDataClientHide();
 							} else {
-								getDataClient();
+								getDataClientHead();
 							}
 						},
 						error: function (xmlhttprequest, textstatus, message) {
@@ -571,7 +572,7 @@ function updateStatusNewBroadcast(client_id, new_client_performa) {
 						success: function (data) {
 							app.dialog.close();
 							openPopupClientProspek();
-							getDataClient();
+							getDataClientHead();
 						},
 						error: function (xmlhttprequest, textstatus, message) {
 						}
@@ -748,16 +749,16 @@ function kirimBroadcast() {
 					success: function (data) {
 						app.dialog.close();
 						if (data.status == 'success') {
-							getDataClient();
+							getDataClientHead();
 							getTargetBroadcastCs();
 						} else if (data.status == 'failed') {
-							getDataClient();
+							getDataClientHead();
 							getTargetBroadcastCs();
 						}
 					},
 					error: function (xmlhttprequest, textstatus, message) {
 						app.dialog.alert('Ada kendala pada koneksi server, Silahkan Coba Kembali');
-						getDataClient();
+						getDataClientHead();
 						getTargetBroadcastCs();
 					}
 
@@ -799,16 +800,16 @@ function simpanClientBroadcast() {
 					smartSelect.setValue([])
 					if (data.status == 'success') {
 						app.popup.close();
-						getDataClient();
+						getDataClientHead();
 					} else if (data.status == 'failed') {
 						app.popup.close();
-						getDataClient();
+						getDataClientHead();
 					}
 				},
 				error: function (xmlhttprequest, textstatus, message) {
 					app.dialog.alert('Ada kendala pada koneksi server, Silahkan Coba Kembali');
 					app.popup.close();
-					getDataClient();
+					getDataClientHead();
 				}
 
 			});
@@ -983,6 +984,7 @@ function getDataClientHead() {
 			app.dialog.close();
 		},
 		error: function (xmlhttprequest, textstatus, message) {
+			app.dialog.error("GAGAL");
 		}
 	});
 }

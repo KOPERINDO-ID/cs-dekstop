@@ -892,9 +892,11 @@ function getMenuUser() {
 
   // Apply menu visibility berdasarkan username (CSO vs lainnya)
   if (username === 'CSO') {
+    $$('#menuDelayGo').show();
     $$('#menuTagihan').show();
     $$('#menuBroadcast').hide();
   } else {
+    $$('#menuDelayGo').hide();
     $$('#menuTagihan').hide();
     $$('#menuBroadcast').show();
   }

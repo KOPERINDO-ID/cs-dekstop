@@ -874,19 +874,29 @@ function more_open(id) {
 
 function getMenuUser() {
   var jabatan = localStorage.getItem("jabatan");
+  var username = localStorage.getItem("username");
 
   if (jabatan == 'Sales') {
-    $$("#menu_sales").show();
-    $$("#menu_produksi").hide();
-    $$("#menu_surat_jalan").hide();
+    $$('#menu_sales').show();
+    $$('#menu_produksi').hide();
+    $$('#menu_surat_jalan').hide();
   } else if (jabatan == 'Produksi') {
-    $$("#menu_sales").hide();
-    $$("#menu_produksi").show();
-    $$("#menu_surat_jalan").hide();
+    $$('#menu_sales').hide();
+    $$('#menu_produksi').show();
+    $$('#menu_surat_jalan').hide();
   } else if (jabatan == 'Surat_jalan') {
-    $$("#menu_sales").hide();
-    $$("#menu_produksi").hide();
-    $$("#menu_surat_jalan").show();
+    $$('#menu_sales').hide();
+    $$('#menu_produksi').hide();
+    $$('#menu_surat_jalan').show();
+  }
+
+  // Apply menu visibility berdasarkan username (CSO vs lainnya)
+  if (username === 'CSO') {
+    $$('#menuTagihan').show();
+    $$('#menuBroadcast').hide();
+  } else {
+    $$('#menuTagihan').hide();
+    $$('#menuBroadcast').show();
   }
 }
 

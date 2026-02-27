@@ -286,6 +286,11 @@ var app = new Framework7({
     iosOverlaysWebView: true,
     androidOverlaysWebView: false,
   },
+  view: {
+    pushState: true,
+    cacheDynamicPages: false, // ← nonaktifkan cache
+    reloadPages: true,        // ← selalu reload halaman
+  },
   on: {
     init: function () {
       var f7 = this;
@@ -356,7 +361,6 @@ $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
 
   if (localStorage.getItem('username') === 'CSO') {
     changeFilterMenuNotif('bayar');
-    $$('#menuTagihan').show();
     $$('#bayarFilterMenuNotif').show();
     $$('#shipmentFilterMenuNotif').show();
     $$('#kirimFilterMenuNotif').show();
@@ -364,7 +368,6 @@ $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
     $$('#salesFilterMenuNotif').hide();
   } else {
     changeFilterMenuNotif('proforma');
-    $$('#menuTagihan').hide();
     $$('#proformaFilterMenuNotif').show();
     $$('#salesFilterMenuNotif').show();
     $$('#bayarFilterMenuNotif').hide();

@@ -214,26 +214,46 @@
     </div>
 
     <div class="card">
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white"
-            onclick="changeFilterMenu('sales',0);" href="/client">Broadcast</a>
+        <div id="menuBroadcast" class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);" href="/client">Broadcast</a>
         </div>
-        <div class="col col-border text-bold merah-notif-all"><a class="text-add-colour-white"
-            onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        <div class="align-items-center justify-content-center text-bold merah-notif-all"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
-        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
-        <div class="col col-border text-bold notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        <div class="align-items-center justify-content-center text-bold notif-merah-delay"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
-        <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a>
+        <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a>
+        <!-- <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
-        
-        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/tools">Tools</a>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/point-sales">Point</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/absen-sales">Absensi</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/prospek">Prospek</a>
         </div> -->
       </div>
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">

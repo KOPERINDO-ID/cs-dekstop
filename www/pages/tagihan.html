@@ -36,10 +36,13 @@
                     <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="alamat_sekarang_delay_popup" name="alamat_sekarang_delay_popup" required readonly disabled validate>
-                      <input type="hidden" id="penjualan_id_delay_alamat" name="penjualan_id_delay_alamat" required validate>
+                      <input type="text" id="alamat_sekarang_delay_popup" name="alamat_sekarang_delay_popup" required
+                        readonly disabled validate>
+                      <input type="hidden" id="penjualan_id_delay_alamat" name="penjualan_id_delay_alamat" required
+                        validate>
                       <input type="hidden" id="client_id_delay_alamat" name="client_id_delay_alamat" required validate>
-                      <input type="hidden" id="karyawan_id_delay_alamat" name="karyawan_id_delay_alamat" required validate>
+                      <input type="hidden" id="karyawan_id_delay_alamat" name="karyawan_id_delay_alamat" required
+                        validate>
                     </div>
                   </div>
                 </li>
@@ -48,7 +51,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Kota</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="kota_kirim_delay_popup" name="kota_kirim_delay_popup" required readonly disabled validate>
+                      <input type="text" id="kota_kirim_delay_popup" name="kota_kirim_delay_popup" required readonly
+                        disabled validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -58,7 +62,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="hp_delay_alamat" name="hp_delay_alamat" required readonly disabled validate>
+                      <input type="text" id="hp_delay_alamat" name="hp_delay_alamat" required readonly disabled
+                        validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -68,7 +73,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <textarea type="text" value="" id="alamat_kirim_delay_popup" readonly disabled name="alamat_kirim_delay_popup" required validate></textarea>
+                      <textarea type="text" value="" id="alamat_kirim_delay_popup" readonly disabled
+                        name="alamat_kirim_delay_popup" required validate></textarea>
                     </div>
                   </div>
                 </li>
@@ -77,7 +83,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="tgl_kirim_cabang_delay" name="tgl_kirim_cabang_delay" required readonly validate>
+                      <input type="text" id="tgl_kirim_cabang_delay" name="tgl_kirim_cabang_delay" required readonly
+                        validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -87,7 +94,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Tgl Req Kirim</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="tgl_req_kirim_cabang_delay" name="tgl_req_kirim_cabang_delay" required readonly validate>
+                      <input type="text" id="tgl_req_kirim_cabang_delay" name="tgl_req_kirim_cabang_delay" required
+                        readonly validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -96,7 +104,8 @@
                   <div class="item-inner">
                     <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
                     <div class="item-input-wrap">
-                      <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_delay" name="keterangan_cabang_delay" readonly required validate></textarea>
+                      <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang_delay"
+                        name="keterangan_cabang_delay" readonly required validate></textarea>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -106,7 +115,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Packing</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="packing_notif_alamat" name="packing_notif_alamat" required readonly disabled validate>
+                      <input type="text" id="packing_notif_alamat" name="packing_notif_alamat" required readonly
+                        disabled validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -151,17 +161,21 @@
                     </h3>
                     <form id="pembayaran_form_tagihan">
                       <div class="card-content" style="overflow-x:auto; width:100%;">
-                        <table align="center" width="100%" border="0" style="border-collapse: collapse; border:1px solid white;">
+                        <table align="center" width="100%" border="0"
+                          style="border-collapse: collapse; border:1px solid white;">
                           <thead>
                             <tr>
-                              <td colspan="3" width="37%" height="10px" class="numeric-cell text-align-left">Tanggal</td>
+                              <td colspan="3" width="37%" height="10px" class="numeric-cell text-align-left">Tanggal
+                              </td>
                               <td width="13%" class="numeric-cell text-align-left">:</td>
-                              <td width="50%" id="tanggal_pembayaran_tagihan_choose" class="numeric-cell text-align-right"></td>
+                              <td width="50%" id="tanggal_pembayaran_tagihan_choose"
+                                class="numeric-cell text-align-right"></td>
                             </tr>
                             <tr>
                               <td colspan="3" height="10px" class="numeric-cell text-align-left">Penjualan</td>
                               <td class="numeric-cell text-align-left">:</td>
-                              <td id="popup-pembayaran-tagihan-penjualan_grandtotal" class="numeric-cell text-align-right"></td>
+                              <td id="popup-pembayaran-tagihan-penjualan_grandtotal"
+                                class="numeric-cell text-align-right"></td>
                             </tr>
                             <tr>
                               <td colspan="3" height="10px" class="numeric-cell text-align-left">Ongkir</td>
@@ -171,50 +185,210 @@
                             <tr>
                               <td colspan="3" class="numeric-cell text-align-left">Dibayar</td>
                               <td class="numeric-cell text-align-left">:</td>
-                              <td id="popup-pembayaran-tagihan-penjualan_jumlah_pembayaran" class="numeric-cell text-align-right"></td>
+                              <td id="popup-pembayaran-tagihan-penjualan_jumlah_pembayaran"
+                                class="numeric-cell text-align-right"></td>
                             </tr>
                             <tr>
                               <td colspan="3" class="numeric-cell text-align-left">Sisa</td>
                               <td class="numeric-cell text-align-left">:</td>
-                              <td id="popup-pembayaran-tagihan-penjualan_kekurangan" class="numeric-cell text-align-right"></td>
+                              <td id="popup-pembayaran-tagihan-penjualan_kekurangan"
+                                class="numeric-cell text-align-right"></td>
                             </tr>
                             <tr>
                               <td colspan="3" class="numeric-cell text-align-left">Status</td>
                               <td class="numeric-cell text-align-left">:</td>
-                              <td id="popup-pembayaran-tagihan-penjualan_status_pembayaran" class="numeric-cell text-align-right"></td>
+                              <td id="popup-pembayaran-tagihan-penjualan_status_pembayaran"
+                                class="numeric-cell text-align-right"></td>
                             </tr>
                             <tr>
-                              <td colspan="5" id="tanggal_pembayaran_tagihan_choose_td" align="left" style="border-collapse: collapse;"></td>
+                              <td colspan="5" id="tanggal_pembayaran_tagihan_choose_td" align="left"
+                                style="border-collapse: collapse;"></td>
                             </tr>
                           </thead>
                           <!-- Single mode hidden by default, same as penjualan -->
                           <tbody class="pembayaran_tagihan_single_div">
                             <tr class="bg-dark-gray-medium">
-                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-center">Bayar</td>
-                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" class="numeric-cell text-align-center">Tanggal</td>
-                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" class="numeric-cell text-align-center">Bank</td>
-                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" class="numeric-cell text-align-center">Jumlah</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-center">Bayar</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Tanggal</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Bank</td>
+                              <td width="25%" style="border-collapse: collapse; border:1px solid white;"
+                                class="numeric-cell text-align-center">Jumlah</td>
                             </tr>
                             <!-- Bayar 1-10: Bank selects KOSONG, diisi dinamis oleh generateBankOptions() -->
                             <tr id="content_bayar1_tagihan">
-                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 1</td>
-                              <td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl1" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 1</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl1" class="text-align-center numeric-cell"></td>
                               <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
-                                <select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_1" name="bank_tagihan_1" class="hide_bank bank_tagihan_1 bank_pembayaran_tagihan"></select>
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_1" name="bank_tagihan_1"
+                                  class="hide_bank bank_tagihan_1 bank_pembayaran_tagihan"></select>
                               </td>
                               <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
-                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_1_dp_awal" name="pembayaran_tagihan_1_dp_awal" placeholder="Belum Dibayar" onclick="emptyValueTagihan('pembayaran_tagihan_1_dp_awal');" required>
+                                <input style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_1_dp_awal"
+                                  name="pembayaran_tagihan_1_dp_awal" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_1_dp_awal');" required>
                               </td>
                             </tr>
-                            <tr id="content_bayar2_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 2</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl2" class="text-align-center numeric-cell"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_2" name="bank_tagihan_2" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_2" name="pembayaran_tagihan_2" placeholder="Belum Dibayar" onclick="emptyValueTagihan('pembayaran_tagihan_2');" required></td></tr>
-                            <tr id="content_bayar3_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 3</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl3" class="text-align-center numeric-cell"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_3" name="bank_tagihan_3" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_3" name="pembayaran_tagihan_3" placeholder="Belum Dibayar" onclick="emptyValueTagihan('pembayaran_tagihan_3');" required></td></tr>
-                            <tr id="content_bayar4_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 4</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl4" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_4" name="bank_tagihan_4" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_4');" type="text" id="pembayaran_tagihan_4" name="pembayaran_tagihan_4" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar5_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 5</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl5" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_5" name="bank_tagihan_5" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" type="text" onclick="emptyValueTagihan('pembayaran_tagihan_5');" id="pembayaran_tagihan_5" name="pembayaran_tagihan_5" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar6_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 6</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl6" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_6" name="bank_tagihan_6" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_6');" type="text" id="pembayaran_tagihan_6" name="pembayaran_tagihan_6" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar7_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 7</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl7" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_7" name="bank_tagihan_7" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_7');" type="text" id="pembayaran_tagihan_7" name="pembayaran_tagihan_7" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar8_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 8</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl8" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_8" name="bank_tagihan_8" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_8');" type="text" id="pembayaran_tagihan_8" name="pembayaran_tagihan_8" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar9_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 9</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl9" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_9" name="bank_tagihan_9" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_9');" type="text" id="pembayaran_tagihan_9" name="pembayaran_tagihan_9" placeholder="Belum Dibayar" required></td></tr>
-                            <tr id="content_bayar10_tagihan" style="display:none;"><td style="border-collapse: collapse; border:1px solid white;" colspan="2" class="numeric-cell text-align-left">Bayar 10</td><td style="border-collapse: collapse; border:1px solid white;" id="popup-pembayaran-tagihan-tgl10" class="numeric-cell text-align-center"></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><select style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;" id="bank_tagihan_10" name="bank_tagihan_10" class="hide_bank bank_pembayaran_tagihan"></select></td><td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input style="text-align: right; border-color:lightgray; float:center; width:100%;" class="pembayaran-tagihan-input" type="text" onclick="emptyValueTagihan('pembayaran_tagihan_10');" id="pembayaran_tagihan_10" name="pembayaran_tagihan_10" placeholder="Belum Dibayar" required></td></tr>
+                            <tr id="content_bayar2_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 2</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl2" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_2" name="bank_tagihan_2"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_2"
+                                  name="pembayaran_tagihan_2" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_2');" required></td>
+                            </tr>
+                            <tr id="content_bayar3_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 3</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl3" class="text-align-center numeric-cell"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_3" name="bank_tagihan_3"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text" id="pembayaran_tagihan_3"
+                                  name="pembayaran_tagihan_3" placeholder="Belum Dibayar"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_3');" required></td>
+                            </tr>
+                            <tr id="content_bayar4_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 4</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl4" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_4" name="bank_tagihan_4"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_4');"
+                                  type="text" id="pembayaran_tagihan_4" name="pembayaran_tagihan_4"
+                                  placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar5_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 5</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl5" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_5" name="bank_tagihan_5"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_5');" id="pembayaran_tagihan_5"
+                                  name="pembayaran_tagihan_5" placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar6_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 6</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl6" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_6" name="bank_tagihan_6"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_6');"
+                                  type="text" id="pembayaran_tagihan_6" name="pembayaran_tagihan_6"
+                                  placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar7_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 7</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl7" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_7" name="bank_tagihan_7"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_7');"
+                                  type="text" id="pembayaran_tagihan_7" name="pembayaran_tagihan_7"
+                                  placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar8_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 8</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl8" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_8" name="bank_tagihan_8"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_8');"
+                                  type="text" id="pembayaran_tagihan_8" name="pembayaran_tagihan_8"
+                                  placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar9_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 9</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl9" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_9" name="bank_tagihan_9"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" onclick="emptyValueTagihan('pembayaran_tagihan_9');"
+                                  type="text" id="pembayaran_tagihan_9" name="pembayaran_tagihan_9"
+                                  placeholder="Belum Dibayar" required></td>
+                            </tr>
+                            <tr id="content_bayar10_tagihan" style="display:none;">
+                              <td style="border-collapse: collapse; border:1px solid white;" colspan="2"
+                                class="numeric-cell text-align-left">Bayar 10</td>
+                              <td style="border-collapse: collapse; border:1px solid white;"
+                                id="popup-pembayaran-tagihan-tgl10" class="numeric-cell text-align-center"></td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell">
+                                <select
+                                  style="text-align-last: center; border-radius:3px; width:150px; background-color:#1c1c1d;"
+                                  id="bank_tagihan_10" name="bank_tagihan_10"
+                                  class="hide_bank bank_pembayaran_tagihan"></select>
+                              </td>
+                              <td style="border-collapse: collapse; border:1px solid white;" class="numeric-cell"><input
+                                  style="text-align: right; border-color:lightgray; float:center; width:100%;"
+                                  class="pembayaran-tagihan-input" type="text"
+                                  onclick="emptyValueTagihan('pembayaran_tagihan_10');" id="pembayaran_tagihan_10"
+                                  name="pembayaran_tagihan_10" placeholder="Belum Dibayar" required></td>
+                            </tr>
 
                             <tr>
                               <td colspan="5" class="numeric-cell text-align-left">
@@ -223,10 +397,13 @@
                                     <li class="item-content item-input">
                                       <div class="item-inner">
                                         <div class="item-input-wrap">
-                                          <input type="hidden" id="pembayaran-tagihan-penjualan_id" name="pembayaran-tagihan-penjualan_id" />
-                                          <input type="hidden" id="pembayaran-tagihan-client_id" name="pembayaran-tagihan-client_id" />
+                                          <input type="hidden" id="pembayaran-tagihan-penjualan_id"
+                                            name="pembayaran-tagihan-penjualan_id" />
+                                          <input type="hidden" id="pembayaran-tagihan-client_id"
+                                            name="pembayaran-tagihan-client_id" />
                                           <center>
-                                            <i onclick="prosesPembayaranTagihan();" style="width:20%;" class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Proses</i>
+                                            <i onclick="prosesPembayaranTagihan();" style="width:20%;"
+                                              class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold">Proses</i>
                                           </center>
                                           <span class="input-clear-button"></span>
                                         </div>
@@ -276,9 +453,12 @@
                     <table align="center" width="100%">
                       <tr>
                         <td>
-                          <center><h3>Foto Bukti Bayar</h3></center>
                           <center>
-                            <img onclick="zoom_view_foto_bayar(this.src);" width="100px" style="border-radius:10px;" id="file_foto_pembayaran_tagihan_view_now" />
+                            <h3>Foto Bukti Bayar</h3>
+                          </center>
+                          <center>
+                            <img onclick="zoom_view_foto_bayar(this.src);" width="100px" style="border-radius:10px;"
+                              id="file_foto_pembayaran_tagihan_view_now" />
                             <br>
                           </center>
                         </td>
@@ -288,17 +468,20 @@
                       <tbody>
                         <div class="card">
                           <form id="upload_foto_pembayaran_tagihan_form">
-                            <input type="hidden" id="penjualan_id_foto_pembayaran_tagihan" name="penjualan_id_foto_pembayaran_tagihan" value="">
+                            <input type="hidden" id="penjualan_id_foto_pembayaran_tagihan"
+                              name="penjualan_id_foto_pembayaran_tagihan" value="">
                             <input type="hidden" id="foto_urutan_tagihan" name="foto_urutan_tagihan" value="">
                             <center>
-                              <input class="btn-payment-penjualan" style="width:90%; border:1px solid gray;" type="file" name="file_foto_pembayaran_tagihan" id="file_foto_pembayaran_tagihan" value="">
+                              <input class="btn-payment-penjualan" style="width:90%; border:1px solid gray;" type="file"
+                                name="file_foto_pembayaran_tagihan" id="file_foto_pembayaran_tagihan" value="">
                             </center>
                             <center>
                               <img width="100px" style="border-radius:10px;" id="file_foto_pembayaran_tagihan_view" />
                               <br>
                             </center>
                           </form>
-                          <button id="btn_upload_foto_selesai_tagihan" onclick="updateFotoPembayaranTagihanProcess()" class="btn-payment-penjualan text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold">Simpan</button>
+                          <button id="btn_upload_foto_selesai_tagihan" onclick="updateFotoPembayaranTagihanProcess()"
+                            class="btn-payment-penjualan text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold">Simpan</button>
                         </div>
                       </tbody>
                     </table>
@@ -321,7 +504,8 @@
           <div class="navbar-inner bg-dark-gray-medium">
             <div class="title">Edit Pembayaran</div>
             <div class="right">
-              <p id="back-edit-pembayaran-tagihan" class="text-add-colour-white link popup-close" data-popup=".edit-pembayaran-tagihan">
+              <p id="back-edit-pembayaran-tagihan" class="text-add-colour-white link popup-close"
+                data-popup=".edit-pembayaran-tagihan">
                 <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
               </p>
             </div>
@@ -336,7 +520,8 @@
                     <label style="height:17px;"><b>Foto Pembayaran</b></label>
                     <div class="item-input-wrap">
                       <center>
-                        <img onclick="zoom_view_foto_bayar(this.src);" width="200px" style="border-radius:10px;margin-top:5px;" id="file_foto_edit_pembayaran_tagihan_view" />
+                        <img onclick="zoom_view_foto_bayar(this.src);" width="200px"
+                          style="border-radius:10px;margin-top:5px;" id="file_foto_edit_pembayaran_tagihan_view" />
                         <br>
                       </center>
                     </div>
@@ -347,14 +532,21 @@
                     <label style="height:17px; margin-top:-9px;"><b>Bayar</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="bayar_ke_edit_tagihan" name="bayar_ke_edit_tagihan" required readonly validate>
+                      <input type="text" id="bayar_ke_edit_tagihan" name="bayar_ke_edit_tagihan" required readonly
+                        validate>
                       <span class="input-clear-button"></span>
-                      <input type="hidden" id="pembayaran_id_edit_tagihan" name="pembayaran_id_edit_tagihan" required validate>
-                      <input type="hidden" id="sisa_pembayaran_edit_tagihan" name="sisa_pembayaran_edit_tagihan" required validate>
-                      <input type="hidden" id="penjualan_grandtotal_edit_tagihan" name="penjualan_grandtotal_edit_tagihan" required validate>
-                      <input type="hidden" id="total_bayar_edit_tagihan" name="total_bayar_edit_tagihan" required validate>
-                      <input type="hidden" id="last_bayar_edit_tagihan" name="last_bayar_edit_tagihan" required validate>
-                      <input type="hidden" id="pembayaran_type_foto_edit_tagihan" name="pembayaran_type_foto_edit_tagihan" required validate>
+                      <input type="hidden" id="pembayaran_id_edit_tagihan" name="pembayaran_id_edit_tagihan" required
+                        validate>
+                      <input type="hidden" id="sisa_pembayaran_edit_tagihan" name="sisa_pembayaran_edit_tagihan"
+                        required validate>
+                      <input type="hidden" id="penjualan_grandtotal_edit_tagihan"
+                        name="penjualan_grandtotal_edit_tagihan" required validate>
+                      <input type="hidden" id="total_bayar_edit_tagihan" name="total_bayar_edit_tagihan" required
+                        validate>
+                      <input type="hidden" id="last_bayar_edit_tagihan" name="last_bayar_edit_tagihan" required
+                        validate>
+                      <input type="hidden" id="pembayaran_type_foto_edit_tagihan"
+                        name="pembayaran_type_foto_edit_tagihan" required validate>
                     </div>
                   </div>
                 </li>
@@ -363,7 +555,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Tanggal</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="tanggal_pembayaran_edit_tagihan" name="tanggal_pembayaran_edit_tagihan" required readonly validate>
+                      <input type="text" id="tanggal_pembayaran_edit_tagihan" name="tanggal_pembayaran_edit_tagihan"
+                        required readonly validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -382,7 +575,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Jumlah</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="jumlah_pembayaran_edit_tagihan" name="jumlah_pembayaran_edit_tagihan" required validate>
+                      <input type="text" id="jumlah_pembayaran_edit_tagihan" name="jumlah_pembayaran_edit_tagihan"
+                        required validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -392,7 +586,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="keterangan_pembayaran_edit_tagihan" name="keterangan_pembayaran_edit_tagihan" required validate>
+                      <input type="text" id="keterangan_pembayaran_edit_tagihan"
+                        name="keterangan_pembayaran_edit_tagihan" required validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -402,7 +597,8 @@
                     <label style="height:17px; margin-top:-9px;"><b>Keterangan Reject</b></label>
                     <div class="item-input-wrap">
                       <label></label>
-                      <input type="text" id="uraian_reject_edit_tagihan" name="uraian_reject_edit_tagihan" readonly required validate>
+                      <input type="text" id="uraian_reject_edit_tagihan" name="uraian_reject_edit_tagihan" readonly
+                        required validate>
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
@@ -410,13 +606,17 @@
               </ul>
             </div>
             <center style="padding:10px;margin-top: -25px;">
-              <label class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold" id="text_foto_bukti_edit_tagihan" for="foto_bukti_edit_tagihan" style="width:80%;">FOTO</label>
-              <input style="display: none;width:80%;" id="foto_bukti_edit_tagihan" onchange="gambarChange();" name="foto_bukti_edit_tagihan" type="file">
+              <label class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                id="text_foto_bukti_edit_tagihan" for="foto_bukti_edit_tagihan" style="width:80%;">FOTO</label>
+              <input style="display: none;width:80%;" id="foto_bukti_edit_tagihan" onchange="gambarChange();"
+                name="foto_bukti_edit_tagihan" type="file">
               <br>
             </center>
           </form>
           <center>
-            <button onclick="editPembayaranTagihanProses();" style="width:80%;" class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold" id="edit_pembayaran_tagihan_save">Simpan</button>
+            <button onclick="editPembayaranTagihanProses();" style="width:80%;"
+              class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+              id="edit_pembayaran_tagihan_save">Simpan</button>
           </center>
         </div>
       </div>
@@ -431,10 +631,22 @@
   <!-- POPUP LOG BROADCAST TAGIHAN -->
   <!-- ============================================================================ -->
   <style>
-    .toggle-arrow.rotated { transform: rotate(180deg); }
-    .log-broadcast-tagihan .page-content::-webkit-scrollbar { width: 4px; }
-    .log-broadcast-tagihan .page-content::-webkit-scrollbar-track { background: transparent; }
-    .log-broadcast-tagihan .page-content::-webkit-scrollbar-thumb { background: #38383a; border-radius: 4px; }
+    .toggle-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    .log-broadcast-tagihan .page-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .log-broadcast-tagihan .page-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .log-broadcast-tagihan .page-content::-webkit-scrollbar-thumb {
+      background: #38383a;
+      border-radius: 4px;
+    }
   </style>
   <div class="popup log-broadcast-tagihan">
     <div class="view">
@@ -465,15 +677,40 @@
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
     <div class="card">
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold"><a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a></div>
-        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);" href="/client">Broadcast</a></div> -->
-        <div class="col col-bordertext-bold"><a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a></div>
-        <div class="col col-border text-bold notif-merah-delay"><a class="text-add-colour-white" href="/delay-go">Delay - Go</a></div>
-        <div class="col col-border text-bold bg-dark-gray-medium notif-merah-tagihan"><a class="text-add-colour-white" href="/tagihan">Tagihan</a></div>
-        <!-- <div class="col col-border text-bold"><a class="text-add-colour-white" href="/kpi">KPI</a></div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/tools">Tools</a></div>
-        <div class="col col-border text-bold "><a class="text-add-colour-white" href="/point-sales">Point</a></div> -->
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+        </div>
+        <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenu('sales',0);" href="/client">Broadcast</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold notif-merah-delay"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
+        </div>
+        <div id="menuTagihan"
+          class="align-items-center justify-content-center bg-dark-gray-medium text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
+        <!-- <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/kpi">KPI</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/point-sales">Point</a>
+        </div> -->
       </div>
       <!-- Card -->
       <div class="card border-actived" style="margin:10px;">
@@ -484,12 +721,15 @@
             <h3 class="margin-15" style="color:white;">Data | <i id="count_notif_tagihan"> </i></h3>
           </div>
           <div style="display:flex; align-items:center; gap:10px; margin-right:56px;">
-            <i class="f7-icons" onclick="getDataTagihan();" style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+            <i class="f7-icons" onclick="getDataTagihan();"
+              style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
           </div>
-          <div class="popup-open" data-popup=".popup-expedisi-global" style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+          <div class="popup-open" data-popup=".popup-expedisi-global"
+            style="position:absolute; right:0; top:0; bottom:0; width:48px; background:#ff6600; display:flex; align-items:center; justify-content:center; cursor:pointer;">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-                  </svg>
+              <path
+                d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+            </svg>
           </div>
         </div>
 
@@ -500,16 +740,21 @@
               placeholder="Cari Nama Client / Perusahaan..."
               style="width:100%; padding:7px 35px 7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px; box-sizing:border-box;"
               onkeyup="filterNamaClientTagihanDebounce();" />
-            <span onclick="resetFilterNamaClientTagihan();" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#888; font-size:16px; line-height:1;">✕</span>
+            <span onclick="resetFilterNamaClientTagihan();"
+              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#888; font-size:16px; line-height:1;">✕</span>
           </div>
         </div>
 
         <!-- Filter Bulan/Tahun -->
         <div class="card-content bg-dark-gray-medium" style="padding:6px 10px; display:flex; gap:8px;">
-          <select onchange="getDataTagihan();" style="flex:1; padding:6px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-weight:bold; text-align:center;"
-            name="transaksi_tagihan_bulan" class="transaksi_tagihan_bulan text-add-colour-black-soft" id="transaksi_tagihan_bulan"></select>
-          <select onchange="getDataTagihan();" style="flex:1; padding:6px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-weight:bold; text-align:center;"
-            class="transaksi_tagihan_years text-add-colour-black-soft" name="transaksi_tagihan_years" id="transaksi_tagihan_years"></select>
+          <select onchange="getDataTagihan();"
+            style="flex:1; padding:6px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-weight:bold; text-align:center;"
+            name="transaksi_tagihan_bulan" class="transaksi_tagihan_bulan text-add-colour-black-soft"
+            id="transaksi_tagihan_bulan"></select>
+          <select onchange="getDataTagihan();"
+            style="flex:1; padding:6px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-weight:bold; text-align:center;"
+            class="transaksi_tagihan_years text-add-colour-black-soft" name="transaksi_tagihan_years"
+            id="transaksi_tagihan_years"></select>
         </div>
 
         <!-- Tabel -->
@@ -520,12 +765,15 @@
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">No</th>
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">SPK</th>
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="15%">Client</th>
-                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">Tgl Selesai Kirim</th>
+                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">Tgl Selesai
+                  Kirim</th>
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">Kota</th>
-                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Nilai Jual</th>
+                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Nilai Jual
+                </th>
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Bayar</th>
                 <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Sisa</th>
-                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%" colspan="2">Opsi</th>
+                <th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%" colspan="2">
+                  Opsi</th>
               </tr>
             </thead>
             <tbody id="data_status_notif_tagihan"></tbody>

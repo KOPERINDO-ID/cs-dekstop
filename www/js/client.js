@@ -1,5 +1,5 @@
 
-function changeFilterMenu(menu) {
+function changeFilterMenu(menu = 'new') {
 	if (localStorage.getItem("stat_log") == 1) {
 		if (localStorage.getItem("menu_log") == 'new') {
 			localStorage.setItem('menu', 'new');
@@ -77,7 +77,7 @@ function changeFilterMenu(menu) {
 	console.log(localStorage.getItem("stat_log"));
 	console.log(localStorage.getItem("menu"));
 	console.log(localStorage.getItem("menu_log"));
-
+	getDataClientHead();
 }
 function activeEye() {
 	if (localStorage.getItem('show_eye') == 'aktif') {
@@ -218,16 +218,19 @@ function getDataClient() {
 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
 						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
 						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
 						data_client += '	 </td>';
-						data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
-						data_client += '	</td>';
-						data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
-						data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
-						data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
-						data_client += '	 </td>';
+						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+						// data_client += '	 </td>';
+						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
+						// data_client += '	</td>';
+						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
+						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
+						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
+						// data_client += '	 </td>';
 						data_client += '</tr>';
 
 					});
@@ -263,16 +266,19 @@ function getDataClient() {
 						data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
 						// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
 						data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+						data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-popup" onclick="detailsClientBroadcast(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
 						data_client += '	 </td>';
-						data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
-						data_client += '	</td>';
-						data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
-						data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
-						data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
-						data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
-						data_client += '	 </td>';
+						// data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)">Log</a>';
+						// data_client += '	 </td>';
+						// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
+						// data_client += '	</td>';
+						// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+						// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
+						// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
+						// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
+						// data_client += '	 </td>';
 						data_client += '</tr>';
 					});
 
@@ -866,4 +872,130 @@ function getDataLogBroadcast() {
 		error: function (xmlhttprequest, textstatus, message) {
 		}
 	});
+}
+
+function getDataClientHead() {
+
+	if (jQuery('#perusahaan_broadcast_head').val() == '' || jQuery('#perusahaan_broadcast_head').val() == null) {
+		perusahaan_broadcast_value = "empty";
+	} else {
+		perusahaan_broadcast_value = jQuery('#perusahaan_broadcast_head').val();
+	}
+
+	if (jQuery('#filter_kota_broadcast_head').val() == '' || jQuery('#filter_kota_broadcast_head').val() == null) {
+		client_kota = "empty";
+	} else {
+		client_kota = jQuery('#filter_kota_broadcast_head').val();
+	}
+
+	var year_now = new Date().getFullYear();
+	if (jQuery('#client_penjualan_years_head option:selected').val() == null) {
+		var year = year_now;
+	} else if (jQuery('#client_penjualan_years_head option:selected').val() == 'all') {
+		var year = 'empty';
+	} else {
+		var year = jQuery('#client_penjualan_years_head option:selected').val();
+	}
+
+	var month_now = new Date().getMonth() + 1;
+	if (jQuery('#client_penjualan_bulan_head option:selected').val() == null) {
+		var month = month_now;
+	} else if (jQuery('#client_penjualan_bulan_head option:selected').val() == 'all') {
+		var month = 'empty';
+	} else {
+		var month = jQuery('#client_penjualan_bulan_head option:selected').val();
+	}
+
+	jQuery.ajax({
+		type: 'POST',
+		url: BASE_API + "/get-data-client-new-head-dm",
+		dataType: 'JSON',
+		data: {
+			perusahaan_broadcast_value: perusahaan_broadcast_value,
+			client_kota: client_kota,
+			user_id: localStorage.getItem("user_id"),
+			year: year,
+			month: month,
+		},
+		beforeSend: function () {
+			app.dialog.preloader('Harap Tunggu');
+		},
+		success: function (data) {
+			var data_client = '';
+			app.dialog.close();
+
+			if (data.data.length != 0) {
+				var no = 0;
+				jQuery.each(data.data, function (i, val) {
+					var kota = cleanText(val.client_kota);
+					no++
+					var status_client = '';
+					if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
+						status_client = 'new';
+					} else if (val.bulan_selisih > 2) {
+						status_client = 'non_aktif';
+					} else if (val.bulan_selisih > 0 && val.bulan_selisih <= 2) {
+						status_client = 'aktif';
+					}
+
+					var warna_status = '';
+					if (data.client_log[val.client_id] != null) {
+						if (data.client_log[val.client_id].status_broadcast == 'F' || data.client_log[val.client_id].status_broadcast == 'A' || data.client_log[val.client_id].status_broadcast == null) {
+							warna_status = 'card-color-red';
+						} else if (data.client_log[val.client_id].status_broadcast == 'S') {
+							warna_status = 'btn-color-greenWhite';
+						} else if (data.client_log[val.client_id].status_broadcast == 'D' || data.client_log[val.client_id].status_broadcast == 'R') {
+							warna_status = 'btn-color-blueWhite';
+						}
+					} else {
+						warna_status = '';
+					}
+
+					data_client += '<tr class="' + warna_status + '">';
+					data_client += '     <td align="center" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + no + '</td>';
+					data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.client_nama + '</td>';
+					data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + kota + ' <input style="width: 100%;" type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+					data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell">' + val.karyawan_nama + '</td>';
+					// data_client += '     <td align="left" style="border-left: 1px solid grey;border-bottom: 1px solid grey;"  class="label-cell"><input style="width: 100%;" type="text" id="status_check_client_' + no + '" name="status_check_client_' + no + '"  value = "' + status_client + '" readonly></td>';
+					data_client += '	 <td style="border-left: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+					data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" href="/log" onclick="localClientID(' + val.client_id + ',1)" style="width:100px;">Log</a></center>';
+					data_client += '	 </td>';
+					// data_client += '	<td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+					// data_client += '  		<label class="text-add-colour-white"><i style="margin-right:5px;" class="f7-icons" onclick="updateHideBroadcast(\'' + val.client_id + '\',1);">eye_slash</i></label>';
+					// data_client += '	</td>';
+					// data_client += '	 <td style="border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+					// data_client += '		<input type="hidden"  name="check_client_' + no + '" value="0" >';
+					// data_client += '		<input type="checkbox" value="1" id="check_client_' + no + '" name="c" class="checked_all check_wa">';
+					// data_client += '		<input value="' + val.client_id + '" type="hidden" id="client_check_client_' + no + '" name="client_check_client_' + no + '"';
+					// data_client += '	 </td>';
+					data_client += '	 <td style="border-left: 1px solid grey;border-right: 1px solid grey;border-bottom: 1px solid grey;text-align:center">';
+					data_client += '		<center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold popup-open"  data-popup=".data-client-head-popup" onclick="detailsClientBroadcastHead(\'' + val.client_id + '\',\'' + val.client_nama + '\',\'' + val.client_cp + '\',\'' + val.client_kota + '\',\'' + val.client_cp_posisi + '\',\'' + val.client_telp + '\',\'' + val.client_alamat + '\')" style="width:100px;">Details</a></center>';
+					data_client += '	 </td>';
+					data_client += '</tr>';
+				});
+
+
+				jQuery("#tabel_data_client_head").html(data_client);
+				jQuery("#total-client-broadcast-head").html(no);
+			} else {
+				jQuery("#tabel_data_client_head").html('<tr><td colspan="6" align="center">Tidak Ada Data</td></tr>');
+				jQuery("#total-client-broadcast-head").html('0');
+			}
+
+			app.dialog.close();
+		},
+		error: function (xmlhttprequest, textstatus, message) {
+		}
+	});
+}
+
+function detailsClientBroadcastHead(client_id, client_nama, client_cp, client_kota, client_cp_posisi, client_telp, client_alamat) {
+	// selectBoxKotaBrodacastHead(client_kota);
+	$$("#edit_kota_broadcast_head").val(client_kota);
+	$$("#edit_client_id_broadcast_head").val(client_id);
+	$$("#edit_client_nama_broadcast_head").val(client_nama);
+	$$("#edit_client_cp_broadcast_head").val(client_cp);
+	$$("#edit_client_posisi_broadcast_head").val(client_cp_posisi);
+	$$("#edit_client_telp_broadcast_head").val(client_telp);
+	$$("#edit_client_alamat_broadcast_head").val(client_alamat);
 }

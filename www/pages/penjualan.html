@@ -632,10 +632,9 @@
             <div class="navbar-inner bg-dark-gray-medium">
               <div class="title">Input Alamat <span id="nama-client-alamat"></span></div>
               <div class="right">
-                <!-- Link to close popup -->
-                <p id="backbutton-input-alamat-kirim" class="text-add-colour-white link popup-close"
-                  data-popup=".input-alamat-kirim"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i></p>
+                <p id="backbutton" class="text-add-colour-white link popup-close" data-popup=".input-alamat-kirim">
+                  <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                </p>
               </div>
             </div>
           </div>
@@ -643,30 +642,22 @@
             <form id="input_alamat_kirim_popup">
               <div class="list" style="margin-top: 10px;">
                 <ul style="padding: 10px;">
+
+                  <!-- 1. FOTO PRODUKSI SELESAI -->
                   <li class="item-content item-input">
                     <div class="item-inner">
-                      <label style="height:17px;"><b>Foto Produksi Selesai</b></label>
+                      <label style="height:17px; padding-top:10px;"><b>Foto Produksi Selesai</b></label>
                       <div class="item-input-wrap">
-                        <center>
-                          <img onclick="zoom_view(this.src);" width="200px" style="border-radius:10px;margin-top:5px;"
+                        <center style="padding-top:10px;">
+                          <img onclick="zoom_view(this.src);" width="200px" style="border-radius:10px; margin-top:10px;"
                             id="file_foto_produksi_selesai_sales_view" />
                           <br>
                         </center>
                       </div>
                     </div>
                   </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
-                      <div class="item-input-wrap">
-                        <label></label>
-                        <input type="text" id="alamat_sekarang_popup" name="alamat_sekarang_popup" required readonly
-                          disabled validate>
-                        <input type="hidden" id="penjualan_id_alamat" name="penjualan_id_alamat" required validate>
-                        <span class="input-clear-button"></span>
-                      </div>
-                    </div>
-                  </li>
+
+                  <!-- 2. KOTA -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Kota</b></label>
@@ -678,63 +669,114 @@
                       </div>
                     </div>
                   </li>
+
+                  <!-- 3. NO HP -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>No Hp.</b></label>
                       <div class="item-input-wrap">
                         <label></label>
                         <input type="text" id="hp_alamat" name="hp_alamat" required readonly disabled validate>
+                        <input type="hidden" id="penjualan_id_alamat" name="penjualan_id_alamat" required validate>
+                        <input type="hidden" id="client_id_alamat" name="client_id_alamat" required validate>
+                        <input type="hidden" id="karyawan_id_alamat" name="karyawan_id_alamat" required validate>
                         <span class="input-clear-button"></span>
                       </div>
                     </div>
                   </li>
+
+                  <!-- 4. ALAMAT AWAL -->
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <label style="height:17px; margin-top:-9px;"><b>Alamat Awal</b></label>
+                      <div class="item-input-wrap">
+                        <label></label>
+                        <input type="text" id="alamat_sekarang_popup" name="alamat_sekarang_popup" required readonly
+                          disabled validate>
+                        <span class="input-clear-button"></span>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- 5. ALAMAT KIRIM -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Alamat Kirim</b></label>
                       <div class="item-input-wrap">
                         <div class="row">
-                          <div class="col-100">
+                          <div class="col-90">
                             <label></label>
                             <textarea type="text" value="" placeholder="Isi Alamat" id="alamat_kirim_popup"
-                              name="alamat_kirim_popup" required validate readonly></textarea>
+                              name="alamat_kirim_popup" required validate></textarea>
                             <span class="input-clear-button"></span>
+                          </div>
+                          <div class="col-10">
+                            <i class="text-align-right f7-icons" onclick="copyFillAlamat();"
+                              style="font-size:30px; color:grey">doc_on_doc</i>
                           </div>
                         </div>
                       </div>
                     </div>
                   </li>
+
+                  <!-- 6. TANGGAL KIRIM -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Tgl Kirim</b></label>
                       <div class="item-input-wrap">
                         <label></label>
-                        <input type="date" id="tgl_kirim_cabang" name="tgl_kirim_cabang" required readonly validate>
+                        <input type="date" id="tgl_kirim_cabang" name="tgl_kirim_cabang" required validate>
                         <span class="input-clear-button"></span>
                       </div>
                     </div>
                   </li>
+
+                  <!-- 7. KETERANGAN -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Keterangan</b></label>
                       <div class="item-input-wrap">
                         <textarea type="text" value="" placeholder="Isi Keterangan" id="keterangan_cabang"
-                          name="keterangan_cabang" readonly required validate></textarea>
+                          name="keterangan_cabang" required validate></textarea>
                         <span class="input-clear-button"></span>
                       </div>
                     </div>
                   </li>
+
+                  <!-- 8. PACKING -->
                   <li class="item-content item-input">
                     <div class="item-inner">
                       <label style="height:17px; margin-top:-9px;"><b>Packing</b></label>
                       <div class="item-input-wrap">
-                        <input type="text" id="packing_kirim_view" name="packing_kirim_view" placeholder="Belum dipilih"
-                          readonly style="background:transparent; border:none; pointer-events:none;">
+                        <input type="hidden" id="penjualan_id_kirim_support" name="penjualan_id_kirim_support">
+                        <!-- Edit mode: select -->
+                        <select id="packing_kirim" name="packing_kirim" onchange="packingProcess();">
+
+                        </select>
+                        <!-- Readonly mode: teks -->
+                        <input type="text" id="packing_kirim_readonly"
+                          style="display:none; background:transparent; border:none; color:#fff; font-size:14px; pointer-events:none;"
+                          readonly>
                       </div>
                     </div>
                   </li>
+
                 </ul>
               </div>
             </form>
+
+            <!-- Container untuk status info dan button -->
+            <center style="padding:10px; margin-top:-30px;">
+              <!-- Status info container (diisi via JavaScript) -->
+              <div id="shipment_status_info_container"></div>
+
+              <!-- Button Simpan/Ajukan (style akan diubah via JavaScript) -->
+              <button onclick="tambahAlamatPenjualanProses();" style="width:90%; height:50px; font-size:16px;"
+                class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                id="tambah_alamat_kirim_button_save">
+                Simpan
+              </button>
+            </center>
           </div>
         </div>
       </div>

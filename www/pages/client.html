@@ -213,6 +213,134 @@
       </div>
     </div>
 
+    <div class="popup data-client-head-popup">
+      <div class="view view-init">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner bg-dark-gray-orange">
+              <div class="title">Details Client</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <p class="text-add-colour-white link popup-close" id="back-data-client-head-popup"
+                  data-popup=".data-client-head-popup"><i style="margin-right:5px;"
+                    class="f7-icons">xmark_rectangle_fill</i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="card card-outline margin-top">
+              <div class="card-content">
+                <div class="row">
+                  <div class="col-100">
+                    <div class="card-content">
+                      <div class="list no-hairlines-md">
+                        <div class="list">
+                          <form id="form_edit_client_broadcast_head">
+                            <ul>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-title item-label">Perusahaan</div>
+                                  <div class="item-input-wrap">
+                                    <input class="clear_edit_client_broadcast_head" type="text"
+                                      id="edit_client_nama_broadcast_head" name="edit_client_nama_broadcast_head"
+                                      placeholder="Nama Perusahaan" required validate readonly>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-title item-label">PIC</div>
+                                  <div class="item-input-wrap">
+                                    <input type="text" class="clear_edit_client_broadcast_head"
+                                      id="edit_client_cp_broadcast_head" name="edit_client_cp_broadcast_head"
+                                      placeholder="PIC" required validate readonly>
+                                    <input type="hidden" class="clear_edit_client_broadcast_head"
+                                      id="edit_client_id_broadcast_head" name="edit_client_id_broadcast_head"
+                                      placeholder="PIC" required validate readonly>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-title item-label">Kota</div>
+                                  <div class="item-input-wrap">
+                                    <input type="text" class="clear_edit_client_broadcast_head"
+                                      id="edit_kota_broadcast_head" name="edit_kota_broadcast_head" placeholder="Kota"
+                                      required validate readonly>
+                                    <!-- <a href="#" class="item-link smart-select smart-select-init" data-searchbar="true"
+                                      data-searchbar-placeholder="Cari Kota" data-open-in="popup"
+                                      data-close-on-select="true" style="width: 100%;margin-top: -15px;">
+                                      <select class="clear_edit_client_broadcast_head" name="edit_kota_broadcast_head"
+                                        id="edit_kota_broadcast_head" required validate readonly disabled>
+                                      </select>
+                                      <div class="item-content" style="float:left;width:100%;padding-left:0px;">
+                                        <div class="item-inner">
+                                          <div class="item-after item_after_edit_kota_broadcast_head"
+                                            style="font-size:16px;margin-top:7px;margin-left: -3px;float:left; color:grey;padding-left:2px;">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a> -->
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-input-wrap">
+                                    <select class="clear_edit_client_broadcast_head"
+                                      id="edit_client_posisi_broadcast_head" name="edit_client_posisi_broadcast_head"
+                                      required validate readonly disabled>
+                                      <option value="">Pilih Posisi</option>
+                                      <option value="Owner">Owner</option>
+                                      <option value="Direktur">Direktur</option>
+                                      <option value="Admin">Admin</option>
+                                    </select>
+                                    <span class="input-clear-button"></span>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-title item-label">No. WA</div>
+                                  <div class="item-input-wrap">
+                                    <input type="text" class="clear_edit_client_broadcast_head"
+                                      id="edit_client_telp_broadcast_head" name="edit_client_telp_broadcast_head"
+                                      placeholder="No. WA" required validate readonly>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="item-content item-input">
+                                <div class="item-inner" style="padding-bottom: 0px;">
+                                  <div class="item-title item-label">Alamat</div>
+                                  <div class="item-input-wrap">
+                                    <textarea class="clear_edit_client_broadcast_head"
+                                      id="edit_client_alamat_broadcast_head" name="edit_client_alamat_broadcast_head"
+                                      placeholder="Alamat" required validate readonly></textarea>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </form>
+                        </div>
+                      </div>
+                      <!-- <div style="padding: 10px;">
+                        <button onclick="editClientBroadcast();" style="width:100%;"
+                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
+                          id="edit_client_button_save">SIMPAN
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
         <div class="align-items-center justify-content-center text-bold"
@@ -256,7 +384,7 @@
           <a class="text-add-colour-white" href="/prospek">Prospek</a>
         </div> -->
       </div>
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
+      <!-- <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
         <div class="col col-border text-bold salesFilterMenu"><a class="text-add-colour-white"
             onclick="changeFilterMenu('sales',0);">Sales</a>
         </div>
@@ -264,6 +392,7 @@
             onclick="changeFilterMenu('new',0);">New</a>
         </div>
       </div>
+
       <div style="margin-bottom:15px;margin-right: 10px;margin-top:5px;">
         <div class="row">
           <div class="col card-color-blue border-actived-gray"
@@ -300,9 +429,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
       <div class="row">
-        <div class="col-100" style="margin-top: 5px;">
+        <!-- <div class="col-100" style="margin-top: 5px;">
           <div class="row">
             <div class="col-20" style="text-align:left;margin-left: 10px;">
               <a class="text-add-colour-white">
@@ -318,12 +448,24 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-100">
           <div class="card-content">
             <div class="card border-actived">
-              <div class="card-header bg-dark-gray-young" style="padding:5px ;">
-                <table width="100%">
+              <div
+                class="card-header bg-dark-gray-young display-flex flex-direction-row justify-content-space-between align-items-center"
+                style="padding:5px ;">
+                <div class="data-table-title">
+                  <h3 style="margin: 0;">Data | <span id="total-client-broadcast"></span></h3>
+                </div>
+                <div class="display-flex justify-content-end align-items-center" style="gap: 4px;">
+                  <i class="text-align-right f7-icons popup-open" onclick="tambahDataClient();"
+                    style="font-size:30px; color:white;"
+                    data-popup=".tambah-client-broadcast-popup">plus_circle_fill</i>
+                  <i class="f7-icons" style="font-size:30px; color:white;"
+                    onclick="reloadData();">arrow_2_circlepath_circle_fill</i>
+                </div>
+                <!-- <table width="100%">
                   <tr>
                     <td>
                       <div class="data-table-title" style="height:2px;">
@@ -356,7 +498,7 @@
                       </div>
                     </td>
                   </tr>
-                </table>
+                </table> -->
               </div>
               <div class="card-content" style="width:100%;">
                 <table cellspacing="1" cellpadding="1" width="100%">
@@ -396,9 +538,10 @@
                         Client</th>
                       <th class="label-cell" width="23%" style="border-bottom:1px solid gray;">Kota</th>
                       <!-- <th class="label-cell" width="22%" style="border-bottom:1px solid gray;">Status</th> -->
-                      <th class="label-cell" width="28.5%" style="border-bottom:1px solid gray;">Log</th>
-                      <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Hide</th>
-                      <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Pilih</th>
+                      <th class="label-cell" width="28.5%" style="border-bottom:1px solid gray;">Detail</th>
+                      <!-- <th class="label-cell" width="28.5%" style="border-bottom:1px solid gray;">Log</th> -->
+                      <!-- <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Hide</th> -->
+                      <!-- <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Pilih</th> -->
                     </thead>
                     <tbody id="tabel_data_client">
                     </tbody>

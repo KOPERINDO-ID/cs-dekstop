@@ -7512,6 +7512,7 @@ function kirimAlamat(penjualan_id) {
 		dataType: 'JSON',
 		data: {
 			penjualan_id: penjualan_id,
+			user_id: localStorage.getItem("user_id"),
 		},
 		beforeSend: function () {
 			app.dialog.preloader('Harap Tunggu');
@@ -7519,56 +7520,240 @@ function kirimAlamat(penjualan_id) {
 		},
 		success: function (data) {
 			app.dialog.close();
+
 			var alamat_client = "";
 			var alamat_kirim = "";
 			var client_nama = "";
 			var hp_alamat = "";
+			var client_kota = "";
 			var tgl_kirim_cabang = "";
 			var keterangan_cabang = "";
 			var packing_kirim = "";
+			var shipment_status = data.data.shipment_status || 'pending';
+			var shipment_reject_reason = data.data.shipment_reject_reason || null;
+
+			// ⭐⭐⭐ Hitung total pembayaran yang sudah divalidasi CS ⭐⭐⭐
+			var total_pembayaran_validated = 0;
+
+			if (data.data.valid_cs_1 == 1 && data.data.pembayaran_1 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_1);
+			}
+			if (data.data.valid_cs_2 == 1 && data.data.pembayaran_2 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_2);
+			}
+			if (data.data.valid_cs_3 == 1 && data.data.pembayaran_3 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_3);
+			}
+			if (data.data.valid_cs_4 == 1 && data.data.pembayaran_4 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_4);
+			}
+			if (data.data.valid_cs_5 == 1 && data.data.pembayaran_5 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_5);
+			}
+			if (data.data.valid_cs_6 == 1 && data.data.pembayaran_6 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_6);
+			}
+			if (data.data.valid_cs_7 == 1 && data.data.pembayaran_7 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_7);
+			}
+			if (data.data.valid_cs_8 == 1 && data.data.pembayaran_8 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_8);
+			}
+			if (data.data.valid_cs_9 == 1 && data.data.pembayaran_9 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_9);
+			}
+			if (data.data.valid_cs_10 == 1 && data.data.pembayaran_10 != null) {
+				total_pembayaran_validated += parseFloat(data.data.pembayaran_10);
+			}
+
+			// Hitung sisa bayar dari pembayaran yang sudah divalidasi
+			var sisa_bayar = parseFloat(data.data.penjualan_grandtotal - total_pembayaran_validated);
+
+			console.log('=== KIRIM ALAMAT DEBUG ===');
+			console.log('Penjualan ID:', penjualan_id);
+			console.log('Grand Total:', data.data.penjualan_grandtotal);
+			console.log('Pembayaran Total (DB):', data.data.penjualan_jumlah_pembayaran);
+			console.log('Pembayaran Validated:', total_pembayaran_validated);
+			console.log('Sisa Bayar (Validated):', sisa_bayar);
+			console.log('Shipment Status:', shipment_status);
+
 			if (data.data != null) {
 				alamat_client = data.data.client_alamat;
 				alamat_kirim = data.data.alamat_kirim_penjualan;
 				client_nama = data.data.client_nama;
 				hp_alamat = data.data.client_telp;
+				client_id = data.data.client_id;
+				client_kota = data.data.client_kota;
+				karyawan_id = data.data.karyawan_id;
 				if (data.data.tgl_kirim_cabang != null) {
 					tgl_kirim_cabang = moment(data.data.tgl_kirim_cabang).format('YYYY-MM-DD');
-				} else {
-					tgl_kirim_cabang = '';
 				}
 				keterangan_cabang = data.data.keterangan_cabang;
-				packing_kirim = data.data.packing || '';
-			} else {
-				alamat_client = '-';
-				alamat_kirim = '-';
-				client_nama = '-';
-				hp_alamat = '-';
-				tgl_kirim_cabang = '';
-				keterangan_cabang = '';
+
+				// ✅ FIX: Gunakan packing_id (angka) bukan packing (string nama)
+				// karena <option value="1">, <option value="2">, <option value="3">
+				packing_kirim = data.data.packing_id ? String(data.data.packing_id) : '0';
 			}
 
-			// Format label packing
-			var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
-			var packingDisplay = packing_kirim
-				? (packingLabels[packing_kirim] || packing_kirim.charAt(0).toUpperCase() + packing_kirim.slice(1))
-				: 'Belum dipilih';
-
+			// Set foto produksi
 			if (data.data.foto_produksi_selesai != null) {
 				jQuery('#file_foto_produksi_selesai_sales_view').attr('src', BASE_PATH_IMAGE_BUKTI_PRODUKSI + '/' + data.data.foto_produksi_selesai);
 			} else {
 				jQuery('#file_foto_produksi_selesai_sales_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
 			}
-			$$('#alamat_kirim_popup').val(alamat_kirim);
-			$$('#alamat_sekarang_popup').val(alamat_client);
-			$$('#nama-client-alamat').html(client_nama);
-			$$('#penjualan_id_alamat').val(data.data.penjualan_id);
-			$$('#hp_alamat').val(hp_alamat);
-			$$('#client_alamat_kota').val(data.data.client_kota);
-			$$('#tgl_kirim_cabang').val(tgl_kirim_cabang);
-			$$('#keterangan_cabang').val(keterangan_cabang);
-			$$('#packing_kirim_view').val(packingDisplay);
+
+			// Set data ke form
+			jQuery('#alamat_sekarang_popup').val(alamat_client);
+			jQuery('#nama-client-alamat').html(client_nama);
+			jQuery('#penjualan_id_alamat').val(penjualan_id);
+			jQuery('#client_id_alamat').val(client_id);
+			jQuery('#karyawan_id_alamat').val(karyawan_id);
+			jQuery('#hp_alamat').val(hp_alamat);
+			jQuery('#client_alamat_kota').val(client_kota);
+			jQuery('#alamat_kirim_popup').val(alamat_kirim || '');
+			jQuery('#tgl_kirim_cabang').val(tgl_kirim_cabang);
+			jQuery('#keterangan_cabang').val(keterangan_cabang);
+			jQuery('#packing_kirim').val(packing_kirim);  // ✅ Sekarang set ID angka (1/2/3)
+
+			var saveButton = jQuery('#tambah_alamat_kirim_button_save');
+
+			// ===== LOGIKA MODE =====
+
+			if (alamat_kirim != null && alamat_kirim != '' && shipment_status !== 'rejected') {
+				// SUDAH ADA ALAMAT KIRIM = VIEW ONLY
+
+				// Disable semua input
+				jQuery('#alamat_kirim_popup').prop('disabled', true).prop('readonly', true);
+				jQuery('#tgl_kirim_cabang').prop('disabled', true).prop('readonly', true);
+				jQuery('#keterangan_cabang').prop('disabled', true).prop('readonly', true);
+				jQuery('#packing_kirim').prop('disabled', true);
+
+				// Tampilkan teks readonly, sembunyikan select
+				// ✅ FIX: Map dari packing_id ke label
+				var packingLabels = { '1': 'Polos', '2': 'Plastik', '3': 'Kardus' };
+				var packingVal = (packing_kirim && packing_kirim !== '0')
+					? (packingLabels[packing_kirim] || packing_kirim)
+					: 'Tidak Ada Packing';
+				jQuery('#packing_kirim').hide();
+				jQuery('#packing_kirim_readonly').val(packingVal).show();
+
+				// Hide button simpan
+				saveButton.hide();
+
+				// Tampilkan status info jika belum lunas dan masih pending
+				if (sisa_bayar > 0 && shipment_status === 'requested') {
+					if (jQuery('#shipment_status_info').length === 0) {
+						var statusHtml = '<div id="shipment_status_info" style="text-align:center; padding:15px; margin-top:-20px;">';
+						statusHtml += '<div style="background-color:#ff9500; color:white; padding:12px; border-radius:8px; font-size:15px; font-weight:bold;">';
+						statusHtml += '<i class="f7-icons" style="font-size:20px; vertical-align:middle;">clock_fill</i> ';
+						statusHtml += 'MENUNGGU PERSETUJUAN CRM';
+						statusHtml += '</div>';
+						statusHtml += '</div>';
+						jQuery('center:has(#tambah_alamat_kirim_button_save)').prepend(statusHtml);
+					} else {
+						jQuery('#shipment_status_info').show();
+					}
+				} else {
+					jQuery('#shipment_status_info').hide();
+				}
+
+			} else {
+
+				// BELUM ADA INPUT ATAU REJECTED = EDITABLE
+				if (karyawan_id == localStorage.getItem("user_id")) {
+					console.log("TEST: ", localStorage.getItem("user_id"));
+					// Enable input
+					jQuery('#alamat_kirim_popup').prop('disabled', false).prop('readonly', false);
+					jQuery('#tgl_kirim_cabang').prop('disabled', false).prop('readonly', false);
+					jQuery('#keterangan_cabang').prop('disabled', false).prop('readonly', false);
+					jQuery('#packing_kirim').prop('disabled', false);
+
+					// Sembunyikan teks readonly, tampilkan select
+					jQuery('#packing_kirim_readonly').hide();
+					jQuery('#packing_kirim').show();
+
+					// Show button dengan text dan style sesuai status pembayaran
+					saveButton.show();
+
+					// Clear previous status/reject info
+					jQuery('#shipment_status_info').remove();
+					jQuery('#shipment_reject_info').remove();
+
+					if (shipment_status === 'rejected') {
+						// 🔴 MERAH - Ditolak, bisa edit dan ajukan ulang
+						saveButton.text('Ajukan Ulang');
+						saveButton.removeClass('bg-dark-gray-young text-add-colour-black-soft btn-color-greenWhite btn-color-blueWhite btn-color-orangeWhite');
+						saveButton.addClass('btn-color-redWhite');
+
+						// Tampilkan alasan rejection dari CS
+						if (shipment_reject_reason) {
+							var rejectHtml = '<div id="shipment_reject_info" style="padding: 10px 10px 15px 0;margin-top:-20px;margin-bottom:10px;">';
+							rejectHtml += '<div style="color:#d32f2f; padding:10px 0; font-weight:bold; font-size:14px; text-align:left;">';
+							rejectHtml += 'Catatan Reject dari CRM';
+							rejectHtml += '</div>';
+							rejectHtml += '<div style="border:2px solid #d32f2f; padding:15px; border-radius:8px; color:#d32f2f; font-size:14px; text-align:left;">';
+							rejectHtml += shipment_reject_reason;
+							rejectHtml += '</div>';
+							rejectHtml += '</div>';
+							jQuery('center:has(#tambah_alamat_kirim_button_save)').prepend(rejectHtml);
+						}
+
+					} else if (sisa_bayar > 0) {
+						// 🟠 ORANGE - Belum lunas, perlu ajukan persetujuan
+						saveButton.text('Ajukan Persetujuan');
+						saveButton.removeClass('bg-dark-gray-young text-add-colour-black-soft btn-color-greenWhite btn-color-blueWhite btn-color-redWhite');
+						saveButton.addClass('btn-color-orangeWhite');
+					} else {
+						// ⚫ ABU-ABU - Sudah lunas, langsung simpan
+						saveButton.text('Simpan');
+						saveButton.removeClass('btn-color-orangeWhite btn-color-greenWhite btn-color-blueWhite btn-color-redWhite');
+						saveButton.addClass('bg-dark-gray-young text-add-colour-black-soft');
+					}
+					saveButton.prop('disabled', false);
+				} else {
+					// MILIK USER LAIN = VIEW ONLY
+
+					// Disable semua input
+					jQuery('#alamat_kirim_popup').prop('disabled', true).prop('readonly', true);
+					jQuery('#tgl_kirim_cabang').prop('disabled', true).prop('readonly', true);
+					jQuery('#keterangan_cabang').prop('disabled', true).prop('readonly', true);
+					jQuery('#packing_kirim').prop('disabled', true);
+
+					// Tampilkan teks readonly, sembunyikan select
+					// ✅ FIX: Map dari packing_id ke label
+					var packingLabels = { '1': 'Polos', '2': 'Plastik', '3': 'Kardus' };
+					var packingVal = (packing_kirim && packing_kirim !== '0')
+						? (packingLabels[packing_kirim] || packing_kirim)
+						: 'Tidak Ada Packing';
+					jQuery('#packing_kirim').hide();
+					jQuery('#packing_kirim_readonly').val(packingVal).show();
+
+					// Hide button simpan
+					saveButton.hide();
+
+					// Tampilkan status info jika belum lunas dan masih pending
+					if (sisa_bayar > 0 && shipment_status === 'requested') {
+						if (jQuery('#shipment_status_info').length === 0) {
+							var statusHtml = '<div id="shipment_status_info" style="text-align:center; padding:15px; margin-top:-20px;">';
+							statusHtml += '<div style="background-color:#ff9500; color:white; padding:12px; border-radius:8px; font-size:15px; font-weight:bold;">';
+							statusHtml += '<i class="f7-icons" style="font-size:20px; vertical-align:middle;">clock_fill</i> ';
+							statusHtml += 'MENUNGGU PERSETUJUAN CRM';
+							statusHtml += '</div>';
+							statusHtml += '</div>';
+							jQuery('center:has(#tambah_alamat_kirim_button_save)').prepend(statusHtml);
+						} else {
+							jQuery('#shipment_status_info').show();
+						}
+					} else {
+						jQuery('#shipment_status_info').hide();
+					}
+				}
+
+			}
 		},
 		error: function (xmlhttprequest, textstatus, message) {
+			app.dialog.close();
+			app.dialog.alert('Gagal mengambil data');
 		}
 	});
 }

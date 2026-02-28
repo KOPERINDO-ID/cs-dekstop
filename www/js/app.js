@@ -851,6 +851,7 @@ $$(document).on('page:afterin', '.page[data-name="history-point-sj"]', function 
 $$(document).on('page:afterin', '.page[data-name="katalog"]', function (e) {
   runFunctionsSequentially([
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
     { name: 'getProduk', func: wrapFunction(getProduk, 'getProduk') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
     { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }

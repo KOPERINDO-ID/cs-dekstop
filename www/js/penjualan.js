@@ -1485,7 +1485,7 @@ function getDataFotoPoint(id_pembayaran_point) {
 	});
 }
 
-function selectBoxClient() {
+function selectBoxSales() {
 	jQuery.ajax({
 		type: "POST",
 		url: "" + BASE_API + "/get-sales-cs",
@@ -5958,6 +5958,7 @@ function getPenjualanHeader(page) {
 						// 	var color_btn_byr = "bg-dark-gray-young text-add-colour-black-soft";
 						// }
 
+						console.log("button pembayaran - penjualan_id: " + item.penjualan_id + ", total_pembayaran_validated: " + total_pembayaran_validated + ", penjualan_grandtotal: " + item.penjualan_grandtotal + ", sisa: " + sisa + ", has_pending_pembayaran: " + has_pending_pembayaran + ", shipment_status: " + item.shipment_status + ", hasOngkirPending: " + (data.log_pembayaran && data.log_pembayaran[item.penjualan_id] && data.log_pembayaran[item.penjualan_id].length > 0) + ", hasPendingPembayaran: " + has_pending_pembayaran);
 						if (total_pembayaran_validated == 0) {
 							// 🟡 KUNING - Belum ada pembayaran sama sekali yang tervalidasi
 							var color_btn_byr = "card-color-yellow-text-white";

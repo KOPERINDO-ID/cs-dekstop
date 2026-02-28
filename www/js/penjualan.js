@@ -7034,7 +7034,7 @@ function getPerformaHeaderPenjualan() {
 					performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
 					performa_value += '		<a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold " onclick="updateStatusWhatsapp(\'' + item2.performa_header_id + '\',\'' + item2.client_nama + '\',\'' + text_link + '\')">Whatsapp</a>';
 					performa_value += '</td>';
-					performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
+					// performa_value += '<td class="label-cell" style="background-color:' + color_tr + '; border-right:1px solid gray; border-bottom:1px solid gray;">';
 
 					// Logika icon download: merah jika needs_approval = 1 dan status pending/rejected
 					var image_potongan = '';

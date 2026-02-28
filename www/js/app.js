@@ -504,6 +504,10 @@ $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
   clearPageIntervals();
 
+  // RequestManager.add(function () {
+  //   getDataClientHead();
+  // });
+
   runFunctionsSequentially([
     // { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
     { name: 'selectBoxKotaBrodacast', func: wrapFunction(selectBoxKotaBrodacast, 'selectBoxKotaBrodacast') },
@@ -847,6 +851,7 @@ $$(document).on('page:afterin', '.page[data-name="history-point-sj"]', function 
 $$(document).on('page:afterin', '.page[data-name="katalog"]', function (e) {
   runFunctionsSequentially([
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
     { name: 'getProduk', func: wrapFunction(getProduk, 'getProduk') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
     { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }

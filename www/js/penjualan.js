@@ -10374,69 +10374,97 @@ jQuery(document).on('page:init', '.page[data-name="penjualan"]', function (e) {
 });
 
 
-/**
- * OVERRIDE: showTableProduksiSelesai dengan expandable detail
- */
+let dataProduksiSelesai = [];
+
 function showTableProduksiSelesai() {
-	jQuery.ajax({
-		type: 'POST',
-		url: BASE_API + "/get-riwayat-produksi-selesai",
-		dataType: 'JSON',
-		data: {},
-		beforeSend: function () {
-			app.dialog.preloader('Memuat riwayat...');
-		},
-		success: function (response) {
-			app.dialog.close();
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + "/get-riwayat-produksi-selesai",
+        dataType: 'JSON',
+        data: {},
+        beforeSend: function () {
+            app.dialog.preloader('Memuat riwayat...');
+        },
+        success: function (response) {
+            app.dialog.close();
 
-			if (response.status === 'success') {
-				let data = response.data;
-				let html = '';
+            if (response.status === 'success') {
+                dataProduksiSelesai = response.data; // Simpan ke variabel global
+                jQuery('#filter-nama-client').val('');  // Reset filter
+                renderTableProduksiSelesai(dataProduksiSelesai); // Render table
+            } else {
+                app.dialog.alert('Gagal memuat riwayat: ' + response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            app.dialog.close();
+            console.error('Error loading riwayat:', error);
+            app.dialog.alert('Error: ' + error);
+        }
+    });
+}
 
-				if (data.length === 0) {
-					jQuery('#tampungan-produksi-selesai-tbody').html('');
-					jQuery('#empty-state-tampungan').show();
-				} else {
-					jQuery('#empty-state-tampungan').hide();
+// Pisahkan logic render ke fungsi sendiri
+function renderTableProduksiSelesai(data) {
+    let html = '';
 
-					data.forEach(function (item, index) {
-						// Main row
-						html += '<tr id="riwayat-row-' + item.penjualan_detail_performa_id + '">';
-						html += '<td style="border: 1px solid gray;" width="5%">' + (index + 1) + '</td>';
-						html += '<td style="border: 1px solid gray;" width="15%">' + moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '') + '</td>';
-						html += '<td style="border: 1px solid gray;text-align:left;" width="20%">' + item.client_nama + '</td>';
-						html += '<td style="border: 1px solid gray;text-align:left;" width="15%">' + item.penjualan_jenis + '</td>';
-						html += '<td style="border: 1px solid gray;text-align:right;" width="15%">' + number_format(item.penjualan_grandtotal) + '</td>';
-						html += '<td style="border: 1px solid gray;" width="10%"><span class="badge color-blue">Dikonfirmasi</span></td>';
-						html += '<td style="border: 1px solid gray;" width="10%">';
-						html += '<button class="button button-small button-fill bg-color-green" onclick="toggleDetailRiwayatProduksi(\'' + item.penjualan_id + '\', \'' + item.penjualan_detail_performa_id + '\')">';
-						html += '<i class="f7-icons btn-expand-produksi" id="icon-riwayat-' + item.penjualan_detail_performa_id + '" style="font-size: 12px;">chevron_down</i> Detail';
-						html += '</button>';
-						html += '</td>';
-						html += '</tr>';
+    if (data.length === 0) {
+        jQuery('#tampungan-produksi-selesai-tbody').html('');
+        jQuery('#empty-state-tampungan').show();
+        return;
+    }
 
-						// Detail row (hidden by default)
-						html += '<tr id="riwayat-detail-' + item.penjualan_detail_performa_id + '" class="detail-row-produksi">';
-						html += '<td colspan="7" style="border: 1px solid gray; padding: 0;">';
-						html += '<div class="detail-content-produksi" id="riwayat-content-' + item.penjualan_detail_performa_id + '">';
-						html += '<div style="text-align: center; padding: 20px; color: gray;"><i class="f7-icons">arrow_2_circlepath</i> Loading...</div>';
-						html += '</div>';
-						html += '</td>';
-						html += '</tr>';
-					});
+    jQuery('#empty-state-tampungan').hide();
 
-					jQuery('#tampungan-produksi-selesai-tbody').html(html);
-				}
-			} else {
-				app.dialog.alert('Gagal memuat riwayat: ' + response.message);
-			}
-		},
-		error: function (xhr, status, error) {
-			app.dialog.close();
-			console.error('Error loading riwayat:', error);
-			app.dialog.alert('Error: ' + error);
-		}
-	});
+    data.forEach(function (item, index) {
+        // Main row
+        html += '<tr id="riwayat-row-' + item.penjualan_detail_performa_id + '">';
+        html += '<td style="border: 1px solid gray;" width="5%">' + (index + 1) + '</td>';
+        html += '<td style="border: 1px solid gray;" width="15%">' + moment(item.dt_record).format('DDMMYY') + '-' + item.penjualan_id.replace(/\INV_/g, '').replace(/^0+/, '') + '</td>';
+        html += '<td style="border: 1px solid gray;text-align:left;" width="20%">' + item.client_nama + '</td>';
+        html += '<td style="border: 1px solid gray;text-align:left;" width="15%">' + item.penjualan_jenis + '</td>';
+        html += '<td style="border: 1px solid gray;text-align:right;" width="15%">' + number_format(item.penjualan_grandtotal) + '</td>';
+        html += '<td style="border: 1px solid gray;" width="10%"><span class="badge color-blue">Dikonfirmasi</span></td>';
+        html += '<td style="border: 1px solid gray;" width="10%">';
+        html += '<button class="button button-small button-fill bg-color-green" onclick="toggleDetailRiwayatProduksi(\'' + item.penjualan_id + '\', \'' + item.penjualan_detail_performa_id + '\')">';
+        html += '<i class="f7-icons btn-expand-produksi" id="icon-riwayat-' + item.penjualan_detail_performa_id + '" style="font-size: 12px;">chevron_down</i> Detail';
+        html += '</button>';
+        html += '</td>';
+        html += '</tr>';
+
+        // Detail row (hidden by default)
+        html += '<tr id="riwayat-detail-' + item.penjualan_detail_performa_id + '" class="detail-row-produksi">';
+        html += '<td colspan="7" style="border: 1px solid gray; padding: 0;">';
+        html += '<div class="detail-content-produksi" id="riwayat-content-' + item.penjualan_detail_performa_id + '">';
+        html += '<div style="text-align: center; padding: 20px; color: gray;"><i class="f7-icons">arrow_2_circlepath</i> Loading...</div>';
+        html += '</div>';
+        html += '</td>';
+        html += '</tr>';
+    });
+
+    jQuery('#tampungan-produksi-selesai-tbody').html(html);
+}
+
+// Filter berdasarkan input user
+function filterTableByClient() {
+    let keyword = jQuery('#filter-nama-client').val().toLowerCase().trim();
+    
+    if (keyword === '') {
+        renderTableProduksiSelesai(dataProduksiSelesai);
+        return;
+    }
+
+    let filtered = dataProduksiSelesai.filter(function (item) {
+        return item.client_nama.toLowerCase().includes(keyword);
+    });
+
+    renderTableProduksiSelesai(filtered);
+}
+
+// Reset filter
+function clearFilterClient() {
+    jQuery('#filter-nama-client').val('');
+    renderTableProduksiSelesai(dataProduksiSelesai);
 }
 
 /**

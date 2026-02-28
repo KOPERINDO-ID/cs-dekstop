@@ -117,7 +117,6 @@ function wrapFunction(func, name) {
   };
 }
 
-
 /**
  * Schedule next interval check
  */
@@ -495,27 +494,23 @@ $$(document).on('page:afterin', '.page[data-name="log"]', function (e) {
 
 $$(document).on('page:afterin', '.page[data-name="client"]', function (e) {
   localStorage.setItem('show_eye', 'tidak_aktif');
-  // changeFilterMenu('sales');
+
+  // Hanya izinkan angka pada input telp
   $$("#tambah_client_telp_broadcast").keypress(function (event) {
     var key = event.which;
-    if (!(key >= 48 && key <= 57))
-      event.preventDefault();
+    if (!(key >= 48 && key <= 57)) event.preventDefault();
   });
+
   $$('#karyawan_nama_header').html(localStorage.getItem("karyawan_nama"));
   clearPageIntervals();
 
-  // RequestManager.add(function () {
-  //   getDataClientHead();
-  // });
-
   runFunctionsSequentially([
-    // { name: 'getTargetBroadcastCs', func: wrapFunction(getTargetBroadcastCs, 'getTargetBroadcastCs') },
     { name: 'selectBoxKotaBrodacast', func: wrapFunction(selectBoxKotaBrodacast, 'selectBoxKotaBrodacast') },
     { name: 'getDataClientHead', func: wrapFunction(getDataClientHead, 'getDataClientHead') },
     { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
-    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') },
   ], 2);
 });
 

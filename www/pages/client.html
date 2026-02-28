@@ -1,211 +1,125 @@
-<div class="page" data-name="client" class="">
-  <!-- Scrollable page content-->
+<div class="page" data-name="client">
   <div class="page-content theme-dark">
-    <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
-    <!-- And somewhere in DOM -->
+
+    <!-- ==============================
+         POPUP: Tambah Client
+         F7 v7: popup > page langsung (TANPA view wrapper)
+    =============================== -->
     <div class="popup tambah-client-broadcast-popup">
-      <div class="view view-init">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-              <div class="title">Tambah Client</div>
-              <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-tambah-client-broadcast"
-                  data-popup=".tambah-client-broadcast-popup"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i></p>
-              </div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="card card-outline margin-top">
-              <div class="card-content">
-                <div class="row">
-                  <div class="col-100">
-                    <div class="card-content">
-                      <div class="list no-hairlines-md">
-                        <div class="list">
-                          <form id="form_tambah_client_broadcast">
-                            <ul>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <label style="height:17px; margin-top:-9px;"><b>Client Name</b></label>
-                                  <div class="item-input-wrap">
-                                    <label></label>
-                                    <input class="clear_tambah_client_broadcast" type="text"
-                                      id="tambah_client_nama_broadcast" name="tambah_client_nama_broadcast"
-                                      onkeyup="doSearchByClientInfo();" placeholder="Client Name" required validate>
-                                    <span class="input-clear-button" onclick="doSearchByClientInfo();"></span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input" id="show_table_client">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <table cellspacing="1" cellpadding="1" width="100%" style="font-size: 13px;">
-                                    <thead class="bg-dark-gray-medium text-align-center">
-                                      <th class="label-cell" width="4%" style="border-bottom:1px solid gray;">No</th>
-                                      <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Client
-                                      </th>
-                                      <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Client CP
-                                      </th>
-                                      <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">No Telp
-                                      </th>
-                                      <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">Kota</th>
-                                    </thead>
-                                    <tbody id="tabel_data_show_client">
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="item-input-wrap">
-                                  <a href="#" class="item-link smart-select smart-select-init" data-searchbar="true"
-                                    data-searchbar-placeholder="Cari Kota" data-open-in="popup"
-                                    data-close-on-select="true" style="width: 100%;">
-                                    <select class="clear_tambah_client_broadcast" name="tambah_kota_broadcast"
-                                      id="tambah_kota_broadcast" required validate>
-                                    </select>
-                                    <div class="item-content" style="float:left;width:96%;">
-                                      <div class="item-inner">
-                                        <div class="item-after item_after_tambah_kota_broadcast"
-                                          style="font-size:16px;margin-top:7px;margin-left: -3px;float:left; color:grey;">
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </a>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <label style="height:17px; margin-top:-9px;"><b>Client CP</b></label>
-                                  <div class="item-input-wrap">
-                                    <label></label>
-                                    <input type="text" class="clear_tambah_client_broadcast"
-                                      id="tambah_client_cp_broadcast" name="tambah_client_cp_broadcast"
-                                      placeholder="Client CP" required validate>
-                                    <span class="input-clear-button"></span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <label style="height:17px; margin-top:-9px;"><b>CP Posisi</b></label>
-                                  <div class="item-input-wrap">
-                                    <label></label>
-                                    <input type="text" class="clear_tambah_client_broadcast"
-                                      id="tambah_cp_posisi_broadcast" name="tambah_cp_posisi_broadcast"
-                                      placeholder="CP Posisi" required validate>
-                                    <span class="input-clear-button"></span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <label style="height:17px; margin-top:-9px;"><b>Client Telp</b></label>
-                                  <div class="item-input-wrap">
-                                    <label></label>
-                                    <input type="text" class="clear_tambah_client_broadcast"
-                                      id="tambah_client_telp_broadcast" name="tambah_client_telp_broadcast"
-                                      placeholder="Client Telp" required validate>
-                                    <span class="input-clear-button"></span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-top: 20px;">
-                                  <label style="height:17px; margin-top:-9px;"><b>Client Alamat</b></label>
-                                  <div class="item-input-wrap">
-                                    <label></label>
-                                    <textarea class="clear_tambah_client_broadcast" id="tambah_client_alamat_broadcast"
-                                      name="tambah_client_alamat_broadcast" placeholder="Client Alamat" required
-                                      validate></textarea>
-                                    <span class="input-clear-button"></span>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                          </form>
-                        </div>
-                      </div>
-                      <div style="padding: 5px;">
-                        <button onclick="simpanClientBroadcast();" style="width:100%;"
-                          class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
-                          id="tambah_client_button_save">SIMPAN
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Tambah Client</div>
+            <div class="right">
+              <a class="link popup-close" data-popup=".tambah-client-broadcast-popup">
+                <i class="f7-icons text-add-colour-white"
+                  style="margin-right:5px;cursor: pointer;">xmark_rectangle_fill</i>
+              </a>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="popup client-prospek-popup">
-      <div class="view view-init">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-              <div class="title">Client Prospek</div>
-              <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-client-prospek-popup"
-                  data-popup=".client-prospek-popup"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i></p>
-              </div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="card card-outline margin-top">
-              <div class="card-content">
-                <div class="row">
-                  <div class="col-100">
-                    <div class="card-content">
-                      <div class="card border-actived">
-                        <div class="card-header bg-dark-gray-young" style="padding-left:5px ;">
-                          <div class="data-table-title" style="height:2px; margin-left:4px;">
-                            <h3 class="margin-15">Client | <span id="total-client-prospek-broadcast"></span></h3>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="list no-hairlines-md">
+                <div class="list">
+                  <form id="form_tambah_client_broadcast">
+                    <ul>
+                      <!-- Client Name + tabel cek duplikat -->
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>Perusahaan</b></label>
+                          <div class="item-input-wrap">
+                            <input class="clear_tambah_client_broadcast" type="text" id="tambah_client_nama_broadcast"
+                              name="tambah_client_nama_broadcast" onkeyup="doSearchByClientInfo();"
+                              placeholder="Perusahaan" required validate>
+                            <span class="input-clear-button" onclick="doSearchByClientInfo();"></span>
                           </div>
                         </div>
-                        <div class="card-content" style="width:100%;">
-                          <table cellspacing="1" cellpadding="1" width="100%">
+                      </li>
+                      <!-- Tabel cek duplikat (muncul saat mengetik nama) -->
+                      <li class="item-content item-input" id="show_table_client" style="display:none;">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <table cellspacing="1" cellpadding="1" width="100%" style="font-size:13px;">
                             <thead class="bg-dark-gray-medium text-align-center">
-                              <tr>
-                                <th style="padding:5px;" width="100%">
-                                  <center>
-                                    <input onkeyup="doSearchByProspekPerusahaan()" type="text"
-                                      style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
-                                      id="perusahaan_prospek_broadcast_filter"
-                                      name="perusahaan_prospek_broadcast_filter" placeholder="Cari Perusahaan">
-                                  </center>
-                                </th>
-                              </tr>
+                              <th class="label-cell" width="4%" style="border-bottom:1px solid gray;">No</th>
+                              <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Perusahaan</th>
+                              <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">PIC</th>
+                              <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">No Telp</th>
+                              <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">Kota</th>
                             </thead>
+                            <tbody id="tabel_data_show_client"></tbody>
                           </table>
                         </div>
-                        <div class="card-content" style="overflow-x:auto;width:100%;">
-                          <form id="form_update_new_client">
-                            <table cellspacing="1" cellpadding="1" width="500px">
-                              <thead class="bg-dark-gray-medium text-align-center">
-                                <th class="label-cell" width="4%" style="border-bottom:1px solid gray;">No</th>
-                                <th class="label-cell" width="19%" style="border-bottom:1px solid gray;">Nama Client
-                                </th>
-                                <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">Kota</th>
-                                <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">New</th>
-                              </thead>
-                              <tbody id="tabel_data_prospek_client">
-                              </tbody>
-                            </table>
-                          </form>
+                      </li>
+                      <!-- Kota (Manual Dropdown Popup) -->
+                      <li class="item-content item-input" onclick="openPilihKotaPopup('tambah_client')"
+                        style="cursor:pointer;">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>Kota</b></label>
+                          <div class="item-input-wrap" style="display:flex;align-items:center;">
+                            <input type="text" id="tambah_kota_broadcast_display" placeholder="Pilih Kota"
+                              style="flex:1;" readonly class="clear_tambah_client_broadcast">
+                            <input type="hidden" id="tambah_kota_broadcast" name="tambah_kota_broadcast"
+                              class="clear_tambah_client_broadcast">
+                            <i class="f7-icons" style="color:#888;font-size:20px;margin-left:8px;">chevron_down</i>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
+                      </li>
+                      <!-- PIC -->
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>PIC</b></label>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_tambah_client_broadcast" id="tambah_client_cp_broadcast"
+                              name="tambah_client_cp_broadcast" placeholder="PIC" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <!-- Posisi -->
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>Posisi</b></label>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_tambah_client_broadcast" id="tambah_cp_posisi_broadcast"
+                              name="tambah_cp_posisi_broadcast" placeholder="Posisi" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <!-- No Telp -->
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>No Telp</b></label>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_tambah_client_broadcast" id="tambah_client_telp_broadcast"
+                              name="tambah_client_telp_broadcast" placeholder="No Telp" required validate>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <!-- Alamat -->
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-top:20px;">
+                          <label style="height:17px;margin-top:-9px;"><b>Alamat</b></label>
+                          <div class="item-input-wrap">
+                            <textarea class="clear_tambah_client_broadcast" id="tambah_client_alamat_broadcast"
+                              name="tambah_client_alamat_broadcast" placeholder="Alamat" required validate></textarea>
+                            <span class="input-clear-button"></span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </form>
                 </div>
+              </div>
+              <div style="padding:5px;">
+                <button onclick="simpanClientBroadcast();" style="width:100%;"
+                  class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"
+                  id="tambah_client_button_save">SIMPAN
+                </button>
               </div>
             </div>
           </div>
@@ -213,126 +127,98 @@
       </div>
     </div>
 
+    <!-- ==============================
+         POPUP: Detail Client
+         F7 v7: popup > page langsung (TANPA view wrapper)
+    =============================== -->
     <div class="popup data-client-head-popup">
-      <div class="view view-init">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-orange">
-              <div class="title">Details Client</div>
-              <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-data-client-head-popup"
-                  data-popup=".data-client-head-popup"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i>
-                </p>
-              </div>
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Details Client</div>
+            <div class="right">
+              <a class="link popup-close" data-popup=".data-client-head-popup">
+                <i class="f7-icons text-add-colour-white"
+                  style="margin-right:5px;cursor: pointer;">xmark_rectangle_fill</i>
+              </a>
             </div>
           </div>
-          <div class="page-content">
-            <div class="card card-outline margin-top">
-              <div class="card-content">
-                <div class="row">
-                  <div class="col-100">
-                    <div class="card-content">
-                      <div class="list no-hairlines-md">
-                        <div class="list">
-                          <form id="form_edit_client_broadcast_head">
-                            <ul>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-title item-label">Perusahaan</div>
-                                  <div class="item-input-wrap">
-                                    <input class="clear_edit_client_broadcast_head" type="text"
-                                      id="edit_client_nama_broadcast_head" name="edit_client_nama_broadcast_head"
-                                      placeholder="Nama Perusahaan" required validate readonly>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-title item-label">PIC</div>
-                                  <div class="item-input-wrap">
-                                    <input type="text" class="clear_edit_client_broadcast_head"
-                                      id="edit_client_cp_broadcast_head" name="edit_client_cp_broadcast_head"
-                                      placeholder="PIC" required validate readonly>
-                                    <input type="hidden" class="clear_edit_client_broadcast_head"
-                                      id="edit_client_id_broadcast_head" name="edit_client_id_broadcast_head"
-                                      placeholder="PIC" required validate readonly>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-title item-label">Kota</div>
-                                  <div class="item-input-wrap">
-                                    <input type="text" class="clear_edit_client_broadcast_head"
-                                      id="edit_kota_broadcast_head" name="edit_kota_broadcast_head" placeholder="Kota"
-                                      required validate readonly>
-                                    <!-- <a href="#" class="item-link smart-select smart-select-init" data-searchbar="true"
-                                      data-searchbar-placeholder="Cari Kota" data-open-in="popup"
-                                      data-close-on-select="true" style="width: 100%;margin-top: -15px;">
-                                      <select class="clear_edit_client_broadcast_head" name="edit_kota_broadcast_head"
-                                        id="edit_kota_broadcast_head" required validate readonly disabled>
-                                      </select>
-                                      <div class="item-content" style="float:left;width:100%;padding-left:0px;">
-                                        <div class="item-inner">
-                                          <div class="item-after item_after_edit_kota_broadcast_head"
-                                            style="font-size:16px;margin-top:7px;margin-left: -3px;float:left; color:grey;padding-left:2px;">
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </a> -->
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-input-wrap">
-                                    <select class="clear_edit_client_broadcast_head"
-                                      id="edit_client_posisi_broadcast_head" name="edit_client_posisi_broadcast_head"
-                                      required validate readonly disabled>
-                                      <option value="">Pilih Posisi</option>
-                                      <option value="Owner">Owner</option>
-                                      <option value="Direktur">Direktur</option>
-                                      <option value="Admin">Admin</option>
-                                    </select>
-                                    <span class="input-clear-button"></span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-title item-label">No. WA</div>
-                                  <div class="item-input-wrap">
-                                    <input type="text" class="clear_edit_client_broadcast_head"
-                                      id="edit_client_telp_broadcast_head" name="edit_client_telp_broadcast_head"
-                                      placeholder="No. WA" required validate readonly>
-                                  </div>
-                                </div>
-                              </li>
-                              <li class="item-content item-input">
-                                <div class="item-inner" style="padding-bottom: 0px;">
-                                  <div class="item-title item-label">Alamat</div>
-                                  <div class="item-input-wrap">
-                                    <textarea class="clear_edit_client_broadcast_head"
-                                      id="edit_client_alamat_broadcast_head" name="edit_client_alamat_broadcast_head"
-                                      placeholder="Alamat" required validate readonly></textarea>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                          </form>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="list no-hairlines-md">
+                <div class="list">
+                  <form id="form_edit_client_broadcast_head">
+                    <ul>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">Perusahaan</div>
+                          <div class="item-input-wrap">
+                            <input class="clear_edit_client_broadcast_head" type="text"
+                              id="edit_client_nama_broadcast_head" name="edit_client_nama_broadcast_head"
+                              placeholder="Nama Perusahaan" required validate readonly>
+                          </div>
                         </div>
-                      </div>
-                      <!-- <div style="padding: 10px;">
-                        <button onclick="editClientBroadcast();" style="width:100%;"
-                          class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold"
-                          id="edit_client_button_save">SIMPAN
-                        </button>
-                      </div> -->
-                    </div>
-                  </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">PIC</div>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_edit_client_broadcast_head"
+                              id="edit_client_cp_broadcast_head" name="edit_client_cp_broadcast_head" placeholder="PIC"
+                              required validate readonly>
+                            <input type="hidden" id="edit_client_id_broadcast_head"
+                              name="edit_client_id_broadcast_head">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">Kota</div>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_edit_client_broadcast_head" id="edit_kota_broadcast_head"
+                              name="edit_kota_broadcast_head" placeholder="Kota" required validate readonly>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">Posisi</div>
+                          <div class="item-input-wrap">
+                            <select class="clear_edit_client_broadcast_head" id="edit_client_posisi_broadcast_head"
+                              name="edit_client_posisi_broadcast_head" required validate disabled>
+                              <option value="">Pilih Posisi</option>
+                              <option value="Owner">Owner</option>
+                              <option value="Direktur">Direktur</option>
+                              <option value="Admin">Admin</option>
+                            </select>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">No. WA</div>
+                          <div class="item-input-wrap">
+                            <input type="text" class="clear_edit_client_broadcast_head"
+                              id="edit_client_telp_broadcast_head" name="edit_client_telp_broadcast_head"
+                              placeholder="No. WA" required validate readonly>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="item-content item-input">
+                        <div class="item-inner" style="padding-bottom:0px;">
+                          <div class="item-title item-label">Alamat</div>
+                          <div class="item-input-wrap">
+                            <textarea class="clear_edit_client_broadcast_head" id="edit_client_alamat_broadcast_head"
+                              name="edit_client_alamat_broadcast_head" placeholder="Alamat" required validate
+                              readonly></textarea>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </form>
                 </div>
               </div>
             </div>
@@ -341,217 +227,127 @@
       </div>
     </div>
 
+    <!-- ==============================
+         NAVBAR MENU BAWAH
+    =============================== -->
     <div class="card">
       <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
         <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
         <div id="menuBroadcast" class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/client">Broadcast</a>
         </div>
         <div class="align-items-center justify-content-center text-bold merah-notif-all"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
         </div>
         <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
         <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
-        <!-- <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/kpi">KPI</a>
-        </div>
-        <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/tools">Tools</a>
-        </div>
-        <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/point-sales">Point</a>
-        </div>
-        <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/absen-sales">Absensi</a>
-        </div>
-        <div class="align-items-center justify-content-center text-bold"
-          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/prospek">Prospek</a>
-        </div> -->
-      </div>
-      <!-- <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border text-bold salesFilterMenu"><a class="text-add-colour-white"
-            onclick="">Sales</a>
-        </div>
-        <div class="col col-border text-bold newFilterMenu"><a class="text-color-new text-add-colour-white"
-            onclick="changeFilterMenu('new',0);">New</a>
-        </div>
       </div>
 
-      <div style="margin-bottom:15px;margin-right: 10px;margin-top:5px;">
-        <div class="row">
-          <div class="col card-color-blue border-actived-gray"
-            style="border-radius:4px; padding-top:4px; padding-bottom:4px; margin-left:13px;">
-            <div class="text-add-colour-white text-bold block-title text-align-center" style="margin: 0;">
-              Target
-              <hr>
-              <h3 id="target_broadcast_value" class="text-add-colour-white text-align-center text-bold"
-                style="margin-bottom: 5px; margin-top:-1px;">0
-              </h3>
-            </div>
-          </div>
-          <div class="col card-color-blue border-actived-gray"
-            style="border-radius:4px; padding-top:4px; padding-bottom:4px;">
-            <div class="text-add-colour-white text-bold block-title text-align-center" style="margin: 0;">
-              Tercapai
-              <hr>
-              <h3 id="tercapai_broadcast_value" class="text-add-colour-white text-align-center text-bold"
-                style="margin-bottom: 5px; margin-top:-1px;">0
-              </h3>
-            </div>
-          </div>
-          <div id="tercapai_minus_element" class="col card-color-red border-actived-gray"
-            style="padding-top:4px; padding-bottom:6px;  border-radius:4px;">
-            <div class="text-add-colour-white text-bold block-title text-align-center" style="margin: 0;">
-              <i style="font-size:14px;" class="material-icons">
-                indeterminate_check_box
-              </i> Sisa
-              <hr>
-              <h3 id="target_broadcast_minus" class="text-add-colour-white text-align-center"
-                style="margin-bottom: 5px; margin-top:-4px;">
-                0
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
+      <!-- ==============================
+           TABEL UTAMA DATA CLIENT
+      =============================== -->
       <div class="row">
-        <!-- <div class="col-100" style="margin-top: 5px;">
-          <div class="row">
-            <div class="col-20" style="text-align:left;margin-left: 10px;">
-              <a class="text-add-colour-white">
-                <i class="text-align-right f7-icons popup-open" onclick="tambahDataClient();"
-                  data-popup=".tambah-client-broadcast-popup"
-                  style="font-size:30px; color:white;">plus_circle_fill</i></a>
-            </div>
-            <div class="col-30" style="margin-top: auto;margin-bottom: auto;margin-right: 10px;">
-              <div class="display-flex justify-content-end">
-                <button style="width:100%;" class="btn-color-greenWhite button-small col button text-bold"
-                  onclick="kirimBroadcast();">KIRIM<span style="margin-left: 5px;"><i class="text-align-right f7-icons"
-                      style="font-size:16px;color: white;">paperplane_fill</i></span></button>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-100">
           <div class="card-content">
             <div class="card border-actived">
+              <!-- Header: judul + tombol tambah & reload -->
               <div
                 class="card-header bg-dark-gray-young display-flex flex-direction-row justify-content-space-between align-items-center"
-                style="padding:5px ;">
+                style="padding:5px;">
                 <div class="data-table-title">
-                  <h3 style="margin: 0;">Data | <span id="total-client-broadcast"></span></h3>
+                  <h3 style="margin:0;">Data | <span id="total-client-broadcast-head"></span></h3>
                 </div>
-                <div class="display-flex justify-content-end align-items-center" style="gap: 4px;">
-                  <i class="text-align-right f7-icons popup-open" onclick="tambahDataClient();"
-                    style="font-size:30px; color:white;"
+                <div class="display-flex justify-content-end align-items-center" style="gap:4px;">
+                  <i class="f7-icons popup-open" onclick="tambahDataClient();"
+                    style="font-size:30px;color:white; cursor: pointer;"
                     data-popup=".tambah-client-broadcast-popup">plus_circle_fill</i>
-                  <i class="f7-icons" style="font-size:30px; color:white;"
+                  <i class="f7-icons" style="font-size:30px;color:white; cursor: pointer;"
                     onclick="reloadData();">arrow_2_circlepath_circle_fill</i>
                 </div>
-                <!-- <table width="100%">
-                  <tr>
-                    <td>
-                      <div class="data-table-title" style="height:2px;">
-                        <h3 class="margin-15">Client | <span id="total-client-broadcast"></span></h3>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="data-table-title" id="hide_prospek_icon"
-                        style="display:none;margin-top:14px;margin-right: -10px;">
-                        <label><i class="f7-icons popup-open" onclick="openPopupClientProspek();"
-                            data-popup=".client-prospek-popup">scope</i></label>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="data-table-title" style="margin-right: -10px;">
-                        <label id="change-color-eye" onclick="activeEye();"><i class="f7-icons">eye_slash</i></label>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="data-table-title" style="margin-right: -10px;">
-                        <label id="change-color-eye" onclick="reloadData();"><i
-                            class="f7-icons">arrow_2_circlepath_circle_fill</i></label>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="data-table-title" style="margin-top:14px;margin-right: -20px;">
-                        <div class="margin-15">
-                          ALL <input type="checkbox" onclick="toggle(this)" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table> -->
               </div>
+              <!-- Filter: Cari Perusahaan + Kota -->
               <div class="card-content" style="width:100%;">
                 <table cellspacing="1" cellpadding="1" width="100%">
                   <thead class="bg-dark-gray-medium text-align-center">
                     <tr>
-                      <th style="padding:5px;" colspan="2" width="50%">
-                        <center>
-                          <input onkeyup="doSearchByPerusahaan()" type="text"
-                            style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
-                            id="perusahaan_broadcast" name="perusahaan_broadcast" placeholder="Cari Perusahaan">
-                        </center>
+                      <th style="padding:5px;" width="50%">
+                        <input onkeyup="doSearchByPerusahaan()" type="text"
+                          style="border-radius:3px;padding:6px;width:100%;color:black;background-color:lightgray;"
+                          id="perusahaan_broadcast_head" name="perusahaan_broadcast_head" placeholder="Cari Perusahaan">
                       </th>
-                      <th style="padding:5px;" colspan="2" width="50%">
-                        <center>
-                          <select
-                            style="border-radius:3px; padding:6px; width:100%;  color:black; background-color:lightgray;"
-                            onchange="getDataClient();" id="filter_bulan" name="filter_bulan">
-                            <option value="0">Pilih Bulan</option>
-                            <option value="2">2 Bulan</option>
-                            <option value="3">3 Bulan</option>
-                            <option value="4">4 Bulan</option>
-                            <option value="5">5 Bulan</option>
-                          </select>
-                        </center>
+                      <th style="padding:5px;" width="50%">
+                        <select style="border-radius:3px;padding:6px;width:100%;color:black;background-color:lightgray;"
+                          onchange="getDataClientHead();" id="filter_kota_broadcast_head"
+                          name="filter_kota_broadcast_head">
+                          <option value="">Semua Kota</option>
+                        </select>
                       </th>
                     </tr>
                   </thead>
                 </table>
               </div>
+              <!-- Tabel data client -->
               <div class="card-content" style="overflow-x:auto;width:100%;">
-                <form id="form_send_broadcast">
-                  <table cellspacing="1" cellpadding="1" width="100%">
-                    <thead class="bg-dark-gray-medium text-align-center">
-                      <th class="label-cell" width="5%" style="border-bottom:1px solid gray;">No</th>
-                      <th class="label-cell" width="20.5%" style="border-bottom:1px solid gray;" id="label_kolom_new">
-                        Nama
-                        Client</th>
-                      <th class="label-cell" width="23%" style="border-bottom:1px solid gray;">Kota</th>
-                      <!-- <th class="label-cell" width="22%" style="border-bottom:1px solid gray;">Status</th> -->
-                      <th class="label-cell" width="28.5%" style="border-bottom:1px solid gray;">Detail</th>
-                      <!-- <th class="label-cell" width="28.5%" style="border-bottom:1px solid gray;">Log</th> -->
-                      <!-- <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Hide</th> -->
-                      <!-- <th class="label-cell" width="10%" style="border-bottom:1px solid gray;">Pilih</th> -->
-                    </thead>
-                    <tbody id="tabel_data_client">
-                    </tbody>
-                  </table>
-                </form>
+                <table cellspacing="1" cellpadding="1" width="100%">
+                  <thead class="bg-dark-gray-medium text-align-center">
+                    <th class="label-cell" width="5%" style="border-bottom:1px solid gray;">No</th>
+                    <th class="label-cell" width="40%" style="border-bottom:1px solid gray;" id="label_kolom_new">Nama
+                      Client</th>
+                    <th class="label-cell" width="30%" style="border-bottom:1px solid gray;">Kota</th>
+                    <th class="label-cell" width="25%" style="border-bottom:1px solid gray;">Details</th>
+                  </thead>
+                  <tbody id="tabel_data_client_head"></tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ==============================
+         POPUP: Pilih Kota
+         Dipakai bersama oleh form Tambah Client
+    =============================== -->
+    <div class="popup popup-pilih-kota">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Pilih Kota</div>
+            <div class="right">
+              <a class="link popup-close" data-popup=".popup-pilih-kota">
+                <i class="f7-icons text-add-colour-white">xmark</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <!-- Search Bar -->
+          <div style="padding:8px;">
+            <input type="search" id="search-kota-input" placeholder="Cari Kota..." oninput="filterKotaList()"
+              style="width:100%;padding:8px;border-radius:6px;border:none;background:#2c2c2c;color:#fff;font-size:14px;">
+          </div>
+          <!-- Kota List -->
+          <div class="list kota-list" style="margin:0;">
+            <ul id="kota-list-items">
+              <!-- diisi oleh JS -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

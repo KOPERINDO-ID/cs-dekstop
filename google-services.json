@@ -1,0 +1,295 @@
+{
+  "project_info": {
+    "project_number": "807706982340",
+    "project_id": "koperindo-id-int",
+    "storage_bucket": "koperindo-id-int.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:40a8ac7d71927a1c92d691",
+        "android_client_info": {
+          "package_name": "com.gps.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:a786fe5b4f38eac192d691",
+        "android_client_info": {
+          "package_name": "com.produksi13.vertice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:ac09e3396dc64d7492d691",
+        "android_client_info": {
+          "package_name": "com.toolskatalog.vertice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:1018ad71dea0403392d691",
+        "android_client_info": {
+          "package_name": "io.cordova.admin_tasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:e82cea98c356d41b92d691",
+        "android_client_info": {
+          "package_name": "io.cordova.ass_admin_tasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:3b239df30a10526292d691",
+        "android_client_info": {
+          "package_name": "io.cordova.crmsales"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:99b7d20d51538e3d92d691",
+        "android_client_info": {
+          "package_name": "io.cordova.crmsurabaya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:d5c937c7e1d77ac292d691",
+        "android_client_info": {
+          "package_name": "io.cordova.csapps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:265e8f654c8309f392d691",
+        "android_client_info": {
+          "package_name": "io.cordova.csnotif"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:3a7a9445e6c13e4692d691",
+        "android_client_info": {
+          "package_name": "io.cordova.hrd_tasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:88eecc33c10735ee92d691",
+        "android_client_info": {
+          "package_name": "io.cordova.operasional_tasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:aca8ac2e71b1d13092d691",
+        "android_client_info": {
+          "package_name": "io.cordova.owner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:36c520132e85be1592d691",
+        "android_client_info": {
+          "package_name": "io.cordova.paymentinvoicetasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:94869d8c12b8803492d691",
+        "android_client_info": {
+          "package_name": "io.cordova.salessurabaya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807706982340:android:c99bc1144bcb771192d691",
+        "android_client_info": {
+          "package_name": "io.cordova.spy_tasindo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEOPVGn_ePp72k8_8lO8zaIHeT6ijl9xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

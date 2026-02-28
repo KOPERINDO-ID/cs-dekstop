@@ -3549,6 +3549,23 @@
           </div>
           <div class="page-content">
             <div class="card" style="margin: 10px;">
+              <!-- Filter Section -->
+              <div class="card-content" style="padding: 10px; width:95%;">
+                <div class="row align-items-center">
+                  <div class="col-80">
+                    <input 
+                      type="text" 
+                      id="filter-nama-client" 
+                      placeholder="Cari nama perusahaan/client..." 
+                      oninput="filterTableByClient()"
+                      style="border: 1px solid #ccc; border-radius: 6px; padding: 8px; width: 100%; box-sizing: border-box;"
+                    />
+                  </div>
+                  <div class="col-20" style="padding-left: 8px;">
+                    <button class="button button-small button-fill bg-color-gray" onclick="clearFilterClient()" style="width: 100%;">Reset</button>
+                  </div>
+                </div>
+              </div>
               <div class="card-content" style="overflow-x:auto; width:100%;">
                 <table width="800px" style="border-collapse: collapse;">
                   <thead class="bg-dark-gray-young text-align-center">

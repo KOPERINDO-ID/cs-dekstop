@@ -451,7 +451,7 @@ $$(document).on('page:afterin', '.page[data-name="penjualan"]', function (e, pag
 
   runFunctionsSequentially([
     { name: 'getYearSalesAdmin', func: wrapFunction(getYearSalesAdmin, 'getYearSalesAdmin') },
-    { name: 'selectBoxClient', func: wrapFunction(selectBoxClient, 'selectBoxClient') },
+    { name: 'selectBoxSales', func: wrapFunction(selectBoxSales, 'selectBoxSales') },
     { name: 'getBulanTransaksiPerforma', func: wrapFunction(getBulanTransaksiPerforma, 'getBulanTransaksiPerforma') },
     { name: 'getYearTransaksiPerforma', func: wrapFunction(getYearTransaksiPerforma, 'getYearTransaksiPerforma') },
     { name: 'getBulanTransaksiPenjualan', func: wrapFunction(getBulanTransaksiPenjualan, 'getBulanTransaksiPenjualan') },

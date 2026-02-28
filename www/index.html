@@ -38,41 +38,13 @@
         <div class="navbar-inner bg-dark-gray-medium">
           <div class="title" style="margin-left:10px;" id="karyawan_nama_header"></div>
           <div class="kotak" id="box_internet" style="float:right;"></div>
-          <div class="popup popup-pengumuman">
-            <div class="view">
-              <div class="page">
-                <div class="navbar">
-                  <div class="navbar-bg"></div>
-                  <div class="navbar-inner">
-                    <div class="title">Info</div>
-                    <div class="right">
-                      <!-- Link to close popup -->
-                      <a class="link popup-close">Close</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="page-content">
-                  <div class="card card-outline margin-top table-color-lightgray">
-                    <div class="card-content">
-                      <div class="row">
-                        <div class="col-100" id="data_pengumuman">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- GROUP SEMUA ELEMENT KANAN DALAM SATU DIV -->
           <div class="right" style="display: flex; align-items: center; gap: 15px; padding-right: 10px;">
-            <!-- Notifikasi -->
-            <a style="color:#dcdcdcfa;" data-popup=".popup-pengumuman" class="popup-open">
-              <i class="f7-icons">bell_fill
-                <span style="left:13% !important;margin-top: 12px !important;" class="badge color-red"
-                  id="count_pengumuman"></span>
-              </i>
-            </a>
+            <!-- Notification Icon -->
+            <div id="notifIcon">
+              <i class="f7-icons">bell_fill</i>
+              <span class="notif-badge" id="notifBadge" style="display: none;">0</span>
+            </div>
 
             <!-- Jam -->
             <div style="color:#dcdcdcfa; font-size:14px;" id="clock_view"></div>
@@ -305,6 +277,81 @@
     </div>
   </div>
 
+  <!-- ========== NOTIFICATION PANEL ========== -->
+  <div id="notifPanel" style="display: none;">
+    <div class="notif-panel-header">
+      <h3 style="margin: 0; color: #fff;">Notifikasi</h3>
+      <div style="display: flex; gap: 4px; align-items: center;">
+        <button id="markAllRead" style="background: none; border: none; color: #3498db; cursor: pointer;"
+          title="Tandai Semua Dibaca">
+          <i class="f7-icons">checkmark_circle</i>
+        </button>
+        <button id="clearAllNotif" style="background: none; border: none; color: #e74c3c; cursor: pointer;"
+          title="Hapus Semua">
+          <i class="f7-icons">trash_circle</i>
+        </button>
+        <button id="closePanel" style="background: none; border: none; color: #fff; cursor: pointer;" title="Tutup">
+          <i class="f7-icons">multiply_circle</i>
+        </button>
+      </div>
+    </div>
+    <div class="notif-panel-body">
+      <ul id="notifList"></ul>
+    </div>
+  </div>
+
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div class="toast-notification" id="toastNotif" style="display: none;">
+    <div class="toast-content">
+      <div class="toast-icon">🔔</div>
+      <div class="toast-text">
+        <h4 id="toastTitle">Judul</h4>
+        <p id="toastBody">Pesan notifikasi</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- ========== NOTIFICATION DETAIL POPUP ========== -->
+  <div class="popup notif-detail-popup" id="notifDetailPopup">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">Detail Notifikasi</div>
+            <div class="right">
+              <a class="link popup-close">
+                <i class="f7-icons">xmark</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block">
+            <div style="background: #2c2c2e; padding: 16px; border-radius: 8px; margin-top: 8px; margin-bottom: 16px;">
+              <h3 id="detailNotifTitle" style="margin: 0 0 12px 0; color: #fff; font-size: 18px; font-weight: 600;">
+              </h3>
+              <p id="detailNotifBody" style="margin: 0 0 12px 0; color: #a0a0a0; font-size: 14px; line-height: 1.6;">
+              </p>
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #3a3a3c;">
+                <span id="detailNotifTime" style="font-size: 12px; color: #666;"></span>
+                <span id="detailNotifStatus"
+                  style="font-size: 12px; padding: 4px 12px; border-radius: 12px; background: rgba(0, 122, 255, 0.2); color: #007aff;"></span>
+              </div>
+            </div>
+            <button class="button button-fill button-large popup-close"
+              style="background: #14418F; color: #fff; border-radius: 8px;">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- CORDOVA_PLACEHOLDER_DONT_REMOVE -->
   <!-- Framework7 library -->
   <!-- Cordova APIs -->
@@ -364,6 +411,10 @@
   <script src="js/csm/sales_csm.js"></script>
   <script src="js/csm/katalog_csm.js"></script>
   <script src="js/csm/visit_csm.js"></script>
+
+  <!-- NOTIFICATION MODULES -->
+  <script src="js/notification.js"></script>
+
 
   <!-- App Global JS -->
   <script src="js/app.js"></script>

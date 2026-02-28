@@ -22,6 +22,7 @@
     "cordova-plugin-canvas2image-updated": "^1.2.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-file": "^7.0.0",
+    "cordova-plugin-firebasex": "^19.1.0",
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-network-information": "^3.0.0",
@@ -48,7 +49,20 @@
       },
       "cordova-plugin-network-information": {},
       "cordova-plugin-screen-orientation": {},
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-firebasex": {
+        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
+        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
+        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
+        "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
+        "FIREBASE_ANALYTICS_WITHOUT_ADS": "false",
+        "FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY": "false",
+        "GOOGLE_ANALYTICS_ADID_COLLECTION_ENABLED": "true",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE": "true",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE": "true",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA": "true",
+        "GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS": "true"
+      }
     },
     "platforms": [
       "browser",

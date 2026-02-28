@@ -23,6 +23,7 @@ function getDataUser() {
 				app.dialog.preloader('Berhasil Login');
 				app.dialog.close();
 				jQuery('#logout_logo').show();
+				jQuery('#notifIcon').show();
 				startTimeMain();
 				localStorage.setItem("user_id", data.user_id);
 				localStorage.setItem("username", data.username);
@@ -36,7 +37,22 @@ function getDataUser() {
 
 				$$('#karyawan_nama_header').html('<b>' + data.karyawan_nama + '</b>');
 				console.log(localStorage.getItem("jabatan_kantor"));
-				
+
+				// ============================================
+				// CRITICAL: Initialize NotificationManager AFTER saving data
+				// Function ini ada di app.js
+				// ============================================
+				console.log('[Login] 🔔 Initializing NotificationManager...');
+
+				// Pastikan function tersedia
+				if (typeof initNotificationManagerAfterLogin === 'function') {
+					initNotificationManagerAfterLogin();
+					console.log("MASUK");
+				} else {
+					console.error('[Login] ❌ initNotificationManagerAfterLogin function not found!');
+					console.error('[Login]    Make sure app.js is loaded before login.js');
+				}
+
 				if (data.user_position == 'CS') {
 					return app.views.main.router.navigate('/notif');
 				} else {

@@ -2932,16 +2932,13 @@ function showselectBoxTS(count) {
     // let b = a.filter(item => search.test(item));
 
     // console.log(b.length);
-    if (jenis_produk.length > 0) {
-        // document.getElementById('qty_' + count).readOnly = true;
-        // button.removeAttribute("onclick");
-        $$('#qty_' + count).val(jenis_produk[0].qty);
-        console.log('found hc')
-    } else {
-        // button.setAttribute('onclick', 'resetValueQty(' + count + ');');
-        // document.getElementById('qty_' + count).readOnly = false;
-        console.log('not found hc')
-    }
+    // if (jenis_produk.length > 0) {
+    //     $$('#qty_' + count).val(jenis_produk[0].qty);
+    //     console.log('found hc')
+    // } else {
+    //     console.log('not found hc')
+    // }
+
     selectBoxTS(count);
     changeHC(count);
 }
@@ -5721,11 +5718,13 @@ function addPerforma() {
     html_performa_group_field += '<div class="row no-gap">';
     html_performa_group_field += '<!-- Kolom Kiri 75% untuk Input Qty -->';
     html_performa_group_field += '<div class="col-75">';
+
     // ========================================
     // FIX: Ambil qty dari proforma #1 sebagai default qty untuk item baru
     // Owner request: jika proforma #1 qty = 100, maka proforma baru juga 100
     // ========================================
-    var defaultQty = $$('#qty_1').val() || '100';
+    // var defaultQty = $$('#qty_1').val() || '100';
+    var defaultQty = '100';
 
     html_performa_group_field += '<input min="1" placeholder="Qty" value="' + defaultQty + '" name="qty_' + ($('.performa_group_field_count').length + 1) + '" id="qty_' + ($('.performa_group_field_count').length + 1) + '" ';
     html_performa_group_field += 'onchange="changeTotalValue(' + ($('.performa_group_field_count').length + 1) + ');changeQtyTs(' + ($('.performa_group_field_count').length + 1) + ');" ';
@@ -5986,6 +5985,13 @@ function changeTotalValue(performa_id_table) {
     }
 
     var qty = parseFloat($$('#qty_' + performa_id_table).val()) || 0;
+
+    if (qty === 0) {
+        qty = 100;
+        $$('#qty_' + performa_id_table).val('100');
+        console.log('Auto-corrected qty to 100 in changeTotalValue');
+    }
+
     var total = price * qty;
 
     // Debug log
@@ -6390,7 +6396,8 @@ document.addEventListener('DOMContentLoaded', function () {
 // }
 
 function resetValueQty(count) {
-    $$('#qty_' + count).val('');
+    $$('#qty_' + count).val('100');
+    console.log('Reset qty to default: 100');
 }
 
 // Author: Crysna Wima - 24 Desember 2025

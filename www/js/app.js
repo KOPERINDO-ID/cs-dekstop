@@ -1030,6 +1030,17 @@ $$(document).on('page:afterin', '.page[data-name="performa_input"]', function (e
   //     $('#wilayah').trigger('change')
   //   }
   // });
+
+  $$(document).on('blur', '.performa-input.input-item-qty', function () {
+    var currentQty = $$(this).val();
+    if (!currentQty || currentQty === '' || parseInt(currentQty) === 0) {
+      $$(this).val('100');
+      var count = $$(this).attr('id').replace('qty_', '');
+      console.log('Auto-filled qty_' + count + ' to 100');
+      // Trigger recalculation
+      changeTotalValue(count);
+    }
+  });
 });
 
 // ============================================

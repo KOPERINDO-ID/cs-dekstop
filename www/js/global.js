@@ -25,7 +25,8 @@ function checkConnection() {
 
 
 
-var BASE_API = 'https://tasindo-sale-webservice.digiseminar.id/api';
+// var BASE_API = 'https://tasindo-sale-webservice.digiseminar.id/api';
+var BASE_API = 'https://indokoper.com/api';
 
 var BASE_API2 = 'https://tasindo-sale-webservice.digiseminar.id/api';
 var BASE_API3 = 'https://be.order.devkoperindo.com/api';

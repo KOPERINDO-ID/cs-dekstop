@@ -76,24 +76,24 @@ function getDataEditToolsBroadcast(tools_marketing_id) {
 		success: function (data) {
 			app.dialog.close();
 			if (data.data.media_type == 'Gambar') {
-				jQuery('#view_video_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/novideo.mp4');
+				jQuery('#view_video_broadcast').attr('src', 'https://indokoper.com/novideo.mp4');
 				$("#head_video_broadcast")[0].load();
 				$("#radio-gambar").prop("checked", true);
 				pilihRadioFile('Gambar');
 				if (data.data.gambar_broadcast != 'null') {
 					jQuery('#view_gambar_broadcast').attr('src', BASE_PATH_IMAGE_BROADCAST + '/' + data.data.gambar_broadcast);
 				} else {
-					jQuery('#view_gambar_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+					jQuery('#view_gambar_broadcast').attr('src', 'https://indokoper.com/noimage.jpg');
 				}
 			} else {
-				jQuery('#view_gambar_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+				jQuery('#view_gambar_broadcast').attr('src', 'https://indokoper.com/noimage.jpg');
 				$("#radio-video").prop("checked", true);
 				pilihRadioFile('Video');
 				if (data.data.gambar_broadcast != 'null') {
 					jQuery('#view_video_broadcast').attr('src', BASE_PATH_IMAGE_BROADCAST + '/' + data.data.gambar_broadcast);
 					$("#head_video_broadcast")[0].load();
 				} else {
-					jQuery('#view_video_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/novideo.mp4');
+					jQuery('#view_video_broadcast').attr('src', 'https://indokoper.com/novideo.mp4');
 					$("#head_video_broadcast")[0].load();
 				}
 			}
@@ -169,7 +169,7 @@ function gambarBroadcast() {
 }
 
 function removeGambarBroadcast() {
-	jQuery('#view_gambar_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+	jQuery('#view_gambar_broadcast').attr('src', 'https://indokoper.com/noimage.jpg');
 	jQuery('#edit_foto_broadcast').val('');
 	$$('#value_edit_foto_broadcast').html('Pilih Gambar');
 }
@@ -198,7 +198,7 @@ function videoBroadcast() {
 }
 
 function removeVideoBroadcast() {
-	jQuery('#view_video_broadcast').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/novideo.mp4');
+	jQuery('#view_video_broadcast').attr('src', 'https://indokoper.com/novideo.mp4');
 	$("#head_video_broadcast")[0].load();
 	jQuery('#edit_video_broadcast').val('');
 	$$('#value_edit_video_broadcast').html('Pilih Video');

@@ -679,9 +679,9 @@ function penjualanGetPerformaData() {
 
 
 					if (val.gambar.substring(0, 5) == "koper") {
-						var path_image = 'https://tasindo-sale-webservice.digiseminar.id/product_image_new';
+						var path_image = 'https://indokoper.com/product_image_new';
 					} else {
-						var path_image = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
+						var path_image = 'https://indokoper.com/performa_image';
 					}
 
 					invoice_performa += '		<tr>';

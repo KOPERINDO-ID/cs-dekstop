@@ -198,7 +198,7 @@ function shipmentNotifDelay(penjualan_id) {
             if (data.data.foto_produksi_selesai != null) {
                 jQuery('#file_foto_produksi_selesai_delay_view').attr('src', BASE_PATH_IMAGE_BUKTI_PRODUKSI + '/' + data.data.foto_produksi_selesai);
             } else {
-                jQuery('#file_foto_produksi_selesai_delay_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+                jQuery('#file_foto_produksi_selesai_delay_view').attr('src', 'https://indokoper.com/noimage.jpg');
             }
             $$('#hp_delay_alamat').val(hp_alamat);
             $$('#tgl_kirim_cabang_delay').val(tgl_kirim_cabang);

@@ -2235,13 +2235,13 @@ function updateProspek(lat_1, lng_1, lat_2, lng_2, lat_3, lng_3, file_selfie_car
     if (foto != 'null') {
         $$("#file_id_card_1_view").attr("src", BASE_PATH_IMAGE + '/' + foto);
     } else {
-        $$('#file_id_card_1_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+        $$('#file_id_card_1_view').attr('src', 'https://indokoper.com/noimage.jpg');
     }
 
     if (foto_selfie != 'null') {
         $$("#file_selfie_card_1_view").attr("src", BASE_PATH_IMAGE + '/' + foto_selfie);
     } else {
-        $$('#file_selfie_card_1_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+        $$('#file_selfie_card_1_view').attr('src', 'https://indokoper.com/noimage.jpg');
     }
 }
 

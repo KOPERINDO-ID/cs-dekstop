@@ -20,6 +20,20 @@ function checkConnection() {
 			});
 		});
 	}
+
+	if (states[networkState] == 'no_network') {
+        $("#box_internet").css("background-color", "red"); // ← TAMBAHKAN
+        localStorage.setItem("internet_koneksi", "fail");  // ← TAMBAHKAN
+        app.dialog.alert('Internet Sangat Lambat, Cek Koneksi Lalu Klik Oke', function () {
+            app.views.main.router.navigate(app.views.main.router.currentRoute.url, {
+				ignoreCache: true,
+				reloadCurrent: true
+			});
+        });
+    } else {
+        // Kalau ada koneksi, tetap jalankan AJAX check untuk validasi server
+        internetCheckQueue.check();
+    }
 }
 
 
@@ -28,24 +42,24 @@ function checkConnection() {
 // var BASE_API = 'https://tasindo-sale-webservice.digiseminar.id/api';
 var BASE_API = 'https://indokoper.com/api';
 
-var BASE_API2 = 'https://tasindo-sale-webservice.digiseminar.id/api';
+var BASE_API2 = 'https://indokoper.com/api';
 var BASE_API3 = 'https://be.order.devkoperindo.com/api';
-var BASE_PATH_IMAGE_ABSEN = 'https://tasindo-sale-webservice.digiseminar.id/absen';
-var BASE_PATH_IMAGE = 'https://tasindo-sale-webservice.digiseminar.id/kunjungan';
-var BASE_PATH_IMAGE_BBM = 'https://tasindo-sale-webservice.digiseminar.id/foto_bbm';
-var BASE_PATH_IMAGE_PERFORMA = 'https://tasindo-sale-webservice.digiseminar.id/performa_image';
-var BASE_PATH_IMAGE_CUSTOMER = 'https://tasindo-sale-webservice.digiseminar.id/customer_logo';
-var BASE_PATH_IMAGE_PRODUCT = 'https://tasindo-sale-webservice.digiseminar.id/product_image_new';
-var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://tasindo-sale-webservice.digiseminar.id/foto_produksi';
-var BASE_PATH_IMAGE_SURAT_JALAN = 'https://tasindo-sale-webservice.digiseminar.id/foto_surat_jalan';
-var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://tasindo-sale-webservice.digiseminar.id/foto_pembayaran';
-var BASE_PATH_IMAGE_FOTO_FEE = 'https://tasindo-sale-webservice.digiseminar.id/foto_fee';
-var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://tasindo-sale-webservice.digiseminar.id/bukti_gaji';
-var BASE_PATH_IMAGE_FOTO_KTP = 'https://tasindo-sale-webservice.digiseminar.id/foto_ktp';
-var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://tasindo-sale-webservice.digiseminar.id/public_selfie';
-var BASE_PATH_IMAGE_BUKTI_SP = 'https://tasindo-sale-webservice.digiseminar.id/bukti_sp';
-var BASE_PATH_IMAGE_BUKTI_POINT = 'https://tasindo-sale-webservice.digiseminar.id/foto_bukti_point';
-var BASE_PATH_IMAGE_BROADCAST = 'https://tasindo-sale-webservice.digiseminar.id/gambar_broadcast';
+var BASE_PATH_IMAGE_ABSEN = 'https://indokoper.com/absen';
+var BASE_PATH_IMAGE = 'https://indokoper.com/kunjungan';
+var BASE_PATH_IMAGE_BBM = 'https://indokoper.com/foto_bbm';
+var BASE_PATH_IMAGE_PERFORMA = 'https://indokoper.com/performa_image';
+var BASE_PATH_IMAGE_CUSTOMER = 'https://indokoper.com/customer_logo';
+var BASE_PATH_IMAGE_PRODUCT = 'https://indokoper.com/product_image_new';
+var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://indokoper.com/foto_produksi';
+var BASE_PATH_IMAGE_SURAT_JALAN = 'https://indokoper.com/foto_surat_jalan';
+var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://indokoper.com/foto_pembayaran';
+var BASE_PATH_IMAGE_FOTO_FEE = 'https://indokoper.com/foto_fee';
+var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://indokoper.com/bukti_gaji';
+var BASE_PATH_IMAGE_FOTO_KTP = 'https://indokoper.com/foto_ktp';
+var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://indokoper.com/public_selfie';
+var BASE_PATH_IMAGE_BUKTI_SP = 'https://indokoper.com/bukti_sp';
+var BASE_PATH_IMAGE_BUKTI_POINT = 'https://indokoper.com/foto_bukti_point';
+var BASE_PATH_IMAGE_BROADCAST = 'https://indokoper.com/gambar_broadcast';
 
 
 function refreshPage() {

@@ -894,10 +894,14 @@ function getMenuUser() {
   if (username === 'CSO') {
     $$('#menuDelayGo').show();
     $$('#menuTagihan').show();
+    $$('#menuInvoice').show();
+    $$('#menuKorin').show();
     $$('#menuBroadcast').hide();
   } else {
     $$('#menuDelayGo').hide();
     $$('#menuTagihan').hide();
+    $$('#menuInvoice').hide();
+    $$('#menuKorin').hide();
     $$('#menuBroadcast').show();
   }
 }

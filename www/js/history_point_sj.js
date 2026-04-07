@@ -267,7 +267,7 @@ function downloadPointHistorySj() {
 function buktiPointSj() {
     $('#show_foto_history_point_sj').attr('src', '');
     if (localStorage.getItem("link_foto_bukti_sj") == null || localStorage.getItem("link_foto_bukti_sj") == undefined || localStorage.getItem("link_foto_bukti") == 'undefined') {
-        jQuery('#show_foto_history_point_sj').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+        jQuery('#show_foto_history_point_sj').attr('src', 'https://indokoper.com/noimage.jpg');
 
     } else {
         jQuery('#show_foto_history_point_sj').attr('src', BASE_PATH_IMAGE_BUKTI_POINT + '/' + localStorage.getItem("link_foto_bukti_sj"));

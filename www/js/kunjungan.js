@@ -417,6 +417,6 @@ function showFotoBbm(foto_bbm, tanggal_nota) {
 	if (foto_bbm != null) {
 		$$("#show_foto_bbm").attr("src", BASE_PATH_IMAGE_BBM + '/' + foto_bbm);
 	} else {
-		$$("#show_foto_bbm").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+		$$("#show_foto_bbm").attr("src", "https://indokoper.com/noimage.jpg");
 	}
 }

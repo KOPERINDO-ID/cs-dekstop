@@ -720,7 +720,7 @@
         </div>
         <div class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
+          <a class="text-add-colour-white" href="/notif">Notif</a>
         </div>
         <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
@@ -731,6 +731,10 @@
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
+        <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
+        </div>
         <!-- <div class="align-items-center justify-content-center text-bold"
          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/kpi">KPI</a>
@@ -739,10 +743,11 @@
         style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tools">Tools</a>
         </div>
-        <div class="align-items-center justify-content-center text-bold "
+         -->
+        <div id="menuKorin" class="align-items-center justify-content-center text-bold "
         style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
-          <a class="text-add-colour-white" href="/point-sales">Point</a>
-        </div> -->
+          <a class="text-add-colour-white" href="/point-sales">Korin</a>
+        </div>
 
       </div>
       <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
@@ -776,7 +781,7 @@
         <div class="col-100">
 
           <!-- ===== PROFORMA ===== -->
-          <div id="notif-proforma">
+          <div id="notif-proforma" style="display:none;">
             <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
@@ -832,7 +837,7 @@
           </div>
 
           <!-- ===== SALES ===== -->
-          <div id="notif-sales">
+          <div id="notif-sales" style="display:none;">
             <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
@@ -880,7 +885,7 @@
           </div>
 
           <!-- ===== BAYAR ===== -->
-          <div id="notif-bayar">
+          <div id="notif-bayar" style="display:none;">
             <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
@@ -930,7 +935,7 @@
           </div>
 
           <!-- ===== SHIPMENT ===== -->
-          <div id="notif-shipment">
+          <div id="notif-shipment" style="display:none;">
             <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">
@@ -978,7 +983,7 @@
           </div>
 
           <!-- ===== KIRIM ===== -->
-          <div id="notif-kirim">
+          <div id="notif-kirim" style="display:none;">
             <div class="border-actived" style="margin:10px 0;">
               <!-- Card Header -->
               <div class="card-header bg-dark-gray-young" style="position:relative; padding-right:0;">

@@ -561,72 +561,60 @@
       </div>
     </div>
 
-    <div class="card" style="margin-top: 2px !important;">
+    <div class="card">
       <!-- Navbar -->
-      <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border">
-          <a class="text-add-colour-white text-bold" id="page_sales" href="/Sales"
-            style="display: flex; justify-content: center; align-items: center;">
-            Sales
-          </a>
+      <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
         </div>
-        <div class="col col-border">
-          <a class="text-add-colour-white text-bold" href="/client" onclick=""
-            style="display: flex; justify-content: center; align-items: center;">
-            Broadcast
-          </a>
+        <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
         </div>
-        <div class="col col-border merah-notif-all">
-          <a class="text-bold text-add-colour-white" href="/notif" onclick="changeFilterMenuNotif('proforma');"
-            style="display: flex; justify-content: center; align-items: center;">
-            Notif
-          </a>
+        <div class="align-items-center justify-content-center text-bold merah-notif-all"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/notif">Notif</a>
         </div>
-        <div class="col col-border notif-merah-delay">
-          <a class="text-bold text-add-colour-white" href="/delay-go"
-            style="display: flex; justify-content: center; align-items: center;">
-            Delay - Go
-          </a>
+        <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
-        <div class="col col-border notif-merah-tagihan">
-          <a class="text-bold text-add-colour-white" href="/tagihan"
-            style="display: flex; justify-content: center; align-items: center;">
-            Tagihan
-          </a>
+        <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
-        <div class="col col-border">
-          <a class="text-bold text-add-colour-white" href="/kpi"
-            style="display: flex; justify-content: center; align-items: center;">
-            KPI
-          </a>
+        <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
         </div>
-        <div class="col col-border">
-          <a class="text-bold text-add-colour-white" href="/tools"
-            style="display: flex; justify-content: center; align-items: center;">
-            Tools
-          </a>
+        <!-- <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/kpi">KPI</a>
         </div>
-        <div class="col col-border bg-dark-gray-orange">
-          <a class="text-bold text-add-colour-white" href="/point-sales"
-            style="display: flex; justify-content: center; align-items: center;">
-            Point
-          </a>
+        <div class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/tools">Tools</a>
+        </div>-->
+        <div id="menuKorin" class="align-items-center justify-content-center text-bold bg-dark-gray-medium"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/point-sales">Korin</a>
         </div>
       </div>
       <!-- End of Navbar -->
 
       <!-- Sub Menu -->
       <div style="text-align: center;" class="row no-gap bg-dark-gray-young">
-        <div class="col col-border pointSalesFilterMenu bg-dark-gray-orange">
+        <!-- <div class="col col-border pointSalesFilterMenu bg-dark-gray-orange">
           <a class="text-add-colour-white text-bold" onclick="changeFilterSubMenu('pointSales');"
             style="display: flex; justify-content: center; align-items: center;">
             Sales
           </a>
-        </div>
+        </div> -->
         <div class="col col-border komisiFilterMenu">
           <a class="text-add-colour-white text-bold" onclick="changeFilterSubMenu('komisi');"
             style="display: flex; justify-content: center; align-items: center;">
-            Korin
+            Komisi
           </a>
         </div>
         <div class="col col-border emoneyFilterMenu">
@@ -643,7 +631,7 @@
     <div class="row">
       <div class="col-100">
         <!-- Sub Menu Point Sales -->
-        <div id="submenu-point-sales">
+        <div id="submenu-point-sales" style="display: none;">
           <table cellspacing="1" cellpadding="1" width="100%" style="margin-top:0px;">
             <thead class="bg-dark-gray-medium text-align-center">
               <tr>

@@ -184,7 +184,7 @@ function getDataFotoPoint(id_pembayaran_point) {
                     // jQuery('#file_foto_lunas_point').show();
                     // jQuery('#file_foto_pelunasan_view_now_point').hide();
                     $$('#label_file_foto_lunas_point').show();
-                    $$("#file_foto_pelunasan_view_now_point").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+                    $$("#file_foto_pelunasan_view_now_point").attr("src", "https://indokoper.com/noimage.jpg");
                     jQuery('#btn_upload_foto_lunas_selesai').show();
                 }
 
@@ -202,7 +202,7 @@ function getDataFotoPoint(id_pembayaran_point) {
                 localStorage.setItem("id_pembayaran_point", null);
                 // jQuery('#file_foto_lunas_point').show();
                 // jQuery('#file_foto_pelunasan_view_now_point').hide();
-                $$("#file_foto_pelunasan_view_now_point").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+                $$("#file_foto_pelunasan_view_now_point").attr("src", "https://indokoper.com/noimage.jpg");
                 jQuery('#btn_upload_foto_lunas_selesai').show();
                 jQuery('#file_foto_point').show();
                 $$('#label_file_foto_lunas_point').show();

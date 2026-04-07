@@ -402,7 +402,7 @@ function showFotoBbmAdmin(foto_bbm, tanggal_nota) {
     if (foto_bbm != null) {
         $$("#show_foto_bbm_admin").attr("src", BASE_PATH_IMAGE_BBM + '/' + foto_bbm);
     } else {
-        $$("#show_foto_bbm_admin").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+        $$("#show_foto_bbm_admin").attr("src", "https://indokoper.com/noimage.jpg");
     }
 }
 
@@ -424,7 +424,7 @@ function confirmBbmAdmin(id_kunjungan_bbm) {
             if (data.data.foto_bbm != null) {
                 $$("#show_foto_nota_bbm_admin").attr("src", BASE_PATH_IMAGE_BBM + '/' + data.data.foto_bbm);
             } else {
-                $$("#show_foto_nota_bbm_admin").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+                $$("#show_foto_nota_bbm_admin").attr("src", "https://indokoper.com/noimage.jpg");
             }
             if (data.data.foto_confirm_bbm != null) {
                 $$("#confirm_bbm_button_save").hide();
@@ -459,7 +459,7 @@ function validBbmAdmin(id_kunjungan_bbm) {
             if (data.data.foto_bbm != null) {
                 $$("#show_foto_nota_bbm_admin_valid").attr("src", BASE_PATH_IMAGE_BBM + '/' + data.data.foto_bbm);
             } else {
-                $$("#show_foto_nota_bbm_admin_valid").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+                $$("#show_foto_nota_bbm_admin_valid").attr("src", "https://indokoper.com/noimage.jpg");
             }
             if (data.data.valid_bbm != 0) {
                 $$("#validasi_bbm_button_save").hide();
@@ -636,7 +636,7 @@ function showFotoDetailBbmAdmin(foto_bbm, tanggal_nota) {
     if (foto_bbm != null) {
         $$("#foto_detail_history_bbm").attr("src", BASE_PATH_IMAGE_BBM + '/' + foto_bbm);
     } else {
-        $$("#foto_detail_history_bbm").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+        $$("#foto_detail_history_bbm").attr("src", "https://indokoper.com/noimage.jpg");
     }
 }
 
@@ -645,7 +645,7 @@ function showFotoHistoryBbmAdmin(foto_bbm) {
     if (foto_bbm != null) {
         $$("#show_foto_history_bbm_admin").attr("src", BASE_PATH_IMAGE_CONFIRM_BBM + '/' + foto_bbm);
     } else {
-        $$("#show_foto_history_bbm_admin").attr("src", "https://tasindo-sale-webservice.digiseminar.id/noimage.jpg");
+        $$("#show_foto_history_bbm_admin").attr("src", "https://indokoper.com/noimage.jpg");
     }
 }
 

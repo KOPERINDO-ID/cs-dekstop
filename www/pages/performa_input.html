@@ -246,7 +246,7 @@
                 </div>
                 <div class="display-flex justify-content-center align-items-center bg-dark-gray-young text-bold merah-notif-all"
                     style="height: 32px; flex: 1;">
-                    <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');"
+                    <a class="text-add-colour-white"
                         href="/notif">Notif</a>
                 </div>
                 <div class="display-flex justify-content-center align-items-center bg-dark-gray-young text-bold notif-merah-delay"
@@ -258,14 +258,18 @@
                     style="height: 32px; flex: 1;">
                     <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
                 </div>
+                <div class="align-items-center justify-content-center text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
+                </div>
             </div>
         </div>
         <div class="card-content" style="overflow-x:auto;">
             <div class="list no-hairlines-md" style="padding: 8px; margin: 0;">
                 <form id="performa_form">
                     <input type="hidden" id="status_perusahaan" name="status_perusahaan" value="perusahaan_database">
-                    <div class="display-flex flex-direction-row align-items-center"
-                        style="height: 48px; gap: 2px; background: -webkit-linear-gradient(#1e4920, #ffffff82); border-collapse: collapse;">
+                    <div class="display-flex flex-direction-row align-items-center bg-dark-gray-medium"
+                        style="height: 48px; gap: 2px; border-collapse: collapse;">
                         <div class="perusahaan_database" style="flex: 5;">
                             <a class="item-link smart-select smart-select-init smart-select-perusahaan"
                                 data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Cari Client"
@@ -472,8 +476,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="item-content item-input margin-8 col-50 el_color_proforma_input color_proforma_input_koper"
-                                id="color_proforma_input_1" style="display: none; position:absolute;">
+                            <li class="item-content item-input margin-8 el_color_proforma_input color_proforma_input_koper"
+                                id="color_proforma_input_1" style="display: none; position:absolute; right: 25px;">
                                 <div class="item-inner" style="height:8px;">
                                     <div class="item-input-wrap" id="color_input_1" style="border-radius: 5px;">
                                     </div>

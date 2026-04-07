@@ -71,10 +71,10 @@ var routes = [
     path: '/login',
     url: './pages/login.html',
   },
-  {
-    path: '/surat_jalan',
-    url: './pages/surat_jalan.html',
-  },
+  // {
+  //   path: '/surat_jalan',
+  //   url: './pages/surat_jalan.html',
+  // },
   {
     path: '/absen-sales',
     url: './pages/absen_sales.html',
@@ -114,6 +114,10 @@ var routes = [
   {
     path: '/tagihan',
     url: './pages/tagihan.html',
+  },
+  {
+    path: '/surat_jalan',
+    url: './pages/surat_jalan_admin.html',
   },
   {
     path: '/form/',

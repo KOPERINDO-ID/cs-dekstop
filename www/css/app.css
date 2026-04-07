@@ -995,3 +995,62 @@ table tbody td {
   overflow-y: auto;
   border-radius: 16px 16px 0 0;
 }
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.swatch-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.swatch-chip {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.swatch-name {
+  font-size: 14px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.swatch-item-performa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.swatch-chip-performa {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.swatch-name-performa {
+  font-size: 14px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+br.spasi-khusus::after {
+  content: "";
+  display: block;
+  margin-top: 8px;
+  /* contoh jarak */
+}

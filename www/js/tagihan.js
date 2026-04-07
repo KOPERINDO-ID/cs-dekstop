@@ -770,7 +770,7 @@ function getDataTagihan(page) {
                     html += '</td>';
                     html += '<td align="center" style="border:1px solid gray; padding:8px;">' + tanggalSelesai + '</td>';
                     html += '<td align="center" style="border:1px solid gray; padding:8px;">' + (item.client_kota || '-') + '</td>';
-                    html += '<td align="right" style="border:1px solid gray; padding:8px;">' + number_format(nilaiJualMurni) + '</td>';
+                    html += '<td align="right" style="border:1px solid gray; padding:8px;">' + number_format(item.penjualan_grandtotal) + '</td>';
                     html += '<td align="right" style="border:1px solid gray; padding:8px;">' + number_format(item.penjualan_jumlah_pembayaran || 0) + '</td>';
                     html += '<td align="right" style="border:1px solid gray; padding:8px;"><b>' + number_format(sisaPembayaran) + '</b></td>';
 
@@ -2572,7 +2572,7 @@ function editPembayaranTagihanPopup(bayar_ke, type_foto, pembayaran_id, foto_ke,
     if (foto_ke != 'null' && foto_ke) {
         jQuery('#file_foto_edit_pembayaran_tagihan_view').attr('src', BASE_PATH_IMAGE_FOTO_PEMBAYARAN + '/' + foto_ke);
     } else {
-        jQuery('#file_foto_edit_pembayaran_tagihan_view').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+        jQuery('#file_foto_edit_pembayaran_tagihan_view').attr('src', 'https://indokoper.com/noimage.jpg');
     }
     
     // Show/hide reject keterangan
@@ -2844,7 +2844,7 @@ function uploadFotoPembayaranTagihan(foto_urutan, pembayaran_id, isi_foto) {
 		jQuery('#file_foto_pembayaran_tagihan_view_now').attr('src', BASE_PATH_IMAGE_FOTO_PEMBAYARAN + '/' + isi_foto);
 	} else {
 		$('.btn-payment-penjualan').show();
-		jQuery('#file_foto_pembayaran_tagihan_view_now').attr('src', 'https://tasindo-sale-webservice.digiseminar.id/noimage.jpg');
+		jQuery('#file_foto_pembayaran_tagihan_view_now').attr('src', 'https://indokoper.com/noimage.jpg');
 	}
 }
 

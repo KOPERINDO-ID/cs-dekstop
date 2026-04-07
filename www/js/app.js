@@ -320,6 +320,7 @@ var app = new Framework7({
 
               // Init notification setelah deviceready
               initNotificationManagerOnStartup();
+              getMenuUser();
             }, false);
           } else {
             // deviceready sudah fired sebelumnya
@@ -372,6 +373,23 @@ $$(document).on('page:afterin', '.page[data-name="prospek"]', function (e) {
   ], 2);
 })
 
+$$(document).on('page:afterin', '.page[data-name="surat_jalan_admin"]', function (e) {
+  clearPageIntervals();
+
+  jQuery('.role_pusat').hide();
+  jQuery('.role_asia').hide();
+  $$("#logo_show").hide();
+
+  runFunctionsSequentially([
+    { name: 'getBulanSummarySjAdmin', func: wrapFunction(getBulanSummarySjAdmin, 'getBulanSummarySjAdmin') },
+    { name: 'getYearSummarySjAdmin', func: wrapFunction(getYearSummarySjAdmin, 'getYearSummarySjAdmin') },
+    { name: 'getSuratJalanCs', func: wrapFunction(getSuratJalanCs, 'getSuratJalanCs') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+  ], 2);
+});
+
 $$(document).on('page:afterin', '.page[data-name="share_link"]', function (e) {
   $$('#karyawan-nama').html(localStorage.getItem("karyawan_nama"));
   clearPageIntervals();
@@ -390,19 +408,19 @@ $$(document).on('page:afterin', '.page[data-name="notif"]', function (e) {
   clearPageIntervals();
 
   if (localStorage.getItem('username') === 'CSO') {
-    changeFilterMenuNotif('bayar');
     $$('#bayarFilterMenuNotif').show();
     $$('#shipmentFilterMenuNotif').show();
     $$('#kirimFilterMenuNotif').show();
     $$('#proformaFilterMenuNotif').hide();
     $$('#salesFilterMenuNotif').hide();
+    changeFilterMenuNotif('bayar');
   } else {
-    changeFilterMenuNotif('proforma');
     $$('#proformaFilterMenuNotif').show();
     $$('#salesFilterMenuNotif').show();
     $$('#bayarFilterMenuNotif').hide();
     $$('#shipmentFilterMenuNotif').hide();
     $$('#kirimFilterMenuNotif').hide();
+    changeFilterMenuNotif('proforma');
   }
 
   runFunctionsSequentially([
@@ -652,6 +670,7 @@ $$(document).on('page:afterin', '.page[data-name="point-sales"]', function (e) {
   $$("#logo_show").hide();
   $$("#nama_absen").hide();
   checkConnection();
+  changeFilterSubMenu('komisi');
   $('#point_bulan_admin').append($('<option>', {
     value: moment().format('M'),
     text: moment().format('MMMM')
@@ -708,7 +727,10 @@ $$(document).on('page:afterin', '.page[data-name="point-produksi"]', function (e
 
   runFunctionsSequentially([
     { name: 'getYearProduksiAdmin', func: wrapFunction(getYearProduksiAdmin, 'getYearProduksiAdmin') },
-    { name: 'pointProduksi', func: wrapFunction(pointProduksi, 'pointProduksi') }
+    { name: 'pointProduksi', func: wrapFunction(pointProduksi, 'pointProduksi') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
   ], 2);
 });
 

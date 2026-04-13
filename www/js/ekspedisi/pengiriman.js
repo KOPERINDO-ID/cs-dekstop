@@ -1,6 +1,7 @@
 // ============================================================
 //  pengiriman.js
 //  Sub Menu: Ekspedisi (Master) & Transaksi
+//  Menggunakan jQuery ($$ = Framework7 alias, $ = jQuery)
 //  Framework7 v7 + Cordova
 // ============================================================
 
@@ -10,36 +11,43 @@ var PengirimanPage = (function () {
     // STATE
     // -------------------------------------------------------
     var activeTab = 'master';
+    var editMasterId = null;
+    var editTransaksiId = null;
 
     // Mock data — ganti dengan pemanggilan API nyata
     var dataMaster = [
-        { id: 1, nama: 'PT MULYAGUNA', pic: 'SUPRIADI', alamat: 'Jalan Hayam Wuruk 48E', noTelp: '08123456789', noRekening: '4300123456', skor: 85 },
-        { id: 2, nama: 'PT JAYA LOGISTIK', pic: 'SUPRIADI', alamat: 'Jalan Raya Darmo 12', noTelp: '08129876543', noRekening: '1200123456', skor: 88 },
+        { id: 1, nama: 'PT MULYAGUNA', pic: 'SUPRIADI', alamat: 'Jalan Hayam Wuruk 48E', telp: '08123456789', bank: 'BCA', rekening: '4300123456', namaRekening: 'PT MULYAGUNA', skor: 85 },
+        { id: 2, nama: 'PT JAYA LOGISTIK', pic: 'SUPRIADI', alamat: 'Jalan Raya Darmo 12', telp: '08129876543', bank: 'BRI', rekening: '1200123456', namaRekening: 'PT JAYA LOGISTIK', skor: 88 },
     ];
 
     var dataTransaksi = [
-        { id: 1, kode: 'SHIP-100326-001', nama: 'PT MULYAGUNA', pic: 'SUPRIADI', rute: 'KOTA SIDOARJO > KOTA JAKARTA TIMUR', noTelp: '08123456789', noRekening: '4300123456', skor: 85, tglKirim: '2026-02-11', tglSampai: '2026-03-08' },
-        { id: 2, kode: 'SHIP-120326-002', nama: 'PT JAYA LOGISTIK', pic: 'SUPRIADI', rute: 'KOTA SIDOARJO > KOTA JAKARTA PUSAT', noTelp: '08123456789', noRekening: '1200123456', skor: 88, tglKirim: '2026-02-14', tglSampai: '2026-03-24' },
+        { id: 1, kode: 'SHIP-100326-001', nama: 'PT MULYAGUNA', pic: 'SUPRIADI', rute: 'KOTA SIDOARJO > KOTA JAKARTA TIMUR', telp: '08123456789', rekening: '4300123456', skor: 85, tglKirim: '2026-02-11', tglSampai: '2026-03-08' },
+        { id: 2, kode: 'SHIP-120326-002', nama: 'PT JAYA LOGISTIK', pic: 'SUPRIADI', rute: 'KOTA SIDOARJO > KOTA JAKARTA PUSAT', telp: '08123456789', rekening: '1200123456', skor: 88, tglKirim: '2026-02-14', tglSampai: '2026-03-24' },
     ];
 
     // -------------------------------------------------------
-    // STYLE CONSTANTS
+    // TAB SWITCHING
     // -------------------------------------------------------
-    var S = {
-        headerBg: '#1a3a5c',
-        headerTxt: '#ffffff',
-        rowBg: '#ffffff',
-        rowAltBg: '#f5f5f5',
-        rowTxt: '#111111',
-        borderClr: '#cccccc',
-        infoBg: '#1565c0',
-        infoTxt: '#ffffff',
-        subInactive: '#9e9e9e',
-        subActive: '#1a3a5c',
-        btnDetail: '#b0bec5',
-        tglOk: '#2e7d32',
-        tglLate: '#c62828',
-    };
+    var ACTIVE_BG = 'bg-dark-gray-medium';
+    var INACTIVE_BG = 'bg-dark-gray-young';
+
+    function setActiveTab(tab) {
+        activeTab = tab;
+
+        var $master = $('#masterPengiriman');
+        var $transaksi = $('#transaksiPengiriman');
+        if (!$master.length || !$transaksi.length) return;
+
+        if (tab === 'master') {
+            $master.addClass(ACTIVE_BG).removeClass(INACTIVE_BG);
+            $transaksi.addClass(INACTIVE_BG).removeClass(ACTIVE_BG);
+            renderMaster();
+        } else {
+            $transaksi.addClass(ACTIVE_BG).removeClass(INACTIVE_BG);
+            $master.addClass(INACTIVE_BG).removeClass(ACTIVE_BG);
+            renderTransaksi();
+        }
+    }
 
     // -------------------------------------------------------
     // HELPERS
@@ -51,347 +59,346 @@ var PengirimanPage = (function () {
         return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     }
 
-    function tglSampaiStyle(dateStr) {
-        if (!dateStr) return S.headerBg;
+    function tglSampaiBg(dateStr) {
+        if (!dateStr) return '';
         var tgl = new Date(dateStr);
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return tgl >= today ? S.tglOk : S.tglLate;
+        var today = new Date(); today.setHours(0, 0, 0, 0);
+        return tgl >= today
+            ? 'background:#1b5e20; color:#fff;'
+            : 'background:#b71c1c; color:#fff;';
     }
 
-    var thStyle = 'padding:6px 8px; text-align:left; color:' + S.headerTxt + '; font-size:12px; font-weight:600; white-space:nowrap; border-right:1px solid #2a5080;';
-    var thCenterStyle = thStyle + ' text-align:center;';
+    // Style ikon circle seragam: background putih, border-radius penuh
+    var IC = 'display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#fff; cursor:pointer;';
 
-    function tdStyle(idx) {
-        var bg = (idx % 2 === 0) ? S.rowBg : S.rowAltBg;
-        return 'padding:5px 8px; font-size:12px; color:' + S.rowTxt + '; border-bottom:1px solid ' + S.borderClr + '; background:' + bg + ';';
-    }
-    function tdCenterStyle(idx) { return tdStyle(idx) + ' text-align:center;'; }
-
-    // -------------------------------------------------------
-    // INFO BAR (Data | N + ikon)
-    // -------------------------------------------------------
-    function infoBar(count, showHistory) {
-        var historyIcon = showHistory
-            ? '<span id="btnHistory" style="cursor:pointer; margin-right:6px; font-size:18px; color:#fff;" title="History">&#128336;</span>'
+    // suffix: 'Master' | 'Transaksi' — agar ID unik per tab, tidak konflik di DOM
+    function buildCardHeader(count, showHistory, suffix) {
+        var historyBtn = showHistory
+            ? '<span id="btnHistory" style="' + IC + ' margin-right:2px;">' +
+            '<i class="f7-icons" style="font-size:32px; color:#222; pointer-events:none;">clock_fill</i>' +
+            '</span>'
             : '';
         return (
-            '<div style="margin-top:20px; display:flex; align-items:center; justify-content:space-between; background:' + S.infoBg + '; padding:4px 10px; height:32px; border-radius:4px 4px 0 0;">' +
-            '<span style="color:' + S.infoTxt + '; font-size:13px; font-weight:600;">Data | ' + count + '</span>' +
-            '<div style="display:flex; align-items:center; gap:4px;">' +
-            historyIcon +
-            '<span id="btnTambah" style="cursor:pointer; font-size:20px; color:#4caf50; font-weight:bold;" title="Tambah">&#43;&#9398;</span>' +
-            '<span id="btnRefresh" style="cursor:pointer; font-size:18px; color:#4caf50; margin-left:4px;" title="Refresh">&#10227;</span>' +
+            '<div class="card-header bg-dark-gray-young" style="padding: 0 10px;">' +
+            '<div class="data-table-title" style="height:2px; margin-left:6px;">' +
+            '<h3 class="margin-15" style="color:white;">Data | <i id="countData">' + count + '</i></h3>' +
+            '</div>' +
+            '<div style="display:flex; align-items:center; gap:8px;">' +
+            historyBtn +
+            '<span id="btnRefresh' + suffix + '" style="' + IC + '">' +
+            '<i class="f7-icons" style="font-size:32px; color:#2e7d32; pointer-events:none;">arrow_2_circlepath_circle_fill</i>' +
+            '</span>' +
+            '<span id="btnTambah' + suffix + '" style="' + IC + '">' +
+            '<i class="f7-icons" style="font-size:32px; color:#2e7d32; pointer-events:none;">plus_circle_fill</i>' +
+            '</span>' +
             '</div>' +
             '</div>'
         );
     }
 
-    function searchBar() {
-        return '<input id="searchPengiriman" type="text" placeholder="Cari Data..." style="width:100%; box-sizing:border-box; padding:6px 10px; border:none; border-bottom:1px solid ' + S.borderClr + '; font-size:13px; outline:none; background:#fff; color:#111;">';
+    function buildSearchBar(idInput, placeholder) {
+        return (
+            '<div class="card-content bg-dark-gray-medium" style="padding:8px 10px;">' +
+            '<input type="text" id="' + idInput + '" placeholder="' + placeholder + '" ' +
+            'style="width:100%; padding:7px 10px; background:#1a1a1a; color:white; border:none; border-bottom:1px solid #555; outline:none; font-size:13px;">' +
+            '</div>'
+        );
     }
 
     // -------------------------------------------------------
     // RENDER MASTER (Ekspedisi)
     // -------------------------------------------------------
     function renderMaster() {
-        var filtered = dataMaster;
-
-        var rows = filtered.map(function (item, idx) {
+        var TD = 'padding:4px 6px; border:1px solid #ddd;';
+        var rows = $.map(dataMaster, function (item, idx) {
             return (
                 '<tr>' +
-                '<td style="' + tdCenterStyle(idx) + '">' + (idx + 1) + '</td>' +
-                '<td style="' + tdStyle(idx) + ' font-weight:700;">' + item.nama + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.pic + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.alamat + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.noTelp + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.noRekening + '</td>' +
-                '<td style="' + tdCenterStyle(idx) + '">' + item.skor + '</td>' +
-                '<td style="' + tdCenterStyle(idx) + '">' +
-                '<button class="btn-detail-master" data-id="' + item.id + '" ' +
-                'style="background:' + S.btnDetail + '; border:none; padding:3px 12px; font-size:11px; font-weight:600; cursor:pointer; border-radius:2px;">DETAIL</button>' +
+                '<td style="' + TD + '">' + (idx + 1) + '</td>' +
+                '<td style="' + TD + ' font-weight:700;">' + item.nama + '</td>' +
+                '<td style="' + TD + '">' + item.pic + '</td>' +
+                '<td style="' + TD + '">' + item.alamat + '</td>' +
+                '<td style="' + TD + '">' + item.telp + '</td>' +
+                '<td style="' + TD + '">' + item.bank + '</td>' +
+                '<td style="' + TD + '">' + item.rekening + '</td>' +
+                '<td style="' + TD + '">' + item.namaRekening + '</td>' +
+                '<td style="' + TD + '">' + item.skor + '</td>' +
+                '<td style="' + TD + '">' +
+                '<button class="btn-detail-master button button-small bg-dark-gray-young text-add-colour-white" data-id="' + item.id + '" ' +
+                'style="font-size:11px; font-weight:600;">DETAIL</button>' +
                 '</td>' +
                 '</tr>'
             );
         }).join('');
 
         var html =
-            infoBar(dataMaster.length, false) +
-            searchBar() +
-            '<div style="overflow-x:auto;">' +
-            '<table style="width:100%; border-collapse:collapse;">' +
-            '<thead>' +
-            '<tr style="background:' + S.headerBg + ';">' +
-            '<th style="' + thCenterStyle + ' width:40px;">NO</th>' +
-            '<th style="' + thStyle + '">Nama</th>' +
-            '<th style="' + thStyle + '">PIC</th>' +
-            '<th style="' + thStyle + '">Alamat</th>' +
-            '<th style="' + thStyle + '">No Telp</th>' +
-            '<th style="' + thStyle + '">No Rekening</th>' +
-            '<th style="' + thCenterStyle + ' width:50px;">Skor</th>' +
-            '<th style="' + thCenterStyle + ' width:80px;">Opsi</th>' +
+            buildCardHeader(dataMaster.length, false, 'Master') +
+            buildSearchBar('searchMaster', 'Cari Ekspedisi...') +
+            '<div class="card-content" style="overflow-x:auto; width:100%;">' +
+            '<table cellspacing="1" cellpadding="1" width="100%">' +
+            '<thead class="bg-dark-gray-medium" style="position:sticky; top:0; z-index:1;">' +
+            '<tr>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="4%">No</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="16%">Nama</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="9%">PIC</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;">Alamat</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="11%">No Telp</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Bank</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="11%">No Rekening</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="11%">Nama Rekening</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">Skor</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="7%">Opsi</th>' +
             '</tr>' +
             '</thead>' +
-            '<tbody>' + rows + '</tbody>' +
+            '<tbody class="text-align-center" id="tbodyMaster">' + rows + '</tbody>' +
             '</table>' +
             '</div>';
 
-        document.getElementById('mainContentPengiriman').innerHTML = html;
+        $('#mainContentPengiriman').html(html);
         bindMasterEvents();
     }
 
     function bindMasterEvents() {
         // Refresh
-        var btnRefresh = document.getElementById('btnRefresh');
-        if (btnRefresh) btnRefresh.addEventListener('click', function () { renderMaster(); });
+        $('#btnRefreshMaster').on('click', function () {
+            // TODO: fetch ulang dari API
+            renderMaster();
+        });
 
         // Tambah
-        var btnTambah = document.getElementById('btnTambah');
-        if (btnTambah) {
-            btnTambah.addEventListener('click', function () {
-                document.getElementById('popupMasterTitle').innerText = 'Tambah Ekspedisi';
-                document.getElementById('inputNamaEkspedisi').value = '';
-                document.getElementById('inputPicEkspedisi').value = '';
-                document.getElementById('inputAlamatEkspedisi').value = '';
-                document.getElementById('inputTelpEkspedisi').value = '';
-                document.getElementById('inputRekeningEkspedisi').value = '';
-                app.popup.open('#popupMaster');
-            });
-        }
+        $('#btnTambahMaster').on('click', function () {
+            editMasterId = null;
+            $('#popupEkspedisiTitle').text('Tambah Ekspedisi');
+            $('#expedisi-nama-perusahaan').val('');
+            $('#expedisi-pic').val('');
+            $('#expedisi-alamat').val('');
+            $('#expedisi-telp').val('');
+            $('#expedisi-bank').val('');
+            $('#expedisi-rekening').val('');
+            $('#expedisi-nama-rekening').val('');
+            app.popup.open('.popup-form-ekspedisi');
+        });
 
         // Simpan
-        var btnSimpan = document.getElementById('btnSimpanMaster');
-        if (btnSimpan) {
-            // Hapus listener lama agar tidak duplikat
-            var newBtn = btnSimpan.cloneNode(true);
-            btnSimpan.parentNode.replaceChild(newBtn, btnSimpan);
-            newBtn.addEventListener('click', function () {
-                var nama = document.getElementById('inputNamaEkspedisi').value.trim();
-                var pic = document.getElementById('inputPicEkspedisi').value.trim();
-                var alamat = document.getElementById('inputAlamatEkspedisi').value.trim();
-                var noTelp = document.getElementById('inputTelpEkspedisi').value.trim();
-                var noRek = document.getElementById('inputRekeningEkspedisi').value.trim();
-
-                if (!nama || !pic) {
-                    app.toast.create({ text: 'Nama dan PIC wajib diisi!', closeTimeout: 2000 }).open();
-                    return;
-                }
-                // TODO: POST ke API
-                var newId = dataMaster.length ? dataMaster[dataMaster.length - 1].id + 1 : 1;
-                dataMaster.push({ id: newId, nama: nama.toUpperCase(), pic: pic.toUpperCase(), alamat: alamat, noTelp: noTelp, noRekening: noRek, skor: 0 });
-                app.popup.close('#popupMaster');
-                app.toast.create({ text: 'Ekspedisi berhasil ditambahkan.', closeTimeout: 2000 }).open();
-                renderMaster();
-            });
-        }
+        $('#btnSimpanEkspedisi').off('click').on('click', simpanEkspedisi);
 
         // Search
-        var searchInput = document.getElementById('searchPengiriman');
-        if (searchInput) {
-            searchInput.addEventListener('input', function () {
-                var q = this.value.toLowerCase();
-                document.querySelectorAll('#mainContentPengiriman tbody tr').forEach(function (tr) {
-                    tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
-                });
+        $('#searchMaster').on('input', function () {
+            filterTable('#tbodyMaster', $(this).val());
+        });
+
+        // Detail
+        $(document).off('click', '.btn-detail-master').on('click', '.btn-detail-master', function () {
+            var id = parseInt($(this).data('id'));
+            var item = $.grep(dataMaster, function (d) { return d.id === id; })[0];
+            if (!item) return;
+            // TODO: buka halaman / popup detail
+            app.toast.create({ text: 'Detail: ' + item.nama, closeTimeout: 1500 }).open();
+        });
+    }
+
+    function simpanEkspedisi() {
+        var nama = $('#expedisi-nama-perusahaan').val().trim();
+        var pic = $('#expedisi-pic').val().trim();
+        var alamat = $('#expedisi-alamat').val().trim();
+        var telp = $('#expedisi-telp').val().trim();
+        var bank = $('#expedisi-bank').val().trim();
+        var rekening = $('#expedisi-rekening').val().trim();
+        var namaRekening = $('#expedisi-nama-rekening').val().trim();
+
+        if (!nama) {
+            app.toast.create({ text: 'Nama Perusahaan wajib diisi!', closeTimeout: 2000 }).open();
+            return;
+        }
+
+        if (editMasterId) {
+            // TODO: PUT ke API
+            var item = $.grep(dataMaster, function (d) { return d.id === editMasterId; })[0];
+            if (item) {
+                item.nama = nama.toUpperCase(); item.pic = pic.toUpperCase(); item.alamat = alamat;
+                item.telp = telp; item.bank = bank; item.rekening = rekening; item.namaRekening = namaRekening.toUpperCase();
+            }
+        } else {
+            // TODO: POST ke API
+            var newId = dataMaster.length ? dataMaster[dataMaster.length - 1].id + 1 : 1;
+            dataMaster.push({
+                id: newId, nama: nama.toUpperCase(), pic: pic.toUpperCase(),
+                alamat: alamat, telp: telp, bank: bank,
+                rekening: rekening, namaRekening: namaRekening.toUpperCase(), skor: 0
             });
         }
 
-        // Detail
-        document.querySelectorAll('.btn-detail-master').forEach(function (el) {
-            el.addEventListener('click', function () {
-                var id = parseInt(this.dataset.id);
-                var item = dataMaster.find(function (d) { return d.id === id; });
-                if (!item) return;
-                // TODO: navigasi ke halaman detail atau buka popup detail
-                app.toast.create({ text: 'Detail: ' + item.nama, closeTimeout: 1500 }).open();
-            });
-        });
+        app.popup.close('.popup-form-ekspedisi');
+        app.toast.create({ text: 'Data ekspedisi disimpan.', closeTimeout: 2000 }).open();
+        renderMaster();
     }
 
     // -------------------------------------------------------
     // RENDER TRANSAKSI
     // -------------------------------------------------------
     function renderTransaksi() {
-        var rows = dataTransaksi.map(function (item, idx) {
-            var tglSampaiColor = tglSampaiStyle(item.tglSampai);
+        var TD = 'padding:4px 6px; border:1px solid #ddd;';
+        var rows = $.map(dataTransaksi, function (item, idx) {
+            var tglStyle = tglSampaiBg(item.tglSampai);
             return (
                 '<tr>' +
-                '<td style="' + tdStyle(idx) + ' font-size:11px;">' + item.kode + '</td>' +
-                '<td style="' + tdStyle(idx) + ' font-weight:700;">' + item.nama + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.pic + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.rute + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.noTelp + '</td>' +
-                '<td style="' + tdStyle(idx) + '">' + item.noRekening + '</td>' +
-                '<td style="' + tdCenterStyle(idx) + '">' + item.skor + '</td>' +
-                '<td style="' + tdCenterStyle(idx) + '">' + formatTgl(item.tglKirim) + '</td>' +
-                '<td style="padding:5px 8px; font-size:12px; text-align:center; border-bottom:1px solid ' + S.borderClr + '; background:' + tglSampaiColor + '; color:#fff; font-weight:600;">' +
-                formatTgl(item.tglSampai) +
-                '</td>' +
-                '<td style="' + tdCenterStyle(idx) + '">' +
-                '<button class="btn-detail-transaksi" data-id="' + item.id + '" ' +
-                'style="background:' + S.btnDetail + '; border:none; padding:3px 12px; font-size:11px; font-weight:600; cursor:pointer; border-radius:2px;">DETAIL</button>' +
+                '<td style="' + TD + ' font-size:14; font-weight:700;">' + item.kode + '</td>' +
+                '<td style="' + TD + ' font-weight:700;">' + item.nama + '</td>' +
+                '<td style="' + TD + '">' + item.pic + '</td>' +
+                '<td style="' + TD + '">' + item.rute + '</td>' +
+                '<td style="' + TD + '">' + item.telp + '</td>' +
+                '<td style="' + TD + '">' + item.rekening + '</td>' +
+                '<td style="' + TD + '">' + item.skor + '</td>' +
+                '<td style="' + TD + '">' + formatTgl(item.tglKirim) + '</td>' +
+                '<td style="' + TD + tglStyle + '">' + formatTgl(item.tglSampai) + '</td>' +
+                '<td style="' + TD + '">' +
+                '<button class="btn-detail-transaksi button button-small bg-dark-gray-young text-add-colour-white" data-id="' + item.id + '" ' +
+                'style="font-size:11px; font-weight:600;">DETAIL</button>' +
                 '</td>' +
                 '</tr>'
             );
         }).join('');
 
         var html =
-            infoBar(dataTransaksi.length, true) +
-            searchBar() +
-            '<div style="overflow-x:auto;">' +
-            '<table style="width:100%; border-collapse:collapse;">' +
-            '<thead>' +
-            '<tr style="background:' + S.headerBg + ';">' +
-            '<th style="' + thStyle + '">ID</th>' +
-            '<th style="' + thStyle + '">Nama</th>' +
-            '<th style="' + thStyle + '">PIC</th>' +
-            '<th style="' + thStyle + '">Rute</th>' +
-            '<th style="' + thStyle + '">No Telp</th>' +
-            '<th style="' + thStyle + '">No Rekening</th>' +
-            '<th style="' + thCenterStyle + ' width:50px;">Skor</th>' +
-            '<th style="' + thCenterStyle + ' width:90px;">Tgl Kirim</th>' +
-            '<th style="' + thCenterStyle + ' width:90px;">Tgl Sampai</th>' +
-            '<th style="' + thCenterStyle + ' width:80px;">Opsi</th>' +
+            buildCardHeader(dataTransaksi.length, true, 'Transaksi') +
+            buildSearchBar('searchTransaksi', 'Cari Pengiriman...') +
+            '<div class="card-content" style="overflow-x:auto; width:100%;">' +
+            '<table cellspacing="1" cellpadding="1" width="100%">' +
+            '<thead class="bg-dark-gray-medium" style="position:sticky; top:0; z-index:1;">' +
+            '<tr>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="10%">ID</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="14%">Nama</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="9%">PIC</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;">Rute</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="11%">No Telp</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="11%">No Rekening</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="5%">Skor</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Kirim</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="8%">Tgl Sampai</th>' +
+            '<th class="label-cell text-align-center" style="border-bottom:1px solid gray;" width="7%">Opsi</th>' +
             '</tr>' +
             '</thead>' +
-            '<tbody>' + rows + '</tbody>' +
+            '<tbody class="text-align-center" id="tbodyTransaksi">' + rows + '</tbody>' +
             '</table>' +
             '</div>';
 
-        document.getElementById('mainContentPengiriman').innerHTML = html;
+        $('#mainContentPengiriman').html(html);
         bindTransaksiEvents();
     }
 
     function bindTransaksiEvents() {
         // Refresh
-        var btnRefresh = document.getElementById('btnRefresh');
-        if (btnRefresh) btnRefresh.addEventListener('click', function () { renderTransaksi(); });
+        $('#btnRefreshTransaksi').on('click', function () {
+            // TODO: fetch ulang dari API
+            renderTransaksi();
+        });
 
         // History
-        var btnHistory = document.getElementById('btnHistory');
-        if (btnHistory) {
-            btnHistory.addEventListener('click', function () {
-                // TODO: navigasi ke halaman history pengiriman
-                app.toast.create({ text: 'History pengiriman', closeTimeout: 1500 }).open();
-            });
-        }
+        $('#btnHistory').on('click', function () {
+            // TODO: navigasi ke halaman history
+            app.toast.create({ text: 'History pengiriman', closeTimeout: 1500 }).open();
+        });
 
         // Tambah
-        var btnTambah = document.getElementById('btnTambah');
-        if (btnTambah) {
-            btnTambah.addEventListener('click', function () {
-                // Isi dropdown ekspedisi dari dataMaster
-                var sel = document.getElementById('inputEkspedisiTransaksi');
-                sel.innerHTML = dataMaster.map(function (m) {
-                    return '<option value="' + m.id + '">' + m.nama + '</option>';
-                }).join('');
+        $('#btnTambahTransaksi').on('click', function () {
+            editTransaksiId = null;
+            $('#popupTransaksiTitle').text('Tambah Pengiriman');
 
-                document.getElementById('popupTransaksiTitle').innerText = 'Tambah Pengiriman';
-                document.getElementById('inputPicTransaksi').value = '';
-                document.getElementById('inputRuteTransaksi').value = '';
-                document.getElementById('inputTelpTransaksi').value = '';
-                document.getElementById('inputRekeningTransaksi').value = '';
-                document.getElementById('inputTglKirimTransaksi').value = '';
-                document.getElementById('inputTglSampaiTransaksi').value = '';
-                app.popup.open('#popupTransaksi');
-            });
-        }
+            // Isi dropdown ekspedisi dari dataMaster
+            var options = $.map(dataMaster, function (m) {
+                return '<option value="' + m.id + '">' + m.nama + '</option>';
+            }).join('');
+            $('#transaksi-ekspedisi').html(options);
+
+            $('#transaksi-pic').val('');
+            $('#transaksi-rute').val('');
+            $('#transaksi-telp').val('');
+            $('#transaksi-rekening').val('');
+            $('#transaksi-tgl-kirim').val('');
+            $('#transaksi-tgl-sampai').val('');
+            app.popup.open('.popup-form-transaksi');
+        });
 
         // Simpan
-        var btnSimpan = document.getElementById('btnSimpanTransaksi');
-        if (btnSimpan) {
-            var newBtn = btnSimpan.cloneNode(true);
-            btnSimpan.parentNode.replaceChild(newBtn, btnSimpan);
-            newBtn.addEventListener('click', function () {
-                var ekspId = document.getElementById('inputEkspedisiTransaksi').value;
-                var ekspedisi = dataMaster.find(function (m) { return m.id === parseInt(ekspId); });
-                var pic = document.getElementById('inputPicTransaksi').value.trim();
-                var rute = document.getElementById('inputRuteTransaksi').value.trim();
-                var noTelp = document.getElementById('inputTelpTransaksi').value.trim();
-                var noRek = document.getElementById('inputRekeningTransaksi').value.trim();
-                var tglKirim = document.getElementById('inputTglKirimTransaksi').value;
-                var tglSampai = document.getElementById('inputTglSampaiTransaksi').value;
-
-                if (!ekspedisi || !rute) {
-                    app.toast.create({ text: 'Ekspedisi dan Rute wajib diisi!', closeTimeout: 2000 }).open();
-                    return;
-                }
-                // TODO: POST ke API
-                var newId = dataTransaksi.length ? dataTransaksi[dataTransaksi.length - 1].id + 1 : 1;
-                var bulan = String(new Date().getMonth() + 1).padStart(2, '0');
-                var tahun = String(new Date().getFullYear()).slice(-2);
-                var kode = 'SHIP-' + bulan + tahun + '-' + String(newId).padStart(3, '0');
-                dataTransaksi.push({
-                    id: newId, kode: kode, nama: ekspedisi.nama, pic: pic.toUpperCase(),
-                    rute: rute.toUpperCase(), noTelp: noTelp, noRekening: noRek,
-                    skor: ekspedisi.skor, tglKirim: tglKirim, tglSampai: tglSampai
-                });
-                app.popup.close('#popupTransaksi');
-                app.toast.create({ text: 'Pengiriman berhasil ditambahkan.', closeTimeout: 2000 }).open();
-                renderTransaksi();
-            });
-        }
+        $('#btnSimpanTransaksi').off('click').on('click', simpanTransaksi);
 
         // Search
-        var searchInput = document.getElementById('searchPengiriman');
-        if (searchInput) {
-            searchInput.addEventListener('input', function () {
-                var q = this.value.toLowerCase();
-                document.querySelectorAll('#mainContentPengiriman tbody tr').forEach(function (tr) {
-                    tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
+        $('#searchTransaksi').on('input', function () {
+            filterTable('#tbodyTransaksi', $(this).val());
+        });
+
+        // Detail
+        $(document).off('click', '.btn-detail-transaksi').on('click', '.btn-detail-transaksi', function () {
+            var id = parseInt($(this).data('id'));
+            var item = $.grep(dataTransaksi, function (d) { return d.id === id; })[0];
+            if (!item) return;
+            // TODO: buka halaman / popup detail
+            app.toast.create({ text: 'Detail: ' + item.kode, closeTimeout: 1500 }).open();
+        });
+    }
+
+    function simpanTransaksi() {
+        var ekspId = $('#transaksi-ekspedisi').val();
+        var ekspedisi = $.grep(dataMaster, function (m) { return m.id === parseInt(ekspId); })[0];
+        var pic = $('#transaksi-pic').val().trim();
+        var rute = $('#transaksi-rute').val().trim();
+        var telp = $('#transaksi-telp').val().trim();
+        var rekening = $('#transaksi-rekening').val().trim();
+        var tglKirim = $('#transaksi-tgl-kirim').val();
+        var tglSampai = $('#transaksi-tgl-sampai').val();
+
+        if (!ekspedisi || !rute || !pic) {
+            app.toast.create({ text: 'Ekspedisi, PIC, dan Rute wajib diisi!', closeTimeout: 2000 }).open();
+            return;
+        }
+
+        if (editTransaksiId) {
+            // TODO: PUT ke API
+            var item = $.grep(dataTransaksi, function (d) { return d.id === editTransaksiId; })[0];
+            if (item) {
+                $.extend(item, {
+                    nama: ekspedisi.nama, pic: pic.toUpperCase(), rute: rute.toUpperCase(),
+                    telp: telp, rekening: rekening, skor: ekspedisi.skor,
+                    tglKirim: tglKirim, tglSampai: tglSampai
                 });
+            }
+        } else {
+            // TODO: POST ke API
+            var newId = dataTransaksi.length ? dataTransaksi[dataTransaksi.length - 1].id + 1 : 1;
+            var bln = String(new Date().getMonth() + 1).padStart(2, '0');
+            var thn = String(new Date().getFullYear()).slice(-2);
+            var kode = 'SHIP-' + bln + thn + '-' + String(newId).padStart(3, '0');
+            dataTransaksi.push({
+                id: newId, kode: kode, nama: ekspedisi.nama, pic: pic.toUpperCase(),
+                rute: rute.toUpperCase(), telp: telp, rekening: rekening,
+                skor: ekspedisi.skor, tglKirim: tglKirim, tglSampai: tglSampai
             });
         }
 
-        // Detail
-        document.querySelectorAll('.btn-detail-transaksi').forEach(function (el) {
-            el.addEventListener('click', function () {
-                var id = parseInt(this.dataset.id);
-                var item = dataTransaksi.find(function (d) { return d.id === id; });
-                if (!item) return;
-                // TODO: navigasi ke halaman detail transaksi
-                app.toast.create({ text: 'Detail: ' + item.kode, closeTimeout: 1500 }).open();
-            });
+        app.popup.close('.popup-form-transaksi');
+        app.toast.create({ text: 'Data pengiriman disimpan.', closeTimeout: 2000 }).open();
+        renderTransaksi();
+    }
+
+    // -------------------------------------------------------
+    // FILTER / SEARCH
+    // -------------------------------------------------------
+    function filterTable(tbodySelector, keyword) {
+        var q = keyword.toLowerCase();
+        $(tbodySelector + ' tr').each(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(q) > -1);
         });
     }
 
     // -------------------------------------------------------
-    // TAB SWITCHING
+    // BIND SUB MENU CLICK
     // -------------------------------------------------------
-    var ACTIVE_BG = 'bg-dark-gray-medium';
-    var INACTIVE_BG = 'bg-dark-gray-young';
-
-    function setActiveTab(tab) {
-        activeTab = tab;
-
-        var elMaster = document.getElementById('masterPengiriman');
-        var elTransaksi = document.getElementById('transaksiPengiriman');
-        if (!elMaster || !elTransaksi) return;
-
-        if (tab === 'master') {
-            elMaster.classList.add(ACTIVE_BG);
-            elMaster.classList.remove(INACTIVE_BG);
-            elTransaksi.classList.add(INACTIVE_BG);
-            elTransaksi.classList.remove(ACTIVE_BG);
-            renderMaster();
-        } else {
-            elTransaksi.classList.add(ACTIVE_BG);
-            elTransaksi.classList.remove(INACTIVE_BG);
-            elMaster.classList.add(INACTIVE_BG);
-            elMaster.classList.remove(ACTIVE_BG);
-            renderTransaksi();
-        }
-    }
-
     function bindSubMenuEvents() {
-        var elMaster = document.getElementById('masterPengiriman');
-        var elTransaksi = document.getElementById('transaksiPengiriman');
-        if (elMaster) elMaster.addEventListener('click', function () { setActiveTab('master'); });
-        if (elTransaksi) elTransaksi.addEventListener('click', function () { setActiveTab('transaksi'); });
+        $('#masterPengiriman').on('click', function () { setActiveTab('master'); });
+        $('#transaksiPengiriman').on('click', function () { setActiveTab('transaksi'); });
     }
 
     // -------------------------------------------------------
-    // INIT
+    // INIT — dipanggil dari app.js page:afterin
     // -------------------------------------------------------
     function init() {
         bindSubMenuEvents();

@@ -1,6 +1,6 @@
 <div class="page" data-name="delay_go" class="">
 
-  <div class="popup popup input-alamat-kirim-delay">
+  <div class="popup popup-input-alamat-kirim-delay">
     <div class="view">
       <div class="page">
         <div class="navbar">
@@ -10,7 +10,7 @@
             <div class="right">
               <!-- Link to close popup -->
               <p id="back-input-alamat-kirim-delay" class="text-add-colour-white link popup-close"
-                data-popup=".input-alamat-kirim-delay">
+                data-popup=".popup-input-alamat-kirim-delay">
                 <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
               </p>
             </div>
@@ -130,6 +130,72 @@
     </div>
   </div>
 
+  <!-- ============================================================
+     POPUP PILIH EKSPEDISI  (taruh sejajar dengan popup lain)
+     ============================================================ -->
+  <div class="popup popup-ekspedisi-selector">
+    <div class="view">
+      <div class="page">
+
+        <!-- Navbar -->
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title text-add-colour-white">Pilih Ekspedisi</div>
+            <div class="right">
+              <a class="link popup-close" data-popup=".popup-ekspedisi-selector">
+                <i class="f7-icons" style="color:white;">xmark_circle_fill</i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-content theme-dark" style="padding-top:0;">
+
+          <!-- Info rute -->
+          <div class="eksp-header">
+            <div class="eksp-header-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#9FE1CB" style="flex-shrink:0;">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span id="ekspedisi_kota_label" class="eksp-header-text">—</span>
+            </div>
+            <div class="eksp-header-row" style="margin-top:3px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#FAC775" style="flex-shrink:0;">
+                <path
+                  d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" />
+              </svg>
+              <span id="ekspedisi_tgl_label" class="eksp-header-text" style="color:#FAC775;">—</span>
+            </div>
+          </div>
+
+          <!-- Column header -->
+          <div class="eksp-col-header">
+            <span style="flex:1; margin-left:54px;">Ekspedisi</span>
+            <span style="text-align:right; width:80px;">Harga / Hari</span>
+          </div>
+
+          <!-- List rows (diisi JS) -->
+          <div id="ekspedisi_list_rows"></div>
+
+          <!-- Hidden: target penjualan_id -->
+          <input type="hidden" id="ekspedisi_target_penjualan_id" value="">
+
+          <!-- Footer confirm -->
+          <div class="eksp-footer">
+            <button id="ekspedisi_confirm_btn"
+              class="button button-fill bg-dark-gray-medium text-add-colour-white disabled-btn"
+              onclick="confirmEkspedisi();" disabled>
+              Pilih Ekspedisi Ini
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
     <!-- In data-popup attribute we specify CSS selector of popup we need to open -->
@@ -157,6 +223,10 @@
         <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
+        <div id="menuPengiriman" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
         </div>
         <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">

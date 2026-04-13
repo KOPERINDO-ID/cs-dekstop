@@ -3504,16 +3504,13 @@
               <div class="card-content" style="padding: 10px; width:95%;">
                 <div class="row align-items-center">
                   <div class="col-80">
-                    <input 
-                      type="text" 
-                      id="filter-nama-client" 
-                      placeholder="Cari nama perusahaan/client..." 
+                    <input type="text" id="filter-nama-client" placeholder="Cari nama perusahaan/client..."
                       oninput="filterTableByClient()"
-                      style="border: 1px solid #ccc; border-radius: 6px; padding: 8px; width: 100%; box-sizing: border-box;"
-                    />
+                      style="border: 1px solid #ccc; border-radius: 6px; padding: 8px; width: 100%; box-sizing: border-box;" />
                   </div>
                   <div class="col-20" style="padding-left: 8px;">
-                    <button class="button button-small button-fill bg-color-gray" onclick="clearFilterClient()" style="width: 100%;">Reset</button>
+                    <button class="button button-small button-fill bg-color-gray" onclick="clearFilterClient()"
+                      style="width: 100%;">Reset</button>
                   </div>
                 </div>
               </div>
@@ -3666,6 +3663,10 @@
         <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
+        <div id="menuPengiriman" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
         </div>
         <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">

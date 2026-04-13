@@ -1,0 +1,215 @@
+<div class="page" data-name="pengiriman">
+
+    <!-- Popup Tambah / Edit Master Ekspedisi -->
+    <div class="popup" id="popupMaster">
+        <div class="page">
+            <div class="navbar">
+                <div class="navbar-bg" style="background:#1a3a5c;"></div>
+                <div class="navbar-inner">
+                    <div class="title text-add-colour-white" id="popupMasterTitle">Tambah Ekspedisi</div>
+                    <div class="right">
+                        <a href="#" class="link popup-close text-add-colour-white">
+                            <i class="icon f7-icons">xmark</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="page-content" style="background:#f0f0f0;">
+                <div class="list no-hairlines-md" style="margin-top:16px;">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Nama Ekspedisi</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputNamaEkspedisi" placeholder="cth: PT Mulyaguna" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">PIC</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputPicEkspedisi" placeholder="cth: Supriadi" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Alamat</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputAlamatEkspedisi"
+                                        placeholder="cth: Jalan Hayam Wuruk 48E" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">No Telp</div>
+                                <div class="item-input-wrap">
+                                    <input type="tel" id="inputTelpEkspedisi" placeholder="cth: 08123456789" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">No Rekening</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputRekeningEkspedisi" placeholder="cth: 4300123456" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <button class="button button-fill" id="btnSimpanMaster"
+                        style="background:#1a3a5c; color:#fff;">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Tambah / Edit Transaksi -->
+    <div class="popup" id="popupTransaksi">
+        <div class="page">
+            <div class="navbar">
+                <div class="navbar-bg" style="background:#1a3a5c;"></div>
+                <div class="navbar-inner">
+                    <div class="title text-add-colour-white" id="popupTransaksiTitle">Tambah Pengiriman</div>
+                    <div class="right">
+                        <a href="#" class="link popup-close text-add-colour-white">
+                            <i class="icon f7-icons">xmark</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="page-content" style="background:#f0f0f0;">
+                <div class="list no-hairlines-md" style="margin-top:16px;">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Nama Ekspedisi</div>
+                                <div class="item-input-wrap">
+                                    <select id="inputEkspedisiTransaksi"></select>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">PIC</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputPicTransaksi" placeholder="cth: Supriadi" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Rute</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputRuteTransaksi"
+                                        placeholder="cth: KOTA SIDOARJO > KOTA JAKARTA TIMUR" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">No Telp</div>
+                                <div class="item-input-wrap">
+                                    <input type="tel" id="inputTelpTransaksi" placeholder="cth: 08123456789" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">No Rekening</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="inputRekeningTransaksi" placeholder="cth: 4300123456" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Tgl Kirim</div>
+                                <div class="item-input-wrap">
+                                    <input type="date" id="inputTglKirimTransaksi" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Tgl Sampai</div>
+                                <div class="item-input-wrap">
+                                    <input type="date" id="inputTglSampaiTransaksi" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <button class="button button-fill" id="btnSimpanTransaksi"
+                        style="background:#1a3a5c; color:#fff;">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page-content theme-dark">
+        <div class="card">
+
+            <!-- Main Menu -->
+            <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+                <div class="align-items-center justify-content-center text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" id="page_sales" href="/Sales">Sales</a>
+                </div>
+                <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
+                </div>
+                <div class="align-items-center justify-content-center text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/notif">Notif</a>
+                </div>
+                <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/delay-go">Delay
+                        - Go</a>
+                </div>
+                <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+                </div>
+                <div id="menuPengiriman" class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
+                </div>
+                <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
+                </div>
+                <div id="menuKorin" class="align-items-center justify-content-center text-bold "
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <a class="text-add-colour-white" href="/point-sales">Korin</a>
+                </div>
+            </div>
+
+            <!-- Sub Menu -->
+            <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
+                <div id="masterPengiriman" class="align-items-center justify-content-center text-bold "
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <span class="text-color-new text-add-colour-white">Ekspedisi</span>
+                </div>
+                <div id="transaksiPengiriman" class="align-items-center justify-content-center text-bold "
+                    style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+                    <span class="text-color-new text-add-colour-white">Transaksi</span>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div id="mainContentPengiriman" style="min-height:100vh;">
+                <!-- Diisi oleh JS -->
+            </div>
+
+        </div>
+    </div>
+</div>

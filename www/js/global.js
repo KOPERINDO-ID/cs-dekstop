@@ -22,25 +22,23 @@ function checkConnection() {
 	}
 
 	if (states[networkState] == 'no_network') {
-        $("#box_internet").css("background-color", "red"); // ← TAMBAHKAN
-        localStorage.setItem("internet_koneksi", "fail");  // ← TAMBAHKAN
-        app.dialog.alert('Internet Sangat Lambat, Cek Koneksi Lalu Klik Oke', function () {
-            app.views.main.router.navigate(app.views.main.router.currentRoute.url, {
+		$("#box_internet").css("background-color", "red"); // ← TAMBAHKAN
+		localStorage.setItem("internet_koneksi", "fail");  // ← TAMBAHKAN
+		app.dialog.alert('Internet Sangat Lambat, Cek Koneksi Lalu Klik Oke', function () {
+			app.views.main.router.navigate(app.views.main.router.currentRoute.url, {
 				ignoreCache: true,
 				reloadCurrent: true
 			});
-        });
-    } else {
-        // Kalau ada koneksi, tetap jalankan AJAX check untuk validasi server
-        internetCheckQueue.check();
-    }
+		});
+	} else {
+		// Kalau ada koneksi, tetap jalankan AJAX check untuk validasi server
+		internetCheckQueue.check();
+	}
 }
 
 
-
-
-// var BASE_API = 'https://tasindo-sale-webservice.digiseminar.id/api';
-var BASE_API = 'https://indokoper.com/api';
+// var BASE_API = 'https://indokoper.com/api'; /** Production Base API */
+var BASE_API = 'https://staging.indokoper.com/api'; /** Staging Base API */
 
 var BASE_API2 = 'https://indokoper.com/api';
 var BASE_API3 = 'https://be.order.devkoperindo.com/api';

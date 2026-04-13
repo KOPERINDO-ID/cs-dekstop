@@ -1,182 +1,184 @@
 <div class="page" data-name="surat_jalan_admin" class="">
 
-    <div class="popup surat-jalan-notif-admin">
-        <div class="view">
-        <div class="page">
-            <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-                <div class="title">Surat Jalan</div>
-                <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-surat-jalan-notif-admin"
-                    data-popup=".surat-jalan-notif-admin"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i>
-                </p>
-                </div>
+  <div class="popup surat-jalan-notif-admin">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Surat Jalan</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-surat-jalan-notif-admin"
+                data-popup=".surat-jalan-notif-admin"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
             </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="row">
+            <div class="col-100 text-align-center">
+              <h4 id="nomer_sj_admin"></h4>
             </div>
-            <div class="page-content">
-            <div class="row">
-                <div class="col-100 text-align-center">
-                <h4 id="nomer_sj_admin"></h4>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-100">
+              <div class="card-content" style="overflow-x:auto; width:100%;">
+                <table align="center" cellspacing="1" width="500px">
+                  <thead>
+                    <tr>
+                      <td colspan="5" align="center"></td>
+                    </tr>
+                  </thead>
+                  <tbody class="text-align-center" id="detail_surat_jalan_history_admin">
+                  </tbody>
+                </table>
+              </div>
+              <input type="hidden" id="detail_penjualan_id_notif_kirim_admin"
+                name="detail_penjualan_id_notif_kirim_admin" required validated>
+              <input type="hidden" id="detail_valid_notif_kirim_admin_admin" name="detail_valid_notif_kirim_admin"
+                required validated>
             </div>
-            <div class="row">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup invoice-download-admin">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Download Invoice</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-invoice-download-admin"
+                data-popup=".invoice-download-admin"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
                 <div class="col-100">
-                <div class="card-content" style="overflow-x:auto; width:100%;">
-                    <table align="center" cellspacing="1" width="500px">
-                    <thead>
-                        <tr><td colspan="5" align="center"></td></tr>
-                    </thead>
-                    <tbody class="text-align-center" id="detail_surat_jalan_history_admin">
-                    </tbody>
+                  <div class="card-content">
+                    <form id="input_invoice_download_admin">
+                      <div class="list" style="margin-top: 10px;">
+                        <ul style="padding: 10px;">
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <label style="height:17px; margin-top:-9px;"><b>Pilih Template</b></label>
+                              <div class="item-input-wrap" style="display:flex; gap:15px; margin-top:5px;">
+                                <label style="display:flex; align-items:center; gap:4px;">
+                                  <input type="radio" name="template_invoice_admin" value="1" checked> Template 1
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;">
+                                  <input type="radio" name="template_invoice_admin" value="2"> Template 2
+                                </label>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="item-content item-input">
+                            <div class="item-inner">
+                              <label style="height:17px; margin-top:-9px;"><b>Tanggal Invoice</b></label>
+                              <div class="item-input-wrap">
+                                <label></label>
+                                <input type="date" id="tanggal_invoice_download_admin"
+                                  name="tanggal_invoice_download_admin" required validate>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </form>
+                    <center>
+                      <i onclick="downloadInvoiceAdmin();" style="width:80%;margin-bottom: 10px;"
+                        class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold">Download
+                      </i>
+                    </center>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-100" id="table_download_invoice">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup history-invoice-download-admin">
+    <div class="view">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner bg-dark-gray-medium">
+            <div class="title">Download History Invoice</div>
+            <div class="right">
+              <!-- Link to close popup -->
+              <p class="text-add-colour-white link popup-close" id="back-history-invoice-download-admin"
+                data-popup=".history-invoice-download-admin"><i style="margin-right:5px;"
+                  class="f7-icons">xmark_rectangle_fill</i>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="card card-outline margin-top">
+            <div class="card-content">
+              <div class="row">
+                <div class="col-100">
+                  <div class="card-content" style="overflow-x:auto; width:100%;">
+                    <table align="center" width="700px" border="0"
+                      style="border-collapse: collapse; border:1px solid gray;">
+                      <tr>
+                        <td align="center" width="5%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">No</td>
+                        <td align="center" width="15%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">Tanggal</td>
+                        <td align="center" width="20%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">Invoice</td>
+                        <td align="center" width="15%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">SPK</td>
+                        <td align="left" width="25%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">Perusahaan</td>
+                        <td align="center" width="20%"
+                          style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                          class="label-cell bg-dark-gray-young">Opsi</td>
+                      </tr>
+                      <tbody id="detail_history_invoice_download_admin">
+                      </tbody>
                     </table>
-                </div>              
-                <input type="hidden" id="detail_penjualan_id_notif_kirim_admin"
-                    name="detail_penjualan_id_notif_kirim_admin" required validated>
-                <input type="hidden" id="detail_valid_notif_kirim_admin_admin" name="detail_valid_notif_kirim_admin"
-                    required validated>
+                  </div>
                 </div>
+              </div>
+
+              <div class="row">
+                <div class="col-100" id="table_download_history">
+
+                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-
-    <div class="popup invoice-download-admin">
-        <div class="view">
-        <div class="page">
-            <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-                <div class="title">Download Invoice</div>
-                <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-invoice-download-admin"
-                    data-popup=".invoice-download-admin"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i>
-                </p>
-                </div>
-            </div>
-            </div>
-            <div class="page-content">
-            <div class="card card-outline margin-top">
-                <div class="card-content">
-                <div class="row">
-                    <div class="col-100">
-                    <div class="card-content">
-                        <form id="input_invoice_download_admin">
-                        <div class="list" style="margin-top: 10px;">
-                            <ul style="padding: 10px;">
-                            <li class="item-content item-input">
-                                <div class="item-inner">
-                                <label style="height:17px; margin-top:-9px;"><b>Pilih Template</b></label>
-                                <div class="item-input-wrap" style="display:flex; gap:15px; margin-top:5px;">
-                                    <label style="display:flex; align-items:center; gap:4px;">
-                                        <input type="radio" name="template_invoice_admin" value="1" checked> Template 1
-                                    </label>
-                                    <label style="display:flex; align-items:center; gap:4px;">
-                                        <input type="radio" name="template_invoice_admin" value="2"> Template 2
-                                    </label>
-                                </div>
-                                </div>
-                            </li>
-                            <li class="item-content item-input">
-                                <div class="item-inner">
-                                <label style="height:17px; margin-top:-9px;"><b>Tanggal Invoice</b></label>
-                                <div class="item-input-wrap">
-                                    <label></label>
-                                    <input type="date" id="tanggal_invoice_download_admin"
-                                    name="tanggal_invoice_download_admin" required validate>
-                                </div>
-                                </div>
-                            </li>
-                            </ul>
-                        </div>
-                        </form>
-                        <center>
-                        <i onclick="downloadInvoiceAdmin();" style="width:80%;margin-bottom: 10px;"
-                            class="text-add-colour-black-soft bg-dark-gray-young button-large col button text-bold">Download
-                        </i>
-                        </center>
-                    </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-100" id="table_download_invoice">
-
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="popup history-invoice-download-admin">
-        <div class="view">
-        <div class="page">
-            <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner bg-dark-gray-medium">
-                <div class="title">Download History Invoice</div>
-                <div class="right">
-                <!-- Link to close popup -->
-                <p class="text-add-colour-white link popup-close" id="back-history-invoice-download-admin"
-                    data-popup=".history-invoice-download-admin"><i style="margin-right:5px;"
-                    class="f7-icons">xmark_rectangle_fill</i>
-                </p>
-                </div>
-            </div>
-            </div>
-            <div class="page-content">
-            <div class="card card-outline margin-top">
-                <div class="card-content">
-                <div class="row">
-                    <div class="col-100">
-                    <div class="card-content" style="overflow-x:auto; width:100%;">
-                        <table align="center" width="700px" border="0"
-                        style="border-collapse: collapse; border:1px solid gray;">
-                        <tr>
-                            <td align="center" width="5%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">No</td>
-                            <td align="center" width="15%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">Tanggal</td>
-                            <td align="center" width="20%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">Invoice</td>
-                            <td align="center" width="15%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">SPK</td>
-                            <td align="left" width="25%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">Perusahaan</td>
-                            <td align="center" width="20%"
-                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
-                            class="label-cell bg-dark-gray-young">Opsi</td>
-                        </tr>
-                        <tbody id="detail_history_invoice_download_admin">
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-100" id="table_download_history">
-
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
+  </div>
 
   <!-- Scrollable page content-->
   <div class="page-content theme-dark">
@@ -203,6 +205,10 @@
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
+        <div id="menuPengiriman" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
+        </div>
         <div id="menuInvoice" class="align-items-center justify-content-center text-bold bg-dark-gray-medium"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
@@ -219,7 +225,7 @@
         <div id="menuKorin" class="align-items-center justify-content-center text-bold"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/point-sales">Korin</a>
-        </div> 
+        </div>
       </div>
 
       <!-- Data Surat Jalan Card -->
@@ -250,8 +256,7 @@
                 <th width="50%" class="label-cell bg-dark-gray-young" style="padding:3px; font-size:16px;">
                   <center>
                     <select onchange="filterBulanSjAdmin()" style="font-weight:bold; text-align: center;"
-                      name="summary_bulan_sj_admin"
-                      class="summary_bulan_sj_admin text-add-colour-black-soft"
+                      name="summary_bulan_sj_admin" class="summary_bulan_sj_admin text-add-colour-black-soft"
                       id="summary_bulan_sj_admin">
                       <option value="" selected>Pilih Bulan</option>
                     </select>
@@ -261,8 +266,7 @@
                   style="padding:5px; font-size:16px; font-weight:bold;">
                   <center>
                     <select onchange="filterBulanSjAdmin()" class="summary_years_sj_admin text-add-colour-black-soft"
-                      style="font-weight:bold; text-align: center;"
-                      name="summary_years_sj_admin"
+                      style="font-weight:bold; text-align: center;" name="summary_years_sj_admin"
                       id="summary_years_sj_admin">
                       <option value="">Pilih Tahun</option>
                     </select>

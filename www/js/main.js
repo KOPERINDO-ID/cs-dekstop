@@ -892,14 +892,16 @@ function getMenuUser() {
 
   // Apply menu visibility berdasarkan username (CSO vs lainnya)
   if (username === 'CSO') {
+    $$('#menuBroadcast').hide();
     $$('#menuDelayGo').show();
     $$('#menuTagihan').show();
+    $$('#menuPengiriman').show();
     $$('#menuInvoice').show();
     $$('#menuKorin').show();
-    $$('#menuBroadcast').hide();
   } else {
     $$('#menuDelayGo').hide();
     $$('#menuTagihan').hide();
+    $$('#menuPengiriman').hide();
     $$('#menuInvoice').hide();
     $$('#menuKorin').hide();
     $$('#menuBroadcast').show();

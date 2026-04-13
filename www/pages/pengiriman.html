@@ -65,69 +65,127 @@
     </div>
 
     <!-- ============================================================
-       POPUP: TAMBAH / EDIT TRANSAKSI PENGIRIMAN
+       POPUP: TAMBAH TRANSAKSI PENGIRIMAN (2-step)
+       Step 1 = Pilih SPK, Step 2 = Pilih Ekspedisi
        ============================================================ -->
-    <div class="popup popup-form-transaksi"
-        style="height:auto; --f7-popup-border-radius:12px 12px 0 0; top:auto; bottom:0;">
+    <div class="popup popup-form-transaksi">
         <div class="view">
             <div class="page">
+
+                <!-- Navbar -->
                 <div class="navbar">
                     <div class="navbar-bg"></div>
                     <div class="navbar-inner bg-dark-gray-medium padding">
-                        <div class="left">
+                        <div class="left" style="display:flex; align-items:center; gap:8px;">
+                            <!-- Tombol back (hanya muncul di step 2) -->
+                            <span id="trx-btn-back" style="display:none; cursor:pointer; color:#fff; margin-right:4px;"
+                                onclick="transaksiGoStep(1)">
+                                <i class="f7-icons" style="font-size:20px; pointer-events:none;">chevron_left</i>
+                            </span>
                             <b id="popupTransaksiTitle">Tambah Pengiriman</b>
                         </div>
                         <div class="right">
                             <p class="text-add-colour-white link popup-close" data-popup=".popup-form-transaksi">
-                                <i style="margin-right:5px;" class="f7-icons">xmark_rectangle_fill</i>
+                                <i class="f7-icons">xmark_circle_fill</i>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="page-content theme-dark">
-                    <div style="margin:16px;">
 
-                        <div style="border:1px solid #444; border-radius:6px; overflow:hidden; margin-bottom:16px;">
-                            <select id="transaksi-ekspedisi"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;">
-                            </select>
-                            <input type="text" id="transaksi-pic"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="PIC *">
-                            <input type="text" id="transaksi-rute"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="Rute * (cth: SIDOARJO > JAKARTA)">
-                            <input type="text" id="transaksi-telp"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="No Telp (Opsional)">
-                            <input type="text" id="transaksi-rekening"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="No Rekening (Opsional)">
-                            <input type="date" id="transaksi-tgl-kirim"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;">
-                            <input type="date" id="transaksi-tgl-sampai"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; outline:none; box-sizing:border-box; font-size:14px;">
+                <!-- Step indicator -->
+                <div style="display:flex; background:#1a1a1a; border-bottom:1px solid #333; margin-top:64px;">
+                    <div id="trx-step-ind-1"
+                        style="flex:1; text-align:center; padding:8px 0; font-size:12px; font-weight:700; color:#fff; border-bottom:2px solid #2e7d32;">
+                        · Pilih SPK ·
+                    </div>
+                    <div id="trx-step-ind-2"
+                        style="flex:1; text-align:center; padding:8px 0; font-size:12px; font-weight:600; color:#666; border-bottom:2px solid transparent;">
+                        · Pilih Ekspedisi ·
+                    </div>
+                </div>
+
+                <div class="page-content theme-dark" style="padding-top:0;">
+
+                    <!-- ─────────────────────────────────────────
+                         STEP 1: Pilih SPK
+                         ───────────────────────────────────────── -->
+                    <div id="trx-step-1">
+
+                        <!-- Search SPK -->
+                        <div style="padding:10px 12px; background:#1a1a1a; border-bottom:1px solid #333;">
+                            <input type="text" id="trx-search-spk" placeholder="Cari SPK / Client / Kota..."
+                                style="width:100%; box-sizing:border-box; padding:8px 10px; background:#2a2a2a; color:white; border:1px solid #444; border-radius:6px; outline:none; font-size:13px;">
                         </div>
 
-                        <p style="font-size:12px; color:gray; margin-bottom:16px;">
-                            <i class="f7-icons" style="font-size:14px;">info_circle</i>
-                            Tanda (*) menunjukkan field wajib diisi. Field lainnya bersifat opsional.
-                        </p>
+                        <!-- Ringkasan pilihan -->
+                        <div id="trx-spk-summary"
+                            style="display:none; padding:8px 12px; background:#1b3a1b; border-bottom:1px solid #2e7d32; font-size:12px; color:#a5d6a7;">
+                        </div>
 
-                        <button id="btnSimpanTransaksi"
-                            style="width:100%; padding:14px; background-color:#444; color:white; border:none; border-radius:4px; font-weight:bold; font-size:15px; cursor:pointer; letter-spacing:1px;">
-                            SIMPAN
-                        </button>
+                        <!-- List SPK -->
+                        <div id="trx-spk-list" style="padding:8px 12px;">
+                            <!-- diisi JS -->
+                        </div>
+
+                        <!-- Tombol lanjut -->
+                        <div style="padding:12px;">
+                            <button id="trx-btn-lanjut" disabled
+                                style="width:100%; padding:13px; background-color:#555; color:#999; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:not-allowed; letter-spacing:1px;">
+                                LANJUT PILIH EKSPEDISI →
+                            </button>
+                        </div>
 
                     </div>
+
+                    <!-- ─────────────────────────────────────────
+                         STEP 2: Pilih Ekspedisi
+                         ───────────────────────────────────────── -->
+                    <div id="trx-step-2" style="display:none;">
+
+                        <!-- Header info rute (pola index.js) -->
+                        <div style="padding:10px 14px; background:#1a1a1a; border-bottom:1px solid #333;">
+                            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                                <i class="f7-icons"
+                                    style="font-size:14px; color:#9FE1CB; pointer-events:none;">location_fill</i>
+                                <span id="trx-eksp-rute" style="font-size:13px; color:#ddd;"></span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <i class="f7-icons"
+                                    style="font-size:14px; color:#FAC775; pointer-events:none;">calendar</i>
+                                <span id="trx-eksp-tgl" style="font-size:12px; color:#FAC775;"></span>
+                            </div>
+                        </div>
+
+                        <!-- Column header -->
+                        <div
+                            style="display:flex; align-items:center; padding:6px 14px; background:#111; border-bottom:1px solid #333; font-size:11px; color:#888;">
+                            <span style="flex:1; margin-left:54px;">Ekspedisi</span>
+                            <span style="width:90px; text-align:right;">Harga / Hari</span>
+                        </div>
+
+                        <!-- List rekomendasi ekspedisi -->
+                        <div id="trx-eksp-list" style="padding:0 12px 8px;">
+                            <!-- diisi JS -->
+                        </div>
+
+                        <!-- Tombol konfirmasi -->
+                        <div style="padding:12px;">
+                            <button id="trx-btn-konfirmasi" disabled
+                                style="width:100%; padding:13px; background-color:#555; color:#999; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:not-allowed; letter-spacing:1px;">
+                                KONFIRMASI PENGIRIMAN
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-       PAGE CONTENT
-       ============================================================ -->
+        PAGE CONTENT
+        ============================================================ -->
     <div class="page-content theme-dark">
         <div class="card">
 

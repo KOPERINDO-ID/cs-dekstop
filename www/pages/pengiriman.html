@@ -1,10 +1,8 @@
 <div class="page" data-name="pengiriman">
-
     <!-- ============================================================
        POPUP: TAMBAH / EDIT EKSPEDISI
        ============================================================ -->
-    <div class="popup popup-form-ekspedisi"
-        style="height:auto; --f7-popup-border-radius:12px 12px 0 0; top:auto; bottom:0;">
+    <div class="sheet-modal popup-form-ekspedisi" style="height:100vh;">
         <div class="view">
             <div class="page">
                 <div class="navbar">
@@ -68,7 +66,7 @@
        POPUP: TAMBAH TRANSAKSI PENGIRIMAN (2-step)
        Step 1 = Pilih SPK, Step 2 = Pilih Ekspedisi
        ============================================================ -->
-    <div class="popup popup-form-transaksi">
+    <div class="sheet-modal popup-form-transaksi" style="height:100vh;">
         <div class="view">
             <div class="page">
 
@@ -176,6 +174,126 @@
                             </button>
                         </div>
 
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     POPUP: HISTORY PENGIRIMAN
+     Sheet Modal — muncul dari bawah, full-height
+     ============================================================ -->
+    <div class="sheet-modal poup-modal-history-pengiriman" style="height:100vh;">
+        <div class="view">
+            <div class="page">
+
+                <!-- Navbar -->
+                <div class="navbar">
+                    <div class="navbar-bg"></div>
+                    <div class="navbar-inner bg-dark-gray-medium padding" style="border-bottom:1px solid #333;">
+                        <div class="left" style="display:flex; align-items:center; gap:8px;">
+                            <b style="color:#fff;">History Pengiriman</b>
+                        </div>
+                        <div class="right">
+                            <span class="link sheet-close" data-sheet=".poup-modal-history-pengiriman"
+                                style="color:#fff;">
+                                <i class="f7-icons">xmark_circle_fill</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-content theme-dark" style="background:#111;">
+
+                    <!-- ── Sticky filter header ── -->
+                    <div id="hist-sticky-header"
+                        style="position:sticky; top:0; z-index:10; background:#111; padding-bottom:0;">
+
+                        <!-- Search bar -->
+                        <div style="padding:10px 12px 6px; background:#111; border-bottom:1px solid #222;">
+                            <div style="position:relative;">
+                                <i class="f7-icons"
+                                    style="position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:16px; color:#555; pointer-events:none;">search</i>
+                                <input type="text" id="hist-search" placeholder="Cari kode, ekspedisi, rute..." style="width:100%; box-sizing:border-box; padding:9px 10px 9px 34px;
+                                       background:#1e1e1e; color:#fff; border:1px solid #333;
+                                       border-radius:8px; outline:none; font-size:13px;">
+                            </div>
+                        </div>
+
+                        <!-- Filter chips: Periode -->
+                        <div
+                            style="display:flex; gap:6px; padding:8px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; border-bottom:1px solid #1e1e1e;">
+                            <span class="hist-chip hist-chip-active" data-period="all"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#2e7d32; color:#fff; border:1px solid #2e7d32; white-space:nowrap;">
+                                Semua
+                            </span>
+                            <span class="hist-chip" data-period="thismonth"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                Bulan Ini
+                            </span>
+                            <span class="hist-chip" data-period="lastmonth"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                Bulan Lalu
+                            </span>
+                            <span class="hist-chip" data-period="3month"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                3 Bulan
+                            </span>
+                            <span class="hist-chip" data-period="custom"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                ⚙ Kustom
+                            </span>
+                        </div>
+
+                        <!-- Custom date range — hidden by default -->
+                        <div id="hist-custom-range"
+                            style="display:none; padding:8px 12px; background:#1a1a1a; border-bottom:1px solid #222;">
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <div style="flex:2;">
+                                    <div style="font-size:10px; color:#777; margin-bottom:3px;">DARI</div>
+                                    <input type="date" id="hist-date-from"
+                                        style="width:100%; box-sizing:border-box; padding:7px 8px; background:#2a2a2a; color:#fff; border:1px solid #444; border-radius:6px; outline:none; font-size:13px; color-scheme:dark;">
+                                </div>
+                                <div style="flex:2;">
+                                    <div style="font-size:10px; color:#777; margin-bottom:3px;">SAMPAI</div>
+                                    <input type="date" id="hist-date-to"
+                                        style="width:100%; box-sizing:border-box; padding:7px 8px; background:#2a2a2a; color:#fff; border:1px solid #444; border-radius:6px; outline:none; font-size:13px; color-scheme:dark;">
+                                </div>
+                                <button id="hist-btn-apply-range"
+                                    style="margin-top:16px; padding:8px 14px; background:#2e7d32; color:#fff; border:none; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; flex:1;">
+                                    Terapkan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Summary bar -->
+                        <div id="hist-summary-bar"
+                            style="display:flex; align-items:center; justify-content:space-between; padding:6px 14px; background:#161616; border-bottom:1px solid #1e1e1e;">
+                            <span id="hist-count-label" style="font-size:11px; color:#666;">Memuat data...</span>
+                            <div style="display:flex; gap:10px;">
+                                <span style="font-size:11px; color:#888;">
+                                    <span
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#1D9E75; margin-right:3px;"></span>Selesai
+                                </span>
+                                <span style="font-size:11px; color:#888;">
+                                    <span
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#EF9F27; margin-right:3px;"></span>Proses
+                                </span>
+                                <span style="font-size:11px; color:#888;">
+                                    <span
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#E24B4A; margin-right:3px;"></span>Terlambat
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end sticky header -->
+
+                    <!-- ── List container ── -->
+                    <div id="hist-list" style="padding:8px 12px 80px;">
+                        <!-- diisi JS -->
                     </div>
 
                 </div>

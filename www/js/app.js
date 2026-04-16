@@ -1065,6 +1065,21 @@ $$(document).on('page:afterin', '.page[data-name="performa_input"]', function (e
   });
 });
 
+$$(document).on('page:afterin', '.page[data-name="pengiriman"]', function (e) {
+  clearPageIntervals();
+
+  runFunctionsSequentially([
+    { name: 'getViewDelayManagerShipment', func: wrapFunction(getViewDelayManagerShipment, 'getViewDelayManagerShipment') },
+    { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
+    { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
+    { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },
+    { name: 'getPengumuman', func: wrapFunction(getPengumuman, 'getPengumuman') }
+  ], 2);
+
+  // Init langsung — tidak perlu masuk antrian
+  PengirimanPage.init();
+});
+
 // ============================================
 // NOTIFICATION MANAGER HELPER FUNCTIONS
 // ============================================

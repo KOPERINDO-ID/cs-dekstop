@@ -54,8 +54,20 @@ function getViewDelayManagerShipment() {
                 penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray; border-left:1px solid gray;" >' + item.client_telp + '</td>';
                 penjualan_value += '<td align="left" style="border-right:1px solid gray; border-bottom:1px solid gray; border-left:1px solid gray;" >' + alamat_kirim_penjualan + '</td>';
 
-                penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;" class="label-cell">';
-                penjualan_value += '   <button  class="text-add-colour-black-soft bg-dark-gray-young button-small col button popup-open text-bold" data-popup=".input-alamat-kirim-delay" onclick="shipmentNotifDelay(\'' + item.penjualan_id + '\');">Detail</button>';
+                penjualan_value += '<td style="border-right:1px solid gray; border-bottom:1px solid gray;gap:4px;" class="label-cell display-flex justify-content-center align-items-center">';
+                penjualan_value += '  <button class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold"'
+                    + ' style="width:96px;"'
+                    + ' onclick="shipmentNotifDelay(\'' + item.penjualan_id + '\');">Detail</button>';
+                penjualan_value += '  <button class="button-small col button text-bold"'
+                    + ' style="background:#0F6E56;color:#9FE1CB;width:96px;"'
+                    + ' onclick="openEkspedisiSelector('
+                    + '\'' + item.penjualan_id + '\','
+                    + '\'' + (localStorage.getItem('lokasi_pabrik_sales') || '') + '\','
+                    + '\'' + item.client_kota + '\','
+                    + '\'' + moment(item.penjualan_tanggal_kirim).format('YYYY-MM-DD') + '\','
+                    + '\'' + (item.tgl_req_shipment ? moment(item.tgl_req_shipment).format('YYYY-MM-DD') : '') + '\','
+                    + '1'
+                    + ');">Ekspedisi</button>';
                 penjualan_value += '</td>';
                 penjualan_value += '</tr>';
             });
@@ -151,6 +163,7 @@ function shipmentNotifDelay(penjualan_id) {
         },
         success: function (data) {
             app.dialog.close();
+            app.popup.open('.popup-input-alamat-kirim-delay');
             var alamat_client = "";
             var alamat_kirim = "";
             var client_nama = "";
@@ -221,7 +234,7 @@ function toSentenceCase(str) {
 // ========================================
 function filterDelayGoTable() {
     var keyword = (jQuery('#search_delay_go_client').val() || '').toLowerCase();
-    jQuery('#data_status_notif_delay_go tr').each(function() {
+    jQuery('#data_status_notif_delay_go tr').each(function () {
         var rowText = jQuery(this).text().toLowerCase();
         jQuery(this).toggle(!keyword || rowText.indexOf(keyword) !== -1);
     });

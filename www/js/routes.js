@@ -116,6 +116,10 @@ var routes = [
     url: './pages/tagihan.html',
   },
   {
+    path: '/pengiriman',
+    url: './pages/pengiriman.html',
+  },
+  {
     path: '/surat_jalan',
     url: './pages/surat_jalan_admin.html',
   },

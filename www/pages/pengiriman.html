@@ -1,6 +1,7 @@
 <div class="page" data-name="pengiriman">
+
     <!-- ============================================================
-       POPUP: TAMBAH / EDIT EKSPEDISI
+       POPUP: TAMBAH / EDIT / DETAIL EKSPEDISI
        ============================================================ -->
     <div class="sheet-modal popup-form-ekspedisi" style="height:100vh;">
         <div class="view">
@@ -9,7 +10,7 @@
                     <div class="navbar-bg"></div>
                     <div class="navbar-inner bg-dark-gray-medium padding">
                         <div class="left">
-                            <b id="popupEkspedisiTitle">Tambah Ekspedisi</b>
+                            <b id="popupEkspedisiTitle" style="font-size:16px;">Tambah Ekspedisi</b>
                         </div>
                         <div class="right">
                             <p class="text-add-colour-white link popup-close" data-popup=".popup-form-ekspedisi">
@@ -24,26 +25,26 @@
                         <!-- Satu kotak untuk semua input -->
                         <div style="border:1px solid #444; border-radius:6px; overflow:hidden; margin-bottom:16px;">
                             <input type="text" id="expedisi-nama-perusahaan"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
                                 placeholder="Nama Perusahaan *">
                             <input type="text" id="expedisi-pic"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="Nama PIC (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="Nama PIC">
                             <input type="text" id="expedisi-alamat"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="Alamat (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="Alamat">
                             <input type="text" id="expedisi-telp"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="No Telpon / WA (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="No Telpon / WA">
                             <input type="text" id="expedisi-bank"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="Nama Bank (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="Nama Bank">
                             <input type="text" id="expedisi-rekening"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="No Rekening (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; border-bottom:1px solid #444; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="No Rekening">
                             <input type="text" id="expedisi-nama-rekening"
-                                style="display:block; width:100%; padding:14px 14px; background:transparent; color:white; border:none; outline:none; box-sizing:border-box; font-size:14px;"
-                                placeholder="Nama Rekening (Opsional)">
+                                style="display:block; width:100%; padding:14px; background:transparent; color:white; border:none; outline:none; box-sizing:border-box; font-size:14px;"
+                                placeholder="Nama Rekening">
                         </div>
 
                         <p style="font-size:12px; color:gray; margin-bottom:16px;">
@@ -51,10 +52,19 @@
                             Tanda (*) menunjukkan field wajib diisi. Field lainnya bersifat opsional.
                         </p>
 
-                        <button id="btnSimpanEkspedisi"
-                            style="width:100%; padding:14px; background-color:#444; color:white; border:none; border-radius:4px; font-weight:bold; font-size:15px; cursor:pointer; letter-spacing:1px;">
-                            SIMPAN
-                        </button>
+                        <div class="display-flex flex-direction-row" style="gap:4px;">
+                            <!-- Tombol Simpan -->
+                            <button id="btnSimpanEkspedisi"
+                                style="flex:1; padding:14px; background-color:#1565c0; color:white; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:pointer; letter-spacing:1px;">
+                                SIMPAN
+                            </button>
+
+                            <!-- Tombol Hapus — hanya muncul di mode Detail/Edit -->
+                            <button id="btnHapusEkspedisi"
+                                style="display:none; flex:1; padding:14px; background-color:#b71c1c; color:white; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:pointer; letter-spacing:1px;">
+                                HAPUS DATA INI
+                            </button>
+                        </div>
 
                     </div>
                 </div>
@@ -64,23 +74,20 @@
 
     <!-- ============================================================
        POPUP: TAMBAH TRANSAKSI PENGIRIMAN (2-step)
-       Step 1 = Pilih SPK, Step 2 = Pilih Ekspedisi
        ============================================================ -->
     <div class="sheet-modal popup-form-transaksi" style="height:100vh;">
         <div class="view">
             <div class="page">
 
-                <!-- Navbar -->
                 <div class="navbar">
                     <div class="navbar-bg"></div>
                     <div class="navbar-inner bg-dark-gray-medium padding">
                         <div class="left" style="display:flex; align-items:center; gap:8px;">
-                            <!-- Tombol back (hanya muncul di step 2) -->
                             <span id="trx-btn-back" style="display:none; cursor:pointer; color:#fff; margin-right:4px;"
                                 onclick="transaksiGoStep(1)">
                                 <i class="f7-icons" style="font-size:20px; pointer-events:none;">chevron_left</i>
                             </span>
-                            <b id="popupTransaksiTitle">Tambah Pengiriman</b>
+                            <b id="popupTransaksiTitle" style="font-size:16px;">Tambah Pengiriman</b>
                         </div>
                         <div class="right">
                             <p class="text-add-colour-white link popup-close" data-popup=".popup-form-transaksi">
@@ -93,54 +100,41 @@
                 <!-- Step indicator -->
                 <div style="display:flex; background:#1a1a1a; border-bottom:1px solid #333; margin-top:64px;">
                     <div id="trx-step-ind-1"
-                        style="flex:1; text-align:center; padding:8px 0; font-size:12px; font-weight:700; color:#fff; border-bottom:2px solid #2e7d32;">
+                        style="flex:1; text-align:center; padding:8px 0; font-size:14px; font-weight:700; color:#fff; border-bottom:2px solid #2e7d32;">
                         · Pilih SPK ·
                     </div>
                     <div id="trx-step-ind-2"
-                        style="flex:1; text-align:center; padding:8px 0; font-size:12px; font-weight:600; color:#666; border-bottom:2px solid transparent;">
+                        style="flex:1; text-align:center; padding:8px 0; font-size:14px; font-weight:600; color:#666; border-bottom:2px solid transparent;">
                         · Pilih Ekspedisi ·
                     </div>
                 </div>
 
                 <div class="page-content theme-dark" style="padding-top:0;">
 
-                    <!-- ─────────────────────────────────────────
-                         STEP 1: Pilih SPK
-                         ───────────────────────────────────────── -->
+                    <!-- STEP 1: Pilih SPK -->
                     <div id="trx-step-1">
-
-                        <!-- Search SPK -->
                         <div style="padding:10px 12px; background:#1a1a1a; border-bottom:1px solid #333;">
                             <input type="text" id="trx-search-spk" placeholder="Cari SPK / Client / Kota..."
                                 style="width:100%; box-sizing:border-box; padding:8px 10px; background:#2a2a2a; color:white; border:1px solid #444; border-radius:6px; outline:none; font-size:13px;">
                         </div>
 
-                        <!-- Ringkasan pilihan -->
                         <div id="trx-spk-summary"
                             style="display:none; padding:8px 12px; background:#1b3a1b; border-bottom:1px solid #2e7d32; font-size:12px; color:#a5d6a7;">
                         </div>
 
-                        <!-- List SPK -->
-                        <div id="trx-spk-list" style="padding:8px 12px;">
-                            <!-- diisi JS -->
-                        </div>
+                        <div id="trx-spk-list" style="padding:8px 12px;"></div>
 
-                        <!-- Tombol lanjut -->
                         <div style="padding:12px;">
                             <button id="trx-btn-lanjut" disabled
                                 style="width:100%; padding:13px; background-color:#555; color:#999; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:not-allowed; letter-spacing:1px;">
                                 LANJUT PILIH EKSPEDISI →
                             </button>
                         </div>
-
                     </div>
 
-                    <!-- ─────────────────────────────────────────
-                         STEP 2: Pilih Ekspedisi
-                         ───────────────────────────────────────── -->
+                    <!-- STEP 2: Pilih Ekspedisi -->
                     <div id="trx-step-2" style="display:none;">
 
-                        <!-- Header info rute (pola index.js) -->
                         <div style="padding:10px 14px; background:#1a1a1a; border-bottom:1px solid #333;">
                             <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
                                 <i class="f7-icons"
@@ -156,17 +150,13 @@
 
                         <!-- Column header -->
                         <div
-                            style="display:flex; align-items:center; padding:6px 14px; background:#111; border-bottom:1px solid #333; font-size:11px; color:#888;">
+                            style="display:flex; align-items:center; padding:6px 14px; background:#111; border-bottom:1px solid #333; font-size:12px; color:#888;">
                             <span style="flex:1; margin-left:54px;">Ekspedisi</span>
                             <span style="width:90px; text-align:right;">Harga / Hari</span>
                         </div>
 
-                        <!-- List rekomendasi ekspedisi -->
-                        <div id="trx-eksp-list" style="padding:0 12px 8px;">
-                            <!-- diisi JS -->
-                        </div>
+                        <div id="trx-eksp-list" style="padding:0 12px 8px;"></div>
 
-                        <!-- Tombol konfirmasi -->
                         <div style="padding:12px;">
                             <button id="trx-btn-konfirmasi" disabled
                                 style="width:100%; padding:13px; background-color:#555; color:#999; border:none; border-radius:4px; font-weight:bold; font-size:14px; cursor:not-allowed; letter-spacing:1px;">
@@ -182,19 +172,44 @@
     </div>
 
     <!-- ============================================================
-     POPUP: HISTORY PENGIRIMAN
-     Sheet Modal — muncul dari bawah, full-height
-     ============================================================ -->
+        SHEET MODAL: DETAIL TRANSAKSI (Read-only + Edit Mode)
+        height:100vh agar konten panjang (banyak SPK) tetap scrollable.
+        Konten diisi JS via #sheet-detail-transaksi-body.
+        ============================================================ -->
+    <div class="sheet-modal sheet-detail-transaksi" style="height:100vh; --f7-sheet-border-radius:0;">
+        <div style="display:flex; flex-direction:column; height:100%; background:#141414;">
+
+            <!-- Navbar sticky -->
+            <div class="bg-dark-gray-medium"
+                style="flex-shrink:0; z-index:10; border-bottom:1px solid #1e1e1e; display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:48px;">
+                <b id="sheetDetailTransaksiTitle" style="font-size:15px; color:#fff;">Detail Transaksi</b>
+                <span class="sheet-close" data-sheet=".sheet-detail-transaksi"
+                    style="cursor:pointer; color:#fff; line-height:1;">
+                    <i class="f7-icons" style="font-size:22px;">xmark_circle_fill</i>
+                </span>
+            </div>
+
+            <!-- Konten dinamis — diisi renderDetailTrxReadOnly / renderDetailTrxEditMode
+                 flex:1 + min-height:0 agar 2-kolom inner bisa overflow-y:auto per kolom -->
+            <div id="sheet-detail-transaksi-body" style="flex:1; min-height:0; display:flex; flex-direction:column;">
+                <!-- diisi JS -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+        POPUP: HISTORY PENGIRIMAN
+        ============================================================ -->
     <div class="sheet-modal poup-modal-history-pengiriman" style="height:100vh;">
         <div class="view">
             <div class="page">
 
-                <!-- Navbar -->
                 <div class="navbar">
                     <div class="navbar-bg"></div>
                     <div class="navbar-inner bg-dark-gray-medium padding" style="border-bottom:1px solid #333;">
-                        <div class="left" style="display:flex; align-items:center; gap:8px;">
-                            <b style="color:#fff;">History Pengiriman</b>
+                        <div class="left">
+                            <b style="color:#fff; font-size:16px;">History Pengiriman</b>
                         </div>
                         <div class="right">
                             <span class="link sheet-close" data-sheet=".poup-modal-history-pengiriman"
@@ -207,7 +222,7 @@
 
                 <div class="page-content theme-dark" style="background:#111;">
 
-                    <!-- ── Sticky filter header ── -->
+                    <!-- Sticky filter header -->
                     <div id="hist-sticky-header"
                         style="position:sticky; top:0; z-index:10; background:#111; padding-bottom:0;">
 
@@ -217,73 +232,74 @@
                                 <i class="f7-icons"
                                     style="position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:16px; color:#555; pointer-events:none;">search</i>
                                 <input type="text" id="hist-search" placeholder="Cari kode, ekspedisi, rute..." style="width:100%; box-sizing:border-box; padding:9px 10px 9px 34px;
-                                       background:#1e1e1e; color:#fff; border:1px solid #333;
-                                       border-radius:8px; outline:none; font-size:13px;">
+                                           background:#1e1e1e; color:#fff; border:1px solid #333;
+                                           border-radius:8px; outline:none; font-size:13px;">
                             </div>
                         </div>
 
-                        <!-- Filter chips: Periode -->
+                        <!-- Filter chips -->
                         <div
                             style="display:flex; gap:6px; padding:8px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; border-bottom:1px solid #1e1e1e;">
-                            <span class="hist-chip hist-chip-active" data-period="all"
-                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#2e7d32; color:#fff; border:1px solid #2e7d32; white-space:nowrap;">
+                            <span class="hist-chip" data-period="all"
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; background:#2e7d32; color:#fff; border:1px solid #2e7d32; white-space:nowrap;">
                                 Semua
                             </span>
                             <span class="hist-chip" data-period="thismonth"
-                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
                                 Bulan Ini
                             </span>
                             <span class="hist-chip" data-period="lastmonth"
-                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
                                 Bulan Lalu
                             </span>
                             <span class="hist-chip" data-period="3month"
-                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
                                 3 Bulan
                             </span>
                             <span class="hist-chip" data-period="custom"
-                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
+                                style="flex-shrink:0; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; background:#1e1e1e; color:#888; border:1px solid #333; white-space:nowrap;">
                                 ⚙ Kustom
                             </span>
                         </div>
 
-                        <!-- Custom date range — hidden by default -->
+                        <!-- Custom date range -->
                         <div id="hist-custom-range"
                             style="display:none; padding:8px 12px; background:#1a1a1a; border-bottom:1px solid #222;">
                             <div style="display:flex; gap:8px; align-items:center;">
                                 <div style="flex:2;">
-                                    <div style="font-size:10px; color:#777; margin-bottom:3px;">DARI</div>
+                                    <div style="font-size:12px; color:#777; margin-bottom:3px;">DARI</div>
                                     <input type="date" id="hist-date-from"
                                         style="width:100%; box-sizing:border-box; padding:7px 8px; background:#2a2a2a; color:#fff; border:1px solid #444; border-radius:6px; outline:none; font-size:13px; color-scheme:dark;">
                                 </div>
                                 <div style="flex:2;">
-                                    <div style="font-size:10px; color:#777; margin-bottom:3px;">SAMPAI</div>
+                                    <div style="font-size:12px; color:#777; margin-bottom:3px;">SAMPAI</div>
                                     <input type="date" id="hist-date-to"
                                         style="width:100%; box-sizing:border-box; padding:7px 8px; background:#2a2a2a; color:#fff; border:1px solid #444; border-radius:6px; outline:none; font-size:13px; color-scheme:dark;">
                                 </div>
                                 <button id="hist-btn-apply-range"
-                                    style="margin-top:16px; padding:8px 14px; background:#2e7d32; color:#fff; border:none; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; flex:1;">
+                                    style="margin-top:16px; padding:8px 14px; background:#2e7d32; color:#fff; border:none; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; flex:1;">
                                     Terapkan
                                 </button>
                             </div>
                         </div>
 
                         <!-- Summary bar -->
+                        <!-- Warna legend disesuaikan: biru=selesai, hijau=proses, merah=terlambat/bermasalah -->
                         <div id="hist-summary-bar"
                             style="display:flex; align-items:center; justify-content:space-between; padding:6px 14px; background:#161616; border-bottom:1px solid #1e1e1e;">
-                            <span id="hist-count-label" style="font-size:11px; color:#666;">Memuat data...</span>
+                            <span id="hist-count-label" style="font-size:12px; color:#666;">Memuat data...</span>
                             <div style="display:flex; gap:10px;">
-                                <span style="font-size:11px; color:#888;">
+                                <span style="font-size:12px; color:#888;">
                                     <span
-                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#1D9E75; margin-right:3px;"></span>Selesai
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#1565c0; margin-right:3px;"></span>Selesai
                                 </span>
-                                <span style="font-size:11px; color:#888;">
+                                <span style="font-size:12px; color:#888;">
                                     <span
-                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#EF9F27; margin-right:3px;"></span>Proses
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#43a047; margin-right:3px;"></span>Proses
                                 </span>
-                                <span style="font-size:11px; color:#888;">
+                                <span style="font-size:12px; color:#888;">
                                     <span
-                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#E24B4A; margin-right:3px;"></span>Terlambat
+                                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#ef5350; margin-right:3px;"></span>Terlambat
                                 </span>
                             </div>
                         </div>
@@ -291,10 +307,8 @@
                     </div>
                     <!-- end sticky header -->
 
-                    <!-- ── List container ── -->
-                    <div id="hist-list" style="padding:8px 12px 80px;">
-                        <!-- diisi JS -->
-                    </div>
+                    <!-- List container -->
+                    <div id="hist-list" style="padding:8px 12px 80px;"></div>
 
                 </div>
             </div>
@@ -311,35 +325,35 @@
             <div class="display-flex flex-direction-row align-items-center no-gap bg-dark-gray-young">
                 <div class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/Sales">Sales</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/Sales">Sales</a>
                 </div>
                 <div id="menuBroadcast" class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/client">Broadcast</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/client">Broadcast</a>
                 </div>
                 <div class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/notif">Notif</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/notif">Notif</a>
                 </div>
                 <div id="menuDelayGo" class="align-items-center justify-content-center text-bold notif-merah-delay"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/delay-go">Delay - Go</a>
                 </div>
                 <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/tagihan">Tagihan</a>
                 </div>
                 <div id="menuPengiriman" class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/pengiriman">Pengiriman</a>
                 </div>
                 <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/surat_jalan">Invoice</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/surat_jalan">Invoice</a>
                 </div>
                 <div id="menuKorin" class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black;">
-                    <a class="text-add-colour-white" href="/point-sales">Korin</a>
+                    <a class="text-add-colour-white" style="font-size:12px;" href="/point-sales">Korin</a>
                 </div>
             </div>
 
@@ -348,15 +362,15 @@
                 <div id="masterPengiriman"
                     class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black; cursor:pointer;">
-                    <a class="text-add-colour-white">Ekspedisi</a>
+                    <a class="text-add-colour-white" style="font-size:12px;">Ekspedisi</a>
                 </div>
                 <div id="transaksiPengiriman" class="align-items-center justify-content-center text-bold"
                     style="display:flex; flex:1; height:32px; border:0.2px solid black; cursor:pointer;">
-                    <a class="text-add-colour-white">Transaksi</a>
+                    <a class="text-add-colour-white" style="font-size:12px;">Transaksi</a>
                 </div>
             </div>
 
-            <!-- Main Content (diisi JS) -->
+            <!-- Main Content -->
             <div class="row">
                 <div class="col-100">
                     <div class="card border-actived" style="margin:10px;">

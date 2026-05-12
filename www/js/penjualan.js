@@ -3700,7 +3700,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 											bankInfo += '      <tr>';
 											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
 											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 518 7422 a.n Sutono</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 225 5818 a.n Sutono</td>';
 											bankInfo += '          <td width="13%" align="center"></td>';
 											bankInfo += '      </tr>';
 										}
@@ -3955,18 +3955,34 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '			</td>';
 										invoice_penjualan += '          <td width="13%" align="center"></td>';
 										invoice_penjualan += '      </tr>';
-										invoice_penjualan += '      <tr>';
-										invoice_penjualan += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
-										invoice_penjualan += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-										invoice_penjualan += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
-										invoice_penjualan += '          <td width="13%" align="center"></td>';
-										invoice_penjualan += '      </tr>';
-										invoice_penjualan += '      <tr>';
-										invoice_penjualan += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
-										invoice_penjualan += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-										invoice_penjualan += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 518 7422 a.n Sutono</td>';
-										invoice_penjualan += '          <td width="13%" align="center"></td>';
-										invoice_penjualan += '      </tr>';
+										var bankInfo = '';
+										if (data.data[0].bank_1_id) {
+											var bankId = parseInt(data.data[0].bank_1_id);
+											if (data.data[0].bank_1 === "Mandiri Owner") {
+												bankId = 6;
+											}
+											var bankData = getBankInfoById(bankId);
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">' + bankData.nama + '</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">' + bankData.rekening + ' a.n ' + bankData.atas_nama + '</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+										} else {
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
+											bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">141 000 225 5818 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
+										}
+										invoice_penjualan += bankInfo;
 										invoice_penjualan += '      <tr>';
 										invoice_penjualan += '          <td width="15%" align="center" colspan="4"></td>';
 										invoice_penjualan += '          <td width="15%" align="center"><p style="font-weight: bold;">' + client_nama.replace(/\PT. /g, '').replace(/\PT/g, '').replace(/\CV. /g, '').replace(/\CV/g, '').replace(/\UD. /g, '').replace(/\UD/g, '') + '</p></td>';

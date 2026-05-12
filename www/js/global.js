@@ -38,7 +38,7 @@ function checkConnection() {
 
 
 // var BASE_API = 'https://indokoper.com/api'; /** Production Base API */
-var BASE_API = 'https://staging.indokoper.com/api'; /** Staging Base API */
+var BASE_API = 'https://indokoper.com/api'; /** Staging Base API */
 
 var BASE_API2 = 'https://indokoper.com/api';
 var BASE_API3 = 'https://be.order.devkoperindo.com/api';

@@ -5,6 +5,7 @@
 // === BANK HELPER VARIABLES & FUNCTIONS (untuk popup pembayaran) ===
 var globalBankData = [];
 var kotaDataCache = null;
+var _tagihanDataLoaded = []; // cache data tagihan untuk fitur overdue
 
 /**
  * Load data bank dari server - dipanggil saat halaman load
@@ -760,106 +761,70 @@ function getDataTagihan(page) {
                         tanggalSelesai = tgl.format('D') + ' ' + bulanIndo[tgl.month()] + ' ' + tgl.format('YYYY');
                     }
 
-                    html += '<tr style="' + rowColor + '">';
-                    html += '<td align="center" style="border:1px solid gray; padding:8px;">' + no + '</td>';
-                    html += '<td align="center" style="border:1px solid gray; padding:8px;">';
-                    html += '<b>' + nomorInvoice + '</b>';
-                    html += '</td>';
-                    html += '<td align="left" style="border:1px solid gray; padding:8px;">';
-                    html += (item.client_nama || '-') + '<br>';
-                    html += '</td>';
-                    html += '<td align="center" style="border:1px solid gray; padding:8px;">' + tanggalSelesai + '</td>';
-                    html += '<td align="center" style="border:1px solid gray; padding:8px;">' + (item.client_kota || '-') + '</td>';
-                    html += '<td align="right" style="border:1px solid gray; padding:8px;">' + number_format(item.penjualan_grandtotal) + '</td>';
-                    html += '<td align="right" style="border:1px solid gray; padding:8px;">' + number_format(item.penjualan_jumlah_pembayaran || 0) + '</td>';
-                    html += '<td align="right" style="border:1px solid gray; padding:8px;"><b>' + number_format(sisaPembayaran) + '</b></td>';
-
-                    var sisa = parseFloat(item.penjualan_grandtotal) - parseFloat(item.penjualan_jumlah_pembayaran || 0);
-
-                    // === WARNA TOMBOL BAYAR BERDASARKAN HARI KETERLAMBATAN ===
-                    var color_btn_byr = "bg-dark-gray-young text-add-colour-black-soft"; // default abu-abu
-                    var style_btn_byr = "";
-
-                    if (sisa <= 0) {
-                        // Sudah lunas - biru
-                        color_btn_byr = "btn-color-blueWhite";
-                        style_btn_byr = "";
-                    } else if (item.tgl_surat_jalan_selesai) {
-                        var tglSelesai = moment(item.tgl_surat_jalan_selesai);
-                        var today = moment().startOf('day');
-                        var hariKeterlambatan = today.diff(tglSelesai, 'days');
-
-                        if (hariKeterlambatan >= 12) {
-                            // H+12 ke atas - MERAH
-                            color_btn_byr = "";
-                            style_btn_byr = "background:#c0392b; color:#fff; border:none;";
-                        } else if (hariKeterlambatan >= 7) {
-                            // H+7 sampai H+11 - ORANGE
-                            color_btn_byr = "";
-                            style_btn_byr = "background:#e67e22; color:#fff; border:none;";
-                        } else if (hariKeterlambatan >= 2) {
-                            // H+2 sampai H+6 - KUNING
-                            color_btn_byr = "";
-                            style_btn_byr = "background:#f1c40f; color:#333; border:none;";
-                        }
+                    // === Helper badge broadcast ===
+                    var bulanI = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+                    function bcBadge(dt, isSent, statusBc, isError, hariKe) {
+                        if (!dt) return '<td style="border:1px solid #2e2e2e;padding:6px;text-align:center;color:#333;font-size:14px;white-space:nowrap;">—</td>';
+                        var m2 = moment(dt);
+                        var label = m2.format('D') + ' ' + bulanI[m2.month()] + ' ' + m2.format('YYYY');
+                        var s = parseInt(isSent||0), e = parseInt(isError||0), st = statusBc||'';
+                        var bg,bd,col;
+                        if (e||st==='F')      { bg='rgba(231,76,60,0.20)';  bd='#e74c3c55'; col='#e74c3c'; }
+                        else if (s&&st==='R') { bg='rgba(52,152,219,0.20)'; bd='#3498db55'; col='#3498db'; }
+                        else if (s)           { bg='rgba(46,204,113,0.20)'; bd='#2ecc7155'; col='#2ecc71'; }
+                        else                  { bg='rgba(120,120,120,0.12)';bd='#44444455'; col='#666'; }
+                        return '<td style="border:1px solid #2e2e2e;padding:6px;text-align:center;white-space:nowrap;">' +
+                            '<span style="background:' + bg + ';color:' + col + ';border:1px solid ' + bd + ';display:inline-block;padding:4px 7px;border-radius:6px;font-size:10px;font-weight:600;white-space:nowrap;cursor:pointer;"' +
+                            ' onclick="showBcDetail(\'' + item.penjualan_id + '\',' + hariKe + ')">' + label + '</span></td>';
                     }
 
-                    // === 2 TOMBOL: LOG dan BAYAR ===
-                    html += '<td align="center" style="border-bottom:1px solid gray; padding:5px;">';
-                    // Tombol LOG Broadcast
-                    html += '         <a href="#" onclick="showBroadcastLogTagihan(\'' + item.penjualan_id + '\', \'' + (item.client_nama || '').replace(/'/g, "\\'") + '\'); return false;" class="button button-small button-fill popup-open" data-popup=".log-broadcast-tagihan" style="width:96px;background: linear-gradient(#6C63FF, #4B44C9); color: white; padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; border-radius: 4px;">';
-                    html += '             <i class="f7-icons" style="font-size:13px;">doc_text</i> <span>LOG</span>';
-                    html += '         </a>';
+                    // === Warna tombol Bayar ===
+                    var sisa = parseFloat(item.penjualan_grandtotal) - parseFloat(item.penjualan_jumlah_pembayaran || 0);
+                    var sudahBayar = parseFloat(item.penjualan_jumlah_pembayaran || 0);
+                    var style_btn_byr, class_btn_byr;
+                    if (sisa <= 0) {
+                        // Lunas → biru (btn-color-blueWhite)
+                        style_btn_byr = '';
+                        class_btn_byr = 'btn-color-blueWhite';
+                    } else if (sudahBayar > 0) {
+                        // Ada pembayaran tapi belum lunas → hijau, text putih
+                        style_btn_byr = 'background:#27ae60;color:#fff;border:none;';
+                        class_btn_byr = '';
+                    } else {
+                        // Belum bayar sama sekali → light grey bg-dark-gray-young
+                        style_btn_byr = '';
+                        class_btn_byr = 'bg-dark-gray-young text-add-colour-black-soft';
+                    }
+
+                    var bayarArgs = [
+                        item.dt_record, item.penjualan_tanggal, item.performa_id_relation,
+                        item.bank_1_id, item.bank_2_id, item.bank_3_id, item.bank_4_id, item.bank_5_id,
+                        item.bank_6_id, item.bank_7_id, item.bank_8_id, item.bank_9_id, item.bank_10_id,
+                        item.pembayaran1_tgl, item.pembayaran2_tgl, item.pembayaran3_tgl, item.pembayaran4_tgl,
+                        item.pembayaran5_tgl, item.pembayaran6_tgl, item.pembayaran7_tgl, item.pembayaran8_tgl,
+                        item.pembayaran9_tgl, item.pembayaran10_tgl,
+                        item.bank,
+                        item.pembayaran_1, item.pembayaran_2, item.pembayaran_3, item.pembayaran_4, item.pembayaran_5,
+                        item.pembayaran_6, item.pembayaran_7, item.pembayaran_8, item.pembayaran_9, item.pembayaran_10,
+                        (item.client_nama||'').replace(/'/g,"\\'"),
+                        item.penjualan_jumlah_pembayaran, item.penjualan_total_qty, item.penjualan_grandtotal,
+                        item.penjualan_id, item.client_id,
+                        (item.penjualan_status_pembayaran||'Belum Lunas'), (item.ongkir||0)
+                    ].map(function(v){ return "'" + v + "'"; }).join(',');
+
+                    html += '<tr style="' + rowColor + '">';
+                    html += '<td style="border:1px solid #2e2e2e;padding:8px;text-align:center;font-size:12px;white-space:nowrap;">' + no + '</td>';
+                    html += '<td style="border:1px solid #2e2e2e;padding:8px;overflow:hidden;">';
+                    html += '<div style="font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (item.client_nama||'-') + '</div>';
+                    html += '<div style="font-size:10px;color:#aaa;margin-top:2px;">' + nomorInvoice + '</div>';
                     html += '</td>';
-                    html += '<td align="center" style="border-right:1px solid gray;border-bottom:1px solid gray; padding:5px;">';
-                    
-                    // === TOMBOL BAYAR - SAMA DENGAN PENJUALAN TAPI ID/NAME BERBEDA ===
-                    html += '<button class="' + color_btn_byr + ' button-small col button popup-open text-bold" style="' + style_btn_byr + '" data-popup=".detail-pembayaran-tagihan" ';
-                    html += 'onclick="detailPembayaranTagihan(';
-                    html += '\'' + item.dt_record + '\',';
-                    html += '\'' + (item.penjualan_tanggal) + '\',';
-                    html += '\'' + (item.performa_id_relation) + '\',';  // performa_id_relation
-                    html += '\'' + (item.bank_1_id) + '\',';
-                    html += '\'' + (item.bank_2_id) + '\',';
-                    html += '\'' + (item.bank_3_id) + '\',';
-                    html += '\'' + (item.bank_4_id) + '\',';
-                    html += '\'' + (item.bank_5_id) + '\',';
-                    html += '\'' + (item.bank_6_id) + '\',';
-                    html += '\'' + (item.bank_7_id) + '\',';
-                    html += '\'' + (item.bank_8_id) + '\',';
-                    html += '\'' + (item.bank_9_id) + '\',';
-                    html += '\'' + (item.bank_10_id) + '\',';
-                    html += '\'' + (item.pembayaran1_tgl) + '\',';
-                    html += '\'' + (item.pembayaran2_tgl) + '\',';
-                    html += '\'' + (item.pembayaran3_tgl) + '\',';
-                    html += '\'' + (item.pembayaran4_tgl) + '\',';
-                    html += '\'' + (item.pembayaran5_tgl) + '\',';
-                    html += '\'' + (item.pembayaran6_tgl) + '\',';
-                    html += '\'' + (item.pembayaran7_tgl) + '\',';
-                    html += '\'' + (item.pembayaran8_tgl) + '\',';
-                    html += '\'' + (item.pembayaran9_tgl) + '\',';
-                    html += '\'' + (item.pembayaran10_tgl) + '\',';
-                    html += '\'' + (item.bank) + '\',';  // bank
-                    html += '\'' + (item.pembayaran_1) + '\',';
-                    html += '\'' + (item.pembayaran_2) + '\',';
-                    html += '\'' + (item.pembayaran_3) + '\',';
-                    html += '\'' + (item.pembayaran_4) + '\',';
-                    html += '\'' + (item.pembayaran_5) + '\',';
-                    html += '\'' + (item.pembayaran_6) + '\',';
-                    html += '\'' + (item.pembayaran_7) + '\',';
-                    html += '\'' + (item.pembayaran_8) + '\',';
-                    html += '\'' + (item.pembayaran_9) + '\',';
-                    html += '\'' + (item.pembayaran_10) + '\',';
-                    html += '\'' + item.client_nama + '\',';
-                    html += '\'' + (item.penjualan_jumlah_pembayaran) + '\',';
-                    html += '\'' + (item.penjualan_total_qty) + '\',';
-                    html += '\'' + (item.penjualan_grandtotal) + '\',';
-                    html += '\'' + item.penjualan_id + '\',';
-                    html += '\'' + item.client_id + '\',';
-                    html += '\'' + (item.penjualan_status_pembayaran || 'Belum Lunas') + '\',';
-                    html += '\'' + (item.ongkir || 0) + '\'';
-                    html += ');">Bayar</button>';
-                    
+                    html += '<td style="border:1px solid #2e2e2e;padding:8px;text-align:center;font-size:12px;white-space:nowrap;">' + tanggalSelesai + '</td>';
+                    html += bcBadge(item.tgl_bc_h2,  item.sent_bc_h2,  item.status_bc_h2,  item.error_bc_h2,  2);
+                    html += bcBadge(item.tgl_bc_h7,  item.sent_bc_h7,  item.status_bc_h7,  item.error_bc_h7,  7);
+                    html += bcBadge(item.tgl_bc_h12, item.sent_bc_h12, item.status_bc_h12, item.error_bc_h12, 12);
+                    html += '<td style="border:1px solid #2e2e2e;padding:8px;text-align:right;font-size:12px;font-weight:700;white-space:nowrap;">' + number_format(sisaPembayaran) + '</td>';
+                    html += '<td style="border:1px solid #2e2e2e;padding:5px;text-align:center;">';
+                    html += '<button class="button-small col button popup-open text-bold ' + class_btn_byr + '" style="' + style_btn_byr + 'width:100%;" data-popup=".detail-pembayaran-tagihan" onclick="detailPembayaranTagihan(' + bayarArgs + ');">Bayar</button>';
                     html += '</td>';
                     html += '</tr>';
                 });
@@ -867,6 +832,10 @@ function getDataTagihan(page) {
 
             jQuery('#data_status_notif_tagihan').html(html);
             jQuery('#count_notif_tagihan').text(data.data.data.length || 0);
+
+            // Simpan data untuk fitur overdue
+            _tagihanDataLoaded = data.data.data || [];
+            updateOverdueBadge();
         },
         error: function (xhr, status, error) {
             app.dialog.close();
@@ -2888,6 +2857,347 @@ function filterNamaClientTagihanDebounce() {
 function resetFilterNamaClientTagihan() {
     jQuery('#filter_nama_client_tagihan').val('');
     getDataTagihan();
+}
+
+// ============================================================================
+// BROADCAST LOG ALL - Tabel ringkasan semua broadcast tagihan
+// ============================================================================
+
+var _bcLogData = []; // cache untuk search
+
+function showAllBroadcastLog() {
+    jQuery('#bc-log-search').val('');
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + '/get-tagihan-broadcast-all',
+        dataType: 'JSON',
+        data: { lokasi_pabrik: localStorage.getItem('lokasi_pabrik_sales') },
+        beforeSend: function () {
+            jQuery('#broadcast-log-all-content').html(
+                '<tr><td colspan="5" style="text-align:center;padding:40px;color:#555;">Memuat data...</td></tr>'
+            );
+        },
+        success: function (data) {
+            _bcLogData = data.data || [];
+            renderBcLogTable(_bcLogData);
+        },
+        error: function () {
+            jQuery('#broadcast-log-all-content').html(
+                '<tr><td colspan="5" style="text-align:center;padding:30px;color:#e74c3c;">Gagal memuat data</td></tr>'
+            );
+        }
+    });
+}
+
+function renderBcLogTable(dataList) {
+    var bulanIndo = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+    function fmtTgl(dt) {
+        if (!dt) return null;
+        var m = moment(dt);
+        return m.format('D') + ' ' + bulanIndo[m.month()] + ' ' + m.format('YYYY');
+    }
+
+    function getBadgeStyle(isSent, statusBc, isError) {
+        isSent   = parseInt(isSent  || 0);
+        isError  = parseInt(isError || 0);
+        statusBc = statusBc || '';
+        if (isError || statusBc === 'F') {
+            return { bg: 'rgba(231,76,60,0.20)', border: '#e74c3c55', color: '#e74c3c' };
+        }
+        if (isSent && statusBc === 'R') {
+            return { bg: 'rgba(52,152,219,0.20)', border: '#3498db55', color: '#3498db' };
+        }
+        if (isSent) {
+            return { bg: 'rgba(46,204,113,0.20)', border: '#2ecc7155', color: '#2ecc71' };
+        }
+        return { bg: 'rgba(120,120,120,0.12)', border: '#44444455', color: '#666' };
+    }
+
+    function dateCell(dt, isSent, statusBc, isError, hariKe, penjualanId, bdr) {
+        if (!dt) {
+            return '<td style="' + bdr + 'padding:8px;text-align:center;color:#333;font-size:14px;white-space:nowrap;">—</td>';
+        }
+        var label = fmtTgl(dt);
+        var bs    = getBadgeStyle(isSent, statusBc, isError);
+        return '<td style="' + bdr + 'padding:6px 8px;text-align:center;white-space:nowrap;">' +
+            '<span class="bc-date-btn" ' +
+            'style="background:' + bs.bg + ';color:' + bs.color + ';border:1px solid ' + bs.border + ';display:inline-block;padding:5px 8px;border-radius:6px;font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer;"' +
+            ' onclick="showBcDetail(\'' + penjualanId + '\',' + hariKe + ')">' +
+            label +
+            '</span>' +
+            '</td>';
+    }
+
+    var rows = '';
+    if (!dataList || dataList.length === 0) {
+        rows = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#555;">Tidak ada data broadcast</td></tr>';
+    } else {
+        jQuery.each(dataList, function (i, log) {
+            var hariKe = parseInt(log.hari_keterlambatan || 0);
+            var rowBg  = '';
+            if (hariKe >= 12)     rowBg = 'background:rgba(231,76,60,0.07);';
+            else if (hariKe >= 7) rowBg = 'background:rgba(230,126,34,0.07);';
+            else if (hariKe >= 2) rowBg = 'background:rgba(241,196,15,0.05);';
+
+            var bdr = 'border:1px solid #2a2a2a;';
+            rows += '<tr style="' + rowBg + '">';
+            rows += '<td style="' + bdr + 'padding:10px 8px;text-align:center;color:#aaa;font-size:11px;white-space:nowrap;">' + (i + 1) + '</td>';
+            rows += '<td style="' + bdr + 'padding:10px 8px;">';
+            rows += '<div style="font-weight:600;font-size:12px;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (log.client_nama || '-') + '</div>';
+            rows += '<div style="font-size:10px;color:#aaa;margin-top:2px;">' + (log.nomor_invoice || log.penjualan_id) + '</div>';
+            rows += '</td>';
+            rows += dateCell(log.tgl_h2,  log.sent_h2,  log.status_h2,  log.error_h2,  2,  log.penjualan_id, bdr);
+            rows += dateCell(log.tgl_h7,  log.sent_h7,  log.status_h7,  log.error_h7,  7,  log.penjualan_id, bdr);
+            rows += dateCell(log.tgl_h12, log.sent_h12, log.status_h12, log.error_h12, 12, log.penjualan_id, bdr);
+            rows += '</tr>';
+        });
+    }
+    jQuery('#broadcast-log-all-content').html(rows);
+}
+
+function filterBcLogTable(keyword) {
+    var kw = (keyword || '').toLowerCase().trim();
+    if (!kw) {
+        renderBcLogTable(_bcLogData);
+        return;
+    }
+    var filtered = _bcLogData.filter(function(log) {
+        return (log.client_nama || '').toLowerCase().indexOf(kw) !== -1 ||
+               (log.nomor_invoice || '').toLowerCase().indexOf(kw) !== -1;
+    });
+    renderBcLogTable(filtered);
+}
+
+function showBcDetail(penjualanId, hariKe) {
+    jQuery('#bc-detail-popup-title').text('Detail H+' + hariKe);
+    jQuery('#bc-detail-popup-content').html(
+        '<div style="text-align:center;padding:40px;color:#555;">Memuat...</div>'
+    );
+    app.popup.open('.bc-broadcast-detail-popup');
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + '/get-tagihan-broadcast-log',
+        dataType: 'JSON',
+        data: { penjualan_id: penjualanId },
+        success: function(data) {
+            var log = null;
+            if (data.data) {
+                jQuery.each(data.data, function(i, item) {
+                    if (parseInt(item.hari_ke) === parseInt(hariKe)) { log = item; return false; }
+                });
+            }
+
+            if (!log) {
+                jQuery('#bc-detail-popup-content').html(
+                    '<div style="text-align:center;padding:40px;color:#555;">Data tidak ditemukan</div>'
+                );
+                return;
+            }
+
+            // Icon & warna berdasarkan hari_ke (sama persis dengan showBroadcastLogTagihan)
+            var icon, labelColor, labelText;
+            if (log.hari_ke >= 12) {
+                icon = '⚠️'; labelColor = '#ff3b30'; labelText = 'URGENT - H+' + log.hari_ke;
+            } else if (log.hari_ke >= 7) {
+                icon = '🔔'; labelColor = '#ff9500'; labelText = 'Reminder ke-2 - H+' + log.hari_ke;
+            } else {
+                icon = '📋'; labelColor = '#007aff'; labelText = 'Reminder - H+' + log.hari_ke;
+            }
+
+            // Status delivery (sama persis)
+            var statusIcon = '⏳', statusText = 'Pending', statusColor = '#8e8e93';
+            if (log.is_sent == 1) {
+                switch (log.status_broadcast) {
+                    case 'R': statusIcon = '✅'; statusText = 'Dibaca';   statusColor = '#34c759'; break;
+                    case 'D': statusIcon = '☑️'; statusText = 'Terkirim'; statusColor = '#30d158'; break;
+                    case 'S': statusIcon = '✓';  statusText = 'Sent';     statusColor = '#64d2ff'; break;
+                    case 'F': statusIcon = '❌'; statusText = 'Gagal';    statusColor = '#ff3b30'; break;
+                    default:  statusIcon = '✓';  statusText = 'Terkirim'; statusColor = '#30d158';
+                }
+            } else if (log.error_message) {
+                statusIcon = '❌'; statusText = 'Error'; statusColor = '#ff3b30';
+            } else {
+                statusIcon = '⏳'; statusText = 'Menunggu'; statusColor = '#ff9f0a';
+            }
+
+            var tglKirim = '-';
+            if (log.sent_date) {
+                tglKirim = moment(log.sent_date).format('DD MMM YYYY HH:mm');
+            } else if (log.dt_record) {
+                tglKirim = moment(log.dt_record).format('DD MMM YYYY HH:mm') + ' (dijadwalkan)';
+            }
+
+            var sisaBayar = parseFloat(log.sisa_pembayaran || 0);
+            var previewId = 'bc-detail-msg-' + log.log_broadcast_tagihan_id;
+            var phone = (log.phone_number || '').replace(/[^0-9]/g, '');
+
+            // WA URL dengan isi pesan
+            var waMsg = log.message_content || '';
+            var waUrl = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(waMsg);
+
+            var html = '';
+
+            // Card full-width
+            html += '<div style="width:100%;box-sizing:border-box;background:#1c1c1e;border:1px solid #38383a;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);margin-top:4px;">';
+
+            // Header gradient
+            html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:linear-gradient(135deg,#2c2c2e 60%,rgba(60,60,65,0.8));border-bottom:2px solid ' + labelColor + '33;">';
+            html += '<div style="display:flex;align-items:center;gap:10px;">';
+            html += '<div style="width:34px;height:34px;border-radius:50%;background:' + labelColor + '22;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">' + icon + '</div>';
+            html += '<div>';
+            html += '<div style="color:' + labelColor + ';font-size:14px;font-weight:700;">' + labelText + '</div>';
+            html += '<div style="color:#636366;font-size:10px;margin-top:2px;">Broadcast Tagihan</div>';
+            html += '</div></div>';
+            // Status badge kanan
+            html += '<div style="background:' + statusColor + '22;border:1px solid ' + statusColor + '55;border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:5px;">';
+            html += '<span style="font-size:12px;line-height:1;">' + statusIcon + '</span>';
+            html += '<span style="color:' + statusColor + ';font-size:12px;font-weight:700;">' + statusText + '</span>';
+            html += '</div></div>';
+
+            // Body
+            html += '<div style="padding:14px;">';
+
+            // Tanggal kirim
+            html += '<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #2c2c2e;">';
+            html += '<span style="color:#8e8e93;font-size:13px;width:120px;flex-shrink:0;">📅 Tanggal Kirim</span>';
+            html += '<span style="color:#fff;font-size:13px;font-weight:500;flex:1;text-align:right;">' + tglKirim + '</span>';
+            html += '</div>';
+
+            // No. Telepon — tombol WA
+            html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #2c2c2e;">';
+            html += '<span style="color:#8e8e93;font-size:13px;flex-shrink:0;">📱 No. Telepon</span>';
+            html += '<div style="text-align:right;">';
+            var waIconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.855L.057 23.996l6.305-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.866 9.866 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374A9.867 9.867 0 012.106 12C2.106 6.58 6.58 2.106 12 2.106c5.42 0 9.894 4.474 9.894 9.894 0 5.42-4.474 9.894-9.894 9.894z"/></svg>';
+            if (phone) {
+                // Gunakan window.open '_system' agar InAppBrowser Cordova yg handle, bukan F7 router
+                html += '<button onclick="window.open(\'' + waUrl.replace(/'/g, "\\'") + '\',\'_system\');return false;" style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:20px;border:none;cursor:pointer;white-space:nowrap;">';
+                html += waIconSvg + ' ' + phone;
+                html += '</button>';
+            } else {
+                html += '<span style="color:#555;font-size:13px;">-</span>';
+            }
+            html += '</div></div>';
+
+            // Sisa Bayar
+            html += '<div style="display:flex;align-items:center;padding:10px 0;">';
+            html += '<span style="color:#8e8e93;font-size:13px;width:120px;flex-shrink:0;">💰 Sisa Bayar</span>';
+            html += '<span style="color:#ff453a;font-size:15px;font-weight:700;flex:1;text-align:right;">Rp ' + number_format(sisaBayar) + '</span>';
+            html += '</div>';
+
+            // Error message
+            if (log.error_message) {
+                html += '<div style="margin-top:8px;padding:9px 12px;background:rgba(255,59,48,0.12);border:1px solid rgba(255,59,48,0.3);border-radius:8px;display:flex;align-items:flex-start;gap:8px;">';
+                html += '<span style="font-size:14px;margin-top:1px;">⚠️</span>';
+                html += '<span style="color:#ff6b6b;font-size:12px;line-height:1.5;">' + log.error_message + '</span>';
+                html += '</div>';
+            }
+
+            // Lihat Isi Pesan collapsible
+            if (log.message_content) {
+                html += '<div style="margin-top:12px;border-top:1px solid #2c2c2e;padding-top:12px;">';
+                html += '<a href="#" onclick="var el=jQuery(\'#' + previewId + '\');el.slideToggle(200);jQuery(this).find(\'.toggle-arrow\').toggleClass(\'rotated\');return false;" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;">';
+                html += '<div style="display:flex;align-items:center;gap:6px;"><span style="font-size:14px;">💬</span>';
+                html += '<span style="color:#007aff;font-size:14px;font-weight:600;">Lihat Isi Pesan</span></div>';
+                html += '<span class="toggle-arrow" style="color:#007aff;font-size:11px;transition:transform 0.2s;display:inline-block;">▼</span>';
+                html += '</a>';
+                html += '<div id="' + previewId + '" style="display:none;margin-top:10px;">';
+                html += '<div style="background:#005c4b;border-radius:12px 12px 4px 12px;padding:12px 14px;max-height:260px;overflow-y:auto;box-shadow:0 2px 6px rgba(0,0,0,0.5);position:relative;">';
+                html += '<div style="position:absolute;top:6px;right:8px;color:#ffffff44;font-size:10px;">WhatsApp</div>';
+                html += '<div style="color:#e9fbe5;font-size:13px;line-height:1.7;word-wrap:break-word;">' + formatWhatsAppText(log.message_content) + '</div>';
+                html += '</div></div></div>';
+            }
+
+            html += '</div></div>';
+            jQuery('#bc-detail-popup-content').html(html);
+        },
+        error: function() {
+            jQuery('#bc-detail-popup-content').html(
+                '<div style="text-align:center;padding:40px;color:#ff3b30;">Gagal memuat detail</div>'
+            );
+        }
+    });
+}
+
+// ============================================================================
+// OVERDUE - Pelanggan lewat H+12
+// ============================================================================
+
+function updateOverdueBadge() {
+    var overdue = (_tagihanDataLoaded || []).filter(function (item) {
+        return parseInt(item.hari_keterlambatan || 0) > 12;
+    });
+    var badge = jQuery('#overdue-count-badge');
+    if (overdue.length > 0) {
+        badge.text(overdue.length).show();
+    } else {
+        badge.hide();
+    }
+}
+
+function showOverdueTagihan() {
+    var bulanIndo = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    var overdue = (_tagihanDataLoaded || []).filter(function (item) {
+        return parseInt(item.hari_keterlambatan || 0) > 12;
+    });
+
+    var html = '';
+    if (overdue.length === 0) {
+        html = '<div style="text-align:center;padding:50px 20px;color:#636366;">' +
+               '<div style="font-size:50px;margin-bottom:14px;">✅</div>' +
+               '<p style="font-size:15px;font-weight:600;margin:0;color:#8e8e93;">Tidak ada pelanggan overdue</p></div>';
+    } else {
+        // Summary bar
+        html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#2c2c2e;border-radius:8px;margin-bottom:12px;">';
+        html += '<span style="color:#8e8e93;font-size:12px;">Total overdue H+12</span>';
+        html += '<span style="background:#ff3b3022;border:1px solid #ff3b3055;color:#ff3b30;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;">' + overdue.length + ' data</span>';
+        html += '</div>';
+
+        jQuery.each(overdue, function (i, item) {
+            var sisa = parseFloat(item.penjualan_grandtotal) - parseFloat(item.penjualan_jumlah_pembayaran || 0);
+            var hari = parseInt(item.hari_keterlambatan || 0);
+            var tgl = '-';
+            if (item.tgl_surat_jalan_selesai) {
+                var m = moment(item.tgl_surat_jalan_selesai);
+                tgl = m.format('D') + ' ' + bulanIndo[m.month()] + ' ' + m.format('YYYY');
+            }
+            var nomorInv = moment(item.dt_record).format('DDMMYY') + '-' +
+                item.penjualan_id.replace(/INV_/g, '').replace(/^0+/, '');
+
+            html += '<div style="background:#1c1c1e;border:1px solid #2a2a2a;border-left:3px solid #ff3b30;border-radius:10px;margin-bottom:10px;overflow:hidden;">';
+
+            // Header row
+            html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #2a2a2a;">';
+            html += '<div style="flex:1;min-width:0;">';
+            html += '<div style="color:#fff;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (item.client_nama || '-') + '</div>';
+            html += '<div style="color:#636366;font-size:10px;margin-top:2px;">' + nomorInv + '</div>';
+            html += '</div>';
+            html += '<div style="background:#ff3b3022;border:1px solid #ff3b3055;border-radius:12px;padding:3px 10px;margin-left:8px;flex-shrink:0;">';
+            html += '<span style="color:#ff3b30;font-size:11px;font-weight:700;">H+' + hari + '</span>';
+            html += '</div></div>';
+
+            // Info row: selesai + sisa
+            html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #2a2a2a;">';
+            html += '<span style="color:#636366;font-size:11px;">📅 Selesai: ' + tgl + '</span>';
+            html += '<span style="color:#ff453a;font-size:13px;font-weight:700;">Rp ' + number_format(sisa) + '</span>';
+            html += '</div>';
+
+            // Action row: tombol Log History
+            html += '<div style="display:flex;justify-content:flex-end;padding:8px 14px;gap:8px;">';
+            html += '<button onclick="showBroadcastLogTagihan(\'' + item.penjualan_id + '\',\'' + (item.client_nama||'').replace(/'/g,"\\'") + '\')" ' +
+                'class="button button-small button-fill popup-open" data-popup=".log-broadcast-tagihan" ' +
+                'style="background:linear-gradient(#6C63FF,#4B44C9);color:#fff;font-size:11px;padding:4px 12px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;border:none;">';
+            html += '<i class="f7-icons" style="font-size:12px;">doc_text</i> Log History';
+            html += '</button>';
+            html += '</div>';
+
+            html += '</div>';
+        });
+    }
+
+    jQuery('#overdue-tagihan-content').html(html);
+    app.popup.open('.popup-overdue-tagihan');
 }
 
 // ============================================================================

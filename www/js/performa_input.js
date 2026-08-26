@@ -187,6 +187,10 @@ function buildCleanFormData() {
         formData.append('needs_approval_' + i, needsApproval || '0');
         if (parseInt(needsApproval) === 1) has_needs_approval = true;
 
+        // Set discount
+        formData.append('is_set_' + i, getVal('input-item-is-set') || '0');
+        formData.append('is_set_applied_' + i, getVal('input-item-is-set-applied') || '0');
+
         // Color
         formData.append('selected_color_' + i, getVal('input-selected-color'));
         formData.append('selected_hex_color_' + i, getVal('input-selected-hex-color'));
@@ -385,6 +389,8 @@ function reindexAllPerformaFields() {
     reindex('.el_style_hc_input', null, 'style_hc_input_', null);
     reindex('.el_color_proforma_input', null, 'color_proforma_input_', null);
     reindex('.item-input-el-extra', null, 'el_extra_', null);
+    reindex('.input-item-is-set', 'is_set_', 'is_set_', null);
+    reindex('.input-item-is-set-applied', 'is_set_applied_', 'is_set_applied_', null);
     reindex('.show-selected-color', null, 'show_color_fullcolor_', null);
     reindex('.input-clear-button-jenis', null, 'input-clear-button-type-', null);
     reindex('.el-input-ukuran-hc', null, 'el_ukuran_hc_', null);
@@ -428,6 +434,11 @@ function reindexAllPerformaFields() {
     var wc = 1;
     $$('[id^="warning_perubahan_"]').each(function () {
         $$(this).attr("id", 'warning_perubahan_' + wc); wc++;
+    });
+
+    var sdc = 1;
+    document.querySelectorAll('[id^="set_discount_btn_"]').forEach(function(el) {
+        el.setAttribute('id', 'set_discount_btn_' + sdc); sdc++;
     });
 
     console.log('✅ reindexAllPerformaFields complete');
@@ -3409,7 +3420,7 @@ function selectBoxUkuran(produk_id, count) {
             select_box_kota += '<option value="" selected>Pilih Ukuran</option>';
             jQuery.each(data.data, function (i, val) {
                 console.log('Ukuran data:', val);
-                select_box_kota += '<option value="' + val.nama_ukuran + '" data-id="' + val.id_ukuran + '"> Uk : ' + val.nama_ukuran + '</option>';
+                select_box_kota += '<option value="' + val.nama_ukuran + '" data-id="' + val.id_ukuran + '" data-is-set="' + (val.is_set || 0) + '"> Uk : ' + val.nama_ukuran + '</option>';
             });
             $$('#ukuran_hc_' + count).html(select_box_kota);
 
@@ -3417,10 +3428,14 @@ function selectBoxUkuran(produk_id, count) {
             $$('#ukuran_hc_' + count).off('change').on('change', function () {
                 var selectElement = this;
                 var selectedOption = selectElement.options[selectElement.selectedIndex];
-                var id_ukuran = selectedOption ? selectedOption.getAttribute('data-id') : null;
+                var id_ukuran  = selectedOption ? selectedOption.getAttribute('data-id') : null;
+                var isSetVal   = selectedOption ? (parseInt(selectedOption.getAttribute('data-is-set')) || 0) : 0;
 
-                console.log('Ukuran changed - Setting id_ukuran_hc_' + count + ' to:', id_ukuran);
+                console.log('Ukuran changed - Setting id_ukuran_hc_' + count + ' to:', id_ukuran, '| is_set:', isSetVal);
                 $$('#id_ukuran_hc_' + count).val(id_ukuran);
+                $$('#is_set_' + count).val(isSetVal);
+                selectElement.style.color = selectElement.value ? 'white' : 'gray';
+                updateSetDiscountUI(count);
 
                 console.log('Triggering fillHargaProduk after id_ukuran set');
             });
@@ -3888,6 +3903,11 @@ function fillHargaProduk(count) {
         },
         success: function (data) {
             var price = 0;
+            // Set is_set flag dari data ukuran, reset applied hanya jika bukan edit mode
+            $$('#is_set_' + count).val(data.data && data.data.is_set ? data.data.is_set : 0);
+            if ($$('#is_editing_' + count).val() !== 'true') {
+                $$('#is_set_applied_' + count).val(0);
+            }
             if ($$('#ukuran_hc_' + count).val() != '' && $$('#ukuran_hc_' + count).val() != 'none') {
                 if (xtra == 1) {
                     if (data.data.harga_ukuran != 0) {
@@ -5713,11 +5733,11 @@ function addPerforma() {
     html_performa_group_field += '</div>';
     html_performa_group_field += '</li>';
     html_performa_group_field += '<li class="item-content item-input margin-8">';
-    html_performa_group_field += '<div class="item-inner">';
+    html_performa_group_field += '<div class="item-inner" style="padding-bottom:20px;">';
     html_performa_group_field += '<div class="item-input-wrap">';
     html_performa_group_field += '<div class="row no-gap">';
-    html_performa_group_field += '<!-- Kolom Kiri 75% untuk Input Qty -->';
-    html_performa_group_field += '<div class="col-75">';
+    html_performa_group_field += '<!-- Kolom Kiri 60% untuk Input Qty -->';
+    html_performa_group_field += '<div class="col-60">';
 
     // ========================================
     // FIX: Ambil qty dari proforma #1 sebagai default qty untuk item baru
@@ -5731,8 +5751,8 @@ function addPerforma() {
     html_performa_group_field += 'onclick="resetValueQty(' + ($('.performa_group_field_count').length + 1) + ');" ';
     html_performa_group_field += 'class="input-item-qty text-add-colour-black-soft bg-dark-gray-young button-small text-bold" type="number" required validate>';
     html_performa_group_field += '</div>';
-    html_performa_group_field += '<!-- Kolom Kanan 25% untuk Nominal dan Icon Copy -->';
-    html_performa_group_field += '<div class="col-25" style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding-right: 10px;">';
+    html_performa_group_field += '<!-- Kolom Kanan 40% untuk Nominal, Icon Copy, dan Set Discount -->';
+    html_performa_group_field += '<div class="col-40" style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding-right: 10px;">';
     html_performa_group_field += '<!-- NOMINAL POTONGAN -->';
     html_performa_group_field += '<span id="nominal_potongan_display_' + ($('.performa_group_field_count').length + 1) + '" ';
     html_performa_group_field += 'style="display: none; font-size: 11px; color: #4CAF50; font-weight: bold; white-space: nowrap;"></span>';
@@ -5740,6 +5760,12 @@ function addPerforma() {
     html_performa_group_field += '<i class="f7-icons icon-copy-potongan" id="copy_potongan_icon_' + ($('.performa_group_field_count').length + 1) + '" ';
     html_performa_group_field += 'onclick="copyPotonganToNetHarga(' + ($('.performa_group_field_count').length + 1) + ');" ';
     html_performa_group_field += 'style="display: none; font-size: 20px; color: #4CAF50; cursor: pointer;">doc_on_doc_fill</i>';
+    html_performa_group_field += '<!-- SET DISCOUNT BUTTON -->';
+    html_performa_group_field += '<span id="set_discount_btn_' + ($('.performa_group_field_count').length + 1) + '" class="set-discount-btn" data-count="' + ($('.performa_group_field_count').length + 1) + '" ';
+    html_performa_group_field += 'onclick="toggleSetDiscount(' + ($('.performa_group_field_count').length + 1) + ');" ';
+    html_performa_group_field += 'style="display:none; border:none; border-radius:5px; background:#4CAF50; color:#fff; font-size:12px; font-weight:bold; padding:3px 8px; cursor:pointer; white-space:nowrap; user-select:none;">';
+    html_performa_group_field += 'FREE 1';
+    html_performa_group_field += '</span>';
     html_performa_group_field += '</div>';
     html_performa_group_field += '</div>';
     html_performa_group_field += '</div>';
@@ -5778,6 +5804,8 @@ function addPerforma() {
     // ========================================
     // HIDDEN FIELDS UNTUK POTONGAN (PENTING!)
     // ========================================
+    html_performa_group_field += '<input type="hidden" class="input-item-is-set" id="is_set_' + ($('.performa_group_field_count').length + 1) + '" name="is_set_' + ($('.performa_group_field_count').length + 1) + '" value="0">';
+    html_performa_group_field += '<input type="hidden" id="is_set_applied_' + ($('.performa_group_field_count').length + 1) + '" name="is_set_applied_' + ($('.performa_group_field_count').length + 1) + '" value="0" class="performa-input input-item-is-set-applied">';
     html_performa_group_field += '<input type="hidden" id="potongan_otomatis_' + ($('.performa_group_field_count').length + 1) + '" name="potongan_otomatis_' + ($('.performa_group_field_count').length + 1) + '" class="performa-input input-item-potongan-otomatis">';
     html_performa_group_field += '<input type="hidden" id="needs_approval_' + ($('.performa_group_field_count').length + 1) + '" name="needs_approval_' + ($('.performa_group_field_count').length + 1) + '" value="0" class="performa-input input-item-needs-approval">';
     html_performa_group_field += '<small id="info_potongan_' + ($('.performa_group_field_count').length + 1) + '" class="show-potongan-info" data-count="' + ($('.performa_group_field_count').length + 1) + '" style="display: none; color: #4CAF50; font-size: 11px; margin-top: 2px; cursor: pointer;"></small>';
@@ -5796,6 +5824,10 @@ function addPerforma() {
     // SET DEFAULT WARNA dari Global Variable
     // ========================================
     var newCount = $$('.performa_group_field_count').length;
+
+    // Inisialisasi UI set discount untuk item baru
+    updateSetDiscountUI(newCount);
+
     if (globalKoperColor.name && globalKoperColor.hex) {
         // Set ke textarea keterangan_full
         jQuery('#keterangan_full_' + newCount).val(globalKoperColor.name);
@@ -5970,6 +6002,93 @@ function deletePerforma(performa_id_table) {
     console.log('✅ deletePerforma complete. Remaining items:', newCount);
 }
 
+/**
+ * Update tampilan info set discount (Terapkan / Batalkan)
+ * Dipanggil setiap kali qty atau total berubah
+ */
+function updateSetDiscountUI(count) {
+    var isSet     = parseInt($$('#is_set_' + count).val()) || 0;
+    var qty       = parseFloat($$('#qty_' + count).val()) || 0;
+    var isApplied = parseInt($$('#is_set_applied_' + count).val()) || 0;
+    var btnEl     = document.getElementById('set_discount_btn_' + count);
+
+    if (!btnEl) return;
+
+    if (isSet === 1 && qty === 120) {
+        var pData       = (typeof globalPotonganData !== 'undefined') && globalPotonganData[count];
+        var hasPotongan = pData && pData.harga_setelah_potongan;
+
+        if (hasPotongan) {
+            // Kedua promo tersedia — tampilkan segmented control
+            btnEl.onclick = null;
+            btnEl.style.cssText = 'display:inline-flex; border:1.5px solid #4CAF50; border-radius:5px; overflow:hidden; cursor:default; vertical-align:middle;';
+
+            var activeStyle   = 'border:none; padding:5px 12px; font-size:11px; font-weight:bold; background:#4CAF50; color:#fff; cursor:pointer; white-space:nowrap;';
+            var inactiveStyle = 'border:none; padding:5px 12px; font-size:11px; font-weight:bold; background:transparent; color:#4CAF50; cursor:pointer; white-space:nowrap;';
+            var divider       = 'display:inline-block; width:1px; background:#4CAF50; flex-shrink:0;';
+
+            btnEl.innerHTML =
+                '<button onclick="event.stopPropagation(); pilihPromo(' + count + ', 0);" style="' + (isApplied === 0 ? activeStyle : inactiveStyle) + '">Potongan</button>' +
+                '<span style="' + divider + '"></span>' +
+                '<button onclick="event.stopPropagation(); pilihPromo(' + count + ', 1);" style="' + (isApplied === 1 ? activeStyle : inactiveStyle) + '">FREE 1</button>';
+        } else {
+            // Hanya FREE 1 — kembalikan perilaku toggle semula
+            btnEl.onclick = function() { toggleSetDiscount(count); };
+            if (isApplied === 1) {
+                btnEl.style.cssText = 'display:inline-block; border:none; border-radius:5px; background:#fd1414; color:#fff; font-size:12px; font-weight:bold; padding:3px 8px; cursor:pointer; white-space:nowrap; user-select:none;';
+                btnEl.innerHTML = 'BATALKAN FREE';
+            } else {
+                btnEl.style.cssText = 'display:inline-block; border:none; border-radius:5px; background:#4CAF50; color:#fff; font-size:12px; font-weight:bold; padding:3px 8px; cursor:pointer; white-space:nowrap; user-select:none;';
+                btnEl.innerHTML = 'FREE 1';
+            }
+        }
+    } else {
+        btnEl.style.display = 'none';
+    }
+}
+
+/**
+ * Pilih promo: 0 = POTONGAN, 1 = FREE 1
+ * Dipanggil saat user klik salah satu tombol pilih promo
+ */
+function pilihPromo(count, choice) {
+    $$('#is_set_applied_' + count).val(choice);
+
+    if (choice === 1) {
+        // FREE 1 dipilih: hapus net harga agar tidak double benefit
+        $$('#potongan_price_' + count).val('');
+        $$('#potongan_otomatis_' + count).val(0);
+        $$('#nominal_potongan_display_' + count).hide();
+        $$('#copy_potongan_icon_' + count).hide();
+        console.log('🏷️ Pilih FREE 1 - potongan harga dihapus');
+    } else {
+        // POTONGAN dipilih: kembalikan dari cache
+        var pData = (typeof globalPotonganData !== 'undefined') && globalPotonganData[count];
+        if (pData && pData.harga_setelah_potongan) {
+            $$('#potongan_otomatis_' + count).val(pData.harga_setelah_potongan);
+            $$('#nominal_potongan_display_' + count).text(number_format(pData.harga_setelah_potongan));
+            $$('#nominal_potongan_display_' + count).show();
+            $$('#copy_potongan_icon_' + count).show();
+            console.log('🏷️ Pilih POTONGAN - net harga:', pData.harga_setelah_potongan);
+        }
+    }
+
+    changeTotalValue(count);
+    updateSetDiscountUI(count);
+}
+
+/**
+ * Toggle terapkan / batalkan set discount
+ * Dipanggil saat user klik info set discount
+ */
+function toggleSetDiscount(count) {
+    var qty = parseFloat($$('#qty_' + count).val()) || 0;
+    if (qty !== 120) return;
+
+    var isApplied = parseInt($$('#is_set_applied_' + count).val()) || 0;
+    pilihPromo(count, isApplied === 1 ? 0 : 1);
+}
+
 function changeTotalValue(performa_id_table) {
     // ========================================
     // PERBAIKAN: Grand Total SELALU dari qty * price (harga normal)
@@ -5992,12 +6111,17 @@ function changeTotalValue(performa_id_table) {
         console.log('Auto-corrected qty to 100 in changeTotalValue');
     }
 
-    var total = price * qty;
+    var isSetApplied = parseInt($$('#is_set_applied_' + performa_id_table).val()) || 0;
+    // Set discount: hanya berlaku jika is_set_applied=1 DAN qty persis 120
+    var effectiveQty = (isSetApplied === 1 && qty === 120) ? 119 : qty;
+    var total = price * effectiveQty;
 
     // Debug log
     console.log('💰 Calculate Total #' + performa_id_table + ':', {
         price: price,
         qty: qty,
+        isSetApplied: isSetApplied,
+        effectiveQty: effectiveQty,
         total: total
     });
 
@@ -6024,6 +6148,9 @@ function changeTotalValue(performa_id_table) {
 
     // Update grand total dengan ongkir
     updateGrandTotalWithOngkir();
+
+    // Update UI set discount (tampil/sembunyikan button terapkan)
+    updateSetDiscountUI(performa_id_table);
 
     // ========================================
     // TAMBAHAN: Auto-fill Net Harga berdasarkan qty
@@ -7581,6 +7708,11 @@ function handleNetHargaInput(count) {
 
 $$(document).on('page:init', '.page[data-name="performa_input"]', function () {
     console.log('Performa Input page initialized - setting up potongan events');
+
+    // Warna teks select ukuran: gray saat kosong, white saat ada nilai
+    $$(document).on('change', '.input-item-ukuran-hc', function () {
+        this.style.color = this.value ? 'white' : 'gray';
+    });
 
     // Event listener untuk qty change - recalculate potongan
     $$(document).on('change', '.performa-input.input-item-qty', function () {

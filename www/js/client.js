@@ -11,28 +11,13 @@ function getDataClientHead() {
     var perusahaan_broadcast_value = (jQuery('#perusahaan_broadcast_head').val() || '') || 'empty';
     var client_kota = (jQuery('#filter_kota_broadcast_head').val() || '') || 'empty';
 
-    var year_now = new Date().getFullYear();
-    var selectedYear = jQuery('#client_penjualan_years_head option:selected').val();
-    var year = (!selectedYear) ? year_now
-        : (selectedYear === 'all') ? 'empty'
-            : selectedYear;
-
-    var month_now = new Date().getMonth() + 1;
-    var selectedMonth = jQuery('#client_penjualan_bulan_head option:selected').val();
-    var month = (!selectedMonth) ? month_now
-        : (selectedMonth === 'all') ? 'empty'
-            : selectedMonth;
-
     jQuery.ajax({
         type: 'POST',
-        url: BASE_API + "/get-data-client-new-head-dm",
+        url: BASE_API + "/get-all-client",
         dataType: 'JSON',
         data: {
             perusahaan_broadcast_value: perusahaan_broadcast_value,
             client_kota: client_kota,
-            user_id: localStorage.getItem("user_id"),
-            year: year,
-            month: month,
         },
         beforeSend: function () {
             app.dialog.preloader('Harap Tunggu');
@@ -51,29 +36,6 @@ function getDataClientHead() {
                     var kota = cleanText(val.client_kota);
                     no++;
 
-                    // Status client berdasarkan bulan_selisih
-                    var status_client;
-                    if (val.bulan_selisih == 0 || val.bulan_selisih == null) {
-                        status_client = 'new';
-                    } else if (val.bulan_selisih > 2) {
-                        status_client = 'non_aktif';
-                    } else {
-                        status_client = 'aktif';
-                    }
-
-                    // Warna row berdasarkan status broadcast log
-                    var warna_status = '';
-                    var log = data.client_log[val.client_id];
-                    if (log) {
-                        if (log.status_broadcast === 'F' || log.status_broadcast === 'A' || log.status_broadcast == null) {
-                            warna_status = 'card-color-red';
-                        } else if (log.status_broadcast === 'S') {
-                            warna_status = 'btn-color-greenWhite';
-                        } else if (log.status_broadcast === 'D' || log.status_broadcast === 'R') {
-                            warna_status = 'btn-color-blueWhite';
-                        }
-                    }
-
                     // Simpan data lengkap ke store — tombol hanya kirim client_id
                     clientDataStore[val.client_id] = {
                         client_id: val.client_id,
@@ -85,13 +47,38 @@ function getDataClientHead() {
                         client_alamat: val.client_alamat || '',
                     };
 
-                    rows += '<tr class="' + warna_status + '">';
+                    var segValue = val.segmentasi || '';
+                    var segColors = {
+                        'A1': '#1565c0',
+                        'A2': '#2e7d32',
+                        'A3': '#f9a825',
+                        'B':  '#c62828',
+                        '':   '#616161'
+                    };
+                    var segBg = segColors[segValue] || segColors[''];
+                    var optStyle = 'background-color:#2c2c2c;color:#ffffff;';
+                    var segSelect = '<select onchange="updateSegmentasiClient(' + val.client_id + ', this.value, this)" '
+                        + 'style="border-radius:0;padding:0;width:100%;height:100%;text-align:center;font-weight:bold;font-size:12px;color:#fff;background-color:' + segBg + ';border:none;cursor:pointer;display:block;">'
+                        + '<option value=""'   + (!segValue          ? ' selected' : '') + ' style="' + optStyle + '">-</option>'
+                        + '<option value="A1"' + (segValue === 'A1' ? ' selected' : '') + ' style="' + optStyle + '">A1</option>'
+                        + '<option value="A2"' + (segValue === 'A2' ? ' selected' : '') + ' style="' + optStyle + '">A2</option>'
+                        + '<option value="A3"' + (segValue === 'A3' ? ' selected' : '') + ' style="' + optStyle + '">A3</option>'
+                        + '<option value="B"'  + (segValue === 'B'  ? ' selected' : '') + ' style="' + optStyle + '">B</option>'
+                        + '</select>';
+
+                    rows += '<tr style="height:34px;">';
                     rows += '  <td align="center" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;">' + no + '</td>';
-                    rows += '  <td align="left" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;">'
-                        + val.client_nama
-                        + '<input type="hidden" id="status_check_client_' + no + '" name="status_check_client_' + no + '" value="' + status_client + '" readonly>'
+                    rows += '  <td align="left" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;padding:0;position:relative;">'
+                        + '<div style="display:flex;align-items:center;height:100%;">'
+                        + '<div style="position:absolute;top:0;left:0;bottom:0;width:48px;">'
+                        + segSelect
+                        + '</div>'
+                        + '<span style="padding-left:56px;display:flex;align-items:center;">' + val.client_nama + '</span>'
+                        + '</div>'
                         + '</td>';
                     rows += '  <td align="left" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;">' + kota + '</td>';
+                    rows += '  <td align="left" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;">' + (val.client_telp || '') + '</td>';
+                    rows += '  <td align="left" class="label-cell" style="border-left:1px solid grey;border-bottom:1px solid grey;">' + (val.karyawan_nama || '') + '</td>';
                     rows += '  <td style="border-left:1px solid grey;border-right:1px solid grey;border-bottom:1px solid grey;text-align:center;">';
                     rows += '    <center><a class="text-add-colour-black-soft bg-dark-gray-young button-small col button text-bold" onclick="openClientDetail(' + val.client_id + ')" style="width:100px;">Details</a></center>';
                     rows += '  </td>';
@@ -101,13 +88,48 @@ function getDataClientHead() {
                 jQuery("#tabel_data_client_head").html(rows);
                 jQuery("#total-client-broadcast-head").html(no);
             } else {
-                jQuery("#tabel_data_client_head").html('<tr><td colspan="4" align="center">Tidak Ada Data</td></tr>');
+                jQuery("#tabel_data_client_head").html('<tr><td colspan="6" align="center">Tidak Ada Data</td></tr>');
                 jQuery("#total-client-broadcast-head").html('0');
             }
         },
         error: function () {
             app.dialog.close();
             app.dialog.error("GAGAL");
+        }
+    });
+}
+
+// ============================================================
+// UPDATE SEGMENTASI CLIENT (A1 / A2 / A3 / B)
+// ============================================================
+function updateSegmentasiClient(client_id, segmentasi, el) {
+    var segColors = {
+        'A1': '#1565c0',
+        'A2': '#2e7d32',
+        'A3': '#f9a825',
+        'B':  '#c62828',
+        '':   '#616161'
+    };
+
+    jQuery.ajax({
+        type: 'POST',
+        url: BASE_API + "/update-segmentasi-client",
+        dataType: 'JSON',
+        data: {
+            client_id: client_id,
+            segmentasi: segmentasi,
+        },
+        success: function (data) {
+            if (data.status === 'success') {
+                if (el) {
+                    el.style.backgroundColor = segColors[segmentasi] || segColors[''];
+                }
+            } else {
+                app.dialog.alert('Gagal update segmentasi');
+            }
+        },
+        error: function () {
+            app.dialog.alert('Ada kendala pada koneksi server, Silahkan Coba Kembali');
         }
     });
 }
@@ -305,7 +327,7 @@ function getClientInfo() {
                 var rows = '';
                 jQuery.each(data.data, function (i, val) {
                     no++;
-                    rows += '<tr>';
+                    rows += '<tr style="height:34px;">';
                     rows += '  <td align="center" style="border-left:1px solid grey;border-bottom:1px solid grey;" class="label-cell">' + no + '</td>';
                     rows += '  <td align="left"   style="border-left:1px solid grey;border-bottom:1px solid grey;" class="label-cell">' + val.client_nama + '</td>';
                     rows += '  <td align="left"   style="border-left:1px solid grey;border-bottom:1px solid grey;" class="label-cell">' + val.client_cp + '</td>';

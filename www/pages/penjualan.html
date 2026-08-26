@@ -3334,6 +3334,9 @@
                             class="label-cell bg-dark-gray-young">Type</td>
                           <td align="center" width="25%"
                             style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
+                            class="label-cell bg-dark-gray-young">Upload Oleh</td>
+                          <td align="center" width="25%"
+                            style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"
                             class="label-cell bg-dark-gray-young">Foto</td>
                         </tr>
                         <tbody id="detail_surat_jalan_customer">
@@ -3355,7 +3358,7 @@
           <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner bg-dark-gray-medium">
-              <div class="title">Foto Surat Jalan Customer</div>
+              <div class="title" id="foto_sjc_navbar_title">Foto Surat Jalan Customer</div>
               <div class="right">
                 <!-- Link to close popup -->
                 <p class="text-add-colour-white link popup-close" data-popup=".view-foto-sjc">
@@ -3375,13 +3378,14 @@
                         <tr>
                           <td>
                             <center>
-                              <h3>Foto Surat Jalan Customer</h3>
+                              <h3>Foto SJC</h3>
                             </center>
 
                             <center>
                               <img onclick="zoom_view(this.src);" width="100px" style="border-radius:10px;"
                                 id="file_foto_sjc_view_now" />
                               <br>
+                              <span id="foto_sjc_uploader_info" style="display:none; color:#aaa; font-size:16px;">Upload oleh Xinyao</span>
                             </center>
                           </td>
                         </tr>
@@ -3655,6 +3659,10 @@
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" onclick="" href="/client">Broadcast</a>
         </div>
+        <div id="menuClient" class="align-items-center justify-content-center text-bold"
+          style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
+          <a class="text-add-colour-white" href="/client">Client</a>
+        </div>
         <div class="align-items-center justify-content-center text-bold merah-notif-all"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/notif">Notif</a>
@@ -3663,10 +3671,12 @@
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
+        <!--
         <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
         </div>
+        -->
         <div id="menuPengiriman" class="align-items-center justify-content-center text-bold"
           style="display: flex; flex: 1; height: 32px; border: 0.2px solid black;">
           <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
@@ -3810,6 +3820,9 @@
             </span>
             <i class="f7-icons" onclick="tampilDataManager();"
               style="font-size:28px; color:#009500; cursor:pointer;">arrow_2_circlepath_circle_fill</i>
+            <a href="/tagihan" style="color:inherit; display:flex; align-items:center;">
+              <i class="f7-icons" style="font-size:28px; color:#f1c40f; cursor:pointer;" title="Tagihan">creditcard_fill</i>
+            </a>
           </div>
           <!-- Truck icon - pojok kanan dengan background orange seperti icon kopor di Proforma -->
           <div onclick="openExpedisiGlobal();" style="
@@ -3910,4 +3923,5 @@
       </div>
     </div>
   </div>
+
 </div>

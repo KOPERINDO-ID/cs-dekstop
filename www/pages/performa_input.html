@@ -605,11 +605,11 @@
                             </div>
                         </li>
                         <li class="item-content item-input margin-8">
-                            <div class="item-inner" style="height:8px;">
+                            <div class="item-inner" style="padding-bottom:20px;">
                                 <div class="item-input-wrap">
                                     <div class="row no-gap">
-                                        <!-- Kolom Kiri 75% untuk Input Qty -->
-                                        <div class="col-75">
+                                        <!-- Kolom Kiri 60% untuk Input Qty -->
+                                        <div class="col-60">
                                             <input placeholder="Qty" name="qty_1" id="qty_1" value="100"
                                                 onchange="changeTotalValue(1);changeQtyTs(1);"
                                                 onclick="resetValueQty(1);" min="1"
@@ -617,17 +617,22 @@
                                                 type="number" required validate>
                                         </div>
 
-                                        <!-- Kolom Kanan 25% untuk Nominal dan Icon Copy -->
-                                        <div class="col-25"
+                                        <!-- Kolom Kanan 40% untuk Nominal, Icon Copy, dan Set Discount -->
+                                        <div class="col-40"
                                             style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding-right: 10px; margin-top: 10px;">
                                             <!-- NOMINAL POTONGAN -->
                                             <span id="nominal_potongan_display_1"
-                                                style="display: none; font-size: 16px; color: #4CAF50; font-weight: bold; white-space: nowrap;"></span>
+                                                style="display: none; font-size: 11px; color: #4CAF50; font-weight: bold; white-space: nowrap;"></span>
 
                                             <!-- ICON COPY POTONGAN -->
                                             <i class="f7-icons icon-copy-potongan" id="copy_potongan_icon_1"
                                                 onclick="copyPotonganToNetHarga(1);"
                                                 style="display: none; font-size: 20px; color: #4CAF50; cursor: pointer;">doc_on_doc_fill</i>
+
+                                            <!-- SET DISCOUNT BUTTON -->
+                                            <span id="set_discount_btn_1" class="set-discount-btn" data-count="1"
+                                                onclick="toggleSetDiscount(1);"
+                                                style="display:none; border:none; border-radius:5px; background:#4CAF50; color:#fff; font-size:12px; font-weight:bold; padding:3px 8px; cursor:pointer; white-space:nowrap; user-select:none;">FREE 1</span>
                                         </div>
                                     </div>
                                 </div>
@@ -682,6 +687,8 @@
                         <input type="hidden" id="id_material_1" name="id_material_1"
                             class="performa-input input-item-id-material">
                         <input type="hidden" id="is_editing_1" class="is-editing-flag" value="false">
+                        <input type="hidden" id="is_set_1" name="is_set_1" value="0" class="performa-input input-item-is-set">
+                        <input type="hidden" id="is_set_applied_1" name="is_set_applied_1" value="0" class="performa-input input-item-is-set-applied">
 
                         <p style="padding-top:5px;"><a id="add_performa" onclick="addPerforma();"
                                 style="float:right; font-size:39px;  margin-bottom:10px; margin-right:14px; margin-top:-27px;  color:forestgreen;"

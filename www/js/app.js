@@ -383,7 +383,7 @@ $$(document).on('page:afterin', '.page[data-name="surat_jalan_admin"]', function
   runFunctionsSequentially([
     { name: 'getBulanSummarySjAdmin', func: wrapFunction(getBulanSummarySjAdmin, 'getBulanSummarySjAdmin') },
     { name: 'getYearSummarySjAdmin', func: wrapFunction(getYearSummarySjAdmin, 'getYearSummarySjAdmin') },
-    { name: 'getSuratJalanCs', func: wrapFunction(getSuratJalanCs, 'getSuratJalanCs') },
+    { name: 'getPenjualanSjAdmin', func: wrapFunction(getPenjualanSjAdmin, 'getPenjualanSjAdmin') },
     { name: 'getMenuUser', func: wrapFunction(getMenuUser, 'getMenuUser') },
     { name: 'checkLogin', func: wrapFunction(checkLogin, 'checkLogin') },
     { name: 'checkConnection', func: wrapFunction(checkConnection, 'checkConnection') },

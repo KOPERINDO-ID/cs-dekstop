@@ -1,4 +1,3 @@
-
 // allow user rotate
 screen.orientation.unlock();
 
@@ -893,12 +892,14 @@ function getMenuUser() {
   // Apply menu visibility berdasarkan username (CSO vs lainnya)
   if (username === 'CSO') {
     $$('#menuBroadcast').hide();
+    $$('#menuClient').show();
     $$('#menuDelayGo').show();
     $$('#menuTagihan').show();
     $$('#menuPengiriman').show();
     $$('#menuInvoice').show();
     $$('#menuKorin').show();
   } else {
+    $$('#menuClient').hide();
     $$('#menuDelayGo').hide();
     $$('#menuTagihan').hide();
     $$('#menuPengiriman').hide();

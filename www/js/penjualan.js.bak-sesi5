@@ -117,13 +117,10 @@ function renderBankOptionsToStaticDropdowns() {
 }
 
 function getBankLabelById(bankId) {
-	if (!bankId || bankId === 'null' || bankId === 'undefined' || bankId === 0) {
-		return '-';
-	}
-	bankId = parseInt(bankId);
 	var bank = globalBankData.find(function (b) {
-		return b.bank_id === bankId;
+		return b.bank_id == bankId;
 	});
+
 	return bank ? bank.bank_label : '-';
 }
 
@@ -210,10 +207,6 @@ function getBankLabel(bankIdOrCode) {
 function getBankInfoById(bankId) {
     var defaultBank = { nama: 'Mandiri', rekening: '141 000 225 5818', atas_nama: 'Sutono' };
     if (!bankId) return defaultBank;
-    // Tunai (bank_id 5) tidak punya rekening/atas nama, alihkan ke Mandiri (bank_id 3)
-	console.log('getBankInfoById called with bankId:', bankId);
-    if (parseInt(bankId) === 5) bankId = 3;
-	console.log('getBankInfoById changed bankId to:', bankId);
     var bank = globalBankData.find(function(b) { return b.bank_id === bankId; });
     if (bank) {
         return {
@@ -237,12 +230,12 @@ function generateBankInfoForInvoice(bankId) {
         html += '          <td width="13%" align="center"></td>';
         html += '      </tr>';
     } else {
-        // html += '      <tr>';
-        // html += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left">BCA</td>';
-        // html += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left">:</td>';
-        // html += '          <td style="border-top: solid 1px; border-right: solid 1px; padding:2px;" width="47%" align="left">01831 29551 a.n Sutono</td>';
-        // html += '          <td width="13%" align="center"></td>';
-        // html += '      </tr>';
+        html += '      <tr>';
+        html += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left">BCA</td>';
+        html += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left">:</td>';
+        html += '          <td style="border-top: solid 1px; border-right: solid 1px; padding:2px;" width="47%" align="left">01831 29551 a.n Sutono</td>';
+        html += '          <td width="13%" align="center"></td>';
+        html += '      </tr>';
         html += '      <tr>';
         html += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left">Mandiri</td>';
         html += '          <td style="border-bottom: solid 1px; border-top: solid 1px; padding:4px;" width="1%" align="left">:</td>';
@@ -785,10 +778,6 @@ function getBankInfoById(bankId) {
 	};
 
 	if (!bankId) return defaultBank;
-
-	console.log('getBankInfoById called with bankId:', bankId);
-    if (parseInt(bankId) === 5) bankId = 3;
-	console.log('getBankInfoById changed bankId to:', bankId);
 
 	// Cari di globalBankData (jika tersedia)
 	if (typeof globalBankData !== 'undefined' && globalBankData.length > 0) {
@@ -2517,17 +2506,16 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 					invoice_penjualan += '			</td>';
 					invoice_penjualan += '		</tr>';
 				}
-				var biaya_kirim_val = parseFloat(data.data[0].biaya_kirim || data.data[0].ongkir || 0);
-				if (biaya_kirim_val != 0) {
-					invoice_penjualan += '		<tr>';
-					invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
-					invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
-					invoice_penjualan += '				Biaya Kirim';
-					invoice_penjualan += '			</td>';
-					invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px;  font-weight:bold;" align="left">';
-					invoice_penjualan += '			<font style="float:right;">' + number_format(biaya_kirim_val) + '</font>';
-					invoice_penjualan += '			</td>';
-					invoice_penjualan += '		</tr>';
+				if (number_format(data.data[0].biaya_kirim) != 0) {
+					//invoice_penjualan += '		<tr>';
+					//invoice_penjualan += '			<td colspan="4" style="font-weight:bold;" align="right"></td>';
+					//invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; font-weight:bold;" align="left">';
+					//invoice_penjualan += '				Biaya Kirim';
+					//invoice_penjualan += '			</td>';
+					//invoice_penjualan += '			<td colspan="1" style="border-top: solid 1px; border-left: solid 1px; border-right: solid 1px;  font-weight:bold;" align="left">';
+					//invoice_penjualan += '			<font style="float:right;">' + number_format(biaya_kirim) + '</font>';
+					//invoice_penjualan += '			</td>';
+					//invoice_penjualan += '		</tr>';
 				}
 
 
@@ -2538,9 +2526,9 @@ function spkPo(penjualan_id_primary, performa_id_relation, performa_header_id, b
 				invoice_penjualan += '			</td>';
 				invoice_penjualan += '			<td colspan="1" style=" border-top: solid 1px; border-left: solid 1px; border-right: solid 1px; border-bottom: solid 1px; font-weight:bold;" align="left">';
 				if (number_format(data.data[0].pembayaran_1) != 0) {
-					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val + biaya_kirim_val - parseFloat(data.data[0].pembayaran_1)) + '</font>';
+					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val - parseFloat(data.data[0].pembayaran_1)) + '</font>';
 				} else {
-					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val + biaya_kirim_val) + '</font>';
+					invoice_penjualan += '   <font style="float:right;">' + number_format(parseFloat(penjualan_total) + biaya_packing_val) + '</font>';
 				}
 				invoice_penjualan += '			</td>';
 				invoice_penjualan += '		</tr>'
@@ -3019,7 +3007,7 @@ function fullReport(penjualan_id_primary, performa_id_relation, performa_header_
 		beforeSend: function () {
 			app.dialog.preloader('Mengambil Data Penjualan');
 			if (penjualan_status_pembayaran == "Lunas") {
-				var style_table = "background-image:url('img/logo/lunas.jpg'); border:none;  background-position: center;  background-size:45% auto; margin:0px; background-repeat:no-repeat";
+				var style_table = "background-image:url('https://indokoper.com/lunas/lunas.jpg'); border:none;  background-position: center;  background-size:45% auto; margin:0px; background-repeat:no-repeat";
 			} else {
 				var style_table = "border-spacing: 0; background-color:white; color:black;";
 			}
@@ -4221,7 +4209,7 @@ function piValue() {
 }
 
 function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client_cp, client_cp_posisi, client_id, client_kota, client_nama, client_telp, jenis_penjualan, karyawan_id, penjualan_global_diskon, penjualan_grandtotal, penjualan_id, penjualan_jumlah_pembayaran, penjualan_keterangan, penjualan_status, penjualan_status_pembayaran, penjualan_tanggal, penjualan_tanggal_kirim, penjualan_total, penjualan_void_keterangan, penjualan_total_qty, sisa_value, extra, packing) {
-	console.log('invoicePenjualan called with:');
+
 	// Format label packing untuk dokumen
 	var packingLabels = { 'polos': 'Polos', 'plastik': 'Plastik', 'kardus': 'Kardus' };
 	var packing_label = packing && packing !== '0' ? 'Packing ' + (packingLabels[packing] || packing.charAt(0).toUpperCase() + packing.slice(1)) : 'Packing finishing plastic';
@@ -4237,7 +4225,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 	}
 
 	if (sisa_value == 0) {
-		var style_table = "background-image:url('img/logo/lunas.jpg'); border:none;  background-position: center;  background-size:45% auto; margin:0px; background-repeat:no-repeat";
+		var style_table = "background-image:url('https://indokoper.com/lunas/lunas.jpg'); border:none;  background-position: center;  background-size:45% auto; margin:0px; background-repeat:no-repeat";
 	} else {
 		var style_table = "border-spacing: 0; background-color:white; color:black;";
 	}
@@ -4498,7 +4486,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '          <td width="20%" align="left"  class=""><b></b></td>';
 										invoice_penjualan += '			<td width="15%" align="center" rowspan="4">';
 										invoice_penjualan += '				<span style="position: relative;">';
-										invoice_penjualan += ' 					<img src="img/logo/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
+										invoice_penjualan += ' 					<img src="https://indokoper.com/lunas/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
 										invoice_penjualan += '					<span style="position: absolute;top: -200%;left: 50%;transform: translate(-50%, -50%);"></span>';
 										invoice_penjualan += ' 					<span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"></span>';
 										invoice_penjualan += '				</span>';
@@ -4520,12 +4508,12 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 											bankInfo += '          <td width="13%" align="center"></td>';
 											bankInfo += '      </tr>';
 										} else {
-											// bankInfo += '      <tr>';
-											// bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
-											// bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-											// bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
-											// bankInfo += '          <td width="13%" align="center"></td>';
-											// bankInfo += '      </tr>';
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
+											bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
 											bankInfo += '      <tr>';
 											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
 											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
@@ -4777,7 +4765,7 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 										invoice_penjualan += '          <td width="20%" align="left"  class=""><b></b></td>';
 										invoice_penjualan += '			<td width="15%" align="center" rowspan="4">';
 										invoice_penjualan += '				<span style="position: relative;">';
-										invoice_penjualan += ' 					<img src="img/logo/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
+										invoice_penjualan += ' 					<img src="https://indokoper.com/lunas/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
 										invoice_penjualan += '					<span style="position: absolute;top: -200%;left: 50%;transform: translate(-50%, -50%);"></span>';
 										invoice_penjualan += ' 					<span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"></span>';
 										invoice_penjualan += '				</span>';
@@ -4798,12 +4786,12 @@ function invoicePenjualan(performa_header_id, biaya_kirim, client_alamat, client
 											bankInfo += '          <td width="13%" align="center"></td>';
 											bankInfo += '      </tr>';
 										} else {
-											// bankInfo += '      <tr>';
-											// bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
-											// bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
-											// bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
-											// bankInfo += '          <td width="13%" align="center"></td>';
-											// bankInfo += '      </tr>';
+											bankInfo += '      <tr>';
+											bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
+											bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+											bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
+											bankInfo += '          <td width="13%" align="center"></td>';
+											bankInfo += '      </tr>';
 											bankInfo += '      <tr>';
 											bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
 											bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
@@ -9697,8 +9685,7 @@ function getSuratJalanListCustomer(penjualan_id) {
 
 					penjualan_value += '<tr>';
 					penjualan_value += '<td width="25%" style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"  class="label-cell">' + item.penjualan_jenis + '</td>';
-					penjualan_value += '<td align="center" width="25%" style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"  class="label-cell">' + (item.foto_produksi_sjc != null ? 'Xinyao' : '-') + '</td>';
-					penjualan_value += '<td align="center" width="25%" style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"  class="label-cell"><button data-popup=".view-foto-sjc" onclick="viewFotoSjc(\'' + item.foto_produksi_sjc + '\', \'' + penjualan_id + '\', \'' + item.penjualan_tanggal + '\')" class="popup-open ' + color_btn_sjc_id + ' button-small col button text-bold">Foto</button></td>';
+					penjualan_value += '<td align="center" width="25%" style="border-left:1px solid gray;  border-right:1px solid gray; border-bottom:1px solid gray;"  class="label-cell"><button data-popup=".view-foto-sjc" onclick="viewFotoSjc(\'' + item.foto_produksi_sjc + '\')" class="popup-open ' + color_btn_sjc_id + ' button-small col button text-bold">Foto</button></td>';
 					penjualan_value += '</tr>'
 				});
 			} else {
@@ -9711,27 +9698,13 @@ function getSuratJalanListCustomer(penjualan_id) {
 	});
 }
 
-function viewFotoSjc(isi_foto, penjualan_id_raw, penjualan_tanggal) {
+function viewFotoSjc(isi_foto) {
 	$('#file_foto_sjc_view_now').attr('src', '');
 	var BASE_PATH_IMAGE_BUKTI_SJC_CABANG = 'https://indokoper.com/file_foto_sjc';
-
-	var tgl = new Date(penjualan_tanggal);
-	var dd = String(tgl.getDate()).padStart(2, '0');
-	var mm = String(tgl.getMonth() + 1).padStart(2, '0');
-	var yy = String(tgl.getFullYear()).slice(-2);
-	var tgl_label = dd + mm + yy;
-
-	var id_label = (penjualan_id_raw || '').replace('INV_', '');
-	var judul = 'Foto SJC ' + tgl_label + '-' + id_label;
-
-	jQuery('#foto_sjc_navbar_title').text(judul);
-
 	if (isi_foto != 'null') {
 		jQuery('#file_foto_sjc_view_now').attr('src', BASE_PATH_IMAGE_BUKTI_SJC_CABANG + '/' + isi_foto);
-		jQuery('#foto_sjc_uploader_info').show();
 	} else {
 		jQuery('#file_foto_sjc_view_now').attr('src', 'https://indokoper.com/noimage.jpg');
-		jQuery('#foto_sjc_uploader_info').hide();
 	}
 }
 
@@ -10032,7 +10005,7 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 				proforma_data += '          <td width="20%" align="left"  class=""><b></b></td>';
 				proforma_data += '			<td width="15%" align="center" rowspan="4">';
 				proforma_data += '				<span style="position: relative;">';
-				proforma_data += ' 					<img src="img/logo/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
+				proforma_data += ' 					<img src="https://indokoper.com/lunas/invoiceLogo.png" style="opacity: 0.6;" width="100" height="100">';
 				proforma_data += '					<span style="position: absolute;top: -200%;left: 50%;transform: translate(-50%, -50%);"><img src="https://indokoper.com/tanda_tangan/' + data.data_user.tanda_tangan + '" width="100" height="100"></span>';
 				proforma_data += ' 					<span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"><p style="font-weight: bold;">' + data.data_user.karyawan_nama + '</p></span>';
 				proforma_data += '				</span>';
@@ -10064,9 +10037,15 @@ function penjualanGetPerformaDownload(performa_header_id, karyawan_id, client_ko
 					bankInfo += '          <td width="13%" align="center"></td>';
 					bankInfo += '      </tr>';
 				} else {
-					console.log('Tidak ada bank dipilih, tampilkan default Mandiri');
+					console.log('Tidak ada bank dipilih, tampilkan default BCA dan Mandiri');
 
-					// Default: tampilkan Mandiri saja
+					// Default: tampilkan BCA dan Mandiri
+					bankInfo += '      <tr>';
+					bankInfo += '          <td style="border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">BCA</td>';
+					bankInfo += '          <td style="border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';
+					bankInfo += '          <td style="border-top: solid 1px;  border-right: solid  1px; padding:2px;" width="47%" align="left" class="">01831 29551 a.n Sutono</td>';
+					bankInfo += '          <td width="13%" align="center"></td>';
+					bankInfo += '      </tr>';
 					bankInfo += '      <tr>';
 					bankInfo += '          <td style="border-bottom: solid 1px; border-top: solid 1px; border-left: solid 1px; padding:4px;" width="2%" align="left" class="">Mandiri</td>';
 					bankInfo += '          <td style="border-bottom: solid 1px;  border-top: solid 1px; padding:4px;" width="1%" align="left" class="">:</td>';

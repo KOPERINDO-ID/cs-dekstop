@@ -197,6 +197,12 @@ function getBankInfoById(bankId) {
         atas_nama: 'Sutono'
     };
     if (!bankId) return defaultBank;
+
+    // Tunai (bank_id 5) tidak punya rekening/atas nama, alihkan ke Mandiri (bank_id 3)
+	console.log('getBankInfoById called with bankId:', bankId);
+    if (parseInt(bankId) === 5) bankId = 3;
+	console.log('getBankInfoById changed bankId to:', bankId);
+
     var bank = globalBankData.find(function(b) {
         return b.bank_id === bankId;
     });
@@ -871,6 +877,88 @@ function getStatusBadge(days) {
         return '<span style="color:#ffc107; font-size:11px;">⚠ WARNING</span>';
     }
     return '<span style="color:#4caf50; font-size:11px;">✓ OK</span>';
+}
+
+/**
+ * Export Data Tagihan ke Excel (.xls)
+ * Export dilakukan murni di frontend, memakai data yang sudah dimuat
+ * di tabel (_tagihanDataLoaded), tanpa panggilan ke server.
+ */
+function exportTagihanExcel() {
+    if (!_tagihanDataLoaded || _tagihanDataLoaded.length === 0) {
+        app.dialog.alert('Tidak ada data untuk diexport');
+        return;
+    }
+
+    var bulanIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+    function fmtTgl(dt) {
+        if (!dt) return '-';
+        var m = moment(dt);
+        return m.format('D') + ' ' + bulanIndo[m.month()] + ' ' + m.format('YYYY');
+    }
+
+    function escapeHtml(str) {
+        return String(str == null ? '-' : str)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var rows = '';
+    jQuery.each(_tagihanDataLoaded, function (i, item) {
+        var nomorInvoice = moment(item.dt_record).format('DDMMYY') + '-' +
+            String(item.penjualan_id).replace(/INV_/g, '').replace(/^0+/, '');
+
+        var sisa = parseFloat(item.penjualan_grandtotal) - parseFloat(item.penjualan_jumlah_pembayaran || 0);
+        var statusText = getStatusBadge(item.hari_keterlambatan).replace(/<[^>]*>/g, '').trim();
+
+        rows += '<tr>' +
+            '<td>' + (i + 1) + '</td>' +
+            '<td>' + escapeHtml(item.client_nama) + '</td>' +
+            '<td>' + escapeHtml(nomorInvoice) + '</td>' +
+            '<td>' + fmtTgl(item.tgl_surat_jalan_selesai) + '</td>' +
+            '<td>' + fmtTgl(item.tgl_bc_h2) + '</td>' +
+            '<td>' + fmtTgl(item.tgl_bc_h7) + '</td>' +
+            '<td>' + fmtTgl(item.tgl_bc_h12) + '</td>' +
+            '<td style="mso-number-format:\'#,##0\';">' + Math.round(sisa) + '</td>' +
+            '<td>' + escapeHtml(statusText) + '</td>' +
+            '</tr>';
+    });
+
+    var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
+        '<head><meta charset="utf-8">' +
+        '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
+        '<x:Name>Tagihan</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>' +
+        '</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' +
+        '</head><body><table border="1">' +
+        '<tr>' +
+        '<th>No</th><th>Nama Client</th><th>No Invoice</th><th>Tgl SJ Selesai</th>' +
+        '<th>H+2</th><th>H+7</th><th>H+12</th><th>Sisa</th><th>Status</th>' +
+        '</tr>' +
+        rows +
+        '</table></body></html>';
+
+    var blob = new Blob(['﻿' + html], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+    var filename = 'Tagihan_' + moment().format('YYYYMMDD_HHmm') + '.xls';
+
+    // PENTING: class "external" wajib ada, TANPA target="_blank".
+    // - Router Framework7 (handleClicks di framework7.bundle.js) selalu
+    //   memanggil e.preventDefault() untuk setiap <a> yang diklik, KECUALI
+    //   anchor cocok dengan app.params.clicks.externalLinks (default: '.external'),
+    //   yang akan langsung return duluan sebelum sampai preventDefault.
+    //   Tanpa class ini, F7 membatalkan aksi download lalu coba routing
+    //   href blob:... sebagai halaman SPA -> berujung ke pages/404.html.
+    // - target="_blank" TIDAK dipakai karena memicu Content-Security-Policy
+    //   "Framing 'blob:...'" block di webview app.
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.className = 'external';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 }
 
 /**
@@ -3179,7 +3267,7 @@ function showOverdueTagihan() {
 
             // Info row: selesai + sisa
             html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #2a2a2a;">';
-            html += '<span style="color:#636366;font-size:11px;">📅 Selesai: ' + tgl + '</span>';
+            html += '<span style="color:#636366;font-size:11px;">📅 SJ Selesai: ' + tgl + '</span>';
             html += '<span style="color:#ff453a;font-size:13px;font-weight:700;">Rp ' + number_format(sisa) + '</span>';
             html += '</div>';
 

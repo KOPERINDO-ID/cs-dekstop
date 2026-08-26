@@ -37,43 +37,43 @@ function checkConnection() {
 }
 
 
-// var BASE_API = 'https://indokoper.com/api'; /** Production Base API */
-// var BASE_API3 = 'https://be.order.devkoperindo.com/api';
-// var BASE_PATH_IMAGE_ABSEN = 'https://indokoper.com/absen';
-// var BASE_PATH_IMAGE = 'https://indokoper.com/kunjungan';
-// var BASE_PATH_IMAGE_BBM = 'https://indokoper.com/foto_bbm';
-// var BASE_PATH_IMAGE_PERFORMA = 'https://indokoper.com/performa_image';
-// var BASE_PATH_IMAGE_CUSTOMER = 'https://indokoper.com/customer_logo';
-// var BASE_PATH_IMAGE_PRODUCT = 'https://indokoper.com/product_image_new';
-// var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://indokoper.com/foto_produksi';
-// var BASE_PATH_IMAGE_SURAT_JALAN = 'https://indokoper.com/foto_surat_jalan';
-// var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://indokoper.com/foto_pembayaran';
-// var BASE_PATH_IMAGE_FOTO_FEE = 'https://indokoper.com/foto_fee';
-// var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://indokoper.com/bukti_gaji';
-// var BASE_PATH_IMAGE_FOTO_KTP = 'https://indokoper.com/foto_ktp';
-// var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://indokoper.com/public_selfie';
-// var BASE_PATH_IMAGE_BUKTI_SP = 'https://indokoper.com/bukti_sp';
-// var BASE_PATH_IMAGE_BUKTI_POINT = 'https://indokoper.com/foto_bukti_point';
-// var BASE_PATH_IMAGE_BROADCAST = 'https://indokoper.com/gambar_broadcast';
-
-var BASE_API = 'https://staging.indokoper.com/api'; /** Staging Base API */
+var BASE_API = 'https://indokoper.com/api'; /** Production Base API */
 var BASE_API3 = 'https://be.order.devkoperindo.com/api';
-var BASE_PATH_IMAGE_ABSEN = 'https://staging.indokoper.com/absen';
-var BASE_PATH_IMAGE = 'https://staging.indokoper.com/kunjungan';
-var BASE_PATH_IMAGE_BBM = 'https://staging.indokoper.com/foto_bbm';
-var BASE_PATH_IMAGE_PERFORMA = 'https://staging.indokoper.com/performa_image';
-var BASE_PATH_IMAGE_CUSTOMER = 'https://staging.indokoper.com/customer_logo';
-var BASE_PATH_IMAGE_PRODUCT = 'https://staging.indokoper.com/product_image_new';
-var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://staging.indokoper.com/foto_produksi';
-var BASE_PATH_IMAGE_SURAT_JALAN = 'https://staging.indokoper.com/foto_surat_jalan';
-var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://staging.indokoper.com/foto_pembayaran';
-var BASE_PATH_IMAGE_FOTO_FEE = 'https://staging.indokoper.com/foto_fee';
-var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://staging.indokoper.com/bukti_gaji';
-var BASE_PATH_IMAGE_FOTO_KTP = 'https://staging.indokoper.com/foto_ktp';
-var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://staging.indokoper.com/public_selfie';
-var BASE_PATH_IMAGE_BUKTI_SP = 'https://staging.indokoper.com/bukti_sp';
-var BASE_PATH_IMAGE_BUKTI_POINT = 'https://staging.indokoper.com/foto_bukti_point';
-var BASE_PATH_IMAGE_BROADCAST = 'https://staging.indokoper.com/gambar_broadcast';
+var BASE_PATH_IMAGE_ABSEN = 'https://indokoper.com/absen';
+var BASE_PATH_IMAGE = 'https://indokoper.com/kunjungan';
+var BASE_PATH_IMAGE_BBM = 'https://indokoper.com/foto_bbm';
+var BASE_PATH_IMAGE_PERFORMA = 'https://indokoper.com/performa_image';
+var BASE_PATH_IMAGE_CUSTOMER = 'https://indokoper.com/customer_logo';
+var BASE_PATH_IMAGE_PRODUCT = 'https://indokoper.com/product_image_new';
+var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://indokoper.com/foto_produksi';
+var BASE_PATH_IMAGE_SURAT_JALAN = 'https://indokoper.com/foto_surat_jalan';
+var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://indokoper.com/foto_pembayaran';
+var BASE_PATH_IMAGE_FOTO_FEE = 'https://indokoper.com/foto_fee';
+var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://indokoper.com/bukti_gaji';
+var BASE_PATH_IMAGE_FOTO_KTP = 'https://indokoper.com/foto_ktp';
+var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://indokoper.com/public_selfie';
+var BASE_PATH_IMAGE_BUKTI_SP = 'https://indokoper.com/bukti_sp';
+var BASE_PATH_IMAGE_BUKTI_POINT = 'https://indokoper.com/foto_bukti_point';
+var BASE_PATH_IMAGE_BROADCAST = 'https://indokoper.com/gambar_broadcast';
+
+// var BASE_API = 'https://staging.indokoper.com/api'; /** Staging Base API */
+// var BASE_API3 = 'https://be.order.devkoperindo.com/api';
+// var BASE_PATH_IMAGE_ABSEN = 'https://staging.indokoper.com/absen';
+// var BASE_PATH_IMAGE = 'https://staging.indokoper.com/kunjungan';
+// var BASE_PATH_IMAGE_BBM = 'https://staging.indokoper.com/foto_bbm';
+// var BASE_PATH_IMAGE_PERFORMA = 'https://staging.indokoper.com/performa_image';
+// var BASE_PATH_IMAGE_CUSTOMER = 'https://staging.indokoper.com/customer_logo';
+// var BASE_PATH_IMAGE_PRODUCT = 'https://staging.indokoper.com/product_image_new';
+// var BASE_PATH_IMAGE_BUKTI_PRODUKSI = 'https://staging.indokoper.com/foto_produksi';
+// var BASE_PATH_IMAGE_SURAT_JALAN = 'https://staging.indokoper.com/foto_surat_jalan';
+// var BASE_PATH_IMAGE_FOTO_PEMBAYARAN = 'https://staging.indokoper.com/foto_pembayaran';
+// var BASE_PATH_IMAGE_FOTO_FEE = 'https://staging.indokoper.com/foto_fee';
+// var BASE_PATH_IMAGE_BUKTI_GAJI = 'https://staging.indokoper.com/bukti_gaji';
+// var BASE_PATH_IMAGE_FOTO_KTP = 'https://staging.indokoper.com/foto_ktp';
+// var BASE_PATH_IMAGE_FOTO_SELFIE = 'https://staging.indokoper.com/public_selfie';
+// var BASE_PATH_IMAGE_BUKTI_SP = 'https://staging.indokoper.com/bukti_sp';
+// var BASE_PATH_IMAGE_BUKTI_POINT = 'https://staging.indokoper.com/foto_bukti_point';
+// var BASE_PATH_IMAGE_BROADCAST = 'https://staging.indokoper.com/gambar_broadcast';
 
 
 function refreshPage() {
@@ -1170,5 +1170,6 @@ console.log('✅ Expedisi Global loaded');
  * Clean text - remove KAB./KOTA prefix
  */
 function cleanText(text) {
-	return text.replace(/^(KAB\.|KOTA)\s*/i, '').trim();
+	if (!text) return '';
+	return String(text).replace(/^(KAB\.|KOTA)\s*/i, '').trim();
 }

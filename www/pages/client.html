@@ -240,6 +240,10 @@
           style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/client">Broadcast</a>
         </div>
+        <div id="menuClient" class="align-items-center justify-content-center bg-dark-gray-medium text-bold"
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
+          <a class="text-add-colour-white" href="/client">Client</a>
+        </div>
         <div class="align-items-center justify-content-center text-bold merah-notif-all"
           style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" onclick="changeFilterMenuNotif('proforma');" href="/notif">Notif</a>
@@ -248,9 +252,23 @@
           style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/delay-go">Delay - Go</a>
         </div>
+        <!--
         <div id="menuTagihan" class="align-items-center justify-content-center text-bold notif-merah-tagihan"
           style="display:flex;flex:1;height:32px;border:0.2px solid black;">
           <a class="text-add-colour-white" href="/tagihan">Tagihan</a>
+        </div>
+        -->
+        <div id="menuPengiriman" class="align-items-center justify-content-center text-bold"
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
+          <a class="text-add-colour-white" href="/pengiriman">Pengiriman</a>
+        </div>
+        <div id="menuInvoice" class="align-items-center justify-content-center text-bold"
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
+          <a class="text-add-colour-white" href="/invoice">Invoice</a>
+        </div>
+        <div id="menuKorin" class="align-items-center justify-content-center text-bold"
+          style="display:flex;flex:1;height:32px;border:0.2px solid black;">
+          <a class="text-add-colour-white" href="/korin">Korin</a>
         </div>
       </div>
 
@@ -302,10 +320,12 @@
                 <table cellspacing="1" cellpadding="1" width="100%">
                   <thead class="bg-dark-gray-medium text-align-center">
                     <th class="label-cell" width="5%" style="border-bottom:1px solid gray;">No</th>
-                    <th class="label-cell" width="40%" style="border-bottom:1px solid gray;" id="label_kolom_new">Nama
+                    <th class="label-cell" width="33%" style="border-bottom:1px solid gray;" id="label_kolom_new">Nama
                       Client</th>
-                    <th class="label-cell" width="30%" style="border-bottom:1px solid gray;">Kota</th>
-                    <th class="label-cell" width="25%" style="border-bottom:1px solid gray;">Details</th>
+                    <th class="label-cell" width="15%" style="border-bottom:1px solid gray;">Kota</th>
+                    <th class="label-cell" width="15%" style="border-bottom:1px solid gray;">No Telepon</th>
+                    <th class="label-cell" width="12%" style="border-bottom:1px solid gray;">Sales</th>
+                    <th class="label-cell" width="20%" style="border-bottom:1px solid gray;">Details</th>
                   </thead>
                   <tbody id="tabel_data_client_head"></tbody>
                 </table>

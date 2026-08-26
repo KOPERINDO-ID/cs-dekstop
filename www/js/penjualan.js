@@ -3540,7 +3540,12 @@ function fullReport(penjualan_id_primary, performa_id_relation, performa_header_
 }
 
 function lihatFotoSuratJalanSales(src) {
-	var url = BASE_PATH_IMAGE_SURAT_JALAN + '/' + src;
+	// [FIX] Baris SJ dari ekspedisi-apk (get-surat-jalan-list-manager, sudah
+	// diarahkan ke ekspedisi_t_surat_jalan) kirim URL ABSOLUT (domain
+	// backend-migrasi), beda dari baris SJ lama yang cuma nama file bare
+	// (perlu di-prefix BASE_PATH_IMAGE_SURAT_JALAN). Deteksi dulu biar tidak
+	// double-prefix jadi link rusak.
+	var url = /^https?:\/\//i.test(src || '') ? src : (BASE_PATH_IMAGE_SURAT_JALAN + '/' + src);
 	var deg = 0;
 
 	var pb = app.photoBrowser.create({
@@ -7265,7 +7270,15 @@ function getPenjualanHeader(page) {
 
 						if (sisa_kirim_sj <= 0) {
 							var color_btn_sj_id = "btn-color-blueWhite";
-						} else if (item.penjualan_total_kirim == null) {
+						} else if (!data.surat_jalan_count[item.penjualan_id]) {
+							// [FIX] Dulu cek item.penjualan_total_kirim == null -- kolom itu
+							// cuma ke-update oleh jalur SJ LAMA (surat-jalan-apk dkk, lihat
+							// ServiceController::simpanSuratJalan-nya), jadi SJ yang dibuat lewat
+							// ekspedisi-apk (ekspedisi_t_surat_jalan_item) tidak pernah bikin
+							// kolom ini terisi -- tombol nyangkut abu-abu selamanya walau sudah
+							// dikirim sebagian. data.surat_jalan_count sudah dihitung dari
+							// ekspedisi_t_surat_jalan_item (lihat sisa_kirim_sj di atas), jadi
+							// dipakai lagi di sini sbg indikator "belum pernah kirim sama sekali".
 							var color_btn_sj_id = "bg-dark-gray-young text-add-colour-black-soft";
 						} else if (sisa_kirim_sj > 0) {
 							var color_btn_sj_id = "btn-color-greenWhite";
@@ -7591,7 +7604,15 @@ function getPenjualanHeader(page) {
 
 						if (sisa_kirim_sj <= 0) {
 							var color_btn_sj_id = "btn-color-blueWhite";
-						} else if (item.penjualan_total_kirim == null) {
+						} else if (!data.surat_jalan_count[item.penjualan_id]) {
+							// [FIX] Dulu cek item.penjualan_total_kirim == null -- kolom itu
+							// cuma ke-update oleh jalur SJ LAMA (surat-jalan-apk dkk, lihat
+							// ServiceController::simpanSuratJalan-nya), jadi SJ yang dibuat lewat
+							// ekspedisi-apk (ekspedisi_t_surat_jalan_item) tidak pernah bikin
+							// kolom ini terisi -- tombol nyangkut abu-abu selamanya walau sudah
+							// dikirim sebagian. data.surat_jalan_count sudah dihitung dari
+							// ekspedisi_t_surat_jalan_item (lihat sisa_kirim_sj di atas), jadi
+							// dipakai lagi di sini sbg indikator "belum pernah kirim sama sekali".
 							var color_btn_sj_id = "bg-dark-gray-young text-add-colour-black-soft";
 						} else if (sisa_kirim_sj > 0) {
 							var color_btn_sj_id = "btn-color-greenWhite";
